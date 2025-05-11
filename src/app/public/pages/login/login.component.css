@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+.login-container {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.login-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  gap: 1rem;
+  background-color: #fbfafa; 
+}
+
+.logo {
+  height: 50px;
+}
+
+.descripcion {
+  font-size: 14px;
+  color: #333;
+}
+
+.login-main {
+  display: flex;
+  justify-content: center;     
+  align-items: flex-start;
+  gap: 4rem;                   
+  max-width: 1000px;          
+  margin: 0 auto;               
+  padding: 2rem 0;              
+  flex: 1;
+}
+
+.imagen {
+  flex: 1;
+  text-align: center;
+}
+
+.imagen h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.imagen img {
+  width: 300px;
+  border-radius: 50%;
+}
+
+.formulario {
+  flex: 1;
+  max-width: 400px;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+}
+
+.formulario h2 {
+  color: #5c2e0d;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.input-password {
+  position: relative;
+}
+
+.toggle {
+  position: absolute;
+  top: 30%;
+  right: 10px;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: #79b267;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.politicas {
+  font-size: 12px;
+  color: #333;
+  margin-top: 1rem;
+}
+
+.forgot {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 14px;
+  color: #5c2e0d;
+  text-align: center;
+}
+
+.linea {
+  height: 1px;
+  background-color: #ccc;
+  margin: 1rem 0;
+}
+
+.nuevo {
+  text-align: center;
+  font-size: 14px;
+}
+
+.crear {
+  border: 2px solid #79b267;
+  color: #5c2e0d;
+  background: none;
+  padding: 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+}
+
+footer {
+  background-color: #79b267;
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+  color: black;
+  font-weight: 600;
+}
+
+
+.password-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.toggle-label {
+  font-size: 14px;
+  color: #999;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.toggle-label .icon {
+  font-size: 16px;
+  margin-top: 2px;
+}
+
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-field input {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding-right: 80px; 
+  box-sizing: border-box;
+}
