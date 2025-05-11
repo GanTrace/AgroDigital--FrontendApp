@@ -1,44 +1,60 @@
-<header class="topbar">
-    <div class="logo-text">AgroDigital</div>
-    <nav class="nav-links">
-      <a class="menu-btn" routerLink="/dashboard" routerLinkActive="active">Animales</a>
-      <a class="menu-btn" routerLink="/eventos" routerLinkActive="active">Eventos</a>
-      <button class="menu-btn">Historial Clínico</button>
-      <button class="menu-btn">Control Económico</button>
-      <button class="menu-btn">Reportes</button>
-    </nav>      
+<div class="events-container">
+  <header class="navbar">
+    <div class="logo">AgroDigital</div>
+    <nav class="main-nav">
+      <a class="nav-item" routerLink="/dashboard">Animales</a>
+      <a class="nav-item active" routerLink="/events">Eventos</a>
+      <a class="nav-item" routerLink="/medical-history">Historial Clínico</a>
+      <a class="nav-item" routerLink="/economic-control">Control Económico</a>
+      <a class="nav-item" routerLink="/reports">Reportes</a>
+    </nav>
     <div class="user-info">
-      <span class="perfil-link">Perfil</span>
-      <span class="user-name">Ricardo</span>
-      <span class="animal-count">580 animales</span>
-      <span class="notification">🔔</span>
+      <div class="user-details">
+        <span class="user-name">Ricardo</span>
+        <span class="animal-count">580 animales</span>
+      </div>
+      <div class="user-avatar">
+        <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+      </div>
+      <div class="notifications">
+        <i class="notification-icon">🔔</i>
+      </div>
     </div>
   </header>
-  
-  <div class="events-container">
-    <div class="top-bar">
-      <div class="search-box">
-        <input type="text" placeholder="Buscar" />
-        <span class="icon">🔍</span>
+
+  <main class="main-content">
+    <section class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input type="text" placeholder="Buscar">
       </div>
-      <button class="filter-btn">Filtro ☰</button>
+      <button class="filter-btn">
+        Filtro
+        <i class="filter-icon">≡</i>
+      </button>
+    </section>
+
+    <section class="events-description">
+      <p>A continuación se muestran los eventos más próximos:</p>
       <button class="add-event-btn">Agregar Evento</button>
-    </div>
-  
-    <p class="section-title">A continuación se muestran los eventos más próximos:</p>
-  
-    <div class="event-grid">
+    </section>
+
+    <section class="events-grid">
       <div class="event-card" *ngFor="let event of events">
-        <div class="img-wrapper">
-          <img [src]="event.imagen" alt="evento" />
-          <span class="tag">{{ event.tipo }}</span>
+        <div class="event-image">
+          <img [src]="event.imagen" alt="Event image">
+          <span class="event-type">{{event.tipo}}</span>
         </div>
-        <div class="info-wrapper">
-          <span class="sub-titulo">📢 {{ event.titulo }}</span>
-          <p class="fecha">{{ event.fecha }}</p>
-          <p class="descripcion">{{ event.descripcion }}</p>
+        <div class="event-details">
+          <div class="event-title">
+            <i class="event-icon">🔊</i>
+            <span>{{event.titulo}}</span>
+          </div>
+          <div class="event-date">{{event.fecha}}</div>
+          <p class="event-description">{{event.descripcion}}</p>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
+</div>
   
