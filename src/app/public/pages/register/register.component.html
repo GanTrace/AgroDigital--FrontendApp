@@ -1,1 +1,52 @@
-<p>register works!</p>
+<div class="register-wrapper">
+    <header class="top-header">
+      <img src="AgroDigital_Logo.png" alt="Logo" class="logo" />
+      <h1 class="brand-name">AgroDigital</h1>
+    </header>
+  
+    <section class="register-content">
+      <h2>Crear una cuenta</h2>
+      <p class="login-link">¿Ya tienes una cuenta? <a routerLink="/login">Iniciar Sesión</a></p>
+  
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <label for="name">¿Cómo te llamas?</label>
+        <input id="name" type="text" formControlName="name" placeholder="Nombre" />
+  
+        <label for="email">¿Cuál es tu correo electrónico?</label>
+        <input id="email" type="email" formControlName="email" placeholder="Correo electrónico" />
+  
+        <div class="password-label">
+          <label for="password">Crear una contraseña</label>
+          <span class="toggle-label" (click)="togglePassword()">
+            <i class="icon">👁️</i> {{ showPassword ? 'Ocultar' : 'Mostrar' }}
+          </span>
+        </div>
+  
+        <div class="password-field">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            placeholder="Contraseña"
+          />
+        </div>
+  
+        <small>Usa 8 o más caracteres que incluyan letras, números y símbolos</small>
+  
+        <p class="politicas">
+          Al continuar, usted está de acuerdo con nuestros
+          <a href="#">Términos de uso</a> y
+          <a href="#">Política de privacidad</a>.
+        </p>
+  
+        <button type="submit" [disabled]="registerForm.invalid">Crear una cuenta</button>
+      </form>
+    </section>
+  
+    <footer class="footer">
+      <p>Contacto</p>
+      <p>Redes Sociales</p>
+      <p>Conócenos</p>
+    </footer>
+  </div>
+  
