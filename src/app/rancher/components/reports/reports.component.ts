@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FooterComponentComponent],
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css']
 })
