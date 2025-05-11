@@ -1,11 +1,49 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  loginForm: FormGroup;
+  showPassword = false;
 
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value).subscribe(users => {
+        if (users.length > 0) {
+          localStorage.setItem('user', JSON.stringify(users[0]));
+          this.router.navigate(['/dashboard']); // ✅ Redirección automática
+        } else {
+          alert('Credenciales incorrectas');
+        }
+      });
+    }
+  }
 }
