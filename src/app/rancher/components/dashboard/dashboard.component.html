@@ -1,1 +1,55 @@
-<p>dashboard works!</p>
+<header class="topbar">
+    <div class="logo-text">AgroDigital</div>
+    <nav class="nav-links">
+        <a class="menu-btn" routerLink="/dashboard" routerLinkActive="active">Animales</a>
+        <a class="menu-btn" routerLink="/events" routerLinkActive="active">Eventos</a>
+        <button class="menu-btn">Historial Clínico</button>
+        <button class="menu-btn">Control Económico</button>
+        <button class="menu-btn">Reportes</button>
+      </nav>      
+    <div class="user-info">
+      <span class="perfil-link">Perfil</span>
+      <span class="user-name">Ricardo</span>
+      <span class="animal-count">580 animales</span>
+      <span class="notification">🔔</span>
+    </div>
+  </header>
+  
+  <main class="dashboard">
+    <div class="welcome-row">
+      <h1 class="welcome-title">¡Bienvenido<br />Ricardo!</h1>
+      <div class="add-section">
+        <button class="add-button">Añadir un animal</button>
+        <button class="icon-add">+</button>
+      </div>
+    </div>
+  
+    <div class="search-filter-row">
+      <input type="text" class="search" placeholder="Buscar" />
+      <button class="filter-btn">Filtro ☰</button>
+    </div>
+  
+    <div class="animal-cards">
+      <div class="card" *ngFor="let animal of animals; let i = index">
+        <div class="card-img">
+          <img [src]="animal.imagen" alt="Animal" />
+          <span class="card-id">#{{ i + 1 }}</span>
+        </div>
+        <div class="card-body">
+          <div class="animal-name">{{ animal.nombre }}</div>
+          <ul>
+            <li>• Especie: {{ animal.especie }}</li>
+            <li>• Edad: {{ animal.edad }}</li>
+            <li>• Sexo: {{ animal.sexo }}</li>
+            <li>• Enfermedades: {{ animal.enfermedades }}</li>
+          </ul>
+          <button class="info-btn">i</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="see-more-wrapper">
+      <button class="see-more">Ver más</button>
+    </div>
+  </main>
+  
