@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
-export interface User {
-  id: number;
-  email: string;
+export interface RegisterPayload {
   name: string;
-  role: string;
+  email: string;
+  password: string;
 }
 
-export interface LoginCredentials {
+export interface LoginPayload {
   email: string;
   password: string;
 }
@@ -18,33 +17,15 @@ export interface LoginCredentials {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'api/users'; // Replace with your actual API URL
+  private apiUrl = 'http://localhost:3000/users'; 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  login(credentials: LoginCredentials): Observable<User[]> {
-    // For demo purposes, we'll simulate a successful login
-    // In a real app, you would call your backend API
-    const mockUser: User = {
-      id: 1,
-      email: credentials.email,
-      name: 'Ricardo',
-      role: 'rancher'
-    };
-    
-    return of([mockUser]);
+  register(payload: RegisterPayload): Observable<any> {
+    return this.http.post(this.apiUrl, payload);
   }
 
-  logout(): void {
-    localStorage.removeItem('user');
-  }
-
-  getCurrentUser(): User | null {
-    const userJson = localStorage.getItem('user');
-    return userJson ? JSON.parse(userJson) : null;
-  }
-
-  isLoggedIn(): boolean {
-    return !!this.getCurrentUser();
+  login(payload: LoginPayload): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}?email=${payload.email}&password=${payload.password}`);
   }
 }
