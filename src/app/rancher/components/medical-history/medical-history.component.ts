@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 
 @Component({
   selector: 'app-medical-history',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FooterComponentComponent],
   templateUrl: './medical-history.component.html',
   styleUrls: ['./medical-history.component.css']
 })
