@@ -1,0 +1,120 @@
+.topbar {
+    background-color: #79b267;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+  }
+  
+  .logo-text {
+    font-size: 24px;
+    font-weight: 800;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .nav-links .active {
+    background-color: #8b572a;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    color: white;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: white;
+  }
+  
+  .perfil-link {
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .user-name {
+    font-size: 16px;
+  }
+  
+  .animal-count {
+    font-size: 14px;
+  }
+  
+  .notification {
+    font-size: 20px;
+  }
+
+  .economic-control-container {
+    font-family: 'Poppins', sans-serif;
+    padding: 2rem;
+  }
+  
+  .summary-cards {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .summary-card {
+    background-color: #f2e7dc;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .summary-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .summary-card p {
+    font-size: 1.2rem;
+    color: #79b267;
+    margin-bottom: 1rem;
+  }
+  
+  .arrow-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .monthly-income h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .monthly-income img {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+  }
+  
+  .action-buttons {
+    margin-top: 2rem;
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .add-btn {
+    background-color: #79b267;
+    color: white;
+    font-weight: bold;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  

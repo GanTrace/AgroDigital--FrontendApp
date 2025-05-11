@@ -1,1 +1,46 @@
-<p>economic-control works!</p>
+<header class="topbar">
+    <div class="logo-text">AgroDigital</div>
+    <nav class="nav-links">
+      <a class="menu-btn" routerLink="/dashboard" routerLinkActive="active">Animales</a>
+      <a class="menu-btn" routerLink="/events" routerLinkActive="active">Eventos</a>
+      <a class="menu-btn" routerLink="/historical" routerLinkActive="active">Historial Clínico</a>
+      <a class="menu-btn" routerLink="/economic-control" routerLinkActive="active">Control Económico</a>
+      <a class="menu-btn" routerLink="/reports" routerLinkActive="active">Reportes</a>
+    </nav>
+    <div class="user-info">
+      <span class="perfil-link">Perfil</span>
+      <span class="user-name">Ricardo</span>
+      <span class="animal-count">580 animales</span>
+      <span class="notification">🔔</span>
+    </div>
+  </header>
+
+  <div class="economic-control-container">
+    <div class="summary-cards">
+      <div class="summary-card">
+        <h3>Mis ingresos</h3>
+        <p>S/ 1485</p>
+        <button class="arrow-btn">
+          <img src="down-arrow-icon.png" alt="arrow down" />
+        </button>
+      </div>
+      <div class="summary-card">
+        <h3>Mis gastos</h3>
+        <p>S/ 1485</p>
+        <button class="arrow-btn">
+          <img src="up-arrow-icon.png" alt="arrow up" />
+        </button>
+      </div>
+    </div>
+    
+    <div class="monthly-income">
+      <h4>Ingreso neto registrado mensualmente:</h4>
+      <img src="chart-image.png" alt="chart" />
+    </div>
+    
+    <div class="action-buttons">
+      <button class="add-btn">Agregar ingreso</button>
+      <button class="add-btn">Agregar gasto</button>
+    </div>
+  </div>
+  
