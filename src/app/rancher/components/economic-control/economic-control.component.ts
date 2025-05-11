@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
+import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-economic-control',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FooterComponentComponent],
   templateUrl: './economic-control.component.html',
   styleUrls: ['./economic-control.component.css']
 })
@@ -79,7 +80,7 @@ export class EconomicControlComponent implements OnInit {
           y: {
             beginAtZero: true,
             grid: {
-              display: true,
+              display: true
             },
             ticks: {
               font: {
