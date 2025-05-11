@@ -1,1 +1,90 @@
-<p>medical-history works!</p>
+<header class="topbar">
+    <div class="logo-text">AgroDigital</div>
+    <nav class="nav-links">
+      <a class="menu-btn" routerLink="/dashboard" routerLinkActive="active">Animales</a>
+      <a class="menu-btn" routerLink="/events" routerLinkActive="active">Eventos</a>
+      <a class="menu-btn" routerLink="/medical-history" routerLinkActive="active">Historial Clínico</a>
+      <button class="menu-btn">Control Económico</button>
+      <button class="menu-btn">Reportes</button>
+    </nav>      
+    <div class="user-info">
+      <span class="perfil-link">Perfil</span>
+      <span class="user-name">Ricardo</span>
+      <span class="animal-count">580 animales</span>
+      <span class="notification">🔔</span>
+    </div>
+  </header>
+  
+  <div class="medical-history-container">
+    <div class="animal-info">
+      <img src="animal-image.jpg" alt="Animal" class="animal-img">
+      <div class="animal-details">
+        <h2 class="animal-name">Carly #58</h2>
+        <div class="animal-info-list">
+          <p><strong>Especie:</strong> Cabra Lechera</p>
+          <p><strong>Fecha de Nacimiento:</strong> 19/04/2022</p>
+          <p><strong>Edad:</strong> 3 años</p>
+          <p><strong>Sexo:</strong> Hembra</p>
+          <p><strong>Problemas de Salud Frecuentes:</strong> No</p>
+          <p><strong>Estado:</strong> Vivo</p>
+        </div>
+        <button class="edit-btn">Editar</button>
+      </div>
+    </div>
+  
+    <p class="search-message">A continuación se detalla el historial médico del animal buscado:</p>
+  
+    <div class="medical-history-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo de Evento</th>
+            <th>Descripción</th>
+            <th>Veterinario</th>
+            <th>Observaciones</th>
+            <th>Adjuntos</th>
+            <th>Más</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>15/04/2025</td>
+            <td>Vacunación</td>
+            <td>Sin riesgos</td>
+            <td>Juan De la Rosa</td>
+            <td>Sin obs.</td>
+            <td>-</td>
+            <td><button class="view-btn">Ver más</button></td>
+          </tr>
+          <tr>
+            <td>10/04/2025</td>
+            <td>Revisión</td>
+            <td>Sin riesgos</td>
+            <td>Juan De la Rosa</td>
+            <td>Sin obs.</td>
+            <td>Pdf</td>
+            <td><button class="view-btn">Ver más</button></td>
+          </tr>
+          <tr>
+            <td>5/04/2025</td>
+            <td>Esterilización</td>
+            <td>Sin riesgos</td>
+            <td>Juan De la Rosa</td>
+            <td>Sin obs.</td>
+            <td>-</td>
+            <td><button class="view-btn">Ver más</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="additional-actions">
+      <button class="add-btn">Añadir visita médica</button>
+      <button class="edit-btn">Editar visita médica</button>
+      <button class="delete-btn">Eliminar visita médica</button>
+    </div>
+  
+    <p class="no-search-results">No se encontraron más búsquedas...</p>
+  </div>
+  
