@@ -1,55 +1,69 @@
-<header class="topbar">
-    <div class="logo-text">AgroDigital</div>
-    <nav class="nav-links">
-        <a class="menu-btn" routerLink="/dashboard" routerLinkActive="active">Animales</a>
-        <a class="menu-btn" routerLink="/events" routerLinkActive="active">Eventos</a>
-        <button class="menu-btn">Historial Clínico</button>
-        <button class="menu-btn">Control Económico</button>
-        <button class="menu-btn">Reportes</button>
-      </nav>      
+<div class="dashboard-container">
+  <header class="navbar">
+    <div class="logo">AgroDigital</div>
+    <nav class="main-nav">
+      <a class="nav-item active" routerLink="/dashboard">Animales</a>
+      <a class="nav-item" routerLink="/events">Eventos</a>
+      <a class="nav-item" routerLink="/medical-history">Historial Clínico</a>
+      <a class="nav-item" routerLink="/economic-control">Control Económico</a>
+      <a class="nav-item" routerLink="/reports">Reportes</a>
+    </nav>
     <div class="user-info">
-      <span class="perfil-link">Perfil</span>
-      <span class="user-name">Ricardo</span>
-      <span class="animal-count">580 animales</span>
-      <span class="notification">🔔</span>
-    </div>
-  </header>
-  
-  <main class="dashboard">
-    <div class="welcome-row">
-      <h1 class="welcome-title">¡Bienvenido<br />Ricardo!</h1>
-      <div class="add-section">
-        <button class="add-button">Añadir un animal</button>
-        <button class="icon-add">+</button>
+      <div class="user-details">
+        <span class="user-name">Ricardo</span>
+        <span class="animal-count">580 animales</span>
+      </div>
+      <div class="user-avatar">
+        <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+      </div>
+      <div class="notifications">
+        <i class="notification-icon">🔔</i>
       </div>
     </div>
-  
-    <div class="search-filter-row">
-      <input type="text" class="search" placeholder="Buscar" />
-      <button class="filter-btn">Filtro ☰</button>
-    </div>
-  
-    <div class="animal-cards">
-      <div class="card" *ngFor="let animal of animals; let i = index">
-        <div class="card-img">
-          <img [src]="animal.imagen" alt="Animal" />
-          <span class="card-id">#{{ i + 1 }}</span>
+  </header>
+
+  <main class="main-content">
+    <section class="welcome-section">
+      <h1 class="welcome-title">¡Bienvenido Ricardo!</h1>
+      <button class="add-animal-btn">
+        Añadir un animal
+        <span class="add-icon">+</span>
+      </button>
+    </section>
+
+    <section class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input type="text" placeholder="Buscar">
+      </div>
+      <button class="filter-btn">
+        Filtro
+        <i class="filter-icon">≡</i>
+      </button>
+    </section>
+
+    <section class="animals-grid">
+      <div class="animal-card" *ngFor="let animal of animals; let i = index">
+        <div class="animal-image">
+          <img [src]="animal.imagen" alt="Animal image">
+          <span class="animal-number">#{{i+1}}</span>
+          <div class="animal-name">{{animal.nombre}}</div>
         </div>
-        <div class="card-body">
-          <div class="animal-name">{{ animal.nombre }}</div>
-          <ul>
-            <li>• Especie: {{ animal.especie }}</li>
-            <li>• Edad: {{ animal.edad }}</li>
-            <li>• Sexo: {{ animal.sexo }}</li>
-            <li>• Enfermedades: {{ animal.enfermedades }}</li>
+        <div class="animal-details">
+          <ul class="details-list">
+            <li>• Especie: {{animal.especie}}</li>
+            <li>• Edad: {{animal.edad}}</li>
+            <li>• Sexo: {{animal.sexo}}</li>
+            <li>• Enfermedades: {{animal.enfermedades}}</li>
           </ul>
           <button class="info-btn">i</button>
         </div>
       </div>
-    </div>
-  
-    <div class="see-more-wrapper">
-      <button class="see-more">Ver más</button>
-    </div>
+    </section>
+
+    <section class="see-more-section">
+      <button class="see-more-btn">Ver más</button>
+    </section>
   </main>
+</div>
   

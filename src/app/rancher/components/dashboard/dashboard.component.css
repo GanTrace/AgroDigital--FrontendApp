@@ -1,202 +1,238 @@
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  .topbar {
-    background-color: #79b267;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-  }
-  
-  .logo-text {
-    font-size: 24px;
-    font-weight: 800;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  .logo {
-    height: 38px;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-  }
-  
-  .menu-btn {
-    background: none;
-    border: none;
-    font-weight: 600;
-    color: white;
-    padding: 0.5rem 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .menu-btn.active {
-    background-color: #8b572a;
-    color: white;
-  }
-  
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    color: white;
-  }
-  
-  .perfil-link {
-    font-size: 14px;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  .dashboard {
-    padding: 2rem;
-  }
-  
-  .welcome-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .welcome-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin: 0;
-  }
-  
-  .add-section {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .add-button {
-    background-color: #79b267;
-    color: white;
-    font-weight: 600;
-    padding: 0.6rem 1.5rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .icon-add {
-    font-size: 24px;
-    font-weight: bold;
-    color: #8b572a;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  /* BUSCADOR */
-  .search-filter-row {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 2rem 0;
-  }
-  
-  .search {
-    flex: 1;
-    padding: 0.8rem;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    font-size: 15px;
-  }
-  
-  .filter-btn {
-    border: none;
-    background: none;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-  }
-  
-  .animal-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 1.5rem;
-  }
-  
-  .card {
-    background-color: #f2e7dc;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
-  }
-  
-  .card-img {
-    position: relative;
-    height: 160px;
-    background-color: #eee;
-  }
-  
-  .card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .card-id {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: white;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 12px;
-    padding: 0.3rem 0.6rem;
-  }
-  
-  .card-body {
-    padding: 1rem;
-    text-align: left;
-  }
-  
-  .animal-name {
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
-  
-  .card-body ul {
-    list-style: none;
-    padding-left: 0;
-    font-size: 14px;
-    margin-bottom: 0.8rem;
-  }
-  
-  .info-btn {
-    display: block;
-    margin: 0 auto;
-    background: none;
-    border: none;
-    font-weight: bold;
-    font-size: 18px;
-    cursor: pointer;
-  }
-  
-  .see-more-wrapper {
-    text-align: center;
-    margin-top: 2rem;
-  }
-  
-  .see-more {
-    background-color: #8b572a;
-    color: white;
-    padding: 0.8rem 2rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background-color: #7ab55c;
+  color: white;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.main-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  color: white;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+
+.nav-item.active {
+  background-color: #8e5928;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.animal-count {
+  font-size: 0.9rem;
+}
+
+.user-avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.main-content {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.welcome-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.welcome-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.add-animal-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #7ab55c;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.add-icon {
+  font-size: 1.5rem;
+  background-color: white;
+  color: #7ab55c;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.search-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px 15px;
+  flex: 1;
+  max-width: 600px;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 1px solid #ccc;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.animals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.animal-card {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.animal-image {
+  position: relative;
+  height: 180px;
+}
+
+.animal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.animal-number {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.animal-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 8px 15px;
+  font-weight: bold;
+}
+
+.animal-details {
+  background-color: #e6d7c3;
+  padding: 15px;
+  position: relative;
+}
+
+.details-list {
+  list-style: none;
+}
+
+.details-list li {
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.info-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #8e5928;
+  background: none;
+  color: #8e5928;
+  font-style: italic;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.see-more-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.see-more-btn {
+  background-color: #8e5928;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
   
