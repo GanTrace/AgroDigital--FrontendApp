@@ -1,111 +1,129 @@
-<header class="topbar">
-    <div class="logo-text">AgroDigital</div>
-    <nav class="nav-links">
-      <a routerLink="/dashboard" routerLinkActive="active">Animales</a>
-      <a routerLink="/events" routerLinkActive="active">Eventos</a>
-      <a routerLink="/medical-history" routerLinkActive="active">Historial Clínico</a>
-      <a routerLink="/economic-control" routerLinkActive="active">Control Económico</a>
-      <a class="active">Reportes</a>
+<div class="reports-container">
+  <header class="navbar">
+    <div class="logo">AgroDigital</div>
+    <nav class="main-nav">
+      <a class="nav-item" routerLink="/dashboard">Animales</a>
+      <a class="nav-item" routerLink="/events">Eventos</a>
+      <a class="nav-item" routerLink="/medical-history">Historial Clínico</a>
+      <a class="nav-item" routerLink="/economic-control">Control Económico</a>
+      <a class="nav-item active" routerLink="/reports">Reportes</a>
     </nav>
     <div class="user-info">
-      <span class="perfil-link">Perfil</span>
-      <span class="user-name">Ricardo</span>
-      <span class="animal-count">580 animales</span>
-      <span class="notification">🔔</span>
+      <div class="user-details">
+        <span class="user-name">Ricardo</span>
+        <span class="animal-count">580 animales</span>
+      </div>
+      <div class="user-avatar">
+        <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+      </div>
+      <div class="notifications">
+        <i class="notification-icon">🔔</i>
+      </div>
     </div>
   </header>
-  
-  <div class="reports-container">
-    <div class="filter-bar">
-      <div class="search-box">
-        <input type="text" placeholder="Buscar reporte de estadística" />
-        <span class="icon">🔍</span>
+
+
+  <main class="main-content">
+    <section class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input type="text" placeholder="Buscar reporte de estadística">
       </div>
-      <button class="filter-btn">Filtro ☰</button>
-    </div>
-  
-    <div class="report-grid">
-  
-      <!-- Report Card 1 -->
+      <button class="filter-btn">
+        Filtro
+        <i class="filter-icon">≡</i>
+      </button>
+    </section>
+
+    <section class="reports-grid">
       <div class="report-card">
-        <div class="left-panel">
-          <h3>Total</h3>
-          <ul>
-            <li class="selected">Especie</li>
-            <li>Edad</li>
-            <li>Esterilizado</li>
-            <li>Sexo</li>
-            <li>Problemas salud</li>
+        <div class="card-sidebar">
+          <div class="card-title">Total</div>
+          <ul class="filter-list">
+            <li class="selected"><i class="circle-icon">○</i> Especie</li>
+            <li><i class="circle-icon"></i> Edad</li>
+            <li><i class="circle-icon"></i> Esterilizado</li>
+            <li><i class="circle-icon"></i> Sexo</li>
+            <li><i class="circle-icon"></i> Problemas salud</li>
           </ul>
-          <span class="icon-panel">📊</span>
+          <div class="card-icon">⚖️</div>
         </div>
-        <div class="right-panel">
-          <input class="mini-input" placeholder="Gallinas" />
-          <h1>50</h1>
-          <p>animales</p>
+        <div class="card-content">
+          <div class="search-input">
+            <i class="search-icon">🔍</i>
+            <input type="text" placeholder="Gallinas">
+          </div>
+          <div class="stat-number">50</div>
+          <div class="stat-label">animales</div>
         </div>
       </div>
-  
-      <!-- Report Card 2 -->
+
       <div class="report-card">
-        <div class="left-panel">
-          <h3>Total</h3>
-          <ul>
-            <li>Especie</li>
-            <li class="selected">Edad</li>
-            <li>Esterilizado</li>
-            <li>Sexo</li>
-            <li>Problemas salud</li>
+        <div class="card-sidebar">
+          <div class="card-title">Total</div>
+          <ul class="filter-list">
+            <li><i class="circle-icon"></i> Especie</li>
+            <li class="selected"><i class="circle-icon">○</i> Edad</li>
+            <li><i class="circle-icon"></i> Esterilizado</li>
+            <li><i class="circle-icon"></i> Sexo</li>
+            <li><i class="circle-icon"></i> Problemas salud</li>
           </ul>
-          <span class="icon-panel">📊</span>
+          <div class="card-icon">⚖️</div>
         </div>
-        <div class="right-panel">
-          <input class="mini-input" placeholder="3 meses" />
-          <h1>15</h1>
-          <p>animales</p>
+        <div class="card-content">
+          <div class="search-input">
+            <i class="search-icon">🔍</i>
+            <input type="text" placeholder="3 meses">
+          </div>
+          <div class="stat-number">15</div>
+          <div class="stat-label">animales</div>
         </div>
       </div>
-  
-      <!-- Report Card 3 -->
+
       <div class="report-card">
-        <div class="left-panel">
-          <h3>Total</h3>
-          <ul>
-            <li>Especie</li>
-            <li>Edad</li>
-            <li>Esterilizado</li>
-            <li class="selected">Sexo</li>
-            <li>Problemas salud</li>
+        <div class="card-sidebar">
+          <div class="card-title">Total</div>
+          <ul class="filter-list">
+            <li><i class="circle-icon"></i> Especie</li>
+            <li><i class="circle-icon"></i> Edad</li>
+            <li><i class="circle-icon"></i> Esterilizado</li>
+            <li class="selected"><i class="circle-icon">○</i> Sexo</li>
+            <li><i class="circle-icon"></i> Problemas salud</li>
           </ul>
-          <span class="icon-panel">📊</span>
+          <div class="card-icon">⚖️</div>
         </div>
-        <div class="right-panel">
-          <input class="mini-input" placeholder="Hembras" />
-          <h1>350</h1>
-          <p>animales</p>
+        <div class="card-content">
+          <div class="search-input">
+            <i class="search-icon">🔍</i>
+            <input type="text" placeholder="Hembras">
+          </div>
+          <div class="stat-number">350</div>
+          <div class="stat-label">animales</div>
         </div>
       </div>
-  
-      <!-- Report Card 4 -->
+
       <div class="report-card">
-        <div class="left-panel">
-          <h3>Porcentaje</h3>
-          <ul>
-            <li class="selected">Reproductores</li>
-            <li>Fuera de producción</li>
-            <li>Tasa de natalidad</li>
-            <li>Edad</li>
-            <li>Sexo</li>
-            <li>Problemas salud</li>
+        <div class="card-sidebar">
+          <div class="card-title">Porcentaje</div>
+          <ul class="filter-list">
+            <li class="selected"><i class="circle-icon">○</i> Reproductores</li>
+            <li><i class="circle-icon"></i> Fuera de producción</li>
+            <li><i class="circle-icon"></i> Tasa de natalidad</li>
+            <li><i class="circle-icon"></i> Edad</li>
+            <li><i class="circle-icon"></i> Sexo</li>
+            <li><i class="circle-icon"></i> Problemas salud</li>
           </ul>
-          <span class="icon-panel">📊</span>
+          <div class="card-icon">⚖️</div>
         </div>
-        <div class="right-panel">
-          <input class="mini-input" placeholder="Gallinas" />
-          <h1>45<span class="percent">%</span></h1>
-          <p>animales</p>
+        <div class="card-content">
+          <div class="search-input">
+            <i class="search-icon">🔍</i>
+            <input type="text" placeholder="Gallinas">
+          </div>
+          <div class="stat-number">45<span class="percentage">%</span></div>
+          <div class="stat-label">animales</div>
         </div>
       </div>
-  
-    </div>
-  </div>
+    </section>
+  </main>
+</div>
