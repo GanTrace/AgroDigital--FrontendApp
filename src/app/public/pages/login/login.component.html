@@ -1,49 +1,65 @@
 <div class="login-container">
-    <header class="login-header">
-      <img src="AgroDigital_Logo.png" alt="AgroDigital" class="logo" />
+  <div class="login-header">
+    <div class="logo-container">
+      <img src="/assets/img/logo.png" alt="AgroDigital" class="logo">
       <p class="descripcion">
         Accede a AgroDigital, la plataforma web que digitaliza la gestión del ganado, con módulos de salud, productividad y trazabilidad para optimizar los procesos ganaderos.
       </p>
-    </header>
-  
-    <main class="login-main">
-      <section class="imagen">
-        <h1>AgroDigital</h1>
-        <img src="PortadaIS.png" alt="Ganadero feliz con ganado" />
-      </section>
-  
-      <section class="formulario">
-        <h2>Iniciar Sesión</h2>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <label>Correo electrónico o número telefónico</label>
-          <input type="text" formControlName="email" placeholder="Ingresa tu correo o número" />
-  
-          <label>Contraseña</label>
-          <div class="input-password">
-            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Ingresa tu contraseña" />
-            <span class="toggle" (click)="togglePassword()">👁️</span>
-          </div>
-  
-          <button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
-        </form>
-  
-        <p class="politicas">
-          Al continuar, usted accede a nuestros
-          <a href="#">Términos de uso</a> y
-          <a href="#">Política de privacidad</a>.
-        </p>
-  
-        <a href="#" class="forgot">¿Olvidaste tu contraseña?</a>
-        <div class="linea"></div>
-        <p class="nuevo">¿Nuevo con nosotros?</p>
-        <button class="crear" routerLink="/register">Crear cuenta</button>
-      </section>
-    </main>
-  
-    <footer>
-      <p>Contacto</p>
-      <p>Redes Sociales</p>
-      <p>Conócenos</p>
-    </footer>
+    </div>
   </div>
-  
+
+  <div class="main-content">
+    <div class="left-section">
+      <h1 class="brand-title">AgroDigital</h1>
+      <div class="circular-image">
+        <img src="/assets/img/rancher-with-animals.jpg" alt="Ganadero con animales">
+      </div>
+    </div>
+
+    <div class="right-section">
+      <div class="form-card">
+        <h2 class="form-title">Iniciar Sesion</h2>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Correo electrónico o número telefónico</label>
+            <input type="text" formControlName="email" class="form-input">
+          </div>
+          
+          <div class="form-group">
+            <label>Contraseña</label>
+            <div class="password-field">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-input">
+              <button type="button" class="toggle-password" (click)="togglePassword()">
+                {{ showPassword ? 'Ocultar' : 'Mostrar' }}
+              </button>
+            </div>
+          </div>
+          
+          <button type="submit" class="submit-button">Iniciar Sesion</button>
+        </form>
+        
+        <p class="terms-text">
+          Al continuar, usted accede a nuestros <a href="#" class="terms-link">Términos de uso</a> y 
+          <a href="#" class="terms-link">Política de privacidad</a>.
+        </p>
+        
+        <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+        
+        <div class="divider">
+          <span>¿Nuevo con nosotros?</span>
+        </div>
+        
+        <button type="button" class="create-account-button" routerLink="/register">Crear cuenta</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="login-footer">
+    <div class="footer-content">
+      <div class="footer-section">Contacto</div>
+      <div class="footer-section">Redes Sociales</div>
+      <div class="footer-section">Conócenos</div>
+    </div>
+  </footer>
+</div>
