@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'app-register',
@@ -10,12 +12,14 @@ import { AuthService } from '../../services/auth.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    TranslateModule,
+    LanguageSwitcherComponent
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   showPassword = false;
   registrationError = '';
@@ -23,13 +27,25 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8), this.passwordStrengthValidator]],
     });
+  }
+
+  ngOnInit(): void {
+    // Set default language or get from localStorage
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang) {
+      this.translate.use(savedLang);
+    } else {
+      // Default to Spanish
+      this.translate.use('es');
+    }
   }
 
   passwordStrengthValidator(control: any) {
@@ -64,7 +80,7 @@ export class RegisterComponent {
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
-          this.registrationError = 'Error al registrar. Por favor intente nuevamente.';
+          this.registrationError = this.translate.instant('REGISTER.REGISTRATION_ERROR');
           console.error('Registration error:', err);
         }
       });
@@ -75,9 +91,9 @@ export class RegisterComponent {
       });
       
       if (this.registerForm.get('password')?.hasError('strength')) {
-        this.registrationError = 'La contraseña debe incluir letras, números y símbolos.';
+        this.registrationError = this.translate.instant('REGISTER.PASSWORD_STRENGTH_ERROR');
       } else {
-        this.registrationError = 'Por favor complete todos los campos correctamente.';
+        this.registrationError = this.translate.instant('REGISTER.FORM_ERROR');
       }
     }
   }

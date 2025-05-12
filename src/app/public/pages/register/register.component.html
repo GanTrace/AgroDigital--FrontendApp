@@ -4,49 +4,50 @@
       <img src="AgroDigital_Logo.png" alt="AgroDigital" class="logo">
       <h1 class="brand-name">AgroDigital</h1>
     </div>
+    <app-language-switcher class="language-switcher"></app-language-switcher>
   </div>
 
   <div class="main-content">
     <div class="register-form-container">
-      <h2 class="form-title">Crear una cuenta</h2>
+      <h2 class="form-title">{{ 'REGISTER.TITLE' | translate }}</h2>
       
       <div class="login-link">
-        <span>¿Ya tienes una cuenta?</span>
-        <a routerLink="/login" class="login-btn">Iniciar Sesión</a>
+        <span>{{ 'REGISTER.HAVE_ACCOUNT' | translate }}</span>
+        <a routerLink="/login" class="login-btn">{{ 'REGISTER.LOGIN' | translate }}</a>
       </div>
       
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label>¿Cómo te llamas?</label>
-          <input type="text" formControlName="name" class="form-control" placeholder="Nombre">
+          <label>{{ 'REGISTER.NAME_LABEL' | translate }}</label>
+          <input type="text" formControlName="name" class="form-control" [placeholder]="'REGISTER.NAME_PLACEHOLDER' | translate">
         </div>
         
         <div class="form-group">
-          <label>¿Cuál es tu correo electrónico?</label>
-          <input type="email" formControlName="email" class="form-control" placeholder="Correo electrónico">
+          <label>{{ 'REGISTER.EMAIL_LABEL' | translate }}</label>
+          <input type="email" formControlName="email" class="form-control" [placeholder]="'REGISTER.EMAIL_PLACEHOLDER' | translate">
         </div>
         
         <div class="form-group">
-          <label>Crear una contraseña</label>
+          <label>{{ 'REGISTER.PASSWORD_LABEL' | translate }}</label>
           <div class="password-input">
-            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control" placeholder="Contraseña">
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control" [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate">
             <button type="button" class="toggle-password" (click)="togglePassword()">
-              {{ showPassword ? 'Ocultar' : 'Mostrar' }}
+              {{ (showPassword ? 'REGISTER.HIDE' : 'REGISTER.SHOW') | translate }}
             </button>
           </div>
-          <p class="password-hint">Usa 8 o más caracteres que incluyan letras, números y símbolos</p>
+          <p class="password-hint">{{ 'REGISTER.PASSWORD_HINT' | translate }}</p>
         </div>
         
         <div class="terms-agreement">
           <p>
-            Al continuar, usted está de acuerdo con nuestros 
-            <a href="#" class="terms-link">Términos de uso</a> y 
-            <a href="#" class="terms-link">Política de privacidad</a>.
+            {{ 'REGISTER.TERMS_AGREEMENT' | translate }}
+            <a href="#" class="terms-link">{{ 'REGISTER.TERMS_OF_USE' | translate }}</a> {{ 'REGISTER.AND' | translate }} 
+            <a href="#" class="terms-link">{{ 'REGISTER.PRIVACY_POLICY' | translate }}</a>.
           </p>
         </div>
         
         <button type="submit" class="register-button" [disabled]="registerForm.invalid">
-          Crear una cuenta
+          {{ 'REGISTER.SUBMIT_BUTTON' | translate }}
         </button>
       </form>
     </div>
@@ -54,9 +55,9 @@
 
   <footer class="footer">
     <div class="footer-content">
-      <div class="footer-section">Contacto</div>
-      <div class="footer-section">Redes Sociales</div>
-      <div class="footer-section">Conócenos</div>
+      <div class="footer-section">{{ 'FOOTER.CONTACT' | translate }}</div>
+      <div class="footer-section">{{ 'FOOTER.SOCIAL' | translate }}</div>
+      <div class="footer-section">{{ 'FOOTER.ABOUT' | translate }}</div>
     </div>
   </footer>
 </div>

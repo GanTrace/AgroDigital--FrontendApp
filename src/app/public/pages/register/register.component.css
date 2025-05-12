@@ -12,8 +12,15 @@
 }
 
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #f5f2e9;
   padding: 15px 30px;
+}
+
+.language-switcher {
+  margin-left: auto;
 }
 
 .logo-section {
