@@ -1,0 +1,146 @@
+.topbar {
+    background-color: #79b267;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+  }
+
+  .logo-text {
+    font-size: 24px;
+    font-weight: 800;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .menu-btn {
+    background: none;
+    border: none;
+    font-weight: 600;
+    color: white;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .menu-btn.active {
+    background-color: #8b572a;
+    color: white;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: white;
+  }
+  
+  .perfil-link {
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .perfil-link:hover {
+    color: #fff;
+  }
+  
+  .medical-history-container {
+    padding: 2rem;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .animal-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .animal-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    margin-right: 2rem;
+  }
+  
+  .animal-details {
+    flex: 1;
+  }
+  
+  .animal-name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .animal-info-list p {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+  
+  .edit-btn {
+    background-color: #79b267;
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .search-message {
+    font-size: 16px;
+    margin: 1rem 0;
+  }
+  
+  .medical-history-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .medical-history-table th, .medical-history-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ccc;
+  }
+  
+  .medical-history-table th {
+    background-color: #f2e7dc;
+  }
+  
+  .view-btn {
+    background-color: #8b572a;
+    color: white;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .additional-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .add-btn, .edit-btn, .delete-btn {
+    background-color: #79b267;
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .no-search-results {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  

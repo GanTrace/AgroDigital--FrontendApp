@@ -1,1 +1,44 @@
-<p>events works!</p>
+<header class="topbar">
+    <div class="logo-text">AgroDigital</div>
+    <nav class="nav-links">
+      <a class="menu-btn" routerLink="/dashboard" routerLinkActive="active">Animales</a>
+      <a class="menu-btn" routerLink="/eventos" routerLinkActive="active">Eventos</a>
+      <button class="menu-btn">Historial Clínico</button>
+      <button class="menu-btn">Control Económico</button>
+      <button class="menu-btn">Reportes</button>
+    </nav>      
+    <div class="user-info">
+      <span class="perfil-link">Perfil</span>
+      <span class="user-name">Ricardo</span>
+      <span class="animal-count">580 animales</span>
+      <span class="notification">🔔</span>
+    </div>
+  </header>
+  
+  <div class="events-container">
+    <div class="top-bar">
+      <div class="search-box">
+        <input type="text" placeholder="Buscar" />
+        <span class="icon">🔍</span>
+      </div>
+      <button class="filter-btn">Filtro ☰</button>
+      <button class="add-event-btn">Agregar Evento</button>
+    </div>
+  
+    <p class="section-title">A continuación se muestran los eventos más próximos:</p>
+  
+    <div class="event-grid">
+      <div class="event-card" *ngFor="let event of events">
+        <div class="img-wrapper">
+          <img [src]="event.imagen" alt="evento" />
+          <span class="tag">{{ event.tipo }}</span>
+        </div>
+        <div class="info-wrapper">
+          <span class="sub-titulo">📢 {{ event.titulo }}</span>
+          <p class="fecha">{{ event.fecha }}</p>
+          <p class="descripcion">{{ event.descripcion }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

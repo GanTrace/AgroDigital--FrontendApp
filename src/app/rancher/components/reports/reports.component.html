@@ -1,1 +1,111 @@
-<p>reports works!</p>
+<header class="topbar">
+    <div class="logo-text">AgroDigital</div>
+    <nav class="nav-links">
+      <a routerLink="/dashboard" routerLinkActive="active">Animales</a>
+      <a routerLink="/events" routerLinkActive="active">Eventos</a>
+      <a routerLink="/medical-history" routerLinkActive="active">Historial Clínico</a>
+      <a routerLink="/economic-control" routerLinkActive="active">Control Económico</a>
+      <a class="active">Reportes</a>
+    </nav>
+    <div class="user-info">
+      <span class="perfil-link">Perfil</span>
+      <span class="user-name">Ricardo</span>
+      <span class="animal-count">580 animales</span>
+      <span class="notification">🔔</span>
+    </div>
+  </header>
+  
+  <div class="reports-container">
+    <div class="filter-bar">
+      <div class="search-box">
+        <input type="text" placeholder="Buscar reporte de estadística" />
+        <span class="icon">🔍</span>
+      </div>
+      <button class="filter-btn">Filtro ☰</button>
+    </div>
+  
+    <div class="report-grid">
+  
+      <!-- Report Card 1 -->
+      <div class="report-card">
+        <div class="left-panel">
+          <h3>Total</h3>
+          <ul>
+            <li class="selected">Especie</li>
+            <li>Edad</li>
+            <li>Esterilizado</li>
+            <li>Sexo</li>
+            <li>Problemas salud</li>
+          </ul>
+          <span class="icon-panel">📊</span>
+        </div>
+        <div class="right-panel">
+          <input class="mini-input" placeholder="Gallinas" />
+          <h1>50</h1>
+          <p>animales</p>
+        </div>
+      </div>
+  
+      <!-- Report Card 2 -->
+      <div class="report-card">
+        <div class="left-panel">
+          <h3>Total</h3>
+          <ul>
+            <li>Especie</li>
+            <li class="selected">Edad</li>
+            <li>Esterilizado</li>
+            <li>Sexo</li>
+            <li>Problemas salud</li>
+          </ul>
+          <span class="icon-panel">📊</span>
+        </div>
+        <div class="right-panel">
+          <input class="mini-input" placeholder="3 meses" />
+          <h1>15</h1>
+          <p>animales</p>
+        </div>
+      </div>
+  
+      <!-- Report Card 3 -->
+      <div class="report-card">
+        <div class="left-panel">
+          <h3>Total</h3>
+          <ul>
+            <li>Especie</li>
+            <li>Edad</li>
+            <li>Esterilizado</li>
+            <li class="selected">Sexo</li>
+            <li>Problemas salud</li>
+          </ul>
+          <span class="icon-panel">📊</span>
+        </div>
+        <div class="right-panel">
+          <input class="mini-input" placeholder="Hembras" />
+          <h1>350</h1>
+          <p>animales</p>
+        </div>
+      </div>
+  
+      <!-- Report Card 4 -->
+      <div class="report-card">
+        <div class="left-panel">
+          <h3>Porcentaje</h3>
+          <ul>
+            <li class="selected">Reproductores</li>
+            <li>Fuera de producción</li>
+            <li>Tasa de natalidad</li>
+            <li>Edad</li>
+            <li>Sexo</li>
+            <li>Problemas salud</li>
+          </ul>
+          <span class="icon-panel">📊</span>
+        </div>
+        <div class="right-panel">
+          <input class="mini-input" placeholder="Gallinas" />
+          <h1>45<span class="percent">%</span></h1>
+          <p>animales</p>
+        </div>
+      </div>
+  
+    </div>
+  </div>
