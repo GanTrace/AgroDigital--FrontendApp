@@ -2,23 +2,26 @@
   <header class="navbar">
     <div class="logo">AgroDigital</div>
     <nav class="main-nav">
-      <a class="nav-item" routerLink="/dashboard">Animales</a>
-      <a class="nav-item" routerLink="/events">Eventos</a>
-      <a class="nav-item active" routerLink="/medical-history">Historial Clínico</a>
-      <a class="nav-item" routerLink="/economic-control">Control Económico</a>
-      <a class="nav-item" routerLink="/reports">Reportes</a>
+      <a class="nav-item" routerLink="/dashboard">{{ 'DASHBOARD.ANIMALS' | translate }}</a>
+      <a class="nav-item" routerLink="/events">{{ 'DASHBOARD.EVENTS' | translate }}</a>
+      <a class="nav-item active" routerLink="/medical-history">{{ 'DASHBOARD.MEDICAL_HISTORY' | translate }}</a>
+      <a class="nav-item" routerLink="/economic-control">{{ 'DASHBOARD.ECONOMIC_CONTROL' | translate }}</a>
+      <a class="nav-item" routerLink="/reports">{{ 'DASHBOARD.REPORTS' | translate }}</a>
     </nav>
-    <div class="user-info">
-      <div class="user-details">
-        <span class="user-name">Ricardo</span>
-        <span class="animal-count">580 animales</span>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="user-details">
+          <span class="user-name">Ricardo</span>
+          <span class="animal-count">580 animales</span>
+        </div>
+        <div class="user-avatar">
+          <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+        </div>
+        <div class="notifications">
+          <i class="notification-icon">🔔</i>
+        </div>
       </div>
-      <div class="user-avatar">
-        <img src="/assets/img/user-avatar.jpg" alt="User avatar">
-      </div>
-      <div class="notifications">
-        <i class="notification-icon">🔔</i>
-      </div>
+      <app-language-switcher class="language-switcher"></app-language-switcher>
     </div>
   </header>
 
@@ -26,12 +29,12 @@
     <section class="search-section">
       <div class="search-bar">
         <i class="search-icon">🔍</i>
-        <input type="text" placeholder="Buscar">
+        <input type="text" placeholder="{{ 'MEDICAL_HISTORY.SEARCH' | translate }}">
       </div>
     </section>
 
     <section class="history-description">
-      <p>A continuación se detalla el historial médico del animal buscado:</p>
+      <p>{{ 'MEDICAL_HISTORY.DESCRIPTION' | translate }}</p>
     </section>
 
     <div class="medical-history-content">
@@ -46,18 +49,18 @@
             <span>{{ selectedAnimal.tipo }}</span>
           </div>
           <ul class="details-list">
-            <li>• Fecha de nacimiento: {{ selectedAnimal.fechaNacimiento }}</li>
-            <li>• Edad: {{ selectedAnimal.edad }}</li>
-            <li>• Sexo: {{ selectedAnimal.sexo }}</li>
-            <li>• Problemas de salud frecuentes: {{ selectedAnimal.problemasSalud }}</li>
-            <li>• Zona: {{ selectedAnimal.zona }}</li>
-            <li>• Alimentación: {{ selectedAnimal.alimentacion }}</li>
-            <li>• Peso: {{ selectedAnimal.peso }}</li>
-            <li>• Crías: {{ selectedAnimal.crias }}</li>
-            <li>• Partos: {{ selectedAnimal.partos }}</li>
-            <li>• Estado: {{ selectedAnimal.estado }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.BIRTH_DATE' | translate }}: {{ selectedAnimal.fechaNacimiento }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.AGE' | translate }}: {{ selectedAnimal.edad }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.SEX' | translate }}: {{ selectedAnimal.sexo }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.HEALTH_PROBLEMS' | translate }}: {{ selectedAnimal.problemasSalud }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.ZONE' | translate }}: {{ selectedAnimal.zona }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.FEEDING' | translate }}: {{ selectedAnimal.alimentacion }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.WEIGHT' | translate }}: {{ selectedAnimal.peso }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.OFFSPRING' | translate }}: {{ selectedAnimal.crias }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.BIRTHS' | translate }}: {{ selectedAnimal.partos }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.STATUS' | translate }}: {{ selectedAnimal.estado }}</li>
           </ul>
-          <button class="edit-btn">Editar</button>
+          <button class="edit-btn">{{ 'MEDICAL_HISTORY.EDIT' | translate }}</button>
         </div>
       </section>
 
@@ -65,13 +68,13 @@
         <table class="medical-table">
           <thead>
             <tr>
-              <th>Fecha</th>
-              <th>Tipo de Evento</th>
-              <th>Descripción</th>
-              <th>Veterinario</th>
-              <th>Observaciones</th>
-              <th>Adjuntos</th>
-              <th>Más</th>
+              <th>{{ 'MEDICAL_HISTORY.DATE' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.EVENT_TYPE' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.DESCRIPTION' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.VETERINARIAN' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.OBSERVATIONS' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.ATTACHMENTS' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.MORE' | translate }}</th>
             </tr>
           </thead>
           <tbody>
@@ -88,13 +91,13 @@
             </tr>
           </tbody>
         </table>
-        <p class="no-results" *ngIf="medicalRecords.length === 0">No se encontraron más búsquedas...</p>
+        <p class="no-results" *ngIf="medicalRecords.length === 0">{{ 'MEDICAL_HISTORY.NO_RESULTS' | translate }}</p>
       </section>
 
       <section class="action-buttons">
-        <button class="add-visit-btn">Añadir visita médica</button>
-        <button class="edit-visit-btn">Editar visita médica</button>
-        <button class="delete-visit-btn">Eliminar visita médica</button>
+        <button class="add-visit-btn">{{ 'MEDICAL_HISTORY.ADD_VISIT' | translate }}</button>
+        <button class="edit-visit-btn">{{ 'MEDICAL_HISTORY.EDIT_VISIT' | translate }}</button>
+        <button class="delete-visit-btn">{{ 'MEDICAL_HISTORY.DELETE_VISIT' | translate }}</button>
       </section>
     </div>
   </main>
