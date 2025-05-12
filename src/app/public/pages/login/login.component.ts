@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, User } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -36,13 +36,18 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe(users => {
+      this.authService.login(this.loginForm.value).subscribe((users: User[]) => {
         if (users.length > 0) {
           localStorage.setItem('user', JSON.stringify(users[0]));
-          this.router.navigate(['/dashboard']); // ✅ Redirección automática
+          this.router.navigate(['/dashboard']);
         } else {
           alert('Credenciales incorrectas');
         }
+      });
+    } else {
+      Object.keys(this.loginForm.controls).forEach(key => {
+        const control = this.loginForm.get(key);
+        control?.markAsTouched();
       });
     }
   }
