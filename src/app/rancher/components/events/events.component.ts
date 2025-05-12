@@ -1,16 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
+import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'app-events',
   standalone: true,
-  imports: [CommonModule, RouterModule, FooterComponentComponent],
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    TranslateModule,
+    FooterComponentComponent,
+    LanguageSwitcherComponent
+  ],
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css']
 })
-export class EventsComponent {
+export class EventsComponent implements OnInit {
   events = [
     {
       tipo: 'Vacunas',
@@ -41,4 +49,14 @@ export class EventsComponent {
       imagen: '/assets/img/visita2.jpg'
     }
   ];
+
+  constructor(private translate: TranslateService) {}
+
+  ngOnInit(): void {
+    // Set language from localStorage or default
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang) {
+      this.translate.use(savedLang);
+    }
+  }
 }
