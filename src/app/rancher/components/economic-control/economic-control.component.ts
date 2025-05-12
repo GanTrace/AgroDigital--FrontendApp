@@ -2,14 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
+import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-economic-control',
   standalone: true,
-  imports: [CommonModule, RouterModule, FooterComponentComponent],
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    TranslateModule,
+    FooterComponentComponent,
+    LanguageSwitcherComponent
+  ],
   templateUrl: './economic-control.component.html',
   styleUrls: ['./economic-control.component.css']
 })
@@ -17,7 +25,15 @@ export class EconomicControlComponent implements OnInit {
   public ingresos: number = 1485;
   public gastos: number = 1485;
 
+  constructor(private translate: TranslateService) {}
+
   ngOnInit() {
+    // Set language from localStorage or default
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang) {
+      this.translate.use(savedLang);
+    }
+    
     setTimeout(() => {
       this.createChart();
     }, 100);
@@ -45,7 +61,7 @@ export class EconomicControlComponent implements OnInit {
       data: {
         labels: labels,
         datasets: [{
-          label: 'Leads generados por semana',
+          label: this.translate.instant('ECONOMIC_CONTROL.LEADS'),
           data: data,
           backgroundColor: '#2563EB',
           borderColor: '#2563EB',
