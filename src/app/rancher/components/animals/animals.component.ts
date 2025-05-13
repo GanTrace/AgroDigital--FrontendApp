@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 import { AuthService } from '../../../public/services/auth.service';
+import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 
 @Component({
   selector: 'app-animals',
@@ -16,7 +17,8 @@ import { AuthService } from '../../../public/services/auth.service';
     TranslateModule,
     ReactiveFormsModule,
     FooterComponentComponent,
-    LanguageSwitcherComponent
+    LanguageSwitcherComponent,
+    NotificationsComponent  
   ],
   templateUrl: './animals.component.html',
   styleUrl: './animals.component.css'
@@ -26,6 +28,7 @@ export class AnimalsComponent implements OnInit {
   userName: string = '';
   animalCount: string = '580 animales';
   nextAnimalId: number = 581;
+  showNotifications: boolean = false; 
 
   constructor(
     private fb: FormBuilder,
@@ -58,6 +61,10 @@ export class AnimalsComponent implements OnInit {
     if (user) {
       this.userName = user.name;
     }
+  }
+
+  toggleNotifications(): void {  
+    this.showNotifications = !this.showNotifications;
   }
 
   addAnimal(): void {
