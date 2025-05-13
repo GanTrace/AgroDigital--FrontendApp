@@ -65,6 +65,7 @@
 .user-name {
   font-weight: bold;
   color: white;
+  cursor: pointer;
 }
 
 .animal-count {
