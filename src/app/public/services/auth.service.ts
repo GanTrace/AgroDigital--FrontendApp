@@ -27,7 +27,6 @@ export class AuthService {
     private http: HttpClient,
     private router: Router
   ) {
-    // Check if user is stored in localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.currentUser = JSON.parse(storedUser);
@@ -35,7 +34,6 @@ export class AuthService {
   }
 
   register(userData: any): Observable<User> {
-    // Add default role if not provided
     const user = {
       ...userData,
       role: userData.role || 'rancher'
@@ -44,7 +42,6 @@ export class AuthService {
     return this.http.post<User>(this.apiUrl, user).pipe(
       tap(response => {
         console.log('Registration successful:', response);
-        // Store user in localStorage (without password for security)
         const { password, ...userWithoutPassword } = response;
         localStorage.setItem('user', JSON.stringify(userWithoutPassword));
         this.currentUser = response;
@@ -58,13 +55,10 @@ export class AuthService {
 
   login(credentials: LoginPayload): Observable<User[]> {
     console.log('Attempting login with:', credentials.email);
-    
-    // Query the db.json for users with matching email and password
     return this.http.get<User[]>(`${this.apiUrl}?email=${credentials.email}&password=${credentials.password}`).pipe(
       tap(users => {
         console.log('Login response:', users);
         if (users.length > 0) {
-          // Store the user in localStorage when login is successful
           const { password, ...userWithoutPassword } = users[0];
           localStorage.setItem('user', JSON.stringify(userWithoutPassword));
           this.currentUser = users[0];
