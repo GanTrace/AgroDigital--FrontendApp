@@ -8,7 +8,6 @@ import { AuthService, User } from '../../services/auth.service';
 import { FooterComponentComponent } from '../../components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
 
-// Define RegisterPayload interface locally since it's not exported from AuthService
 interface RegisterPayload {
   name: string;
   email: string;

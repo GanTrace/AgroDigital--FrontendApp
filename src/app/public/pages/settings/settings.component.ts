@@ -58,10 +58,9 @@ export class SettingsComponent implements OnInit {
     
     this.user = this.authService.getCurrentUser();
     if (this.user) {
-      // Obtener los datos completos del usuario, incluyendo la contraseña
       this.authService.getUserById(this.user.id).subscribe({
         next: (userData) => {
-          this.user = userData; // Actualizar el usuario con todos los datos
+          this.user = userData; 
           this.settingsForm.patchValue({
             name: userData.name,
             email: userData.email,
@@ -76,7 +75,6 @@ export class SettingsComponent implements OnInit {
 togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
     
-    // Mostrar u ocultar la contraseña real del usuario
     this.settingsForm.patchValue({
       password: this.showPassword ? this.user.password : '••••••••'
     });
@@ -89,7 +87,6 @@ toggleNotifications(): void {
   toggleEdit(): void {
     this.isEditing = !this.isEditing;
     if (!this.isEditing && this.user) {
-      // Reset form when canceling edit
       this.settingsForm.patchValue({
         name: this.user.name,
         email: this.user.email,

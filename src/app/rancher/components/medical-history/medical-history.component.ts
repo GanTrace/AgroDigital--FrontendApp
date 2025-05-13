@@ -53,7 +53,6 @@ export class MedicalHistoryComponent implements OnInit {
   animalCount = '0 animales';
   showNotifications: boolean = false;
   
-  // Sample animal data
   selectedAnimal: Animal = {
     id: 49,
     nombre: 'Clery',
@@ -71,7 +70,6 @@ export class MedicalHistoryComponent implements OnInit {
     imagen: '/assets/img/vaca.jpg'
   };
   
-  // Sample medical records data
   medicalRecords: MedicalRecord[] = [
     {
       id: 1,

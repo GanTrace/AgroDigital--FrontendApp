@@ -56,7 +56,6 @@ export class AnimalsComponent implements OnInit {
       this.translate.use(savedLang);
     }
 
-    // Get user data
     const user = this.authService.getCurrentUser();
     if (user) {
       this.userName = user.name;
@@ -69,8 +68,7 @@ export class AnimalsComponent implements OnInit {
 
   addAnimal(): void {
     console.log('Animal data:', this.animalForm.value);
-    // Here you would typically save the animal data to your backend
-    // For now, just navigate back to dashboard
+
     this.router.navigate(['/dashboard']);
   }
 
