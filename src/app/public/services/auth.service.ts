@@ -88,8 +88,30 @@ export class AuthService {
     }
     return null;
   }
+
+  updateUser(user: User): Observable<User> {
+    if (!user.id) {
+      console.error('Cannot update user without ID');
+      throw new Error('User ID is required for update');
+    }
+    
+    return this.http.put<User>(`${this.apiUrl}/${user.id}`, user).pipe(
+      tap(updatedUser => {
+        console.log('User updated successfully:', updatedUser);
+        
+        const { password, ...userWithoutPassword } = updatedUser;
+        localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+        
+        this.currentUser = updatedUser;
+      }),
+      catchError(error => {
+        console.error('Error updating user:', error);
+        throw error;
+      })
+    );
+  }
   
-  updateCurrentUser(user: User): void {
-    localStorage.setItem('currentUser', JSON.stringify(user));
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 }
