@@ -5,6 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 import { AuthService } from '../../../public/services/auth.service';
+import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 
 @Component({
   selector: 'app-events',
@@ -14,7 +15,8 @@ import { AuthService } from '../../../public/services/auth.service';
     RouterModule, 
     TranslateModule,
     FooterComponentComponent,
-    LanguageSwitcherComponent
+    LanguageSwitcherComponent,
+    NotificationsComponent
   ],
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css']
@@ -22,6 +24,7 @@ import { AuthService } from '../../../public/services/auth.service';
 export class EventsComponent implements OnInit {
   userName: string = '';
   animalCount: string = '580 animales';
+  showNotifications: boolean = false;
   
   events = [
     {
@@ -71,6 +74,10 @@ export class EventsComponent implements OnInit {
     if (user) {
       this.userName = user.name;
     }
+  }
+  
+  toggleNotifications(): void {
+    this.showNotifications = !this.showNotifications;
   }
   
   logout(): void {
