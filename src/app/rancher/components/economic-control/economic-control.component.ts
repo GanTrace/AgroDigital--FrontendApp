@@ -5,6 +5,7 @@ import { Chart, registerables } from 'chart.js';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
+import { AuthService } from '../../../public/services/auth.service';
 
 Chart.register(...registerables);
 
@@ -24,19 +25,33 @@ Chart.register(...registerables);
 export class EconomicControlComponent implements OnInit {
   public ingresos: number = 1485;
   public gastos: number = 1485;
+  userName: string = '';
+  animalCount: string = '580 animales';
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    // Set language from localStorage or default
     const savedLang = localStorage.getItem('preferredLanguage');
     if (savedLang) {
       this.translate.use(savedLang);
     }
     
+    // Get user data
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      this.userName = user.name;
+    }
+    
     setTimeout(() => {
       this.createChart();
     }, 100);
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
   createChart() {
@@ -46,6 +61,7 @@ export class EconomicControlComponent implements OnInit {
     const labels = Array.from({ length: 50 }, (_, i) => `Sem ${i+1}`);
     const data = Array.from({ length: 50 }, () => Math.floor(Math.random() * 2000) + 500);
     
+    // Rest of the method remains unchanged
     data[0] = 3200;
     data[1] = 2800;
     data[2] = 2600;
