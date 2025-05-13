@@ -6,6 +6,7 @@ import { FooterComponentComponent } from '../../components/footer-component/foot
 import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
 import { AuthService, User } from '../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-settings',
@@ -27,12 +28,14 @@ export class SettingsComponent implements OnInit {
   animalCount = '580 animales';
   settingsForm: FormGroup;
   isEditing = false;
+  actualPassword: string = '';
   
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private http: HttpClient
   ) {
     this.settingsForm = this.fb.group({
       name: [''],
@@ -54,39 +57,96 @@ export class SettingsComponent implements OnInit {
     }
     
     this.user = this.authService.getCurrentUser();
-    if (this.user) {
-      // Initialize form with user data
+    if (this.user && this.user.id !== undefined) {
+      this.getUserPassword(this.user.id);
+      
       this.settingsForm.patchValue({
         name: this.user.name,
         email: this.user.email,
-        password: '••••••••', // Placeholder for password
+        password: '••••••••', 
         role: this.user.role || 'rancher'
       });
     }
   }
   
+  getUserPassword(userId: number): void {
+    this.http.get<User>(`http://localhost:3000/users/${userId}`).subscribe(
+      (userData) => {
+        this.actualPassword = userData.password;
+      },
+      (error) => {
+        console.error('Error fetching user data:', error);
+      }
+    );
+  }
+  
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
+    
+    if (this.showPassword && this.actualPassword) {
+      this.settingsForm.patchValue({
+        password: this.actualPassword
+      });
+    } else {
+      if (!this.isEditing) {
+        this.settingsForm.patchValue({
+          password: '••••••••'
+        });
+      }
+    }
   }
 
   toggleEdit(): void {
     this.isEditing = !this.isEditing;
-    if (!this.isEditing && this.user) {
-      // Reset form when canceling edit
+    
+    if (this.isEditing && this.actualPassword) {
+      if (this.showPassword) {
+        this.settingsForm.patchValue({
+          password: this.actualPassword
+        });
+      }
+    } else if (!this.isEditing && this.user) {
       this.settingsForm.patchValue({
         name: this.user.name,
         email: this.user.email,
-        password: '••••••••',
+        password: this.showPassword ? this.actualPassword : '••••••••',
         role: this.user.role || 'rancher'
       });
     }
   }
 
   updateProfile(): void {
-    // In a real app, you would send this data to your backend
-    console.log('Profile update requested with data:', this.settingsForm.value);
-    // For now, just toggle off edit mode
-    this.isEditing = false;
+    if (!this.user || this.user.id === undefined) return;
+    
+    let passwordToSave = this.settingsForm.value.password;
+    if (passwordToSave === '••••••••') {
+      passwordToSave = this.actualPassword;
+    }
+    
+    const updatedData = {
+      ...this.user,
+      name: this.settingsForm.value.name,
+      password: passwordToSave
+    };
+    
+    this.http.put<User>(`http://localhost:3000/users/${this.user.id}`, updatedData).subscribe(
+      (response) => {
+        console.log('Profile updated successfully:', response);
+        
+        this.user = response;
+        this.actualPassword = passwordToSave; 
+        
+        this.authService.updateCurrentUser(response);
+        
+        this.isEditing = false;
+        
+        alert('Profile updated successfully!');
+      },
+      (error) => {
+        console.error('Error updating profile:', error);
+        alert('Error updating profile. Please try again.');
+      }
+    );
   }
   
   logout(): void {

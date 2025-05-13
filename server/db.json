@@ -3,9 +3,9 @@
     {
       "name": "Rodrigo",
       "email": "rodrigo.jsr12@gmail.com",
-      "password": "Rodrigo12!",
       "role": "rancher",
-      "id": 1
+      "id": 1,
+      "password": "Rodrigo12!"
     },
     {
       "name": "Erick",

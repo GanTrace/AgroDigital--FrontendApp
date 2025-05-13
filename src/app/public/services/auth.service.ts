@@ -88,4 +88,8 @@ export class AuthService {
     }
     return null;
   }
+  
+  updateCurrentUser(user: User): void {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
 }
