@@ -1,75 +1,83 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
+import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'app-medical-history',
+  standalone: true,
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    TranslateModule,
+    FooterComponentComponent,
+    LanguageSwitcherComponent
+  ],
   templateUrl: './medical-history.component.html',
   styleUrls: ['./medical-history.component.css']
 })
-export class MedicalHistoryComponent {
-  animalName: string = 'Carly #58';  
-  searchForm: FormGroup;  
+export class MedicalHistoryComponent implements OnInit {
+  selectedAnimal = {
+    id: 58,
+    nombre: 'CARLY',
+    tipo: 'Cabra Lechera',
+    fechaNacimiento: '19/04/2022',
+    edad: '3 años',
+    sexo: 'Hembra',
+    problemasSalud: 'No',
+    zona: 'B',
+    alimentacion: 'Heno y Frutas',
+    peso: '40.39 kg',
+    crias: '3',
+    partos: '1',
+    estado: 'Vivo',
+    imagen: '/assets/img/cabra.jpg'
+  };
 
-  events = [
+  medicalRecords = [
     {
       fecha: '15/04/2025',
-      tipo: 'Vacunación',
+      tipoEvento: 'Vacunación',
       descripcion: 'Sin riesgos',
       veterinario: 'Juan De la Rosa',
       observaciones: 'Sin obs.',
-      adjuntos: '-',
-      imagen: 'https://via.placeholder.com/150',
+      adjuntos: '-'
     },
     {
       fecha: '10/04/2025',
-      tipo: 'Revisión',
+      tipoEvento: 'Revisión',
       descripcion: 'Sin riesgos',
       veterinario: 'Juan De la Rosa',
       observaciones: 'Sin obs.',
-      adjuntos: 'Pdf',
-      imagen: 'https://via.placeholder.com/150',
+      adjuntos: 'Pdf'
     },
     {
       fecha: '5/04/2025',
-      tipo: 'Esterilización',
+      tipoEvento: 'Esterilización',
       descripcion: 'Sin riesgos',
       veterinario: 'Juan De la Rosa',
       observaciones: 'Sin obs.',
-      adjuntos: '-',
-      imagen: 'https://via.placeholder.com/150',
+      adjuntos: '-'
     },
     {
       fecha: '5/03/2025',
-      tipo: 'Control médico',
+      tipoEvento: 'Control médico',
       descripcion: 'Sin riesgos',
       veterinario: 'Esteban Grados',
-      observaciones: 'Se receta medicamento',
-      adjuntos: 'Imagen',
-      imagen: 'https://via.placeholder.com/150',
-    },
+      observaciones: 'Se receta med...',
+      adjuntos: 'Imagen'
+    }
   ];
 
-  constructor(private fb: FormBuilder, private router: Router) {
-    this.searchForm = this.fb.group({
-      searchQuery: ['']
-    });
-  }
+  constructor(private translate: TranslateService) {}
 
-  filterEvents() {
-    const query = this.searchForm.value.searchQuery.toLowerCase();
-    return this.events.filter(event => event.tipo.toLowerCase().includes(query));
-  }
-
-  addVisit() {
-    console.log('Añadir visita médica');
-  }
-
-  editVisit() {
-    console.log('Editar visita médica');
-  }
-
-  deleteVisit() {
-    console.log('Eliminar visita médica');
+  ngOnInit(): void {
+    // Set language from localStorage or default
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang) {
+      this.translate.use(savedLang);
+    }
   }
 }

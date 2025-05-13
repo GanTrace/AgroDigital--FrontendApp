@@ -1,111 +1,131 @@
-<header class="topbar">
-    <div class="logo-text">AgroDigital</div>
-    <nav class="nav-links">
-      <a routerLink="/dashboard" routerLinkActive="active">Animales</a>
-      <a routerLink="/events" routerLinkActive="active">Eventos</a>
-      <a routerLink="/medical-history" routerLinkActive="active">Historial Clínico</a>
-      <a routerLink="/economic-control" routerLinkActive="active">Control Económico</a>
-      <a class="active">Reportes</a>
+<div class="reports-container">
+  <header class="navbar">
+    <div class="logo">AgroDigital</div>
+    <nav class="main-nav">
+      <a class="nav-item" routerLink="/dashboard">{{ 'DASHBOARD.ANIMALS' | translate }}</a>
+      <a class="nav-item" routerLink="/events">{{ 'DASHBOARD.EVENTS' | translate }}</a>
+      <a class="nav-item" routerLink="/medical-history">{{ 'DASHBOARD.MEDICAL_HISTORY' | translate }}</a>
+      <a class="nav-item" routerLink="/economic-control">{{ 'DASHBOARD.ECONOMIC_CONTROL' | translate }}</a>
+      <a class="nav-item active" routerLink="/reports">{{ 'DASHBOARD.REPORTS' | translate }}</a>
     </nav>
-    <div class="user-info">
-      <span class="perfil-link">Perfil</span>
-      <span class="user-name">Ricardo</span>
-      <span class="animal-count">580 animales</span>
-      <span class="notification">🔔</span>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="user-details">
+          <span class="user-name">Ricardo</span>
+          <span class="animal-count">580 animales</span>
+        </div>
+        <div class="user-avatar">
+          <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+        </div>
+        <div class="notifications">
+          <i class="notification-icon">🔔</i>
+        </div>
+      </div>
+      <app-language-switcher class="language-switcher"></app-language-switcher>
     </div>
   </header>
-  
-  <div class="reports-container">
-    <div class="filter-bar">
-      <div class="search-box">
-        <input type="text" placeholder="Buscar reporte de estadística" />
-        <span class="icon">🔍</span>
+
+  <main class="main-content">
+    <section class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input type="text" placeholder="{{ 'REPORTS.SEARCH' | translate }}">
       </div>
-      <button class="filter-btn">Filtro ☰</button>
+      <button class="filter-btn">
+        {{ 'REPORTS.FILTER' | translate }}
+        <i class="filter-icon">≡</i>
+      </button>
+    </section>
+
+    <div class="reports-grid">
+      <div class="report-card">
+        <div class="card-sidebar">
+          <h3 class="card-title">{{ 'REPORTS.HEALTH_REPORT' | translate }}</h3>
+          <ul class="filter-list">
+            <li class="selected"><span class="circle-icon">●</span> {{ 'REPORTS.ALL_ANIMALS' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.COWS' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.GOATS' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.SHEEP' | translate }}</li>
+          </ul>
+          <div class="card-icon">📊</div>
+        </div>
+        <div class="card-content">
+          <div class="search-input">
+            <i class="search-icon">🔍</i>
+            <input type="text" placeholder="{{ 'REPORTS.SEARCH_ANIMAL' | translate }}">
+          </div>
+          <div class="stat-number">85<span class="percentage">%</span></div>
+          <div class="stat-label">{{ 'REPORTS.HEALTHY_ANIMALS' | translate }}</div>
+        </div>
+      </div>
+
+      <div class="report-card">
+        <div class="card-sidebar">
+          <h3 class="card-title">{{ 'REPORTS.PRODUCTION_REPORT' | translate }}</h3>
+          <ul class="filter-list">
+            <li class="selected"><span class="circle-icon">●</span> {{ 'REPORTS.ALL_ANIMALS' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.COWS' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.GOATS' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.SHEEP' | translate }}</li>
+          </ul>
+          <div class="card-icon">📈</div>
+        </div>
+        <div class="card-content">
+          <div class="search-input">
+            <i class="search-icon">🔍</i>
+            <input type="text" placeholder="{{ 'REPORTS.SEARCH_ANIMAL' | translate }}">
+          </div>
+          <div class="stat-number">92<span class="percentage">%</span></div>
+          <div class="stat-label">{{ 'REPORTS.PRODUCTION_EFFICIENCY' | translate }}</div>
+        </div>
+      </div>
+
+      <div class="report-card">
+        <div class="card-sidebar">
+          <h3 class="card-title">{{ 'REPORTS.FINANCIAL_REPORT' | translate }}</h3>
+          <ul class="filter-list">
+            <li class="selected"><span class="circle-icon">●</span> {{ 'REPORTS.CURRENT_MONTH' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.LAST_MONTH' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.LAST_QUARTER' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.LAST_YEAR' | translate }}</li>
+          </ul>
+          <div class="card-icon">💰</div>
+        </div>
+        <div class="card-content">
+          <div class="search-input">
+            <i class="search-icon">🔍</i>
+            <input type="text" placeholder="{{ 'REPORTS.SEARCH_CATEGORY' | translate }}">
+          </div>
+          <div class="stat-number">S/2850</div>
+          <div class="stat-label">{{ 'REPORTS.NET_PROFIT' | translate }}</div>
+        </div>
+      </div>
+
+      <div class="report-card">
+        <div class="card-sidebar">
+          <h3 class="card-title">{{ 'REPORTS.INVENTORY_REPORT' | translate }}</h3>
+          <ul class="filter-list">
+            <li class="selected"><span class="circle-icon">●</span> {{ 'REPORTS.ALL_ITEMS' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.FEED' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.MEDICINE' | translate }}</li>
+            <li><span class="circle-icon">●</span> {{ 'REPORTS.EQUIPMENT' | translate }}</li>
+          </ul>
+          <div class="card-icon">📦</div>
+        </div>
+        <div class="card-content">
+          <div class="search-input">
+            <i class="search-icon">🔍</i>
+            <input type="text" placeholder="{{ 'REPORTS.SEARCH_ITEM' | translate }}">
+          </div>
+          <div class="stat-number">78<span class="percentage">%</span></div>
+          <div class="stat-label">{{ 'REPORTS.INVENTORY_LEVEL' | translate }}</div>
+        </div>
+      </div>
     </div>
-  
-    <div class="report-grid">
-  
-      <!-- Report Card 1 -->
-      <div class="report-card">
-        <div class="left-panel">
-          <h3>Total</h3>
-          <ul>
-            <li class="selected">Especie</li>
-            <li>Edad</li>
-            <li>Esterilizado</li>
-            <li>Sexo</li>
-            <li>Problemas salud</li>
-          </ul>
-          <span class="icon-panel">📊</span>
-        </div>
-        <div class="right-panel">
-          <input class="mini-input" placeholder="Gallinas" />
-          <h1>50</h1>
-          <p>animales</p>
-        </div>
-      </div>
-  
-      <!-- Report Card 2 -->
-      <div class="report-card">
-        <div class="left-panel">
-          <h3>Total</h3>
-          <ul>
-            <li>Especie</li>
-            <li class="selected">Edad</li>
-            <li>Esterilizado</li>
-            <li>Sexo</li>
-            <li>Problemas salud</li>
-          </ul>
-          <span class="icon-panel">📊</span>
-        </div>
-        <div class="right-panel">
-          <input class="mini-input" placeholder="3 meses" />
-          <h1>15</h1>
-          <p>animales</p>
-        </div>
-      </div>
-  
-      <!-- Report Card 3 -->
-      <div class="report-card">
-        <div class="left-panel">
-          <h3>Total</h3>
-          <ul>
-            <li>Especie</li>
-            <li>Edad</li>
-            <li>Esterilizado</li>
-            <li class="selected">Sexo</li>
-            <li>Problemas salud</li>
-          </ul>
-          <span class="icon-panel">📊</span>
-        </div>
-        <div class="right-panel">
-          <input class="mini-input" placeholder="Hembras" />
-          <h1>350</h1>
-          <p>animales</p>
-        </div>
-      </div>
-  
-      <!-- Report Card 4 -->
-      <div class="report-card">
-        <div class="left-panel">
-          <h3>Porcentaje</h3>
-          <ul>
-            <li class="selected">Reproductores</li>
-            <li>Fuera de producción</li>
-            <li>Tasa de natalidad</li>
-            <li>Edad</li>
-            <li>Sexo</li>
-            <li>Problemas salud</li>
-          </ul>
-          <span class="icon-panel">📊</span>
-        </div>
-        <div class="right-panel">
-          <input class="mini-input" placeholder="Gallinas" />
-          <h1>45<span class="percent">%</span></h1>
-          <p>animales</p>
-        </div>
-      </div>
-  
+
+    <div class="generate-report-section">
+      <button class="generate-report-btn">{{ 'REPORTS.GENERATE' | translate }}</button>
     </div>
-  </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>

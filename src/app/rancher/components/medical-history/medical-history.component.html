@@ -1,90 +1,106 @@
-<header class="topbar">
-    <div class="logo-text">AgroDigital</div>
-    <nav class="nav-links">
-      <a class="menu-btn" routerLink="/dashboard" routerLinkActive="active">Animales</a>
-      <a class="menu-btn" routerLink="/events" routerLinkActive="active">Eventos</a>
-      <a class="menu-btn" routerLink="/medical-history" routerLinkActive="active">Historial Clínico</a>
-      <button class="menu-btn">Control Económico</button>
-      <button class="menu-btn">Reportes</button>
-    </nav>      
-    <div class="user-info">
-      <span class="perfil-link">Perfil</span>
-      <span class="user-name">Ricardo</span>
-      <span class="animal-count">580 animales</span>
-      <span class="notification">🔔</span>
+<div class="medical-history-container">
+  <header class="navbar">
+    <div class="logo">AgroDigital</div>
+    <nav class="main-nav">
+      <a class="nav-item" routerLink="/dashboard">{{ 'DASHBOARD.ANIMALS' | translate }}</a>
+      <a class="nav-item" routerLink="/events">{{ 'DASHBOARD.EVENTS' | translate }}</a>
+      <a class="nav-item active" routerLink="/medical-history">{{ 'DASHBOARD.MEDICAL_HISTORY' | translate }}</a>
+      <a class="nav-item" routerLink="/economic-control">{{ 'DASHBOARD.ECONOMIC_CONTROL' | translate }}</a>
+      <a class="nav-item" routerLink="/reports">{{ 'DASHBOARD.REPORTS' | translate }}</a>
+    </nav>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="user-details">
+          <span class="user-name">Ricardo</span>
+          <span class="animal-count">580 animales</span>
+        </div>
+        <div class="user-avatar">
+          <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+        </div>
+        <div class="notifications">
+          <i class="notification-icon">🔔</i>
+        </div>
+      </div>
+      <app-language-switcher class="language-switcher"></app-language-switcher>
     </div>
   </header>
-  
-  <div class="medical-history-container">
-    <div class="animal-info">
-      <img src="animal-image.jpg" alt="Animal" class="animal-img">
-      <div class="animal-details">
-        <h2 class="animal-name">Carly #58</h2>
-        <div class="animal-info-list">
-          <p><strong>Especie:</strong> Cabra Lechera</p>
-          <p><strong>Fecha de Nacimiento:</strong> 19/04/2022</p>
-          <p><strong>Edad:</strong> 3 años</p>
-          <p><strong>Sexo:</strong> Hembra</p>
-          <p><strong>Problemas de Salud Frecuentes:</strong> No</p>
-          <p><strong>Estado:</strong> Vivo</p>
-        </div>
-        <button class="edit-btn">Editar</button>
+
+  <main class="main-content">
+    <section class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input type="text" placeholder="{{ 'MEDICAL_HISTORY.SEARCH' | translate }}">
       </div>
+    </section>
+
+    <section class="history-description">
+      <p>{{ 'MEDICAL_HISTORY.DESCRIPTION' | translate }}</p>
+    </section>
+
+    <div class="medical-history-content">
+      <section class="animal-info">
+        <div class="animal-image">
+          <img [src]="selectedAnimal.imagen" alt="Animal image">
+          <div class="animal-id">{{ selectedAnimal.nombre }} #{{ selectedAnimal.id }}</div>
+        </div>
+        <div class="animal-details">
+          <div class="animal-type">
+            <i class="star-icon">★</i>
+            <span>{{ selectedAnimal.tipo }}</span>
+          </div>
+          <ul class="details-list">
+            <li>• {{ 'MEDICAL_HISTORY.BIRTH_DATE' | translate }}: {{ selectedAnimal.fechaNacimiento }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.AGE' | translate }}: {{ selectedAnimal.edad }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.SEX' | translate }}: {{ selectedAnimal.sexo }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.HEALTH_PROBLEMS' | translate }}: {{ selectedAnimal.problemasSalud }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.ZONE' | translate }}: {{ selectedAnimal.zona }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.FEEDING' | translate }}: {{ selectedAnimal.alimentacion }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.WEIGHT' | translate }}: {{ selectedAnimal.peso }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.OFFSPRING' | translate }}: {{ selectedAnimal.crias }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.BIRTHS' | translate }}: {{ selectedAnimal.partos }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.STATUS' | translate }}: {{ selectedAnimal.estado }}</li>
+          </ul>
+          <button class="edit-btn">{{ 'MEDICAL_HISTORY.EDIT' | translate }}</button>
+        </div>
+      </section>
+
+      <section class="medical-table-section">
+        <table class="medical-table">
+          <thead>
+            <tr>
+              <th>{{ 'MEDICAL_HISTORY.DATE' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.EVENT_TYPE' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.DESCRIPTION' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.VETERINARIAN' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.OBSERVATIONS' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.ATTACHMENTS' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.MORE' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of medicalRecords">
+              <td>{{ record.fecha }}</td>
+              <td>{{ record.tipoEvento }}</td>
+              <td>{{ record.descripcion }}</td>
+              <td>{{ record.veterinario }}</td>
+              <td>{{ record.observaciones }}</td>
+              <td>{{ record.adjuntos }}</td>
+              <td class="more-cell">
+                <button class="more-btn">⊕</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="no-results" *ngIf="medicalRecords.length === 0">{{ 'MEDICAL_HISTORY.NO_RESULTS' | translate }}</p>
+      </section>
+
+      <section class="action-buttons">
+        <button class="add-visit-btn">{{ 'MEDICAL_HISTORY.ADD_VISIT' | translate }}</button>
+        <button class="edit-visit-btn">{{ 'MEDICAL_HISTORY.EDIT_VISIT' | translate }}</button>
+        <button class="delete-visit-btn">{{ 'MEDICAL_HISTORY.DELETE_VISIT' | translate }}</button>
+      </section>
     </div>
-  
-    <p class="search-message">A continuación se detalla el historial médico del animal buscado:</p>
-  
-    <div class="medical-history-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Tipo de Evento</th>
-            <th>Descripción</th>
-            <th>Veterinario</th>
-            <th>Observaciones</th>
-            <th>Adjuntos</th>
-            <th>Más</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>15/04/2025</td>
-            <td>Vacunación</td>
-            <td>Sin riesgos</td>
-            <td>Juan De la Rosa</td>
-            <td>Sin obs.</td>
-            <td>-</td>
-            <td><button class="view-btn">Ver más</button></td>
-          </tr>
-          <tr>
-            <td>10/04/2025</td>
-            <td>Revisión</td>
-            <td>Sin riesgos</td>
-            <td>Juan De la Rosa</td>
-            <td>Sin obs.</td>
-            <td>Pdf</td>
-            <td><button class="view-btn">Ver más</button></td>
-          </tr>
-          <tr>
-            <td>5/04/2025</td>
-            <td>Esterilización</td>
-            <td>Sin riesgos</td>
-            <td>Juan De la Rosa</td>
-            <td>Sin obs.</td>
-            <td>-</td>
-            <td><button class="view-btn">Ver más</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  
-    <div class="additional-actions">
-      <button class="add-btn">Añadir visita médica</button>
-      <button class="edit-btn">Editar visita médica</button>
-      <button class="delete-btn">Eliminar visita médica</button>
-    </div>
-  
-    <p class="no-search-results">No se encontraron más búsquedas...</p>
-  </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>
   

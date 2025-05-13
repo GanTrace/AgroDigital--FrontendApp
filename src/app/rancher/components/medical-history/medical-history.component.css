@@ -1,146 +1,299 @@
-.topbar {
-    background-color: #79b267;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.medical-history-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #7ab55c;
+  padding: 15px 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  color: white;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.language-switcher {
+  margin-left: 15px;
+}
+
+.user-info .user-section,
+.user-info .language-switcher {
+  display: none;
+}
+
+.main-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  color: white;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+
+.nav-item.active {
+  background-color: #8e5928;
+}
+
+.user-info {
+  
+  .user-section {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
+    gap: 15px;
+  }
+  
+  .language-switcher {
+    margin-left: 15px;
   }
 
-  .logo-text {
-    font-size: 24px;
-    font-weight: 800;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-  }
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-  }
-  
-  .menu-btn {
-    background: none;
-    border: none;
-    font-weight: 600;
-    color: white;
-    padding: 0.5rem 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .menu-btn.active {
-    background-color: #8b572a;
-    color: white;
-  }
+.user-details {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
 
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    color: white;
-  }
-  
-  .perfil-link {
-    font-size: 14px;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  .perfil-link:hover {
-    color: #fff;
-  }
-  
-  .medical-history-container {
-    padding: 2rem;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  .animal-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-  
-  .animal-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 8px;
-    margin-right: 2rem;
-  }
-  
-  .animal-details {
-    flex: 1;
-  }
-  
-  .animal-name {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  .animal-info-list p {
-    font-size: 14px;
-    margin: 5px 0;
-  }
-  
-  .edit-btn {
-    background-color: #79b267;
-    color: white;
-    padding: 0.6rem 1.5rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .search-message {
-    font-size: 16px;
-    margin: 1rem 0;
-  }
-  
-  .medical-history-table table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .medical-history-table th, .medical-history-table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ccc;
-  }
-  
-  .medical-history-table th {
-    background-color: #f2e7dc;
-  }
-  
-  .view-btn {
-    background-color: #8b572a;
-    color: white;
-    padding: 0.4rem 1rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .additional-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-  
-  .add-btn, .edit-btn, .delete-btn {
-    background-color: #79b267;
-    color: white;
-    padding: 0.6rem 1.5rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .no-search-results {
-    font-size: 14px;
-    color: #555;
-    text-align: center;
-    margin-top: 2rem;
-  }
+.user-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.animal-count {
+  font-size: 0.9rem;
+}
+
+.user-avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.notification-icon {
+  font-size: 1.5rem;
+}
+
+/* Contenido principal */
+.main-content {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px 15px;
+  flex: 1;
+  max-width: 600px;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+.history-description {
+  margin-bottom: 30px;
+}
+
+.history-description p {
+  font-size: 1.1rem;
+}
+
+.medical-history-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.animal-info {
+  display: flex;
+  gap: 30px;
+}
+
+.animal-image {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.animal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.animal-id {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(122, 181, 92, 0.8);
+  color: white;
+  padding: 8px 15px;
+  font-weight: bold;
+}
+
+.animal-details {
+  flex: 1;
+  background-color: #e6d7c3;
+  border-radius: 10px;
+  padding: 20px;
+  position: relative;
+}
+
+.animal-type {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.star-icon {
+  color: #8e5928;
+  font-size: 1.2rem;
+}
+
+.animal-type span {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.details-list {
+  list-style: none;
+}
+
+.details-list li {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.edit-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: #7ab55c;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.medical-table-section {
+  margin-top: 20px;
+}
+
+.medical-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.medical-table th {
+  background-color: #f2f2f2;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.medical-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.medical-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.more-cell {
+  text-align: center;
+}
+
+.more-btn {
+  background: none;
+  border: none;
+  color: #7ab55c;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.add-visit-btn, .edit-visit-btn, .delete-visit-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.add-visit-btn {
+  background-color: #7ab55c;
+  color: white;
+}
+
+.edit-visit-btn, .delete-visit-btn {
+  background-color: #e6d7c3;
+  color: #333;
+}
   

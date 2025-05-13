@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService, User } from '../../services/auth.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'app-login',
@@ -10,24 +12,38 @@ import { AuthService, User } from '../../services/auth.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    TranslateModule,
+    LanguageSwitcherComponent
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   showPassword = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+
+  ngOnInit(): void {
+    // Set default language or get from localStorage
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang) {
+      this.translate.use(savedLang);
+    } else {
+      // Default to Spanish
+      this.translate.use('es');
+    }
   }
 
   togglePassword(): void {
@@ -41,7 +57,7 @@ export class LoginComponent {
           localStorage.setItem('user', JSON.stringify(users[0]));
           this.router.navigate(['/dashboard']);
         } else {
-          alert('Credenciales incorrectas');
+          alert(this.translate.instant('LOGIN.INVALID_CREDENTIALS'));
         }
       });
     } else {
