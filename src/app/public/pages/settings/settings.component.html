@@ -1,1 +1,121 @@
-<p>settings works!</p>
+<div class="settings-container">
+  <header class="navbar">
+    <div class="logo">AgroDigital</div>
+    <nav class="main-nav">
+      <a class="nav-item" routerLink="/dashboard">{{ 'DASHBOARD.ANIMALS' | translate }}</a>
+      <a class="nav-item" routerLink="/events">{{ 'DASHBOARD.EVENTS' | translate }}</a>
+      <a class="nav-item" routerLink="/medical-history">{{ 'DASHBOARD.MEDICAL_HISTORY' | translate }}</a>
+      <a class="nav-item" routerLink="/economic-control">{{ 'DASHBOARD.ECONOMIC_CONTROL' | translate }}</a>
+      <a class="nav-item" routerLink="/reports">{{ 'DASHBOARD.REPORTS' | translate }}</a>
+    </nav>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="user-details">
+          <span class="user-name" routerLink="/settings">{{ user?.name }}</span>
+          <span class="animal-count">{{ animalCount }}</span>
+        </div>
+        <div class="user-avatar">
+          <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+        </div>
+        <div class="notifications">
+          <i class="notification-icon">🔔</i>
+        </div>
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+      <app-language-switcher class="language-switcher"></app-language-switcher>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="settings-card">
+      <h1 class="settings-title">{{ 'SETTINGS.TITLE' | translate }}</h1>
+      
+      <div class="profile-section">
+        <div class="profile-image">
+          <img src="/assets/img/user-avatar.jpg" alt="User profile">
+          <button class="change-photo-btn">{{ 'SETTINGS.CHANGE_PHOTO' | translate }}</button>
+        </div>
+        
+        <div class="profile-form">
+          <form [formGroup]="settingsForm">
+            <div class="form-group">
+              <label>{{ 'SETTINGS.FULL_NAME' | translate }}</label>
+              <input 
+                type="text" 
+                formControlName="name" 
+                [readonly]="!isEditing"
+                class="form-input"
+              >
+            </div>
+            
+            <div class="form-group">
+              <label>{{ 'SETTINGS.EMAIL' | translate }}</label>
+              <input 
+                type="email" 
+                formControlName="email" 
+                [readonly]="!isEditing"
+                class="form-input"
+              >
+            </div>
+            
+            <div class="form-group">
+              <label>{{ 'SETTINGS.PASSWORD' | translate }}</label>
+              <div class="password-field">
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  formControlName="password" 
+                  [readonly]="!isEditing"
+                  class="form-input"
+                >
+                <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+                  {{ (showPassword ? 'SETTINGS.HIDE' : 'SETTINGS.SHOW') | translate }}
+                </button>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>{{ 'SETTINGS.ROLE' | translate }}</label>
+              <input 
+                type="text" 
+                formControlName="role" 
+                readonly
+                class="form-input"
+              >
+            </div>
+            
+            <div class="form-actions">
+              <button 
+                *ngIf="!isEditing" 
+                type="button" 
+                class="edit-button" 
+                (click)="toggleEdit()"
+              >
+                {{ 'SETTINGS.EDIT_PROFILE' | translate }}
+              </button>
+              
+              <ng-container *ngIf="isEditing">
+                <button 
+                  type="button" 
+                  class="update-button" 
+                  (click)="updateProfile()"
+                >
+                  {{ 'SETTINGS.UPDATE_PROFILE' | translate }}
+                </button>
+                
+                <button 
+                  type="button" 
+                  class="cancel-button" 
+                  (click)="toggleEdit()"
+                >
+                  {{ 'SETTINGS.CANCEL' | translate }}
+                </button>
+              </ng-container>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <app-footer-component></app-footer-component>
+</div>
