@@ -125,5 +125,18 @@
       "CONTACT": "Contact",
       "SOCIAL": "Social Media",
       "ABOUT": "About Us"
-    }
+    },
+    "SETTINGS": {
+    "TITLE": "Profile Settings",
+    "CHANGE_PHOTO": "Change photo",
+    "FULL_NAME": "Full name",
+    "EMAIL": "Email address",
+    "PASSWORD": "Password",
+    "ROLE": "Role",
+    "EDIT_PROFILE": "Edit profile",
+    "UPDATE_PROFILE": "Update profile",
+    "CANCEL": "Cancel",
+    "SHOW": "Show",
+    "HIDE": "Hide"
   }
+}
