@@ -11,8 +11,8 @@
     <div class="user-section">
       <div class="user-info">
         <div class="user-details">
-          <span class="user-name">Ricardo</span>
-          <span class="animal-count">580 animales</span>
+          <span class="user-name">{{ userName }}</span>
+          <span class="animal-count">{{ animalCount }}</span>
         </div>
         <div class="user-avatar">
           <img src="/assets/img/user-avatar.jpg" alt="User avatar">
@@ -20,6 +20,7 @@
         <div class="notifications">
           <i class="notification-icon">🔔</i>
         </div>
+        <button class="logout-btn" (click)="logout()">Logout</button>
       </div>
       <app-language-switcher class="language-switcher"></app-language-switcher>
     </div>
