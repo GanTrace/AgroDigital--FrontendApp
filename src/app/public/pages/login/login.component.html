@@ -24,20 +24,28 @@
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label>{{ 'LOGIN.EMAIL_LABEL' | translate }}</label>
-            <input type="text" formControlName="email" class="form-input">
+            <input type="text" formControlName="email" class="form-input" 
+                  [ngClass]="{'invalid-input': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
           </div>
           
           <div class="form-group">
             <label>{{ 'LOGIN.PASSWORD_LABEL' | translate }}</label>
             <div class="password-field">
-              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-input">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-input"
+                    [ngClass]="{'invalid-input': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
               <button type="button" class="toggle-password" (click)="togglePassword()">
                 {{ (showPassword ? 'LOGIN.HIDE' : 'LOGIN.SHOW') | translate }}
               </button>
             </div>
           </div>
           
-          <button type="submit" class="submit-button">{{ 'LOGIN.SUBMIT_BUTTON' | translate }}</button>
+          <div *ngIf="loginError" class="error-message">
+            {{ loginError }}
+          </div>
+          
+          <button type="submit" class="submit-button" [disabled]="isLoggingIn">
+            {{ isLoggingIn ? ('LOGIN.LOGGING_IN' | translate) : ('LOGIN.SUBMIT_BUTTON' | translate) }}
+          </button>
         </form>
         
         <p class="terms-text">
