@@ -1,1 +1,88 @@
-<p>register works!</p>
+<div class="register-container">
+  <div class="language-switcher-container">
+    <app-language-switcher></app-language-switcher>
+  </div>
+  
+  <div class="register-content">
+    <div class="logo-container">
+      <img src="AgroDigital_Logo.png" alt="AgroDigital Logo">
+      <span class="logo-text">AgroDigital</span>
+    </div>
+    
+    <div class="register-header">
+      <h1 class="register-title">{{ 'REGISTER.TITLE' | translate }}</h1>
+      <div class="login-link">
+        <span>{{ 'REGISTER.HAVE_ACCOUNT' | translate }}</span>
+        <a routerLink="/login">{{ 'REGISTER.LOGIN' | translate }}</a>
+      </div>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <div class="form-group">
+        <label for="name">{{ 'REGISTER.NAME_LABEL' | translate }}</label>
+        <input 
+          type="text" 
+          id="name" 
+          formControlName="name" 
+          placeholder="{{ 'REGISTER.NAME_PLACEHOLDER' | translate }}"
+          [class.invalid]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="email">{{ 'REGISTER.EMAIL_LABEL' | translate }}</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email" 
+          placeholder="{{ 'REGISTER.EMAIL_PLACEHOLDER' | translate }}"
+          [class.invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password">{{ 'REGISTER.PASSWORD_LABEL' | translate }}</label>
+        <div class="password-input-container">
+          <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            id="password" 
+            formControlName="password" 
+            placeholder="{{ 'REGISTER.PASSWORD_PLACEHOLDER' | translate }}"
+            [class.invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+          >
+          <button 
+            type="button" 
+            class="toggle-password-btn" 
+            (click)="togglePasswordVisibility()"
+          >
+            {{ showPassword ? ('REGISTER.HIDE' | translate) : ('REGISTER.SHOW' | translate) }}
+          </button>
+        </div>
+        <p class="password-hint">{{ 'REGISTER.PASSWORD_HINT' | translate }}</p>
+      </div>
+
+      <div class="terms-agreement">
+        <p>
+          {{ 'REGISTER.TERMS_AGREEMENT' | translate }}
+          <a href="#">{{ 'REGISTER.TERMS_OF_USE' | translate }}</a>
+          {{ 'REGISTER.AND' | translate }}
+          <a href="#">{{ 'REGISTER.PRIVACY_POLICY' | translate }}</a>
+        </p>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <button 
+        type="submit" 
+        class="register-btn" 
+        [disabled]="registerForm.invalid || isSubmitting"
+      >
+        {{ 'REGISTER.SUBMIT_BUTTON' | translate }}
+      </button>
+    </form>
+  </div>
+
+  <app-footer-component></app-footer-component>
+</div>

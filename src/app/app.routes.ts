@@ -1,9 +1,23 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './public/pages/login/login.component';
 import { RegisterComponent } from './public/pages/register/register.component';
+import { PageNotFoundComponent } from './public/pages/page-not-found/page-not-found.component';
+import { DashboardComponent } from './rancher/components/dashboard/dashboard.component';
+import { EventsComponent } from './rancher/components/events/events.component';
+import { MedicalHistoryComponent } from './rancher/components/medical-history/medical-history.component';
+import { EconomicControlComponent } from './rancher/components/economic-control/economic-control.component';
+import { ReportsComponent } from './rancher/components/reports/reports.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-];
+    { path:'page-not-found', component: PageNotFoundComponent },
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'events', component: EventsComponent },
+    { path: 'medical-history', component: MedicalHistoryComponent }, 
+    { path: 'economic-control', component: EconomicControlComponent },
+    { path: 'reports', component: ReportsComponent },
+    { path: '**', redirectTo: 'login' }
+  ];
+
