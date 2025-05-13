@@ -6,6 +6,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 import { AuthService } from '../../../public/services/auth.service';
+import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 
 Chart.register(...registerables);
 
@@ -17,7 +18,8 @@ Chart.register(...registerables);
     RouterModule, 
     TranslateModule,
     FooterComponentComponent,
-    LanguageSwitcherComponent
+    LanguageSwitcherComponent,
+    NotificationsComponent
   ],
   templateUrl: './economic-control.component.html',
   styleUrls: ['./economic-control.component.css']
@@ -27,6 +29,7 @@ export class EconomicControlComponent implements OnInit {
   public gastos: number = 1485;
   userName: string = '';
   animalCount: string = '580 animales';
+  showNotifications: boolean = false;
 
   constructor(
     private translate: TranslateService,
@@ -50,11 +53,16 @@ export class EconomicControlComponent implements OnInit {
     }, 100);
   }
 
+  toggleNotifications(): void {
+    this.showNotifications = !this.showNotifications;
+  }
+
   logout(): void {
     this.authService.logout();
   }
 
   createChart() {
+    // Chart creation code remains unchanged
     const ctx = document.getElementById('chart') as HTMLCanvasElement;
     if (!ctx) return;
 
