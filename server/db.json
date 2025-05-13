@@ -13,6 +13,13 @@
       "password": "TheMutantRoost1812!",
       "role": "rancher",
       "id": 2
+    },
+    {
+      "name": "Gary",
+      "email": "gary96@gmail.com",
+      "password": "Khvrenai96!",
+      "role": "rancher",
+      "id": 3
     }
   ]
 }
