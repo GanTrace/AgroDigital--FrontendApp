@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 export interface User {
@@ -9,12 +9,6 @@ export interface User {
   email: string;
   password: string;
   role?: string;
-}
-
-export interface RegisterPayload {
-  name: string;
-  email: string;
-  password: string;
 }
 
 export interface LoginPayload {
@@ -26,56 +20,78 @@ export interface LoginPayload {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/users'; //Fake Api
+  private apiUrl = 'http://localhost:3000/users';
   private currentUser: User | null = null;
-
+  
   constructor(
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) {
+    // Check if user is stored in localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.currentUser = JSON.parse(storedUser);
+    }
+  }
 
-  register(payload: RegisterPayload): Observable<User> {
-  
-    const userWithRole = { ...payload, role: 'rancher' };
+  register(userData: any): Observable<User> {
+    // Add default role if not provided
+    const user = {
+      ...userData,
+      role: userData.role || 'rancher'
+    };
     
-    return this.http.post<User>(this.apiUrl, userWithRole).pipe(
-      tap(user => {
-       
-        this.currentUser = user;
-        localStorage.setItem('currentUser', JSON.stringify(user));
+    return this.http.post<User>(this.apiUrl, user).pipe(
+      tap(response => {
+        console.log('Registration successful:', response);
+        // Store user in localStorage (without password for security)
+        const { password, ...userWithoutPassword } = response;
+        localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+        this.currentUser = response;
+      }),
+      catchError(error => {
+        console.error('Registration error:', error);
+        throw error;
       })
     );
   }
 
-  login(payload: LoginPayload): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}?email=${payload.email}&password=${payload.password}`).pipe(
+  login(credentials: LoginPayload): Observable<User[]> {
+    console.log('Attempting login with:', credentials.email);
+    
+    // Query the db.json for users with matching email and password
+    return this.http.get<User[]>(`${this.apiUrl}?email=${credentials.email}&password=${credentials.password}`).pipe(
       tap(users => {
+        console.log('Login response:', users);
         if (users.length > 0) {
-          
+          // Store the user in localStorage when login is successful
+          const { password, ...userWithoutPassword } = users[0];
+          localStorage.setItem('user', JSON.stringify(userWithoutPassword));
           this.currentUser = users[0];
-          localStorage.setItem('currentUser', JSON.stringify(users[0]));
         }
+      }),
+      catchError(error => {
+        console.error('Error during login:', error);
+        return of([]);
       })
     );
   }
 
   logout(): void {
+    localStorage.removeItem('user');
     this.currentUser = null;
-    localStorage.removeItem('currentUser');
     this.router.navigate(['/login']);
   }
 
-  getCurrentUser(): User | null {
-    if (!this.currentUser) {
-      const storedUser = localStorage.getItem('currentUser');
-      if (storedUser) {
-        this.currentUser = JSON.parse(storedUser);
-      }
-    }
-    return this.currentUser;
+  isLoggedIn(): boolean {
+    return localStorage.getItem('user') !== null;
   }
 
-  isLoggedIn(): boolean {
-    return this.getCurrentUser() !== null;
+  getCurrentUser(): User | null {
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      return JSON.parse(userJson);
+    }
+    return null;
   }
 }
