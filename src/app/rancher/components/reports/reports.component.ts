@@ -32,13 +32,11 @@ export class ReportsComponent implements OnInit {
   ) {}
   
   ngOnInit(): void {
-    // Set language from localStorage or default
     const savedLang = localStorage.getItem('preferredLanguage');
     if (savedLang) {
       this.translate.use(savedLang);
     }
     
-    // Get user data
     const user = this.authService.getCurrentUser();
     if (user) {
       this.userName = user.name;
