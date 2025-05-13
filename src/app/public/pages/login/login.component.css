@@ -12,8 +12,15 @@
 }
 
 .login-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #f5f2e9;
   padding: 15px 30px;
+}
+
+.language-switcher {
+  margin-left: auto;
 }
 
 .logo-container {
@@ -242,4 +249,23 @@
     width: 250px;
     height: 250px;
   }
+}
+
+.invalid-input {
+  border: 2px solid #ff3333 !important;
+  background-color: #fff0f0;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-input:focus {
+  border-color: #8e5928;
+  outline: none;
 }

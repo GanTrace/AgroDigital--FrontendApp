@@ -12,16 +12,34 @@
 
 .navbar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 15px 30px;
+  align-items: center;
   background-color: #7ab55c;
+  padding: 15px 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   color: white;
 }
 
 .logo {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
+  color: white;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.language-switcher {
+  margin-left: 15px;
 }
 
 .main-nav {

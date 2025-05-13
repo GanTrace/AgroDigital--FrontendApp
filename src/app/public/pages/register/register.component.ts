@@ -1,16 +1,30 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { RouterModule, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AuthService, User } from '../../services/auth.service';
+
+import { FooterComponentComponent } from '../../components/footer-component/footer-component.component';
+import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
+
+// Define RegisterPayload interface locally since it's not exported from AuthService
+interface RegisterPayload {
+  name: string;
+  email: string;
+  password: string;
+}
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     ReactiveFormsModule,
-    RouterModule
+    TranslateModule,
+    FooterComponentComponent,
+    LanguageSwitcherComponent
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
@@ -18,67 +32,77 @@ import { AuthService } from '../../services/auth.service';
 export class RegisterComponent {
   registerForm: FormGroup;
   showPassword = false;
-  registrationError = '';
+  errorMessage = '';
+  isSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.registerForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8), this.passwordStrengthValidator]],
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
+
+
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang) {
+      this.translate.use(savedLang);
+    }
   }
 
-  passwordStrengthValidator(control: any) {
-    const value = control.value || '';
-    const hasLetter = /[a-zA-Z]/.test(value);
-    const hasNumber = /[0-9]/.test(value);
-    const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
-    
-    const valid = hasLetter && hasNumber && hasSpecial;
-    return valid ? null : { strength: true };
-  }
-
-  togglePassword() {
+  togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
   onSubmit() {
-    this.registrationError = '';
-    
-    if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value).subscribe({
-        next: (res) => {
-          // Store user data in localStorage
-          localStorage.setItem('user', JSON.stringify({
-            id: Date.now(),
-            name: this.registerForm.value.name,
-            email: this.registerForm.value.email,
-            role: 'rancher'
-          }));
-          
-          // Navigate to dashboard
-          this.router.navigate(['/dashboard']);
-        },
-        error: (err) => {
-          this.registrationError = 'Error al registrar. Por favor intente nuevamente.';
-          console.error('Registration error:', err);
-        }
+    if (this.registerForm.invalid) {
+      this.translate.get('REGISTER.FORM_ERROR').subscribe((res: string) => {
+        this.errorMessage = res;
       });
-    } else {
-      // Mark all fields as touched to trigger validation messages
-      Object.keys(this.registerForm.controls).forEach(key => {
-        this.registerForm.get(key)?.markAsTouched();
-      });
-      
-      if (this.registerForm.get('password')?.hasError('strength')) {
-        this.registrationError = 'La contraseña debe incluir letras, números y símbolos.';
-      } else {
-        this.registrationError = 'Por favor complete todos los campos correctamente.';
-      }
+      return;
     }
+
+    const password = this.registerForm.get('password')?.value;
+    if (!this.isStrongPassword(password)) {
+      this.translate.get('REGISTER.PASSWORD_STRENGTH_ERROR').subscribe((res: string) => {
+        this.errorMessage = res;
+      });
+      return;
+    }
+
+    this.isSubmitting = true;
+    this.errorMessage = '';
+
+    const payload: RegisterPayload = {
+      name: this.registerForm.get('name')?.value,
+      email: this.registerForm.get('email')?.value,
+      password: this.registerForm.get('password')?.value
+    };
+
+    this.authService.register(payload).subscribe({
+      next: () => {
+        this.isSubmitting = false;
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        this.isSubmitting = false;
+        console.error('Registration error:', error);
+        this.translate.get('REGISTER.REGISTRATION_ERROR').subscribe((res: string) => {
+          this.errorMessage = res;
+        });
+      }
+    });
+  }
+
+  private isStrongPassword(password: string): boolean {
+    const hasLetter = /[a-zA-Z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+    
+    return hasLetter && hasNumber && hasSymbol;
   }
 }

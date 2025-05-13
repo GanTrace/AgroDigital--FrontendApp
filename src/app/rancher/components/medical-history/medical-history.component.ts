@@ -1,16 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
+import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'app-medical-history',
   standalone: true,
-  imports: [CommonModule, RouterModule, FooterComponentComponent],
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    TranslateModule,
+    FooterComponentComponent,
+    LanguageSwitcherComponent
+  ],
   templateUrl: './medical-history.component.html',
   styleUrls: ['./medical-history.component.css']
 })
-export class MedicalHistoryComponent {
+export class MedicalHistoryComponent implements OnInit {
   selectedAnimal = {
     id: 58,
     nombre: 'CARLY',
@@ -62,4 +70,14 @@ export class MedicalHistoryComponent {
       adjuntos: 'Imagen'
     }
   ];
+
+  constructor(private translate: TranslateService) {}
+
+  ngOnInit(): void {
+    // Set language from localStorage or default
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang) {
+      this.translate.use(savedLang);
+    }
+  }
 }

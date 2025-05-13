@@ -2,69 +2,49 @@
   <header class="navbar">
     <div class="logo">AgroDigital</div>
     <nav class="main-nav">
-      <a class="nav-item active" routerLink="/dashboard">Animales</a>
-      <a class="nav-item" routerLink="/events">Eventos</a>
-      <a class="nav-item" routerLink="/medical-history">Historial Clínico</a>
-      <a class="nav-item" routerLink="/economic-control">Control Económico</a>
-      <a class="nav-item" routerLink="/reports">Reportes</a>
+      <a class="nav-item active" routerLink="/dashboard">{{ 'DASHBOARD.ANIMALS' | translate }}</a>
+      <a class="nav-item" routerLink="/events">{{ 'DASHBOARD.EVENTS' | translate }}</a>
+      <a class="nav-item" routerLink="/medical-history">{{ 'DASHBOARD.MEDICAL_HISTORY' | translate }}</a>
+      <a class="nav-item" routerLink="/economic-control">{{ 'DASHBOARD.ECONOMIC_CONTROL' | translate }}</a>
+      <a class="nav-item" routerLink="/reports">{{ 'DASHBOARD.REPORTS' | translate }}</a>
     </nav>
-    <div class="user-info">
-      <div class="user-details">
-        <span class="user-name">Ricardo</span>
-        <span class="animal-count">580 animales</span>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="user-details">
+          <span class="user-name">{{ userName }}</span>
+          <span class="animal-count">{{ animalCount }}</span>
+        </div>
+        <div class="user-avatar">
+          <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+        </div>
+        <div class="notifications">
+          <i class="notification-icon">🔔</i>
+        </div>
+        <button class="logout-btn" (click)="logout()">Logout</button>
       </div>
-      <div class="user-avatar">
-        <img src="/assets/img/user-avatar.jpg" alt="User avatar">
-      </div>
-      <div class="notifications">
-        <i class="notification-icon">🔔</i>
-      </div>
+      <app-language-switcher class="language-switcher"></app-language-switcher>
     </div>
   </header>
 
   <main class="main-content">
-    <section class="welcome-section">
-      <h1 class="welcome-title">¡Bienvenido Ricardo!</h1>
-      <button class="add-animal-btn">
-        Añadir un animal
-        <span class="add-icon">+</span>
-      </button>
-    </section>
-
-    <section class="search-section">
-      <div class="search-bar">
-        <i class="search-icon">🔍</i>
-        <input type="text" placeholder="Buscar">
-      </div>
-      <button class="filter-btn">
-        Filtro
-        <i class="filter-icon">≡</i>
-      </button>
-    </section>
-
-    <section class="animals-grid">
-      <div class="animal-card" *ngFor="let animal of animals; let i = index">
+    <h1>{{ 'DASHBOARD.TITLE' | translate }}</h1>
+    
+    <div class="animals-grid">
+      <div class="animal-card" *ngFor="let animal of animals">
         <div class="animal-image">
           <img [src]="animal.imagen" alt="Animal image">
-          <span class="animal-number">#{{i+1}}</span>
-          <div class="animal-name">{{animal.nombre}}</div>
         </div>
         <div class="animal-details">
-          <ul class="details-list">
-            <li>• Especie: {{animal.especie}}</li>
-            <li>• Edad: {{animal.edad}}</li>
-            <li>• Sexo: {{animal.sexo}}</li>
-            <li>• Enfermedades: {{animal.enfermedades}}</li>
-          </ul>
-          <button class="info-btn">i</button>
+          <h3>{{animal.nombre}}</h3>
+          <p><strong>{{ 'DASHBOARD.SPECIES' | translate }}:</strong> {{animal.especie}}</p>
+          <p><strong>{{ 'DASHBOARD.AGE' | translate }}:</strong> {{animal.edad}}</p>
+          <p><strong>{{ 'DASHBOARD.SEX' | translate }}:</strong> {{animal.sexo}}</p>
+          <p><strong>{{ 'DASHBOARD.DISEASES' | translate }}:</strong> {{animal.enfermedades}}</p>
         </div>
       </div>
-    </section>
-
-    <section class="see-more-section">
-      <button class="see-more-btn">Ver más</button>
-    </section>
+    </div>
   </main>
+  
   <app-footer-component></app-footer-component>
 </div>
   

@@ -40,10 +40,20 @@
   background-color: #8e5928;
 }
 
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
 .user-info {
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+.language-switcher {
+  margin-left: 15px;
 }
 
 .user-details {

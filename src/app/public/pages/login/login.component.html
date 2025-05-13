@@ -3,9 +3,10 @@
     <div class="logo-container">
       <img src="AgroDigital_Logo.png" alt="AgroDigital" class="logo">
       <p class="descripcion">
-        Accede a AgroDigital, la plataforma web que digitaliza la gestión del ganado, con módulos de salud, productividad y trazabilidad para optimizar los procesos ganaderos.
+        {{ 'LOGIN.DESCRIPTION' | translate }}
       </p>
     </div>
+    <app-language-switcher class="language-switcher"></app-language-switcher>
   </div>
 
   <div class="main-content">
@@ -18,48 +19,56 @@
 
     <div class="right-section">
       <div class="form-card">
-        <h2 class="form-title">Iniciar Sesion</h2>
+        <h2 class="form-title">{{ 'LOGIN.TITLE' | translate }}</h2>
         
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
-            <label>Correo electrónico o número telefónico</label>
-            <input type="text" formControlName="email" class="form-input">
+            <label>{{ 'LOGIN.EMAIL_LABEL' | translate }}</label>
+            <input type="text" formControlName="email" class="form-input" 
+                  [ngClass]="{'invalid-input': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
           </div>
           
           <div class="form-group">
-            <label>Contraseña</label>
+            <label>{{ 'LOGIN.PASSWORD_LABEL' | translate }}</label>
             <div class="password-field">
-              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-input">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-input"
+                    [ngClass]="{'invalid-input': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
               <button type="button" class="toggle-password" (click)="togglePassword()">
-                {{ showPassword ? 'Ocultar' : 'Mostrar' }}
+                {{ (showPassword ? 'LOGIN.HIDE' : 'LOGIN.SHOW') | translate }}
               </button>
             </div>
           </div>
           
-          <button type="submit" class="submit-button">Iniciar Sesion</button>
+          <div *ngIf="loginError" class="error-message">
+            {{ loginError }}
+          </div>
+          
+          <button type="submit" class="submit-button" [disabled]="isLoggingIn">
+            {{ isLoggingIn ? ('LOGIN.LOGGING_IN' | translate) : ('LOGIN.SUBMIT_BUTTON' | translate) }}
+          </button>
         </form>
         
         <p class="terms-text">
-          Al continuar, usted accede a nuestros <a href="#" class="terms-link">Términos de uso</a> y 
-          <a href="#" class="terms-link">Política de privacidad</a>.
+          {{ 'LOGIN.TERMS_AGREEMENT' | translate }} <a href="#" class="terms-link">{{ 'LOGIN.TERMS_OF_USE' | translate }}</a> {{ 'LOGIN.AND' | translate }} 
+          <a href="#" class="terms-link">{{ 'LOGIN.PRIVACY_POLICY' | translate }}</a>.
         </p>
         
-        <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+        <a href="#" class="forgot-link">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a>
         
         <div class="divider">
-          <span>¿Nuevo con nosotros?</span>
+          <span>{{ 'LOGIN.NEW_USER' | translate }}</span>
         </div>
         
-        <button type="button" class="create-account-button" routerLink="/register">Crear cuenta</button>
+        <button type="button" class="create-account-button" routerLink="/register">{{ 'LOGIN.CREATE_ACCOUNT' | translate }}</button>
       </div>
     </div>
   </div>
 
   <footer class="login-footer">
     <div class="footer-content">
-      <div class="footer-section">Contacto</div>
-      <div class="footer-section">Redes Sociales</div>
-      <div class="footer-section">Conócenos</div>
+      <div class="footer-section">{{ 'FOOTER.CONTACT' | translate }}</div>
+      <div class="footer-section">{{ 'FOOTER.SOCIAL' | translate }}</div>
+      <div class="footer-section">{{ 'FOOTER.ABOUT' | translate }}</div>
     </div>
   </footer>
 </div>
