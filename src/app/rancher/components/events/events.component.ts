@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
+import { AuthService } from '../../../public/services/auth.service';
 
 @Component({
   selector: 'app-events',
@@ -19,6 +20,9 @@ import { LanguageSwitcherComponent } from '../../../public/components/language-s
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
+  userName: string = '';
+  animalCount: string = '580 animales';
+  
   events = [
     {
       tipo: 'Vacunas',
@@ -50,7 +54,10 @@ export class EventsComponent implements OnInit {
     }
   ];
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     // Set language from localStorage or default
@@ -58,5 +65,15 @@ export class EventsComponent implements OnInit {
     if (savedLang) {
       this.translate.use(savedLang);
     }
+    
+    // Get user data
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      this.userName = user.name;
+    }
+  }
+  
+  logout(): void {
+    this.authService.logout();
   }
 }

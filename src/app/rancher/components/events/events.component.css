@@ -212,4 +212,25 @@
   font-size: 0.9rem;
   line-height: 1.4;
 }
+
+.logout-btn {
+  background-color: #8e5928;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.logout-btn:hover {
+  background-color: #734621;
+}
+
+.user-name {
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
   
