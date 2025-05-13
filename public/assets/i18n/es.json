@@ -125,5 +125,20 @@
       "CONTACT": "Contacto",
       "SOCIAL": "Redes Sociales",
       "ABOUT": "Conócenos"
-    }
+    },
+    "SETTINGS": {
+    "TITLE": "Configuración de Perfil",
+    "CHANGE_PHOTO": "Cambiar foto",
+    "FULL_NAME": "Nombre completo",
+    "EMAIL": "Correo electrónico",
+    "PASSWORD": "Contraseña",
+    "ROLE": "Rol",
+    "EDIT_PROFILE": "Editar perfil",
+    "UPDATE_PROFILE": "Actualizar perfil",
+    "CANCEL": "Cancelar",
+    "SHOW": "Mostrar",
+    "HIDE": "Ocultar"
   }
+}
+
+  

@@ -11,7 +11,7 @@
     <div class="user-section">
       <div class="user-info">
         <div class="user-details">
-          <span class="user-name">Ricardo</span>
+          <span class="user-name" routerLink="/settings">{{ userName }}</span>
           <span class="animal-count">580 animales</span>
         </div>
         <div class="user-avatar">
@@ -20,6 +20,7 @@
         <div class="notifications">
           <i class="notification-icon">🔔</i>
         </div>
+        <button class="logout-btn" (click)="logout()">Logout</button>
       </div>
       <app-language-switcher class="language-switcher"></app-language-switcher>
     </div>
