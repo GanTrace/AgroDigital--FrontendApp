@@ -5,21 +5,25 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 import { AuthService } from '../../../public/services/auth.service';
+import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterModule, 
+    CommonModule,
+    RouterModule,
     TranslateModule,
     FooterComponentComponent,
-    LanguageSwitcherComponent
+    LanguageSwitcherComponent,
+    NotificationsComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  showNotifications: boolean = false;
+  
   animals = Array(4).fill({
     nombre: 'Rascas',
     especie: 'Vaca',
@@ -38,6 +42,10 @@ export class DashboardComponent implements OnInit {
     private router: Router
   ) {}
 
+  toggleNotifications(): void {
+    this.showNotifications = !this.showNotifications;
+  }
+
   ngOnInit(): void {
     const savedLang = localStorage.getItem('preferredLanguage');
     if (savedLang) {
@@ -52,7 +60,7 @@ export class DashboardComponent implements OnInit {
     const user = this.authService.getCurrentUser();
     if (user) {
       this.userName = user.name;
-      this.animalCount = '580 animales'; // This would come from a real API in a production app
+      this.animalCount = '580 animales'; 
     }
   }
   
