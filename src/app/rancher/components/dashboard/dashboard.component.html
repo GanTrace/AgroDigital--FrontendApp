@@ -27,21 +27,46 @@
   </header>
 
   <main class="main-content">
-    <h1>{{ 'DASHBOARD.TITLE' | translate }}</h1>
+    <div class="welcome-section">
+      <h1>¡Bienvenido {{ userName }}!</h1>
+      <button class="add-animal-btn">
+        <span>Añadir un animal</span>
+        <span class="add-icon">+</span>
+      </button>
+    </div>
+    
+    <!-- Add search section -->
+    <div class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input type="text" placeholder="Buscar">
+      </div>
+      <button class="filter-btn">
+        Filtro
+        <i class="filter-icon">≡</i>
+      </button>
+    </div>
     
     <div class="animals-grid">
-      <div class="animal-card" *ngFor="let animal of animals">
+      <div class="animal-card" *ngFor="let animal of animals; let i = index">
+        <div class="animal-tag">#{{i+1}}</div>
         <div class="animal-image">
           <img [src]="animal.imagen" alt="Animal image">
         </div>
-        <div class="animal-details">
-          <h3>{{animal.nombre}}</h3>
-          <p><strong>{{ 'DASHBOARD.SPECIES' | translate }}:</strong> {{animal.especie}}</p>
-          <p><strong>{{ 'DASHBOARD.AGE' | translate }}:</strong> {{animal.edad}}</p>
-          <p><strong>{{ 'DASHBOARD.SEX' | translate }}:</strong> {{animal.sexo}}</p>
-          <p><strong>{{ 'DASHBOARD.DISEASES' | translate }}:</strong> {{animal.enfermedades}}</p>
-        </div>
+        <div class="animal-name">{{animal.nombre}}</div>
+        <ul class="animal-details-list">
+          <li>• Especie: {{animal.especie}}</li>
+          <li>• Edad: {{animal.edad}}</li>
+          <li>• Sexo: {{animal.sexo}}</li>
+          <li>• Enfermedades: {{animal.enfermedades}}</li>
+        </ul>
+        <button class="info-btn">i</button>
       </div>
+    </div>
+    
+    <!-- Add "Ver más" button -->
+    <div class="view-more-container">
+      <button class="view-more-btn">Ver más</button>
     </div>
   </main>
   
