@@ -127,12 +127,6 @@ export class SettingsComponent implements OnInit {
           console.log('Profile updated successfully:', user);
           this.user = user;
           this.isEditing = false;
-          
-          // Actualizar la imagen en el header
-          const userAvatar = document.querySelector('.user-avatar img') as HTMLImageElement;
-          if (userAvatar && this.profileImageUrl) {
-            userAvatar.src = this.profileImageUrl;
-          }
         },
         error: (error) => {
           console.error('Error updating profile:', error);

@@ -15,7 +15,7 @@
           <span class="animal-count">{{ animalCount }}</span>
         </div>
         <div class="user-avatar">
-          <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+          <img [src]="user?.profileImage || '/assets/img/user-avatar.jpg'" alt="User avatar">
         </div>
         <div class="notifications">
           <button class="notification-btn" (click)="toggleNotifications()">
