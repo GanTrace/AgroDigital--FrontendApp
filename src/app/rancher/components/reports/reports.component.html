@@ -12,14 +12,21 @@
       <div class="user-info">
         <div class="user-details">
           <span class="user-name" routerLink="/settings">{{ userName }}</span>
-          <span class="animal-count">580 animales</span>
+          <span class="animal-count">0 animales</span>
         </div>
         <div class="user-avatar">
           <img src="/assets/img/user-avatar.jpg" alt="User avatar">
         </div>
         <div class="notifications">
-          <i class="notification-icon">🔔</i>
+          <button class="notification-btn" (click)="toggleNotifications()">
+            <i class="notification-icon">🔔</i>
+          </button>
         </div>
+        
+        <app-notifications 
+          [isVisible]="showNotifications" 
+          (close)="toggleNotifications()">
+        </app-notifications>
         <button class="logout-btn" (click)="logout()">Logout</button>
       </div>
       <app-language-switcher class="language-switcher"></app-language-switcher>

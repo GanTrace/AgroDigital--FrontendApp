@@ -102,11 +102,47 @@
   object-fit: cover;
 }
 
-.notification-icon {
-  font-size: 1.5rem;
+.notifications {
+  position: relative;
+  margin-right: 15px;
 }
 
-/* Contenido principal */
+.notification-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.notification-btn:hover {
+  transform: scale(1.1);
+}
+
+.notification-icon {
+  font-size: 1.4rem;
+  color: white;
+}
+
+.notification-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #ff4444;
+  border-radius: 50%;
+  display: none; 
+}
+
+.notification-btn.has-notifications::after {
+  display: block;
+}
+
 .main-content {
   padding: 30px;
   max-width: 1200px;

@@ -9,6 +9,7 @@ export interface User {
   email: string;
   password: string;
   role?: string;
+  profileImage?: string; 
 }
 
 export interface LoginPayload {
@@ -88,8 +89,30 @@ export class AuthService {
     }
     return null;
   }
+
+  updateUser(user: any): Observable<any> {
+    if (user.id === undefined) {
+      console.error('updateUser called with undefined ID');
+      return of({}); 
+    }
+    return this.http.put<any>(`${this.apiUrl}/${user.id}`, user).pipe(
+      tap(updatedUser => {
+        if (this.isLoggedIn()) {
+          const currentUser = this.getCurrentUser();
+          if (currentUser && currentUser.id === updatedUser.id) {
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            this.currentUser = updatedUser;
+          }
+        }
+      })
+    );
+  }
   
-  updateCurrentUser(user: User): void {
-    localStorage.setItem('currentUser', JSON.stringify(user));
+  getUserById(id: number): Observable<User> {
+    if (id === undefined) {
+      console.error('getUserById called with undefined ID');
+      return of({} as User);
+    }
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 }

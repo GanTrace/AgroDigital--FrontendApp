@@ -48,13 +48,39 @@
       "SPECIES": "Species",
       "AGE": "Age",
       "SEX": "Sex",
-      "DISEASES": "Diseases"
+      "DISEASES": "Diseases",
+      "WELCOME": "Welcome",
+      "ADD_ANIMAL": "Add Animal",
+      "SEARCH": "Search animal",
+      "FILTER": "Filter",
+      "FILTER_OPTIONS": "Filter Options",
+      "ANIMAL_TYPE": "Animal Type",
+      "YEARS": "years",
+      "APPLY_FILTERS": "Apply Filters",
+      "RESET_FILTERS": "Reset Filters",
+      "CANCEL": "Cancel",
+      "ANIMAL_IMAGE": "Animal image",
+      "VIEW_MORE": "View more",
+      "VIEW_LESS": "View less"
     },
     "EVENTS": {
       "SEARCH": "Search",
       "FILTER": "Filter",
       "UPCOMING": "Here are the upcoming events:",
-      "ADD_EVENT": "Add Event"
+      "ADD_EVENT": "Add Event",
+      "EVENT_IMAGE": "Event image",
+      "EVENT_TYPE": "Event type",
+      "EVENT_TITLE": "Event title",
+      "EVENT_DATE": "Event date",
+      "EVENT_DESCRIPTION": "Event description",
+      "VIEW_MORE": "View more",
+      "VIEW_LESS": "View less",
+      "LOGOUT": "Logout",
+      "ANIMALS_COUNT": "0 animals",
+      "FILTER_OPTIONS": "Filter Options",
+      "APPLY_FILTERS": "Apply Filters",
+      "RESET_FILTERS": "Reset Filters",
+      "CANCEL": "Cancel"
     },
     "MEDICAL_HISTORY": {
       "TITLE": "Medical History",
@@ -138,5 +164,23 @@
     "CANCEL": "Cancel",
     "SHOW": "Show",
     "HIDE": "Hide"
+  },
+  "ANIMALS": {
+    "LETS_START": "Let's start!",
+    "NAME": "Name",
+    "SPECIES": "Species",
+    "BIRTH_DATE": "Birth Date",
+    "SEX": "Sex",
+    "DISEASE": "Disease",
+    "REPRODUCTIVE_STATUS": "Reproductive Status",
+    "UPLOAD_IMAGE": "Upload Image",
+    "APPLIED_VACCINES": "Applied Vaccines",
+    "NUMBER_OF_BIRTHS": "Number of Births",
+    "LOCATION": "Location",
+    "ATTACH_FILE": "Attach File",
+    "OBSERVATIONS": "Observations",
+    "ADD_ANIMAL": "Add Animal",
+    "CANCEL": "Cancel"
   }
+
 }

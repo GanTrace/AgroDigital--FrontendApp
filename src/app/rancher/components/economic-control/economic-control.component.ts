@@ -6,6 +6,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 import { AuthService } from '../../../public/services/auth.service';
+import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 
 Chart.register(...registerables);
 
@@ -17,7 +18,8 @@ Chart.register(...registerables);
     RouterModule, 
     TranslateModule,
     FooterComponentComponent,
-    LanguageSwitcherComponent
+    LanguageSwitcherComponent,
+    NotificationsComponent
   ],
   templateUrl: './economic-control.component.html',
   styleUrls: ['./economic-control.component.css']
@@ -27,6 +29,7 @@ export class EconomicControlComponent implements OnInit {
   public gastos: number = 1485;
   userName: string = '';
   animalCount: string = '580 animales';
+  showNotifications: boolean = false;
 
   constructor(
     private translate: TranslateService,
@@ -39,7 +42,6 @@ export class EconomicControlComponent implements OnInit {
       this.translate.use(savedLang);
     }
     
-    // Get user data
     const user = this.authService.getCurrentUser();
     if (user) {
       this.userName = user.name;
@@ -48,6 +50,10 @@ export class EconomicControlComponent implements OnInit {
     setTimeout(() => {
       this.createChart();
     }, 100);
+  }
+
+  toggleNotifications(): void {
+    this.showNotifications = !this.showNotifications;
   }
 
   logout(): void {
@@ -61,7 +67,6 @@ export class EconomicControlComponent implements OnInit {
     const labels = Array.from({ length: 50 }, (_, i) => `Sem ${i+1}`);
     const data = Array.from({ length: 50 }, () => Math.floor(Math.random() * 2000) + 500);
     
-    // Rest of the method remains unchanged
     data[0] = 3200;
     data[1] = 2800;
     data[2] = 2600;

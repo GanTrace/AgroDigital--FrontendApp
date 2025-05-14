@@ -8,6 +8,7 @@ import { MedicalHistoryComponent } from './rancher/components/medical-history/me
 import { EconomicControlComponent } from './rancher/components/economic-control/economic-control.component';
 import { ReportsComponent } from './rancher/components/reports/reports.component';
 import { SettingsComponent } from './public/pages/settings/settings.component';
+import { AnimalsComponent } from './rancher/components/animals/animals.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -15,6 +16,7 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path:'page-not-found', component: PageNotFoundComponent },
     { path: 'dashboard', component: DashboardComponent },
+    { path: 'animals', component: AnimalsComponent },
     { path: 'events', component: EventsComponent },
     { path: 'medical-history', component: MedicalHistoryComponent }, 
     { path: 'economic-control', component: EconomicControlComponent },

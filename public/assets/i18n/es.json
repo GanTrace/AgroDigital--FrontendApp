@@ -48,13 +48,39 @@
       "SPECIES": "Especie",
       "AGE": "Edad",
       "SEX": "Sexo",
-      "DISEASES": "Enfermedades"
+      "DISEASES": "Enfermedades",
+      "WELCOME": "Bienvenido",
+      "ADD_ANIMAL": "Agregar Animal",
+      "SEARCH": "Buscar animal",
+      "FILTER": "Filtrar",
+      "FILTER_OPTIONS": "Opciones de Filtro",
+      "ANIMAL_TYPE": "Tipo de Animal",
+      "YEARS": "años",
+      "APPLY_FILTERS": "Aplicar Filtros",
+      "RESET_FILTERS": "Resetear Filtros",
+      "CANCEL": "Cancelar",
+      "ANIMAL_IMAGE": "Imagen del animal",
+      "VIEW_MORE": "Ver más",
+      "VIEW_LESS": "Ver menos"
     },
     "EVENTS": {
       "SEARCH": "Buscar",
-      "FILTER": "Filtro",
+      "FILTER": "Filtrar",
       "UPCOMING": "A continuación se muestran los eventos más próximos:",
-      "ADD_EVENT": "Agregar Evento"
+      "ADD_EVENT": "Agregar Evento",
+      "EVENT_IMAGE": "Imagen del evento",
+      "EVENT_TYPE": "Tipo de evento",
+      "EVENT_TITLE": "Título del evento",
+      "EVENT_DATE": "Fecha del evento",
+      "EVENT_DESCRIPTION": "Descripción del evento",
+      "VIEW_MORE": "Ver más",
+      "VIEW_LESS": "Ver menos",
+      "LOGOUT": "Cerrar Sesión",
+      "ANIMALS_COUNT": "0 animales",
+      "FILTER_OPTIONS": "Opciones de filtro",
+      "APPLY_FILTERS": "Aplicar filtros",
+      "RESET_FILTERS": "Restablecer filtros",
+      "CANCEL": "Cancelar"
     },
     "MEDICAL_HISTORY": {
       "TITLE": "Historial Clínico",
@@ -138,6 +164,23 @@
     "CANCEL": "Cancelar",
     "SHOW": "Mostrar",
     "HIDE": "Ocultar"
+  },
+  "ANIMALS": {
+    "LETS_START": "¡Empecemos!",
+    "NAME": "Nombre",
+    "SPECIES": "Especie",
+    "BIRTH_DATE": "Fecha de Nacimiento",
+    "SEX": "Sexo",
+    "DISEASE": "Enfermedad",
+    "REPRODUCTIVE_STATUS": "Estado Reproductivo",
+    "UPLOAD_IMAGE": "Subir Imagen",
+    "APPLIED_VACCINES": "Vacunas Aplicadas",
+    "NUMBER_OF_BIRTHS": "Número de Partos",
+    "LOCATION": "Ubicación",
+    "ATTACH_FILE": "Adjuntar Archivo",
+    "OBSERVATIONS": "Observaciones",
+    "ADD_ANIMAL": "Agregar Animal",
+    "CANCEL": "Cancelar"
   }
 }
 

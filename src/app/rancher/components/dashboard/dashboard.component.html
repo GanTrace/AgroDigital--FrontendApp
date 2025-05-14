@@ -18,8 +18,15 @@
           <img src="/assets/img/user-avatar.jpg" alt="User avatar">
         </div>
         <div class="notifications">
-          <i class="notification-icon">🔔</i>
+          <button class="notification-btn" (click)="toggleNotifications()">
+            <i class="notification-icon">🔔</i>
+          </button>
         </div>
+        
+        <app-notifications 
+          [isVisible]="showNotifications" 
+          (close)="toggleNotifications()">
+        </app-notifications>
         <button class="logout-btn" (click)="logout()">Logout</button>
       </div>
       <app-language-switcher class="language-switcher"></app-language-switcher>
@@ -27,21 +34,98 @@
   </header>
 
   <main class="main-content">
-    <h1>{{ 'DASHBOARD.TITLE' | translate }}</h1>
+    <div class="welcome-section">
+      <h1>{{ 'DASHBOARD.WELCOME' | translate }} {{ userName }}!</h1>
+      <button class="add-animal-btn" routerLink="/animals">
+        <span>{{ 'DASHBOARD.ADD_ANIMAL' | translate }}</span>
+        <span class="add-icon">+</span>
+      </button>
+    </div>
     
-    <div class="animals-grid">
-      <div class="animal-card" *ngFor="let animal of animals">
-        <div class="animal-image">
-          <img [src]="animal.imagen" alt="Animal image">
+    <div class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (input)="searchAnimals()"
+          (keyup)="searchAnimals()"
+          placeholder="{{ 'DASHBOARD.SEARCH' | translate }}">
+      </div>
+      <button class="filter-btn" (click)="toggleFilters()">
+        {{ 'DASHBOARD.FILTER' | translate }}
+        <i class="filter-icon">≡</i>
+      </button>
+    </div>
+    
+    <div class="filter-panel" [class.show-filters]="showFilters">
+      <div class="filter-header">
+        <h3>{{ 'DASHBOARD.FILTER_OPTIONS' | translate }}</h3>
+        <button class="close-filters" (click)="toggleFilters()">×</button>
+      </div>
+      
+      <div class="filter-content">
+        <div class="filter-group">
+          <label>{{ 'DASHBOARD.ANIMAL_TYPE' | translate }}</label>
+          <select [(ngModel)]="selectedFilters.type">
+            <option *ngFor="let type of animalTypes" [value]="type">{{ type }}</option>
+          </select>
         </div>
-        <div class="animal-details">
-          <h3>{{animal.nombre}}</h3>
-          <p><strong>{{ 'DASHBOARD.SPECIES' | translate }}:</strong> {{animal.especie}}</p>
-          <p><strong>{{ 'DASHBOARD.AGE' | translate }}:</strong> {{animal.edad}}</p>
-          <p><strong>{{ 'DASHBOARD.SEX' | translate }}:</strong> {{animal.sexo}}</p>
-          <p><strong>{{ 'DASHBOARD.DISEASES' | translate }}:</strong> {{animal.enfermedades}}</p>
+        
+        <div class="filter-group">
+          <label>{{ 'DASHBOARD.AGE' | translate }} ({{ selectedFilters.age }} {{ 'DASHBOARD.YEARS' | translate }})</label>
+          <input type="range" [(ngModel)]="selectedFilters.age" [min]="ageRange.min" [max]="ageRange.max">
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'DASHBOARD.SEX' | translate }}</label>
+          <div class="radio-group">
+            <label *ngFor="let gender of genders">
+              <input type="radio" name="gender" [value]="gender" [(ngModel)]="selectedFilters.gender">
+              {{ gender }}
+            </label>
+          </div>
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'DASHBOARD.DISEASES' | translate }}</label>
+          <div class="radio-group">
+            <label *ngFor="let option of diseaseOptions">
+              <input type="radio" name="disease" [value]="option" [(ngModel)]="selectedFilters.disease">
+              {{ option }}
+            </label>
+          </div>
         </div>
       </div>
+      
+      <div class="filter-actions">
+        <button class="apply-filters" (click)="applyFilters()">{{ 'DASHBOARD.APPLY_FILTERS' | translate }}</button>
+        <button class="reset-filters" (click)="resetFilters()">{{ 'DASHBOARD.RESET_FILTERS' | translate }}</button>
+        <button class="cancel-filters" (click)="toggleFilters()">{{ 'DASHBOARD.CANCEL' | translate }}</button>
+      </div>
+    </div>
+    
+    <div class="animals-grid">
+      <div class="animal-card" *ngFor="let animal of animals; let i = index">
+        <div class="animal-tag">#{{i+1}}</div>
+        <div class="animal-image">
+          <img [src]="animal.imagen" alt="{{ 'DASHBOARD.ANIMAL_IMAGE' | translate }}">
+        </div>
+        <div class="animal-name">{{animal.nombre}}</div>
+        <ul class="animal-details-list">
+          <li>• {{ 'DASHBOARD.SPECIES' | translate }}: {{animal.especie}}</li>
+          <li>• {{ 'DASHBOARD.AGE' | translate }}: {{animal.edad}}</li>
+          <li>• {{ 'DASHBOARD.SEX' | translate }}: {{animal.sexo}}</li>
+          <li>• {{ 'DASHBOARD.DISEASES' | translate }}: {{animal.enfermedades}}</li>
+        </ul>
+        <button class="info-btn">i</button>
+      </div>
+    </div>
+    
+    <div class="view-more-container">
+      <button class="view-more-btn" (click)="toggleViewMore()">
+        {{ showingAllAnimals ? ('DASHBOARD.VIEW_LESS' | translate) : ('DASHBOARD.VIEW_MORE' | translate) }}
+      </button>
     </div>
   </main>
   

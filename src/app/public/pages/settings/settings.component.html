@@ -15,11 +15,18 @@
           <span class="animal-count">{{ animalCount }}</span>
         </div>
         <div class="user-avatar">
-          <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+          <img [src]="user?.profileImage || '/assets/img/user-avatar.jpg'" alt="User avatar">
         </div>
         <div class="notifications">
-          <i class="notification-icon">🔔</i>
+          <button class="notification-btn" (click)="toggleNotifications()">
+            <i class="notification-icon">🔔</i>
+          </button>
         </div>
+        
+        <app-notifications 
+          [isVisible]="showNotifications" 
+          (close)="toggleNotifications()">
+        </app-notifications>
         <button class="logout-btn" (click)="logout()">Logout</button>
       </div>
       <app-language-switcher class="language-switcher"></app-language-switcher>
@@ -32,8 +39,27 @@
       
       <div class="profile-section">
         <div class="profile-image">
-          <img src="/assets/img/user-avatar.jpg" alt="User profile">
-          <button class="change-photo-btn">{{ 'SETTINGS.CHANGE_PHOTO' | translate }}</button>
+          <img [src]="profileImageUrl || '/assets/img/user-avatar.jpg'" alt="User profile">
+          <button 
+            type="button" 
+            class="change-photo-btn" 
+            (click)="toggleImageUrlInput()" 
+            *ngIf="isEditing">
+            {{ 'SETTINGS.CHANGE_PHOTO' | translate }}
+          </button>
+          
+          <div class="image-url-input" *ngIf="showImageUrlInput && isEditing">
+            <input 
+              type="text" 
+              [(ngModel)]="imageUrl" 
+              [ngModelOptions]="{standalone: true}"
+              placeholder="Ingrese URL de la imagen"
+              class="form-input">
+            <div class="url-input-actions">
+              <button type="button" class="accept-url-btn" (click)="applyImageUrl()">Aceptar</button>
+              <button type="button" class="cancel-url-btn" (click)="toggleImageUrlInput()">Cancelar</button>
+            </div>
+          </div>
         </div>
         
         <div class="profile-form">
