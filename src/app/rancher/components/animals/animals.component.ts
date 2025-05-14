@@ -7,6 +7,7 @@ import { FooterComponentComponent } from '../../../public/components/footer-comp
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 import { AuthService } from '../../../public/services/auth.service';
 import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
+import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 
 @Component({
   selector: 'app-animals',
@@ -18,7 +19,8 @@ import { NotificationsComponent } from '../../../public/pages/notifications/noti
     ReactiveFormsModule,
     FooterComponentComponent,
     LanguageSwitcherComponent,
-    NotificationsComponent  
+    NotificationsComponent,
+    HeaderComponent 
   ],
   templateUrl: './animals.component.html',
   styleUrl: './animals.component.css'

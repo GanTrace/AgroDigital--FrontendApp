@@ -7,6 +7,7 @@ import { LanguageSwitcherComponent } from '../../../public/components/language-s
 import { AuthService } from '../../../public/services/auth.service';
 import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     FooterComponentComponent,
     LanguageSwitcherComponent,
     NotificationsComponent,
-    FormsModule
+    FormsModule,
+    HeaderComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']

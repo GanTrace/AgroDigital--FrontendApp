@@ -9,12 +9,14 @@ import { EconomicControlComponent } from './rancher/components/economic-control/
 import { ReportsComponent } from './rancher/components/reports/reports.component';
 import { SettingsComponent } from './public/pages/settings/settings.component';
 import { AnimalsComponent } from './rancher/components/animals/animals.component';
+import { HeaderComponent } from './public/components/header-component/header-component.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path:'page-not-found', component: PageNotFoundComponent },
+    { path:'header', component: HeaderComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'animals', component: AnimalsComponent },
     { path: 'events', component: EventsComponent },

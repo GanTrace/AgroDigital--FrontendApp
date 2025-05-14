@@ -7,6 +7,7 @@ import { FooterComponentComponent } from '../../components/footer-component/foot
 import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
 import { AuthService, User } from '../../services/auth.service'; // Importamos User directamente
 import { NotificationsComponent } from '../../pages/notifications/notifications.component';
+import { HeaderComponent } from '../../components/header-component/header-component.component';
 
 @Component({
   selector: 'app-settings',
@@ -19,7 +20,8 @@ import { NotificationsComponent } from '../../pages/notifications/notifications.
     FormsModule,
     FooterComponentComponent,
     LanguageSwitcherComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    HeaderComponent
   ],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
