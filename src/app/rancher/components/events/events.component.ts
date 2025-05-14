@@ -8,6 +8,7 @@ import { AuthService } from '../../../public/services/auth.service';
 import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
+import { EventService, Event } from '../../services/event.service';
 
 @Component({
   selector: 'app-events',
@@ -20,100 +21,28 @@ import { HeaderComponent } from '../../../public/components/header-component/hea
     LanguageSwitcherComponent,
     NotificationsComponent,
     FormsModule,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponentComponent
   ],
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-  userName: string = '';
-  animalCount: string = '0 animales';
-  showNotifications: boolean = false;
+  events: Event[] = [];
+  allEvents: Event[] = [];
+  filteredEvents: Event[] = [];
   showFilters: boolean = false;
-  
   showingAllEvents: boolean = false;
-  
-  eventTypes = ['Todos', 'Vacunas', 'Visita', 'Feria', 'Capacitación', 'Salud', 'Mercado', 'Tecnología'];
-  
+  eventTypes: string[] = ['Todos', 'Vacunas', 'Visita', 'Feria', 'Capacitación', 'Salud', 'Mercado', 'Tecnología'];
   selectedFilters = {
     type: 'Todos',
     date: ''
   };
-  
-
-  allEvents = [
-    {
-      tipo: 'Vacunas',
-      titulo: 'Vacunación Municipal',
-      fecha: '23 de abril del 2024',
-      descripcion: 'Lorem ipsum vitae ullamcorper gravida aliquam laoreet elementum donec vestibulum dictumst tortor',
-      imagen: 'VacunacionMunicipal.jpeg'
-    },
-    {
-      tipo: 'Visita',
-      titulo: 'Visita Municipal',
-      fecha: '21 de junio del 2024',
-      descripcion: 'Lorem ipsum vitae ullamcorper gravida aliquam laoreet elementum donec vestibulum dictumst tortor',
-      imagen: 'VisitaMunicipal.jpg'
-    },
-    {
-      tipo: 'Visita',
-      titulo: 'Micro Exportadores',
-      fecha: '12 de agosto del 2024',
-      descripcion: 'Lorem ipsum vitae ullamcorper gravida aliquam laoreet elementum donec vestibulum dictumst tortor',
-      imagen: 'MicroExportadores.jpg'
-    },
-    {
-      tipo: 'Feria',
-      titulo: 'Feria Ganadera Regional',
-      fecha: '15 de mayo del 2024',
-      descripcion: 'Exposición de ganado de alta calidad con oportunidades de compra y venta. Incluye concursos y premios para los mejores ejemplares.',
-      imagen: 'FeriaGanadera.jpg'
-    },
-    {
-      tipo: 'Capacitación',
-      titulo: 'Taller de Nutrición Animal',
-      fecha: '10 de junio del 2024',
-      descripcion: 'Aprenda sobre las últimas técnicas en nutrición animal para mejorar la salud y productividad de su ganado con expertos del sector.',
-      imagen: 'TallerNutricion.jpeg'
-    },
-    {
-      tipo: 'Salud',
-      titulo: 'Campaña de Desparasitación',
-      fecha: '5 de julio del 2024',
-      descripcion: 'Campaña gratuita de desparasitación para todo tipo de ganado. Incluye revisión general y recomendaciones personalizadas.',
-      imagen: 'CampañaDesparasitación.jpg'
-    },
-    {
-      tipo: 'Mercado',
-      titulo: 'Subasta Ganadera',
-      fecha: '20 de julio del 2024',
-      descripcion: 'Gran subasta de ganado bovino, ovino y porcino. Oportunidad única para adquirir ejemplares de alta calidad a precios competitivos.',
-      imagen: 'SubastaGanadera.jpeg'
-    },
-    {
-      tipo: 'Tecnología',
-      titulo: 'Expo Agrotecnología',
-      fecha: '8 de agosto del 2024',
-      descripcion: 'Exhibición de las últimas innovaciones tecnológicas para el sector ganadero. Demostraciones prácticas y asesoramiento especializado.',
-      imagen: 'Agrotecnologia.gif'
-    },
-    {
-      tipo: 'Capacitación',
-      titulo: 'Curso de Inseminación Artificial',
-      fecha: '15 de septiembre del 2024',
-      descripcion: 'Curso práctico sobre técnicas modernas de inseminación artificial para mejorar la genética de su ganado. Certificación incluida.',
-      imagen: 'InseminacionArtificial.jpg'
-    }
-  ];
-  
-  filteredEvents = [...this.allEvents];
-  
-  events = this.filteredEvents.slice(0, 3);
+  searchTerm: string = '';
 
   constructor(
     private translate: TranslateService,
-    private authService: AuthService
+    private eventService: EventService
   ) {}
 
   ngOnInit(): void {
@@ -122,44 +51,51 @@ export class EventsComponent implements OnInit {
       this.translate.use(savedLang);
     }
     
-    const user = this.authService.getCurrentUser();
-    if (user) {
-      this.userName = user.name;
-    }
-    
-    this.filteredEvents = [...this.allEvents];
-    this.events = this.filteredEvents.slice(0, 3);
+    this.loadEvents();
   }
-  
-  toggleNotifications(): void {
-    this.showNotifications = !this.showNotifications;
+
+  loadEvents(): void {
+    this.eventService.getEvents().subscribe(events => {
+      this.allEvents = events;
+      this.filteredEvents = [...this.allEvents];
+      
+      // Mostrar solo los primeros 3 eventos inicialmente
+      if (!this.showingAllEvents) {
+        this.events = this.filteredEvents.slice(0, 3);
+      } else {
+        this.events = this.filteredEvents;
+      }
+    });
   }
-  
-  logout(): void {
-    this.authService.logout();
-  }
-  
-  toggleViewMore(): void {
-    if (this.showingAllEvents) {
-      this.events = this.filteredEvents.slice(0, 3);
-      this.showingAllEvents = false;
-    } else {
-      this.events = this.filteredEvents;
-      this.showingAllEvents = true;
-    }
-  }
-  
+
   toggleFilters(): void {
     this.showFilters = !this.showFilters;
   }
-  
+
+  toggleViewMore(): void {
+    this.showingAllEvents = !this.showingAllEvents;
+    
+    if (this.showingAllEvents) {
+      this.events = this.filteredEvents;
+    } else {
+      this.events = this.filteredEvents.slice(0, 3);
+    }
+  }
+
   applyFilters(): void {
     this.filteredEvents = this.allEvents.filter(event => {
+      // Filtrar por tipo
       if (this.selectedFilters.type !== 'Todos' && event.tipo !== this.selectedFilters.type) {
         return false;
       }
       
+      // Filtrar por fecha
       if (this.selectedFilters.date && event.fecha !== this.selectedFilters.date) {
+        return false;
+      }
+      
+      // Filtrar por término de búsqueda
+      if (this.searchTerm && !this.matchesSearchTerm(event)) {
         return false;
       }
       
@@ -174,13 +110,22 @@ export class EventsComponent implements OnInit {
     
     this.showFilters = false;
   }
-  
+
+  matchesSearchTerm(event: Event): boolean {
+    const term = this.searchTerm.toLowerCase();
+    return (
+      event.titulo.toLowerCase().includes(term) ||
+      event.descripcion.toLowerCase().includes(term) ||
+      event.tipo.toLowerCase().includes(term)
+    );
+  }
+
   resetFilters(): void {
     this.selectedFilters = {
       type: 'Todos',
       date: ''
     };
-    
+    this.searchTerm = '';
     this.filteredEvents = [...this.allEvents];
     
     if (this.showingAllEvents) {
@@ -188,5 +133,9 @@ export class EventsComponent implements OnInit {
     } else {
       this.events = this.filteredEvents.slice(0, 3);
     }
+  }
+
+  search(): void {
+    this.applyFilters();
   }
 }

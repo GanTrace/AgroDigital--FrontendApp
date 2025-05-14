@@ -4,7 +4,7 @@
     <section class="search-section">
       <div class="search-bar">
         <i class="search-icon">🔍</i>
-        <input type="text" placeholder="{{ 'EVENTS.SEARCH' | translate }}">
+        <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="search()" placeholder="{{ 'EVENTS.SEARCH' | translate }}">
       </div>
       <button class="filter-btn" (click)="toggleFilters()">
         {{ 'EVENTS.FILTER' | translate }}
@@ -55,13 +55,13 @@
             <i class="event-icon">🔊</i>
             <span>{{ event.titulo }}</span>
           </div>
-          <div class="event-date">{{ event.fecha }}</div>
+          <div class="event-date">{{ event.fecha | date }}</div>
           <p class="event-description">{{ event.descripcion }}</p>
         </div>
       </div>
     </section>
     
-    <div class="view-more-container">
+    <div class="view-more-container" *ngIf="filteredEvents.length > 3">
       <button class="view-more-btn" (click)="toggleViewMore()">
         {{ showingAllEvents ? ('EVENTS.VIEW_LESS' | translate) : ('EVENTS.VIEW_MORE' | translate) }}
       </button>

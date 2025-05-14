@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { AuthService } from '../../../public/services/auth.service';
+import { EventService, Event } from '../../services/event.service';
 
 @Component({
   selector: 'app-add-event',
@@ -25,12 +26,14 @@ export class AddEventComponent implements OnInit {
   eventForm: FormGroup;
   eventTypes = ['Vacunas', 'Visita', 'Feria', 'Capacitación', 'Salud', 'Mercado', 'Tecnología'];
   previewImageUrl: string = '';
+  isSubmitting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private translate: TranslateService,
-    private authService: AuthService
+    private authService: AuthService,
+    private eventService: EventService
   ) {
     this.eventForm = this.fb.group({
       tipo: ['', Validators.required],
@@ -59,17 +62,25 @@ export class AddEventComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.eventForm.valid) {
-      // Aquí iría la lógica para guardar el evento
-      // Por ahora, simplemente vamos a imprimir los datos y redirigir
-      console.log('Evento creado:', this.eventForm.value);
+    if (this.eventForm.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
       
-      // En un caso real, aquí se enviaría el evento a un servicio
-      // this.eventService.addEvent(this.eventForm.value).subscribe(...)
+      const newEvent: Event = this.eventForm.value;
       
-      // Redirigir a la página de eventos
-      this.router.navigate(['/events']);
-    } else {
+      this.eventService.addEvent(newEvent).subscribe({
+        next: (event) => {
+          console.log('Evento creado:', event);
+          this.router.navigate(['/events']);
+        },
+        error: (error) => {
+          console.error('Error al crear el evento:', error);
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false;
+        }
+      });
+    } else if (!this.isSubmitting) {
       // Marcar todos los campos como tocados para mostrar errores
       Object.keys(this.eventForm.controls).forEach(key => {
         const control = this.eventForm.get(key);
