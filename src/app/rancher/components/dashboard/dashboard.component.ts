@@ -40,15 +40,104 @@ export class DashboardComponent implements OnInit {
     disease: 'No'
   };
   
-  allAnimals = Array(12).fill({
-    nombre: 'Rascas',
-    especie: 'Vaca',
-    edad: '5 años',
-    sexo: 'Macho',
-    enfermedades: 'No',
-    imagen: '/assets/img/vaca.jpg'
-  });
-  
+  allAnimals = [
+    {
+      nombre: 'Rascas',
+      especie: 'Vaca',
+      edad: '5 años',
+      sexo: 'Macho',
+      enfermedades: 'No',
+      imagen: '/assets/img/vaca.jpg'
+    },
+    {
+      nombre: 'Luna',
+      especie: 'Vaca',
+      edad: '3 años',
+      sexo: 'Hembra',
+      enfermedades: 'No',
+      imagen: '/assets/img/vaca.jpg'
+    },
+    {
+      nombre: 'Tormenta',
+      especie: 'Toro',
+      edad: '7 años',
+      sexo: 'Macho',
+      enfermedades: 'No',
+      imagen: '/assets/img/toro.jpg'
+    },
+    {
+      nombre: 'Manchas',
+      especie: 'Vaca',
+      edad: '4 años',
+      sexo: 'Hembra',
+      enfermedades: 'Sí',
+      imagen: '/assets/img/vaca.jpg'
+    },
+    {
+      nombre: 'Nube',
+      especie: 'Oveja',
+      edad: '2 años',
+      sexo: 'Hembra',
+      enfermedades: 'No',
+      imagen: '/assets/img/oveja.jpg'
+    },
+    {
+      nombre: 'Lana',
+      especie: 'Oveja',
+      edad: '3 años',
+      sexo: 'Hembra',
+      enfermedades: 'No',
+      imagen: '/assets/img/oveja.jpg'
+    },
+    {
+      nombre: 'Trueno',
+      especie: 'Caballo',
+      edad: '8 años',
+      sexo: 'Macho',
+      enfermedades: 'No',
+      imagen: '/assets/img/caballo.jpg'
+    },
+    {
+      nombre: 'Pegaso',
+      especie: 'Caballo',
+      edad: '6 años',
+      sexo: 'Macho',
+      enfermedades: 'Sí',
+      imagen: '/assets/img/caballo.jpg'
+    },
+    {
+      nombre: 'Rosita',
+      especie: 'Cerdo',
+      edad: '1 año',
+      sexo: 'Hembra',
+      enfermedades: 'No',
+      imagen: '/assets/img/cerdo.jpg'
+    },
+    {
+      nombre: 'Orejón',
+      especie: 'Cerdo',
+      edad: '2 años',
+      sexo: 'Macho',
+      enfermedades: 'No',
+      imagen: '/assets/img/cerdo.jpg'
+    },
+    {
+      nombre: 'Lana Blanca',
+      especie: 'Cordero',
+      edad: '1 año',
+      sexo: 'Hembra',
+      enfermedades: 'No',
+      imagen: '/assets/img/cordero.jpg'
+    },
+    {
+      nombre: 'Copito',
+      especie: 'Cordero',
+      edad: '1 año',
+      sexo: 'Macho',
+      enfermedades: 'Sí',
+      imagen: '/assets/img/cordero.jpg'
+    }
+  ];
   filteredAnimals = [...this.allAnimals];
   animals = this.filteredAnimals.slice(0, 4);
   
