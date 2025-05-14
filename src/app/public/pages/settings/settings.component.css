@@ -184,9 +184,14 @@
   border: 3px solid #e6d7c3;
 }
 
-.change-photo-btn {
-  background-color: #7ab55c;
-  color: white;
+.photo-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.change-photo-btn, .delete-photo-btn {
   border: none;
   border-radius: 4px;
   padding: 8px 15px;
@@ -194,10 +199,23 @@
   font-size: 0.9rem;
 }
 
+.change-photo-btn {
+  background-color: #7ab55c;
+  color: white;
+}
+
 .change-photo-btn:hover {
   background-color: #689b4e;
 }
 
+.delete-photo-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.delete-photo-btn:hover {
+  background-color: #c0392b;
+}
 .profile-form {
   flex: 1;
 }

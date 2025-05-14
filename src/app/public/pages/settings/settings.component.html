@@ -7,13 +7,21 @@
       <div class="profile-section">
         <div class="profile-image">
           <img [src]="profileImageUrl || '/assets/img/user-avatar.jpg'" alt="User profile">
-          <button 
-            type="button" 
-            class="change-photo-btn" 
-            (click)="toggleImageUrlInput()" 
-            *ngIf="isEditing">
-            {{ 'SETTINGS.CHANGE_PHOTO' | translate }}
-          </button>
+          <div class="photo-buttons" *ngIf="isEditing">
+            <button 
+              type="button" 
+              class="change-photo-btn" 
+              (click)="toggleImageUrlInput()">
+              {{ 'SETTINGS.CHANGE_PHOTO' | translate }}
+            </button>
+            <button 
+              type="button" 
+              class="delete-photo-btn" 
+              (click)="deleteProfileImage()"
+              *ngIf="profileImageUrl">
+              {{ 'SETTINGS.DELETE_PHOTO' | translate }}
+            </button>
+          </div>
           
           <div class="image-url-input" *ngIf="showImageUrlInput && isEditing">
             <input 
