@@ -1,3 +1,34 @@
 {
-    "users": []
-  }
+  "users": [
+    {
+      "name": "Rodrigo",
+      "email": "rodrigo.jsr12@gmail.com",
+      "password": "Rodrigo12!",
+      "role": "rancher",
+      "id": 1,
+      "profileImage": "https://hospitalveterinariodonostia.com/wp-content/uploads/2020/10/gatos.png"
+    },
+    {
+      "name": "Erick",
+      "email": "halamadrid@gmail.com",
+      "password": "TheMutantRoost1812!",
+      "role": "rancher",
+      "id": 2
+    },
+    {
+      "name": "Gary",
+      "email": "gary96@gmail.com",
+      "password": "Khvrenai96!",
+      "role": "rancher",
+      "id": 3
+    },
+    {
+      "name": "Nelson Fabrizio",
+      "email": "nelson@gmail.com",
+      "password": "Nelson12345!",
+      "role": "rancher",
+      "id": 4,
+      "profileImage": "https://hospitalveterinariodonostia.com/wp-content/uploads/2020/10/gatos.png"
+    }
+  ]
+}

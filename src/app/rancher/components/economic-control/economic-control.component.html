@@ -1,46 +1,74 @@
-<header class="topbar">
-    <div class="logo-text">AgroDigital</div>
-    <nav class="nav-links">
-      <a class="menu-btn" routerLink="/dashboard" routerLinkActive="active">Animales</a>
-      <a class="menu-btn" routerLink="/events" routerLinkActive="active">Eventos</a>
-      <a class="menu-btn" routerLink="/historical" routerLinkActive="active">Historial Clínico</a>
-      <a class="menu-btn" routerLink="/economic-control" routerLinkActive="active">Control Económico</a>
-      <a class="menu-btn" routerLink="/reports" routerLinkActive="active">Reportes</a>
+<div class="economic-container">
+  <header class="navbar">
+    <div class="logo">AgroDigital</div>
+    <nav class="main-nav">
+      <a class="nav-item" routerLink="/dashboard">{{ 'DASHBOARD.ANIMALS' | translate }}</a>
+      <a class="nav-item" routerLink="/events">{{ 'DASHBOARD.EVENTS' | translate }}</a>
+      <a class="nav-item" routerLink="/medical-history">{{ 'DASHBOARD.MEDICAL_HISTORY' | translate }}</a>
+      <a class="nav-item active" routerLink="/economic-control">{{ 'DASHBOARD.ECONOMIC_CONTROL' | translate }}</a>
+      <a class="nav-item" routerLink="/reports">{{ 'DASHBOARD.REPORTS' | translate }}</a>
     </nav>
-    <div class="user-info">
-      <span class="perfil-link">Perfil</span>
-      <span class="user-name">Ricardo</span>
-      <span class="animal-count">580 animales</span>
-      <span class="notification">🔔</span>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="user-details">
+          <span class="user-name" routerLink="/settings">{{ userName }}</span>
+          <span class="animal-count">0 animales</span>
+        </div>
+        <div class="user-avatar">
+          <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+        </div>
+        <div class="notifications">
+          <button class="notification-btn" (click)="toggleNotifications()">
+            <i class="notification-icon">🔔</i>
+          </button>
+        </div>
+        
+        <app-notifications 
+          [isVisible]="showNotifications" 
+          (close)="toggleNotifications()">
+        </app-notifications>
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+      <app-language-switcher class="language-switcher"></app-language-switcher>
     </div>
   </header>
 
-  <div class="economic-control-container">
-    <div class="summary-cards">
-      <div class="summary-card">
-        <h3>Mis ingresos</h3>
-        <p>S/ 1485</p>
-        <button class="arrow-btn">
-          <img src="down-arrow-icon.png" alt="arrow down" />
-        </button>
+  <main class="main-content">
+    <section class="action-buttons">
+      <button class="add-income-btn">{{ 'ECONOMIC_CONTROL.ADD_INCOME' | translate }}</button>
+      <button class="add-expense-btn">{{ 'ECONOMIC_CONTROL.ADD_EXPENSE' | translate }}</button>
+    </section>
+
+    <section class="financial-cards">
+      <div class="financial-card income-card">
+        <div class="card-header">{{ 'ECONOMIC_CONTROL.INCOME' | translate }}</div>
+        <div class="card-content">
+          <div class="icon-container">
+            <i class="arrow-icon down">↓</i>
+          </div>
+          <div class="amount">S/{{ ingresos }}</div>
+        </div>
       </div>
-      <div class="summary-card">
-        <h3>Mis gastos</h3>
-        <p>S/ 1485</p>
-        <button class="arrow-btn">
-          <img src="up-arrow-icon.png" alt="arrow up" />
-        </button>
+
+      <div class="financial-card expense-card">
+        <div class="card-header">{{ 'ECONOMIC_CONTROL.EXPENSES' | translate }}</div>
+        <div class="card-content">
+          <div class="icon-container">
+            <i class="arrow-icon up">↑</i>
+          </div>
+          <div class="amount">S/{{ gastos }}</div>
+        </div>
       </div>
-    </div>
-    
-    <div class="monthly-income">
-      <h4>Ingreso neto registrado mensualmente:</h4>
-      <img src="chart-image.png" alt="chart" />
-    </div>
-    
-    <div class="action-buttons">
-      <button class="add-btn">Agregar ingreso</button>
-      <button class="add-btn">Agregar gasto</button>
-    </div>
-  </div>
+    </section>
+
+    <section class="net-income-description">
+      <p>{{ 'ECONOMIC_CONTROL.NET_INCOME' | translate }}</p>
+    </section>
+
+    <section class="chart-section">
+      <canvas id="chart"></canvas>
+    </section>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>
   

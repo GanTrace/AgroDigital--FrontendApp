@@ -1,44 +1,106 @@
-<header class="topbar">
-    <div class="logo-text">AgroDigital</div>
-    <nav class="nav-links">
-      <a class="menu-btn" routerLink="/dashboard" routerLinkActive="active">Animales</a>
-      <a class="menu-btn" routerLink="/eventos" routerLinkActive="active">Eventos</a>
-      <button class="menu-btn">Historial Clínico</button>
-      <button class="menu-btn">Control Económico</button>
-      <button class="menu-btn">Reportes</button>
-    </nav>      
-    <div class="user-info">
-      <span class="perfil-link">Perfil</span>
-      <span class="user-name">Ricardo</span>
-      <span class="animal-count">580 animales</span>
-      <span class="notification">🔔</span>
+<div class="events-container">
+  <header class="navbar">
+    <div class="logo">AgroDigital</div>
+    <nav class="main-nav">
+      <a class="nav-item" routerLink="/dashboard">{{ 'DASHBOARD.ANIMALS' | translate }}</a>
+      <a class="nav-item active" routerLink="/events">{{ 'DASHBOARD.EVENTS' | translate }}</a>
+      <a class="nav-item" routerLink="/medical-history">{{ 'DASHBOARD.MEDICAL_HISTORY' | translate }}</a>
+      <a class="nav-item" routerLink="/economic-control">{{ 'DASHBOARD.ECONOMIC_CONTROL' | translate }}</a>
+      <a class="nav-item" routerLink="/reports">{{ 'DASHBOARD.REPORTS' | translate }}</a>
+    </nav>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="user-details">
+          <span class="user-name" routerLink="/settings">{{ userName }}</span>
+          <span class="animal-count">{{ animalCount }}</span>
+        </div>
+        <div class="user-avatar">
+          <img src="/assets/img/user-avatar.jpg" alt="User avatar">
+        </div>
+        <div class="notifications">
+          <button class="notification-btn" (click)="toggleNotifications()">
+            <i class="notification-icon">🔔</i>
+          </button>
+        </div>
+        
+        <app-notifications 
+          [isVisible]="showNotifications" 
+          (close)="toggleNotifications()">
+        </app-notifications>
+        <button class="logout-btn" (click)="logout()">{{ 'EVENTS.LOGOUT' | translate }}</button>
+      </div>
+      <app-language-switcher class="language-switcher"></app-language-switcher>
     </div>
   </header>
-  
-  <div class="events-container">
-    <div class="top-bar">
-      <div class="search-box">
-        <input type="text" placeholder="Buscar" />
-        <span class="icon">🔍</span>
+
+  <main class="main-content">
+    <section class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input type="text" placeholder="{{ 'EVENTS.SEARCH' | translate }}">
       </div>
-      <button class="filter-btn">Filtro ☰</button>
-      <button class="add-event-btn">Agregar Evento</button>
+      <button class="filter-btn" (click)="toggleFilters()">
+        {{ 'EVENTS.FILTER' | translate }}
+        <i class="filter-icon">≡</i>
+      </button>
+    </section>
+
+    <div class="filter-panel" [class.show-filters]="showFilters">
+      <div class="filter-header">
+        <h3>{{ 'EVENTS.FILTER_OPTIONS' | translate }}</h3>
+        <button class="close-filters" (click)="toggleFilters()">×</button>
+      </div>
+      
+      <div class="filter-content">
+        <div class="filter-group">
+          <label>{{ 'EVENTS.EVENT_TYPE' | translate }}</label>
+          <select [(ngModel)]="selectedFilters.type">
+            <option *ngFor="let type of eventTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'EVENTS.EVENT_DATE' | translate }}</label>
+          <input type="date" [(ngModel)]="selectedFilters.date">
+        </div>
+      </div>
+      
+      <div class="filter-actions">
+        <button class="apply-filters" (click)="applyFilters()">{{ 'EVENTS.APPLY_FILTERS' | translate }}</button>
+        <button class="reset-filters" (click)="resetFilters()">{{ 'EVENTS.RESET_FILTERS' | translate }}</button>
+        <button class="cancel-filters" (click)="toggleFilters()">{{ 'EVENTS.CANCEL' | translate }}</button>
+      </div>
     </div>
-  
-    <p class="section-title">A continuación se muestran los eventos más próximos:</p>
-  
-    <div class="event-grid">
+
+    <section class="events-description">
+      <p>{{ 'EVENTS.UPCOMING' | translate }}</p>
+      <button class="add-event-btn">{{ 'EVENTS.ADD_EVENT' | translate }}</button>
+    </section>
+
+    <section class="events-grid">
       <div class="event-card" *ngFor="let event of events">
-        <div class="img-wrapper">
-          <img [src]="event.imagen" alt="evento" />
-          <span class="tag">{{ event.tipo }}</span>
+        <div class="event-image">
+          <img [src]="event.imagen" alt="{{ 'EVENTS.EVENT_IMAGE' | translate }}">
+          <span class="event-type">{{ event.tipo }}</span>
         </div>
-        <div class="info-wrapper">
-          <span class="sub-titulo">📢 {{ event.titulo }}</span>
-          <p class="fecha">{{ event.fecha }}</p>
-          <p class="descripcion">{{ event.descripcion }}</p>
+        <div class="event-details">
+          <div class="event-title">
+            <i class="event-icon">🔊</i>
+            <span>{{ event.titulo }}</span>
+          </div>
+          <div class="event-date">{{ event.fecha }}</div>
+          <p class="event-description">{{ event.descripcion }}</p>
         </div>
       </div>
+    </section>
+    
+    <div class="view-more-container">
+      <button class="view-more-btn" (click)="toggleViewMore()">
+        {{ showingAllEvents ? ('EVENTS.VIEW_LESS' | translate) : ('EVENTS.VIEW_MORE' | translate) }}
+      </button>
     </div>
-  </div>
+  </main>
+  
+  <app-footer-component></app-footer-component>
+</div>
   
