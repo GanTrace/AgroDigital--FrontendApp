@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
       edad: '5 años',
       sexo: 'Macho',
       enfermedades: 'No',
-      imagen: '/assets/img/vaca.jpg'
+      imagen: 'Vaca1.jpg'
     },
     {
       nombre: 'Luna',
@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
       edad: '3 años',
       sexo: 'Hembra',
       enfermedades: 'No',
-      imagen: '/assets/img/vaca.jpg'
+      imagen: 'Vaca2.jpeg'
     },
     {
       nombre: 'Tormenta',
@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
       edad: '7 años',
       sexo: 'Macho',
       enfermedades: 'No',
-      imagen: '/assets/img/toro.jpg'
+      imagen: 'Toro1.jpg'
     },
     {
       nombre: 'Manchas',
@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit {
       edad: '4 años',
       sexo: 'Hembra',
       enfermedades: 'Sí',
-      imagen: '/assets/img/vaca.jpg'
+      imagen: 'Vaca3.jpg'
     },
     {
       nombre: 'Nube',
@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit {
       edad: '2 años',
       sexo: 'Hembra',
       enfermedades: 'No',
-      imagen: '/assets/img/oveja.jpg'
+      imagen: 'Oveja1.jpg'
     },
     {
       nombre: 'Lana',
@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
       edad: '3 años',
       sexo: 'Hembra',
       enfermedades: 'No',
-      imagen: '/assets/img/oveja.jpg'
+      imagen: 'Oveja2.jpg'
     },
     {
       nombre: 'Trueno',
@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit {
       edad: '8 años',
       sexo: 'Macho',
       enfermedades: 'No',
-      imagen: '/assets/img/caballo.jpg'
+      imagen: 'Caballo1.jpg'
     },
     {
       nombre: 'Pegaso',
@@ -104,7 +104,7 @@ export class DashboardComponent implements OnInit {
       edad: '6 años',
       sexo: 'Macho',
       enfermedades: 'Sí',
-      imagen: '/assets/img/caballo.jpg'
+      imagen: 'Caballo2.jpg'
     },
     {
       nombre: 'Rosita',
@@ -112,7 +112,7 @@ export class DashboardComponent implements OnInit {
       edad: '1 año',
       sexo: 'Hembra',
       enfermedades: 'No',
-      imagen: '/assets/img/cerdo.jpg'
+      imagen: 'Cerdo1.jpg'
     },
     {
       nombre: 'Orejón',
@@ -120,7 +120,7 @@ export class DashboardComponent implements OnInit {
       edad: '2 años',
       sexo: 'Macho',
       enfermedades: 'No',
-      imagen: '/assets/img/cerdo.jpg'
+      imagen: 'Cerdo2.jpeg'
     },
     {
       nombre: 'Lana Blanca',
@@ -128,7 +128,7 @@ export class DashboardComponent implements OnInit {
       edad: '1 año',
       sexo: 'Hembra',
       enfermedades: 'No',
-      imagen: '/assets/img/cordero.jpg'
+      imagen: 'Cordero1.jpg'
     },
     {
       nombre: 'Copito',
@@ -136,7 +136,7 @@ export class DashboardComponent implements OnInit {
       edad: '1 año',
       sexo: 'Macho',
       enfermedades: 'Sí',
-      imagen: '/assets/img/cordero.jpg'
+      imagen: 'Cordero2.jpg'
     }
   ];
   filteredAnimals = [...this.allAnimals];

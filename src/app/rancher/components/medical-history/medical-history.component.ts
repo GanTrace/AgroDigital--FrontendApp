@@ -67,7 +67,7 @@ export class MedicalHistoryComponent implements OnInit {
     crias: '2',
     partos: '2',
     estado: 'Activo',
-    imagen: '/assets/img/vaca.jpg'
+    imagen: 'Vaca3.jpg'
   };
   
   medicalRecords: MedicalRecord[] = [
@@ -120,7 +120,7 @@ export class MedicalHistoryComponent implements OnInit {
     const user = this.authService.getCurrentUser();
     if (user) {
       this.userName = user.name;
-      this.animalCount = '580 animales';
+      this.animalCount = '0 animales';
     }
   }
   
