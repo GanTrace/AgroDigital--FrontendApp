@@ -12,7 +12,7 @@
       <div class="user-info">
         <div class="user-details">
           <span class="user-name" routerLink="/settings">{{ userName }}</span>
-          <span class="animal-count">0 animales</span>
+          <span class="animal-count">{{ 'EVENTS.ANIMALS_COUNT' | translate }}</span>
         </div>
         <div class="user-avatar">
           <img src="/assets/img/user-avatar.jpg" alt="User avatar">
@@ -27,7 +27,7 @@
           [isVisible]="showNotifications" 
           (close)="toggleNotifications()">
         </app-notifications>
-        <button class="logout-btn" (click)="logout()">Logout</button>
+        <button class="logout-btn" (click)="logout()">{{ 'EVENTS.LOGOUT' | translate }}</button>
       </div>
       <app-language-switcher class="language-switcher"></app-language-switcher>
     </div>
@@ -53,16 +53,16 @@
     <section class="events-grid">
       <div class="event-card" *ngFor="let event of events">
         <div class="event-image">
-          <img [src]="event.imagen" alt="Event image">
-          <span class="event-type">{{event.tipo}}</span>
+          <img [src]="event.imagen" alt="{{ 'EVENTS.EVENT_IMAGE' | translate }}">
+          <span class="event-type">{{ event.tipo }}</span>
         </div>
         <div class="event-details">
           <div class="event-title">
             <i class="event-icon">🔊</i>
-            <span>{{event.titulo}}</span>
+            <span>{{ event.titulo }}</span>
           </div>
-          <div class="event-date">{{event.fecha}}</div>
-          <p class="event-description">{{event.descripcion}}</p>
+          <div class="event-date">{{ event.fecha }}</div>
+          <p class="event-description">{{ event.descripcion }}</p>
         </div>
       </div>
     </section>

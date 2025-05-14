@@ -26,7 +26,7 @@ import { NotificationsComponent } from '../../../public/pages/notifications/noti
 export class AnimalsComponent implements OnInit {
   animalForm: FormGroup;
   userName: string = '';
-  animalCount: string = '580 animales';
+  animalCount: string = '0 animales';
   nextAnimalId: number = 581;
   showNotifications: boolean = false; 
 
