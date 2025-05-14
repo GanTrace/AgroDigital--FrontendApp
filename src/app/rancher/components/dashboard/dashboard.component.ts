@@ -29,14 +29,13 @@ export class DashboardComponent implements OnInit {
   
   // Opciones de filtro
   animalTypes = ['Vaca', 'Toro', 'Oveja', 'Cordero', 'Cerdo', 'Caballo'];
-  ageRange = { min: 0, max: 15, value: 15 };
+  ageRange = { min: 0, max: 30, value: 30 };
   genders = ['Macho', 'Hembra'];
   diseaseOptions = ['Sí', 'No'];
   
-  // Filtros seleccionados
   selectedFilters = {
     type: 'Vaca',
-    age: 15,
+    age: 30,
     gender: 'Macho',
     disease: 'No'
   };
@@ -50,7 +49,8 @@ export class DashboardComponent implements OnInit {
     imagen: '/assets/img/vaca.jpg'
   });
   
-  animals = this.allAnimals.slice(0, 4);
+  filteredAnimals = [...this.allAnimals];
+  animals = this.filteredAnimals.slice(0, 4);
   
   showingAllAnimals: boolean = false;
   
@@ -72,11 +72,53 @@ export class DashboardComponent implements OnInit {
   }
 
   applyFilters(): void {
-    // Aquí implementaríamos la lógica real de filtrado
-    // Por ahora, solo cerramos el panel de filtros
+    this.filteredAnimals = this.allAnimals.filter(animal => {
+      if (this.selectedFilters.type !== '' && animal.especie !== this.selectedFilters.type) {
+        return false;
+      }
+      
+      const animalAge = parseInt(animal.edad);
+      if (!isNaN(animalAge) && animalAge > this.selectedFilters.age) {
+        return false;
+      }
+      
+      if (this.selectedFilters.gender !== '' && animal.sexo !== this.selectedFilters.gender) {
+        return false;
+      }
+      
+      if (this.selectedFilters.disease !== '' && animal.enfermedades !== this.selectedFilters.disease) {
+        return false;
+      }
+      
+      return true;
+    });
+    
+    if (this.showingAllAnimals) {
+      this.animals = this.filteredAnimals;
+    } else {
+      this.animals = this.filteredAnimals.slice(0, 4);
+    }
+    
     this.showFilters = false;
   }
 
+  resetFilters(): void {
+    this.selectedFilters = {
+      type: 'Vaca',
+      age: 30,
+      gender: 'Macho',
+      disease: 'No'
+    };
+    
+    this.filteredAnimals = [...this.allAnimals];
+    
+    if (this.showingAllAnimals) {
+      this.animals = this.filteredAnimals;
+    } else {
+      this.animals = this.filteredAnimals.slice(0, 4);
+    }
+  }
+  
   ngOnInit(): void {
     const savedLang = localStorage.getItem('preferredLanguage');
     if (savedLang) {
@@ -98,15 +140,12 @@ export class DashboardComponent implements OnInit {
     this.authService.logout();
   }
   
-  // Método para alternar entre ver más y ver menos
   toggleViewMore(): void {
     if (this.showingAllAnimals) {
-      // Si ya estamos mostrando todos, volvemos a mostrar solo 4
-      this.animals = this.allAnimals.slice(0, 4);
+      this.animals = this.filteredAnimals.slice(0, 4);
       this.showingAllAnimals = false;
     } else {
-      // Si no, mostramos todos los animales
-      this.animals = this.allAnimals;
+      this.animals = this.filteredAnimals;
       this.showingAllAnimals = true;
     }
   }
