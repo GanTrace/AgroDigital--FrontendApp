@@ -1,0 +1,33 @@
+<header class="navbar">
+    <div class="logo">AgroDigital</div>
+    <nav class="main-nav">
+      <a class="nav-item" routerLink="/dashboard" routerLinkActive="active">{{ 'DASHBOARD.ANIMALS' | translate }}</a>
+      <a class="nav-item" routerLink="/events" routerLinkActive="active">{{ 'DASHBOARD.EVENTS' | translate }}</a>
+      <a class="nav-item" routerLink="/medical-history" routerLinkActive="active">{{ 'DASHBOARD.MEDICAL_HISTORY' | translate }}</a>
+      <a class="nav-item" routerLink="/economic-control" routerLinkActive="active">{{ 'DASHBOARD.ECONOMIC_CONTROL' | translate }}</a>
+      <a class="nav-item" routerLink="/reports" routerLinkActive="active">{{ 'DASHBOARD.REPORTS' | translate }}</a>
+    </nav>
+    <div class="user-section">
+      <div class="user-info">
+        <div class="user-details">
+          <span class="user-name" routerLink="/settings">{{ user?.name }}</span>
+          <span class="animal-count">{{ animalCount }}</span>
+        </div>
+        <div class="user-avatar">
+          <img [src]="user?.profileImage || '/assets/img/user-avatar.jpg'" alt="User avatar">
+        </div>
+        <div class="notifications">
+          <button class="notification-btn" (click)="toggleNotifications()">
+            <i class="notification-icon">🔔</i>
+          </button>
+        </div>
+        
+        <app-notifications 
+          [isVisible]="showNotifications" 
+          (close)="toggleNotifications()">
+        </app-notifications>
+        <button class="logout-btn" (click)="logout()">{{ 'EVENTS.LOGOUT' | translate }}</button>
+      </div>
+      <app-language-switcher class="language-switcher"></app-language-switcher>
+    </div>
+  </header>
