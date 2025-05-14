@@ -25,7 +25,7 @@ import { NotificationsComponent } from '../../pages/notifications/notifications.
 })
 export class SettingsComponent implements OnInit {
   user: any;
-  animalCount: string = '580 animales';
+  animalCount: string = '0 animales';
   showNotifications: boolean = false;
   isEditing: boolean = false;
   showPassword: boolean = false;
