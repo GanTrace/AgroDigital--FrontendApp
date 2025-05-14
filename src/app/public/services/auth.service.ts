@@ -21,7 +21,7 @@ export interface LoginPayload {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'https://my-json-server.typicode.com/GanTrace/db.json/users';
   private currentUser: User | null = null;
   
   constructor(
