@@ -80,7 +80,17 @@
       "FILTER_OPTIONS": "Opciones de filtro",
       "APPLY_FILTERS": "Aplicar filtros",
       "RESET_FILTERS": "Restablecer filtros",
-      "CANCEL": "Cancelar"
+      "CANCEL": "Cancelar",
+      "SELECT_TYPE": "Seleccione tipo de evento",
+      "SAVE_EVENT": "Guardar Evento",
+      "IMAGE_URL": "URL de la imagen",
+      "IMAGE_PREVIEW": "Vista previa de la imagen",
+      "TYPE_REQUIRED": "El tipo de evento es obligatorio",
+      "TITLE_REQUIRED": "El título del evento es obligatorio",
+      "DATE_REQUIRED": "La fecha del evento es obligatoria",
+      "DESCRIPTION_REQUIRED": "La descripción del evento es obligatoria",
+      "DESCRIPTION_TOO_LONG": "La descripción no puede exceder los 200 caracteres",
+      "IMAGE_REQUIRED": "La URL de la imagen es obligatoria"
     },
     "MEDICAL_HISTORY": {
       "TITLE": "Historial Clínico",

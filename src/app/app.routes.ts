@@ -10,6 +10,7 @@ import { ReportsComponent } from './rancher/components/reports/reports.component
 import { SettingsComponent } from './public/pages/settings/settings.component';
 import { AnimalsComponent } from './rancher/components/animals/animals.component';
 import { HeaderComponent } from './public/components/header-component/header-component.component';
+import { AddEventComponent } from './rancher/components/add-event/add-event.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -24,6 +25,7 @@ export const routes: Routes = [
     { path: 'economic-control', component: EconomicControlComponent },
     { path: 'reports', component: ReportsComponent },
     { path: 'settings', component: SettingsComponent },
+    { path:'add-event', component: AddEventComponent },
     { path: '**', redirectTo: 'login' }
   ];
 

@@ -80,7 +80,17 @@
       "FILTER_OPTIONS": "Filter Options",
       "APPLY_FILTERS": "Apply Filters",
       "RESET_FILTERS": "Reset Filters",
-      "CANCEL": "Cancel"
+      "CANCEL": "Cancel",
+      "SELECT_TYPE": "Select event type",
+      "SAVE_EVENT": "Save Event",
+      "IMAGE_URL": "Image URL",
+      "IMAGE_PREVIEW": "Image Preview",
+      "TYPE_REQUIRED": "Event type is required",
+      "TITLE_REQUIRED": "Event title is required",
+      "DATE_REQUIRED": "Event date is required",
+      "DESCRIPTION_REQUIRED": "Event description is required",
+      "DESCRIPTION_TOO_LONG": "Description cannot exceed 200 characters",
+      "IMAGE_REQUIRED": "Image URL is required"
     },
     "MEDICAL_HISTORY": {
       "TITLE": "Medical History",
