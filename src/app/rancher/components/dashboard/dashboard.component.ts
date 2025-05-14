@@ -27,7 +27,6 @@ export class DashboardComponent implements OnInit {
   showNotifications: boolean = false;
   showFilters: boolean = false;
   
-  // Opciones de filtro
   animalTypes = ['Vaca', 'Toro', 'Oveja', 'Cordero', 'Cerdo', 'Caballo'];
   ageRange = { min: 0, max: 30, value: 30 };
   genders = ['Macho', 'Hembra'];
@@ -39,6 +38,8 @@ export class DashboardComponent implements OnInit {
     gender: 'Macho',
     disease: 'No'
   };
+  
+  searchTerm: string = '';
   
   allAnimals = [
     {
@@ -159,9 +160,9 @@ export class DashboardComponent implements OnInit {
   toggleFilters(): void {
     this.showFilters = !this.showFilters;
   }
-
-  applyFilters(): void {
-    this.filteredAnimals = this.allAnimals.filter(animal => {
+  
+  applyCurrentFilters(): void {
+    this.filteredAnimals = this.filteredAnimals.filter(animal => {
       if (this.selectedFilters.type !== '' && animal.especie !== this.selectedFilters.type) {
         return false;
       }
@@ -181,6 +182,21 @@ export class DashboardComponent implements OnInit {
       
       return true;
     });
+  }
+  
+  applyFilters(): void {
+    if (this.searchTerm.trim()) {
+      const term = this.searchTerm.toLowerCase().trim();
+      this.filteredAnimals = this.allAnimals.filter(animal => 
+        animal.nombre.toLowerCase().includes(term) || 
+        animal.especie.toLowerCase().includes(term) || 
+        animal.sexo.toLowerCase().includes(term)
+      );
+    } else {
+      this.filteredAnimals = [...this.allAnimals];
+    }
+    
+    this.applyCurrentFilters();
     
     if (this.showingAllAnimals) {
       this.animals = this.filteredAnimals;
@@ -190,7 +206,7 @@ export class DashboardComponent implements OnInit {
     
     this.showFilters = false;
   }
-
+  
   resetFilters(): void {
     this.selectedFilters = {
       type: 'Vaca',
@@ -199,7 +215,41 @@ export class DashboardComponent implements OnInit {
       disease: 'No'
     };
     
-    this.filteredAnimals = [...this.allAnimals];
+    if (this.searchTerm.trim()) {
+      this.searchAnimals();
+    } else {
+      this.filteredAnimals = [...this.allAnimals];
+      
+      if (this.showingAllAnimals) {
+        this.animals = this.filteredAnimals;
+      } else {
+        this.animals = this.filteredAnimals.slice(0, 4);
+      }
+    }
+  }
+
+  searchAnimals(): void {
+    if (!this.searchTerm.trim()) {
+      this.filteredAnimals = [...this.allAnimals];
+      this.applyCurrentFilters();
+      
+      if (this.showingAllAnimals) {
+        this.animals = this.filteredAnimals;
+      } else {
+        this.animals = this.filteredAnimals.slice(0, 4);
+      }
+      return;
+    }
+    
+    const term = this.searchTerm.toLowerCase().trim();
+    
+    this.filteredAnimals = this.allAnimals.filter(animal => 
+      animal.nombre.toLowerCase().includes(term) || 
+      animal.especie.toLowerCase().includes(term) || 
+      animal.sexo.toLowerCase().includes(term)
+    );
+    
+    this.applyCurrentFilters();
     
     if (this.showingAllAnimals) {
       this.animals = this.filteredAnimals;

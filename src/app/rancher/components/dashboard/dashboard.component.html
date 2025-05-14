@@ -45,7 +45,12 @@
     <div class="search-section">
       <div class="search-bar">
         <i class="search-icon">🔍</i>
-        <input type="text" placeholder="{{ 'DASHBOARD.SEARCH' | translate }}">
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (input)="searchAnimals()"
+          (keyup)="searchAnimals()"
+          placeholder="{{ 'DASHBOARD.SEARCH' | translate }}">
       </div>
       <button class="filter-btn" (click)="toggleFilters()">
         {{ 'DASHBOARD.FILTER' | translate }}
