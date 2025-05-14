@@ -9,6 +9,7 @@ export interface User {
   email: string;
   password: string;
   role?: string;
+  profileImage?: string; // Propiedad para la imagen de perfil
 }
 
 export interface LoginPayload {
@@ -89,29 +90,20 @@ export class AuthService {
     return null;
   }
 
-  updateUser(user: User): Observable<User> {
-    if (!user.id) {
-      console.error('Cannot update user without ID');
-      throw new Error('User ID is required for update');
+  // Método único para actualizar el usuario
+  updateUser(user: any): Observable<any> {
+    if (user.id === undefined) {
+      console.error('updateUser called with undefined ID');
+      return of({}); // Retornar un observable vacío
     }
-    
-    return this.http.put<User>(`${this.apiUrl}/${user.id}`, user).pipe(
-      tap(updatedUser => {
-        console.log('User updated successfully:', updatedUser);
-        
-        const { password, ...userWithoutPassword } = updatedUser;
-        localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-        
-        this.currentUser = updatedUser;
-      }),
-      catchError(error => {
-        console.error('Error updating user:', error);
-        throw error;
-      })
-    );
+    return this.http.put<any>(`${this.apiUrl}/${user.id}`, user);
   }
   
   getUserById(id: number): Observable<User> {
+    if (id === undefined) {
+      console.error('getUserById called with undefined ID');
+      return of({} as User); // Retornar un observable con un usuario vacío
+    }
     return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 }

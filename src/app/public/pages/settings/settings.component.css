@@ -282,3 +282,41 @@
 .cancel-button:hover {
   background-color: #e0e0e0;
 }
+
+.image-url-input {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.url-input-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.accept-url-btn, .cancel-url-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.accept-url-btn {
+  background-color: #7ab55c;
+  color: white;
+}
+
+.accept-url-btn:hover {
+  background-color: #689b4e;
+}
+
+.cancel-url-btn {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.cancel-url-btn:hover {
+  background-color: #e0e0e0;
+}
