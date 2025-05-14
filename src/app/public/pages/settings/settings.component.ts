@@ -73,11 +73,16 @@ export class SettingsComponent implements OnInit {
 }
 
 togglePasswordVisibility(): void {
-    this.showPassword = !this.showPassword;
-    
+  this.showPassword = !this.showPassword;
+  if (this.showPassword && this.user) {
     this.settingsForm.patchValue({
-      password: this.showPassword ? this.user.password : '••••••••'
+      password: this.user.password
     });
+  } else {
+    this.settingsForm.patchValue({
+      password: '••••••••'
+    });
+  }
 }
 
 toggleNotifications(): void {
