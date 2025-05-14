@@ -193,6 +193,13 @@
     "OBSERVATIONS": "Observations",
     "ADD_ANIMAL": "Add Animal",
     "CANCEL": "Cancel"
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "Notifications",
+    "MARK_ALL_READ": "Mark all as read",
+    "ADD": "Add",
+    "DISMISS": "Dismiss"
   }
 
 }
+

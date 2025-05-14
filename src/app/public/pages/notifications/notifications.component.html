@@ -1,8 +1,12 @@
 <div class="notifications-panel" [class.visible]="isVisible">
   <div class="notifications-header">
-    <h2>Notificaciones <span class="notification-count">{{ notifications.length }}</span></h2>
+    <h2>{{ 'NOTIFICATIONS.TITLE' | translate }} 
+      <span class="notification-count" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+    </h2>
     <div class="header-actions">
-      <button class="mark-read-btn" (click)="markAllAsRead()">Mark all as read</button>
+      <button class="mark-read-btn" (click)="markAllAsRead()" *ngIf="unreadCount > 0">
+        {{ 'NOTIFICATIONS.MARK_ALL_READ' | translate }}
+      </button>
       <button class="close-btn" (click)="closeNotifications()">×</button>
     </div>
   </div>
@@ -10,7 +14,7 @@
   <div class="notifications-list">
     <div class="notification-item" *ngFor="let notification of notifications">
       <div class="notification-avatar">
-        <img [src]="'/assets/img/' + notification.type + '-icon.jpg'" alt="Notification icon">
+        <img [src]="notification.imageUrl" alt="Notification icon">
       </div>
       
       <div class="notification-content">

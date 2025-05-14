@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -7,10 +7,12 @@ export interface Notification {
   type: string;
   title: string;
   subtitle: string;
-  time: string;
-  details?: string;
+  time?: string;
   date?: string;
-  hasActions?: boolean;
+  details?: string;
+  hasActions: boolean;
+  read: boolean;
+  imageUrl?: string;
 }
 
 @Component({
@@ -18,10 +20,10 @@ export interface Notification {
   standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './notifications.component.html',
-  styleUrl: './notifications.component.css'
+  styleUrls: ['./notifications.component.css']
 })
-export class NotificationsComponent {
-  @Input() isVisible: boolean = false;
+export class NotificationsComponent implements OnInit {
+  @Input() isVisible: boolean = true;
   @Output() close = new EventEmitter<void>();
   
   notifications: Notification[] = [
@@ -31,7 +33,9 @@ export class NotificationsComponent {
       title: 'Clery #49',
       subtitle: 'Visita médica programada',
       time: 'Hace una hora',
-      hasActions: false
+      read: false,
+      hasActions: false,
+      imageUrl: 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?q=80&w=1000&auto=format&fit=crop'
     },
     {
       id: 2,
@@ -39,60 +43,83 @@ export class NotificationsComponent {
       title: 'Clery #49',
       subtitle: 'Agrega un detalle de su última visita médica',
       time: 'Hace 6 horas',
-      hasActions: true
+      hasActions: true,
+      read: false,
+      imageUrl: 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?q=80&w=1000&auto=format&fit=crop'
     },
     {
       id: 3,
-      type: 'control',
+      type: 'veterinary',
       title: 'McDelta #145',
       subtitle: 'Control veterinario programado',
-      time: 'Hace 8 horas', 
-      date: '15 de abril del 2025',
-      hasActions: false
+      time: 'Hace 8 horas',
+      read: false,
+      hasActions: false,
+      imageUrl: 'https://images.unsplash.com/photo-1584704135557-d8bf7ca50eae?q=80&w=1000&auto=format&fit=crop'
     },
     {
       id: 4,
       type: 'vaccine',
       title: 'Vacunación Programada',
       subtitle: 'Recordatorio',
-      time: 'Hace un día', 
+      date: 'Hace un día',
       details: 'Vacunación del lote #3. Verifica los detalles en tu historial sanitario.',
-      date: '25 de abril del 2025',
-      hasActions: false
-    },
-    {
-      id: 5,
-      type: 'economic',
-      title: 'Control Económico',
-      subtitle: 'Recordatorio',
-      time: 'Hace 2 días', 
-      details: 'Fin de mes: ingresa los movimientos económicos para obtener un reporte actualizado de tu rentabilidad.',
-      date: '30 de abril del 2025',
-      hasActions: false
-    },
-    {
-      id: 6,
-      type: 'system',
-      title: 'AgroDigital',
-      subtitle: 'Se detectó un parto reciente. No olvides registrar el evento para mantener actualizado el historial del animal.',
-      time: 'Hace 3 días',
-      hasActions: false
+      read: false,
+      hasActions: false,
+      imageUrl: 'https://images.unsplash.com/photo-1584704135557-d8bf7ca50eae?q=80&w=1000&auto=format&fit=crop'
     }
   ];
 
-  markAllAsRead(): void {
-    console.log('Marked all as read');
+  // Mapa de imágenes predeterminadas por tipo
+  defaultImages: {[key: string]: string} = {
+    'medical': 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?q=80&w=1000&auto=format&fit=crop',
+    'veterinary': 'https://images.unsplash.com/photo-1584704135557-d8bf7ca50eae?q=80&w=1000&auto=format&fit=crop',
+    'vaccine': 'https://images.unsplash.com/photo-1612277394714-5c4110e63e2b?q=80&w=1000&auto=format&fit=crop',
+    'event': 'https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1000&auto=format&fit=crop',
+    'default': 'https://images.unsplash.com/photo-1533167649158-6d508895b680?q=80&w=1000&auto=format&fit=crop'
+  };
+
+  // Añadir propiedad para contar notificaciones no leídas
+  get unreadCount(): number {
+    return this.notifications.filter(notification => !notification.read).length;
   }
 
-  addDetail(notificationId: number): void {
-    console.log('Add detail for notification', notificationId);
+  constructor() { }
+
+  ngOnInit(): void {
+    // Asegurarse de que todas las notificaciones tengan una imagen
+    this.notifications.forEach(notification => {
+      if (!notification.imageUrl) {
+        notification.imageUrl = this.getImageForType(notification.type);
+      }
+    });
   }
 
-  dismissNotification(notificationId: number): void {
-    console.log('Dismiss notification', notificationId);
+  // Método para obtener la imagen según el tipo
+  getImageForType(type: string): string {
+    return this.defaultImages[type] || this.defaultImages['default'];
   }
 
   closeNotifications(): void {
     this.close.emit();
+  }
+
+  markAllAsRead(): void {
+    this.notifications.forEach(notification => {
+      notification.read = true;
+    });
+
+  }
+
+  addDetail(id: number): void {
+    // Implementar lógica para agregar detalle
+    console.log(`Agregar detalle a la notificación ${id}`);
+    
+    // Eliminar la notificación después de agregar el detalle
+    this.dismissNotification(id);
+  }
+
+  dismissNotification(id: number): void {
+    this.notifications = this.notifications.filter(notification => notification.id !== id);
   }
 }
