@@ -44,7 +44,6 @@ export class EventService {
   private eventsSubject = new BehaviorSubject<Event[]>(this.events);
 
   constructor() {
-    // Cargar eventos del localStorage si existen
     const storedEvents = localStorage.getItem('events');
     if (storedEvents) {
       this.events = JSON.parse(storedEvents);
@@ -57,7 +56,6 @@ export class EventService {
   }
 
   addEvent(event: Event): Observable<Event> {
-    // Generar un ID único para el nuevo evento
     const newId = this.events.length > 0 ? Math.max(...this.events.map(e => e.id || 0)) + 1 : 1;
     
     const newEvent: Event = {
@@ -67,10 +65,7 @@ export class EventService {
     
     this.events.push(newEvent);
     
-    // Guardar en localStorage
     localStorage.setItem('events', JSON.stringify(this.events));
-    
-    // Notificar a los suscriptores
     this.eventsSubject.next(this.events);
     
     return of(newEvent);
@@ -82,10 +77,8 @@ export class EventService {
     if (index !== -1) {
       this.events[index] = event;
       
-      // Guardar en localStorage
       localStorage.setItem('events', JSON.stringify(this.events));
       
-      // Notificar a los suscriptores
       this.eventsSubject.next(this.events);
       
       return of(event);
@@ -100,10 +93,8 @@ export class EventService {
     if (index !== -1) {
       this.events.splice(index, 1);
       
-      // Guardar en localStorage
       localStorage.setItem('events', JSON.stringify(this.events));
       
-      // Notificar a los suscriptores
       this.eventsSubject.next(this.events);
       
       return of(true);

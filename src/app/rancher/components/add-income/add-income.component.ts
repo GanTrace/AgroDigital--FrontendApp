@@ -51,7 +51,6 @@ export class AddIncomeComponent implements OnInit {
       this.economicService.addIncome(Number(amount), description, category);
       this.router.navigate(['/economic-control']);
     } else {
-      // Marcar todos los campos como tocados para mostrar errores
       Object.keys(this.incomeForm.controls).forEach(key => {
         const control = this.incomeForm.get(key);
         control?.markAsTouched();

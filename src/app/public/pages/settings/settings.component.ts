@@ -5,7 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FooterComponentComponent } from '../../components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
-import { AuthService, User } from '../../services/auth.service'; // Importamos User directamente
+import { AuthService, User } from '../../services/auth.service'; 
 import { NotificationsComponent } from '../../pages/notifications/notifications.component';
 import { HeaderComponent } from '../../components/header-component/header-component.component';
 
@@ -34,7 +34,6 @@ export class SettingsComponent implements OnInit {
   showPassword: boolean = false;
   settingsForm: FormGroup;
   
-  // Propiedades para la imagen
   profileImageUrl: string | null = null;
   showImageUrlInput: boolean = false;
   imageUrl: string = '';
@@ -76,7 +75,6 @@ export class SettingsComponent implements OnInit {
             role: userData.role || 'rancher'
           });
           
-          // Cargar la imagen de perfil si existe
           if (userData.profileImage) {
             this.profileImageUrl = userData.profileImage;
           }
@@ -85,7 +83,6 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  // Métodos para manejar la URL de la imagen
   toggleImageUrlInput(): void {
     if (!this.isEditing) {
       return;
@@ -104,16 +101,12 @@ export class SettingsComponent implements OnInit {
     }
   }
   
-  // Actualizar el método updateProfile para incluir la imagen
-  // Añadir método para eliminar la imagen de perfil
   deleteProfileImage(): void {
-    this.profileImageUrl = null; // Ahora esto es válido con la interfaz actualizada
-    // Cerrar el panel de URL si está abierto
+    this.profileImageUrl = null; 
     this.showImageUrlInput = false;
     this.imageUrl = '';
   }
   
-  // Modificar el método updateProfile para manejar la eliminación de la imagen
   updateProfile(): void {
     const formData = this.settingsForm.value;
     
@@ -128,8 +121,6 @@ export class SettingsComponent implements OnInit {
         updatedUser.password = formData.password;
       }
       
-      // Actualizar la imagen de perfil
-      // Si profileImageUrl es null, se eliminará la imagen
       updatedUser.profileImage = this.profileImageUrl;
       
       this.authService.updateUser(updatedUser).subscribe({
@@ -138,7 +129,7 @@ export class SettingsComponent implements OnInit {
           this.user = user;
           this.isEditing = false;
           
-          // Actualizar el usuario en localStorage para que el header-component lo detecte
+         
           localStorage.setItem('user', JSON.stringify(user));
         },
         error: (error) => {
@@ -147,8 +138,7 @@ export class SettingsComponent implements OnInit {
       });
     }
   }
-  
-  // Métodos existentes
+
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
@@ -160,12 +150,10 @@ export class SettingsComponent implements OnInit {
   toggleEdit(): void {
     this.isEditing = !this.isEditing;
     
-    // Si se está saliendo del modo edición, cerrar el panel de URL
     if (!this.isEditing) {
       this.showImageUrlInput = false;
       this.imageUrl = '';
       
-      // Restaurar los valores originales del formulario
       if (this.user) {
         this.settingsForm.patchValue({
           name: this.user.name,

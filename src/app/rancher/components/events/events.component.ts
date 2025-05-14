@@ -59,7 +59,6 @@ export class EventsComponent implements OnInit {
       this.allEvents = events;
       this.filteredEvents = [...this.allEvents];
       
-      // Mostrar solo los primeros 3 eventos inicialmente
       if (!this.showingAllEvents) {
         this.events = this.filteredEvents.slice(0, 3);
       } else {
@@ -84,17 +83,14 @@ export class EventsComponent implements OnInit {
 
   applyFilters(): void {
     this.filteredEvents = this.allEvents.filter(event => {
-      // Filtrar por tipo
       if (this.selectedFilters.type !== 'Todos' && event.tipo !== this.selectedFilters.type) {
         return false;
       }
       
-      // Filtrar por fecha
       if (this.selectedFilters.date && event.fecha !== this.selectedFilters.date) {
         return false;
       }
       
-      // Filtrar por término de búsqueda
       if (this.searchTerm && !this.matchesSearchTerm(event)) {
         return false;
       }

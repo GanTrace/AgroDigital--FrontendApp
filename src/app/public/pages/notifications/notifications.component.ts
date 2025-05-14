@@ -70,7 +70,6 @@ export class NotificationsComponent implements OnInit {
     }
   ];
 
-  // Mapa de imágenes predeterminadas por tipo
   defaultImages: {[key: string]: string} = {
     'medical': 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?q=80&w=1000&auto=format&fit=crop',
     'veterinary': 'https://images.unsplash.com/photo-1584704135557-d8bf7ca50eae?q=80&w=1000&auto=format&fit=crop',
@@ -79,7 +78,6 @@ export class NotificationsComponent implements OnInit {
     'default': 'https://images.unsplash.com/photo-1533167649158-6d508895b680?q=80&w=1000&auto=format&fit=crop'
   };
 
-  // Añadir propiedad para contar notificaciones no leídas
   get unreadCount(): number {
     return this.notifications.filter(notification => !notification.read).length;
   }
@@ -87,7 +85,6 @@ export class NotificationsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // Asegurarse de que todas las notificaciones tengan una imagen
     this.notifications.forEach(notification => {
       if (!notification.imageUrl) {
         notification.imageUrl = this.getImageForType(notification.type);
@@ -95,7 +92,6 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-  // Método para obtener la imagen según el tipo
   getImageForType(type: string): string {
     return this.defaultImages[type] || this.defaultImages['default'];
   }
@@ -112,10 +108,8 @@ export class NotificationsComponent implements OnInit {
   }
 
   addDetail(id: number): void {
-    // Implementar lógica para agregar detalle
     console.log(`Agregar detalle a la notificación ${id}`);
     
-    // Eliminar la notificación después de agregar el detalle
     this.dismissNotification(id);
   }
 

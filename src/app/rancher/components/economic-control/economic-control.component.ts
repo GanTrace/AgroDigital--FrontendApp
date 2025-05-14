@@ -55,7 +55,6 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
       this.userName = user.name;
     }
     
-    // Suscribirse a los cambios en ingresos y gastos
     this.incomeSubscription = this.economicService.getTotalIncome().subscribe(total => {
       this.ingresos = total;
     });
@@ -70,7 +69,6 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Cancelar suscripciones para evitar memory leaks
     if (this.incomeSubscription) {
       this.incomeSubscription.unsubscribe();
     }
