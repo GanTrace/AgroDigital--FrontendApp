@@ -35,9 +35,9 @@
 
   <main class="main-content">
     <div class="welcome-section">
-      <h1>¡Bienvenido {{ userName }}!</h1>
+      <h1>{{ 'DASHBOARD.WELCOME' | translate }} {{ userName }}!</h1>
       <button class="add-animal-btn" routerLink="/animals">
-        <span>Añadir un animal</span>
+        <span>{{ 'DASHBOARD.ADD_ANIMAL' | translate }}</span>
         <span class="add-icon">+</span>
       </button>
     </div>
@@ -45,10 +45,10 @@
     <div class="search-section">
       <div class="search-bar">
         <i class="search-icon">🔍</i>
-        <input type="text" placeholder="Buscar">
+        <input type="text" placeholder="{{ 'DASHBOARD.SEARCH' | translate }}">
       </div>
       <button class="filter-btn">
-        Filtro
+        {{ 'DASHBOARD.FILTER' | translate }}
         <i class="filter-icon">≡</i>
       </button>
     </div>
@@ -57,21 +57,21 @@
       <div class="animal-card" *ngFor="let animal of animals; let i = index">
         <div class="animal-tag">#{{i+1}}</div>
         <div class="animal-image">
-          <img [src]="animal.imagen" alt="Animal image">
+          <img [src]="animal.imagen" alt="{{ 'DASHBOARD.ANIMAL_IMAGE' | translate }}">
         </div>
         <div class="animal-name">{{animal.nombre}}</div>
         <ul class="animal-details-list">
-          <li>• Especie: {{animal.especie}}</li>
-          <li>• Edad: {{animal.edad}}</li>
-          <li>• Sexo: {{animal.sexo}}</li>
-          <li>• Enfermedades: {{animal.enfermedades}}</li>
+          <li>• {{ 'DASHBOARD.SPECIES' | translate }}: {{animal.especie}}</li>
+          <li>• {{ 'DASHBOARD.AGE' | translate }}: {{animal.edad}}</li>
+          <li>• {{ 'DASHBOARD.SEX' | translate }}: {{animal.sexo}}</li>
+          <li>• {{ 'DASHBOARD.DISEASES' | translate }}: {{animal.enfermedades}}</li>
         </ul>
         <button class="info-btn">i</button>
       </div>
     </div>
     
     <div class="view-more-container">
-      <button class="view-more-btn">Ver más</button>
+      <button class="view-more-btn">{{ 'DASHBOARD.VIEW_MORE' | translate }}</button>
     </div>
   </main>
   

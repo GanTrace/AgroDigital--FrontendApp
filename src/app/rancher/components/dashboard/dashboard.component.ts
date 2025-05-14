@@ -60,7 +60,6 @@ export class DashboardComponent implements OnInit {
     const user = this.authService.getCurrentUser();
     if (user) {
       this.userName = user.name;
-      this.animalCount = '580 animales'; 
     }
   }
   
