@@ -9,7 +9,7 @@ export interface User {
   email: string;
   password: string;
   role?: string;
-  profileImage?: string; 
+  profileImage?: string | null; 
 }
 
 export interface LoginPayload {
@@ -93,13 +93,16 @@ export class AuthService {
   updateUser(user: any): Observable<any> {
     if (user.id === undefined) {
       console.error('updateUser called with undefined ID');
-      return of({}); 
+      return of({}); // Retornar un observable vacío
     }
+    
     return this.http.put<any>(`${this.apiUrl}/${user.id}`, user).pipe(
       tap(updatedUser => {
+        // Actualizar el usuario en localStorage para que persista entre recargas
         if (this.isLoggedIn()) {
           const currentUser = this.getCurrentUser();
           if (currentUser && currentUser.id === updatedUser.id) {
+            // Guardar el usuario actualizado en localStorage
             localStorage.setItem('user', JSON.stringify(updatedUser));
             this.currentUser = updatedUser;
           }

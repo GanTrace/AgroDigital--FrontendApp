@@ -1,38 +1,5 @@
 <div class="settings-container">
-  <header class="navbar">
-    <div class="logo">AgroDigital</div>
-    <nav class="main-nav">
-      <a class="nav-item" routerLink="/dashboard">{{ 'DASHBOARD.ANIMALS' | translate }}</a>
-      <a class="nav-item" routerLink="/events">{{ 'DASHBOARD.EVENTS' | translate }}</a>
-      <a class="nav-item" routerLink="/medical-history">{{ 'DASHBOARD.MEDICAL_HISTORY' | translate }}</a>
-      <a class="nav-item" routerLink="/economic-control">{{ 'DASHBOARD.ECONOMIC_CONTROL' | translate }}</a>
-      <a class="nav-item" routerLink="/reports">{{ 'DASHBOARD.REPORTS' | translate }}</a>
-    </nav>
-    <div class="user-section">
-      <div class="user-info">
-        <div class="user-details">
-          <span class="user-name" routerLink="/settings">{{ user?.name }}</span>
-          <span class="animal-count">{{ animalCount }}</span>
-        </div>
-        <div class="user-avatar">
-          <img [src]="user?.profileImage || '/assets/img/user-avatar.jpg'" alt="User avatar">
-        </div>
-        <div class="notifications">
-          <button class="notification-btn" (click)="toggleNotifications()">
-            <i class="notification-icon">🔔</i>
-          </button>
-        </div>
-        
-        <app-notifications 
-          [isVisible]="showNotifications" 
-          (close)="toggleNotifications()">
-        </app-notifications>
-        <button class="logout-btn" (click)="logout()">Logout</button>
-      </div>
-      <app-language-switcher class="language-switcher"></app-language-switcher>
-    </div>
-  </header>
-
+  <app-header-component></app-header-component>
   <main class="main-content">
     <div class="settings-card">
       <h1 class="settings-title">{{ 'SETTINGS.TITLE' | translate }}</h1>
@@ -40,13 +7,21 @@
       <div class="profile-section">
         <div class="profile-image">
           <img [src]="profileImageUrl || '/assets/img/user-avatar.jpg'" alt="User profile">
-          <button 
-            type="button" 
-            class="change-photo-btn" 
-            (click)="toggleImageUrlInput()" 
-            *ngIf="isEditing">
-            {{ 'SETTINGS.CHANGE_PHOTO' | translate }}
-          </button>
+          <div class="photo-buttons" *ngIf="isEditing">
+            <button 
+              type="button" 
+              class="change-photo-btn" 
+              (click)="toggleImageUrlInput()">
+              {{ 'SETTINGS.CHANGE_PHOTO' | translate }}
+            </button>
+            <button 
+              type="button" 
+              class="delete-photo-btn" 
+              (click)="deleteProfileImage()"
+              *ngIf="profileImageUrl">
+              {{ 'SETTINGS.DELETE_PHOTO' | translate }}
+            </button>
+          </div>
           
           <div class="image-url-input" *ngIf="showImageUrlInput && isEditing">
             <input 

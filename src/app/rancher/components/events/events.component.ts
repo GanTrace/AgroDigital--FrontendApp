@@ -7,6 +7,7 @@ import { LanguageSwitcherComponent } from '../../../public/components/language-s
 import { AuthService } from '../../../public/services/auth.service';
 import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 
 @Component({
   selector: 'app-events',
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     FooterComponentComponent,
     LanguageSwitcherComponent,
     NotificationsComponent,
-    FormsModule
+    FormsModule,
+    HeaderComponent
   ],
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css']
@@ -45,63 +47,63 @@ export class EventsComponent implements OnInit {
       titulo: 'Vacunación Municipal',
       fecha: '23 de abril del 2024',
       descripcion: 'Lorem ipsum vitae ullamcorper gravida aliquam laoreet elementum donec vestibulum dictumst tortor',
-      imagen: '/assets/img/vacunacion1.jpg'
+      imagen: 'VacunacionMunicipal.jpeg'
     },
     {
       tipo: 'Visita',
       titulo: 'Visita Municipal',
       fecha: '21 de junio del 2024',
       descripcion: 'Lorem ipsum vitae ullamcorper gravida aliquam laoreet elementum donec vestibulum dictumst tortor',
-      imagen: '/assets/img/visita1.jpg'
+      imagen: 'VisitaMunicipal.jpg'
     },
     {
       tipo: 'Visita',
       titulo: 'Micro Exportadores',
       fecha: '12 de agosto del 2024',
       descripcion: 'Lorem ipsum vitae ullamcorper gravida aliquam laoreet elementum donec vestibulum dictumst tortor',
-      imagen: '/assets/img/visita2.jpg'
+      imagen: 'MicroExportadores.jpg'
     },
     {
       tipo: 'Feria',
       titulo: 'Feria Ganadera Regional',
       fecha: '15 de mayo del 2024',
       descripcion: 'Exposición de ganado de alta calidad con oportunidades de compra y venta. Incluye concursos y premios para los mejores ejemplares.',
-      imagen: '/assets/img/feria1.jpg'
+      imagen: 'FeriaGanadera.jpg'
     },
     {
       tipo: 'Capacitación',
       titulo: 'Taller de Nutrición Animal',
       fecha: '10 de junio del 2024',
       descripcion: 'Aprenda sobre las últimas técnicas en nutrición animal para mejorar la salud y productividad de su ganado con expertos del sector.',
-      imagen: '/assets/img/capacitacion1.jpg'
+      imagen: 'TallerNutricion.jpeg'
     },
     {
       tipo: 'Salud',
       titulo: 'Campaña de Desparasitación',
       fecha: '5 de julio del 2024',
       descripcion: 'Campaña gratuita de desparasitación para todo tipo de ganado. Incluye revisión general y recomendaciones personalizadas.',
-      imagen: '/assets/img/salud1.jpg'
+      imagen: 'CampañaDesparasitación.jpg'
     },
     {
       tipo: 'Mercado',
       titulo: 'Subasta Ganadera',
       fecha: '20 de julio del 2024',
       descripcion: 'Gran subasta de ganado bovino, ovino y porcino. Oportunidad única para adquirir ejemplares de alta calidad a precios competitivos.',
-      imagen: '/assets/img/subasta1.jpg'
+      imagen: 'SubastaGanadera.jpeg'
     },
     {
       tipo: 'Tecnología',
       titulo: 'Expo Agrotecnología',
       fecha: '8 de agosto del 2024',
       descripcion: 'Exhibición de las últimas innovaciones tecnológicas para el sector ganadero. Demostraciones prácticas y asesoramiento especializado.',
-      imagen: '/assets/img/tecnologia1.jpg'
+      imagen: 'Agrotecnologia.gif'
     },
     {
       tipo: 'Capacitación',
       titulo: 'Curso de Inseminación Artificial',
       fecha: '15 de septiembre del 2024',
       descripcion: 'Curso práctico sobre técnicas modernas de inseminación artificial para mejorar la genética de su ganado. Certificación incluida.',
-      imagen: '/assets/img/capacitacion2.jpg'
+      imagen: 'InseminacionArtificial.jpg'
     }
   ];
   

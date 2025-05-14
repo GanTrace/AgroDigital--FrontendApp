@@ -7,6 +7,7 @@ import { FooterComponentComponent } from '../../components/footer-component/foot
 import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
 import { AuthService, User } from '../../services/auth.service'; // Importamos User directamente
 import { NotificationsComponent } from '../../pages/notifications/notifications.component';
+import { HeaderComponent } from '../../components/header-component/header-component.component';
 
 @Component({
   selector: 'app-settings',
@@ -19,7 +20,8 @@ import { NotificationsComponent } from '../../pages/notifications/notifications.
     FormsModule,
     FooterComponentComponent,
     LanguageSwitcherComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    HeaderComponent
   ],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
@@ -103,6 +105,15 @@ export class SettingsComponent implements OnInit {
   }
   
   // Actualizar el método updateProfile para incluir la imagen
+  // Añadir método para eliminar la imagen de perfil
+  deleteProfileImage(): void {
+    this.profileImageUrl = null; // Ahora esto es válido con la interfaz actualizada
+    // Cerrar el panel de URL si está abierto
+    this.showImageUrlInput = false;
+    this.imageUrl = '';
+  }
+  
+  // Modificar el método updateProfile para manejar la eliminación de la imagen
   updateProfile(): void {
     const formData = this.settingsForm.value;
     
@@ -117,16 +128,18 @@ export class SettingsComponent implements OnInit {
         updatedUser.password = formData.password;
       }
       
-      // Añadir la imagen de perfil si existe
-      if (this.profileImageUrl) {
-        updatedUser.profileImage = this.profileImageUrl;
-      }
+      // Actualizar la imagen de perfil
+      // Si profileImageUrl es null, se eliminará la imagen
+      updatedUser.profileImage = this.profileImageUrl;
       
       this.authService.updateUser(updatedUser).subscribe({
         next: (user) => {
           console.log('Profile updated successfully:', user);
           this.user = user;
           this.isEditing = false;
+          
+          // Actualizar el usuario en localStorage para que el header-component lo detecte
+          localStorage.setItem('user', JSON.stringify(user));
         },
         error: (error) => {
           console.error('Error updating profile:', error);

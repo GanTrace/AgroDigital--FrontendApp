@@ -153,8 +153,10 @@
       "ABOUT": "About Us"
     },
     "SETTINGS": {
-    "TITLE": "Profile Settings",
-    "CHANGE_PHOTO": "Change photo",
+    "TITLE": "Profile Configuration",
+    "SAVE_CHANGES": "Save Changes",
+    "CHANGE_PHOTO": "Change Photo",
+    "DELETE_PHOTO": "Delete Photo",
     "FULL_NAME": "Full name",
     "EMAIL": "Email address",
     "PASSWORD": "Password",

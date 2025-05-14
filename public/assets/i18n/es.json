@@ -160,6 +160,8 @@
     "PASSWORD": "Contraseña",
     "ROLE": "Rol",
     "EDIT_PROFILE": "Editar perfil",
+    "DELETE_PHOTO": "Eliminar foto",
+    "SAVE_CHANGES": "Guardar Cambios",
     "UPDATE_PROFILE": "Actualizar perfil",
     "CANCEL": "Cancelar",
     "SHOW": "Mostrar",

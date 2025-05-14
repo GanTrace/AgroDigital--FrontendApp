@@ -6,6 +6,7 @@ import { FooterComponentComponent } from '../../../public/components/footer-comp
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 import { AuthService } from '../../../public/services/auth.service';
 import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
+import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 
 interface Animal {
   id: number;
@@ -43,7 +44,8 @@ interface MedicalRecord {
     TranslateModule,
     FooterComponentComponent,
     LanguageSwitcherComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    HeaderComponent
   ],
   templateUrl: './medical-history.component.html',
   styleUrls: ['./medical-history.component.css']
@@ -67,7 +69,7 @@ export class MedicalHistoryComponent implements OnInit {
     crias: '2',
     partos: '2',
     estado: 'Activo',
-    imagen: '/assets/img/vaca.jpg'
+    imagen: 'Vaca3.jpg'
   };
   
   medicalRecords: MedicalRecord[] = [
@@ -120,7 +122,7 @@ export class MedicalHistoryComponent implements OnInit {
     const user = this.authService.getCurrentUser();
     if (user) {
       this.userName = user.name;
-      this.animalCount = '580 animales';
+      this.animalCount = '0 animales';
     }
   }
   
