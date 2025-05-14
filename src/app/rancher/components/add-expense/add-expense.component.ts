@@ -53,7 +53,6 @@ export class AddExpenseComponent implements OnInit {
       this.economicService.addExpense(Number(amount), description, category);
       this.router.navigate(['/economic-control']);
     } else {
-      // Marcar todos los campos como tocados para mostrar errores
       Object.keys(this.expenseForm.controls).forEach(key => {
         const control = this.expenseForm.get(key);
         control?.markAsTouched();

@@ -50,12 +50,10 @@ export class AddEventComponent implements OnInit {
       this.translate.use(savedLang);
     }
 
-    // Verificar si el usuario está autenticado
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
     }
 
-    // Suscribirse a cambios en el campo de imagen para mostrar la vista previa
     this.eventForm.get('imagen')?.valueChanges.subscribe(url => {
       this.previewImageUrl = url;
     });
@@ -81,7 +79,6 @@ export class AddEventComponent implements OnInit {
         }
       });
     } else if (!this.isSubmitting) {
-      // Marcar todos los campos como tocados para mostrar errores
       Object.keys(this.eventForm.controls).forEach(key => {
         const control = this.eventForm.get(key);
         control?.markAsTouched();
@@ -89,7 +86,6 @@ export class AddEventComponent implements OnInit {
     }
   }
 
-  // Método para cancelar y volver a la página de eventos
   cancel(): void {
     this.router.navigate(['/events']);
   }

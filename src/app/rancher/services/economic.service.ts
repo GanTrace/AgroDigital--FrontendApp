@@ -20,7 +20,6 @@ export class EconomicService {
   private nextId = 1;
 
   constructor() {
-    // Cargar datos del localStorage si existen
     const storedIncome = localStorage.getItem('totalIncome');
     const storedExpense = localStorage.getItem('totalExpense');
     const storedTransactions = localStorage.getItem('transactions');
@@ -35,7 +34,6 @@ export class EconomicService {
     
     if (storedTransactions) {
       this.transactions = JSON.parse(storedTransactions);
-      // Encontrar el ID más alto para continuar la secuencia
       if (this.transactions.length > 0) {
         this.nextId = Math.max(...this.transactions.map(t => t.id)) + 1;
       }
@@ -58,11 +56,10 @@ export class EconomicService {
     const currentTotal = this.totalIncome.value;
     const newTotal = currentTotal + amount;
     
-    // Actualizar el total
+
     this.totalIncome.next(newTotal);
     localStorage.setItem('totalIncome', newTotal.toString());
     
-    // Registrar la transacción
     const transaction: Transaction = {
       id: this.nextId++,
       type: 'income',
@@ -80,11 +77,9 @@ export class EconomicService {
     const currentTotal = this.totalExpense.value;
     const newTotal = currentTotal + amount;
     
-    // Actualizar el total
     this.totalExpense.next(newTotal);
     localStorage.setItem('totalExpense', newTotal.toString());
     
-    // Registrar la transacción
     const transaction: Transaction = {
       id: this.nextId++,
       type: 'expense',
