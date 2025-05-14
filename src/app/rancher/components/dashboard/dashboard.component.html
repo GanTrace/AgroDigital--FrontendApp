@@ -47,10 +47,56 @@
         <i class="search-icon">🔍</i>
         <input type="text" placeholder="{{ 'DASHBOARD.SEARCH' | translate }}">
       </div>
-      <button class="filter-btn">
+      <button class="filter-btn" (click)="toggleFilters()">
         {{ 'DASHBOARD.FILTER' | translate }}
         <i class="filter-icon">≡</i>
       </button>
+    </div>
+    
+    <div class="filter-panel" [class.show-filters]="showFilters">
+      <div class="filter-header">
+        <h3>{{ 'DASHBOARD.FILTER_OPTIONS' | translate }}</h3>
+        <button class="close-filters" (click)="toggleFilters()">×</button>
+      </div>
+      
+      <div class="filter-content">
+        <div class="filter-group">
+          <label>{{ 'DASHBOARD.ANIMAL_TYPE' | translate }}</label>
+          <select [(ngModel)]="selectedFilters.type">
+            <option *ngFor="let type of animalTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'DASHBOARD.AGE' | translate }} ({{ selectedFilters.age }} {{ 'DASHBOARD.YEARS' | translate }})</label>
+          <input type="range" [(ngModel)]="selectedFilters.age" [min]="ageRange.min" [max]="ageRange.max">
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'DASHBOARD.SEX' | translate }}</label>
+          <div class="radio-group">
+            <label *ngFor="let gender of genders">
+              <input type="radio" name="gender" [value]="gender" [(ngModel)]="selectedFilters.gender">
+              {{ gender }}
+            </label>
+          </div>
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'DASHBOARD.DISEASES' | translate }}</label>
+          <div class="radio-group">
+            <label *ngFor="let option of diseaseOptions">
+              <input type="radio" name="disease" [value]="option" [(ngModel)]="selectedFilters.disease">
+              {{ option }}
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="filter-actions">
+        <button class="apply-filters" (click)="applyFilters()">{{ 'DASHBOARD.APPLY_FILTERS' | translate }}</button>
+        <button class="reset-filters" (click)="toggleFilters()">{{ 'DASHBOARD.CANCEL' | translate }}</button>
+      </div>
     </div>
     
     <div class="animals-grid">
@@ -71,7 +117,9 @@
     </div>
     
     <div class="view-more-container">
-      <button class="view-more-btn">{{ 'DASHBOARD.VIEW_MORE' | translate }}</button>
+      <button class="view-more-btn" (click)="toggleViewMore()">
+        {{ showingAllAnimals ? ('DASHBOARD.VIEW_LESS' | translate) : ('DASHBOARD.VIEW_MORE' | translate) }}
+      </button>
     </div>
   </main>
   

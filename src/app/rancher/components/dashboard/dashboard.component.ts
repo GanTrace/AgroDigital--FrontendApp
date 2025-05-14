@@ -6,6 +6,7 @@ import { FooterComponentComponent } from '../../../public/components/footer-comp
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 import { AuthService } from '../../../public/services/auth.service';
 import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,15 +17,31 @@ import { NotificationsComponent } from '../../../public/pages/notifications/noti
     TranslateModule,
     FooterComponentComponent,
     LanguageSwitcherComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    FormsModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   showNotifications: boolean = false;
+  showFilters: boolean = false;
   
-  animals = Array(4).fill({
+  // Opciones de filtro
+  animalTypes = ['Vaca', 'Toro', 'Oveja', 'Cordero', 'Cerdo', 'Caballo'];
+  ageRange = { min: 0, max: 15, value: 15 };
+  genders = ['Macho', 'Hembra'];
+  diseaseOptions = ['Sí', 'No'];
+  
+  // Filtros seleccionados
+  selectedFilters = {
+    type: 'Vaca',
+    age: 15,
+    gender: 'Macho',
+    disease: 'No'
+  };
+  
+  allAnimals = Array(12).fill({
     nombre: 'Rascas',
     especie: 'Vaca',
     edad: '5 años',
@@ -32,6 +49,10 @@ export class DashboardComponent implements OnInit {
     enfermedades: 'No',
     imagen: '/assets/img/vaca.jpg'
   });
+  
+  animals = this.allAnimals.slice(0, 4);
+  
+  showingAllAnimals: boolean = false;
   
   userName = '';
   animalCount = '0 animales';
@@ -44,6 +65,16 @@ export class DashboardComponent implements OnInit {
 
   toggleNotifications(): void {
     this.showNotifications = !this.showNotifications;
+  }
+
+  toggleFilters(): void {
+    this.showFilters = !this.showFilters;
+  }
+
+  applyFilters(): void {
+    // Aquí implementaríamos la lógica real de filtrado
+    // Por ahora, solo cerramos el panel de filtros
+    this.showFilters = false;
   }
 
   ngOnInit(): void {
@@ -65,5 +96,18 @@ export class DashboardComponent implements OnInit {
   
   logout(): void {
     this.authService.logout();
+  }
+  
+  // Método para alternar entre ver más y ver menos
+  toggleViewMore(): void {
+    if (this.showingAllAnimals) {
+      // Si ya estamos mostrando todos, volvemos a mostrar solo 4
+      this.animals = this.allAnimals.slice(0, 4);
+      this.showingAllAnimals = false;
+    } else {
+      // Si no, mostramos todos los animales
+      this.animals = this.allAnimals;
+      this.showingAllAnimals = true;
+    }
   }
 }

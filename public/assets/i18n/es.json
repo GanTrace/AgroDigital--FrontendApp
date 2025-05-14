@@ -53,8 +53,14 @@
       "ADD_ANIMAL": "Agregar Animal",
       "SEARCH": "Buscar animal",
       "FILTER": "Filtrar",
+      "FILTER_OPTIONS": "Opciones de Filtro",
+      "ANIMAL_TYPE": "Tipo de Animal",
+      "YEARS": "años",
+      "APPLY_FILTERS": "Aplicar Filtros",
+      "CANCEL": "Cancelar",
       "ANIMAL_IMAGE": "Imagen del animal",
-      "VIEW_MORE": "Ver más"
+      "VIEW_MORE": "Ver más",
+      "VIEW_LESS": "Ver menos"
     },
     "EVENTS": {
       "SEARCH": "Buscar",

@@ -53,8 +53,14 @@
       "ADD_ANIMAL": "Add Animal",
       "SEARCH": "Search animal",
       "FILTER": "Filter",
+      "FILTER_OPTIONS": "Filter Options",
+      "ANIMAL_TYPE": "Animal Type",
+      "YEARS": "years",
+      "APPLY_FILTERS": "Apply Filters",
+      "CANCEL": "Cancel",
       "ANIMAL_IMAGE": "Animal image",
-      "VIEW_MORE": "View more"
+      "VIEW_MORE": "View more",
+      "VIEW_LESS": "View less"
     },
     "EVENTS": {
       "SEARCH": "Search",
