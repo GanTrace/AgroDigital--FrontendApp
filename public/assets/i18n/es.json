@@ -120,14 +120,39 @@
       "DELETE_VISIT": "Eliminar visita"
     },
     "ECONOMIC_CONTROL": {
-      "TITLE": "Control Económico",
-      "INCOME": "Ingresos",
-      "EXPENSES": "Gastos",
-      "LEADS": "Leads generados por semana",
-      "ADD_INCOME": "Agregar ingreso",
-      "ADD_EXPENSE": "Agregar gasto",
-      "NET_INCOME": "A continuación se muestra el ingreso neto por semana:"
+    "ADD_INCOME": "Agregar Ingreso",
+    "ADD_EXPENSE": "Agregar Gasto",
+    "INCOME": "Ingresos",
+    "EXPENSES": "Gastos",
+    "NET_INCOME": "Ingreso Neto",
+    "ADD_INCOME_TITLE": "Agregar Ingreso",
+    "ADD_EXPENSE_TITLE": "Agregar Gasto",
+    "AMOUNT": "Monto",
+    "DESCRIPTION": "Descripción",
+    "CATEGORY": "Categoría",
+    "ACCEPT": "Aceptar",
+    "CANCEL": "Cancelar",
+    "AMOUNT_REQUIRED": "El monto es obligatorio",
+    "AMOUNT_MIN": "El monto debe ser mayor que 0",
+    "DESCRIPTION_REQUIRED": "La descripción es obligatoria",
+    "DESCRIPTION_MAX_LENGTH": "La descripción no puede exceder los 100 caracteres",
+    "DESCRIPTION_PLACEHOLDER": "Describe la fuente de ingreso...",
+    "EXPENSE_DESCRIPTION_PLACEHOLDER": "Describe el gasto...",
+    "CATEGORIES": {
+      "SALES": "Ventas",
+      "SERVICES": "Servicios",
+      "INVESTMENTS": "Inversiones",
+      "OTHER": "Otros"
     },
+    "EXPENSE_CATEGORIES": {
+      "SUPPLIES": "Suministros",
+      "EQUIPMENT": "Equipamiento",
+      "VETERINARY": "Veterinario",
+      "FEED": "Alimentación",
+      "MAINTENANCE": "Mantenimiento",
+      "OTHER": "Otros"
+    }
+  },
     "REPORTS": {
       "TITLE": "Reportes",
       "GENERATE": "Generar Reporte",

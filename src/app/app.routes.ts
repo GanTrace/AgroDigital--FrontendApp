@@ -11,6 +11,8 @@ import { SettingsComponent } from './public/pages/settings/settings.component';
 import { AnimalsComponent } from './rancher/components/animals/animals.component';
 import { HeaderComponent } from './public/components/header-component/header-component.component';
 import { AddEventComponent } from './rancher/components/add-event/add-event.component';
+import { AddExpenseComponent } from './rancher/components/add-expense/add-expense.component';
+import { AddIncomeComponent } from './rancher/components/add-income/add-income.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -26,6 +28,8 @@ export const routes: Routes = [
     { path: 'reports', component: ReportsComponent },
     { path: 'settings', component: SettingsComponent },
     { path:'add-event', component: AddEventComponent },
+    { path:'add-expense', component: AddExpenseComponent },
+    { path:'add-income', component: AddIncomeComponent },
     { path: '**', redirectTo: 'login' }
   ];
 
