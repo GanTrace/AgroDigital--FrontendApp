@@ -1,1 +1,73 @@
-<p>events works!</p>
+<div class="events-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <section class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="search()" placeholder="{{ 'EVENTS.SEARCH' | translate }}">
+      </div>
+      <button class="filter-btn" (click)="toggleFilters()">
+        {{ 'EVENTS.FILTER' | translate }}
+        <i class="filter-icon">≡</i>
+      </button>
+    </section>
+
+    <div class="filter-panel" [class.show-filters]="showFilters">
+      <div class="filter-header">
+        <h3>{{ 'EVENTS.FILTER_OPTIONS' | translate }}</h3>
+        <button class="close-filters" (click)="toggleFilters()">×</button>
+      </div>
+      
+      <div class="filter-content">
+        <div class="filter-group">
+          <label>{{ 'EVENTS.EVENT_TYPE' | translate }}</label>
+          <select [(ngModel)]="selectedFilters.type">
+            <option *ngFor="let type of eventTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'EVENTS.EVENT_DATE' | translate }}</label>
+          <input type="date" [(ngModel)]="selectedFilters.date">
+        </div>
+      </div>
+      
+      <div class="filter-actions">
+        <button class="apply-filters" (click)="applyFilters()">{{ 'EVENTS.APPLY_FILTERS' | translate }}</button>
+        <button class="reset-filters" (click)="resetFilters()">{{ 'EVENTS.RESET_FILTERS' | translate }}</button>
+        <button class="cancel-filters" (click)="toggleFilters()">{{ 'EVENTS.CANCEL' | translate }}</button>
+      </div>
+    </div>
+
+    <section class="events-description">
+      <p>{{ 'EVENTS.UPCOMING' | translate }}</p>
+      <button class="add-event-btn" routerLink="/add-event">{{ 'EVENTS.ADD_EVENT' | translate }}</button>
+    </section>
+
+    <section class="events-grid">
+      <div class="event-card" *ngFor="let event of events">
+        <div class="event-image">
+          <img [src]="event.imagen" alt="{{ 'EVENTS.EVENT_IMAGE' | translate }}">
+          <span class="event-type">{{ event.tipo }}</span>
+        </div>
+        <div class="event-details">
+          <div class="event-title">
+            <i class="event-icon">🔊</i>
+            <span>{{ event.titulo }}</span>
+          </div>
+          <div class="event-date">{{ event.fecha | date }}</div>
+          <p class="event-description">{{ event.descripcion }}</p>
+        </div>
+      </div>
+    </section>
+    
+    <div class="view-more-container" *ngIf="filteredEvents.length > 3">
+      <button class="view-more-btn" (click)="toggleViewMore()">
+        {{ showingAllEvents ? ('EVENTS.VIEW_LESS' | translate) : ('EVENTS.VIEW_MORE' | translate) }}
+      </button>
+    </div>
+  </main>
+  
+  <app-footer-component></app-footer-component>
+</div>
+  

@@ -1,1 +1,122 @@
-<p>settings works!</p>
+<div class="settings-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="settings-card">
+      <h1 class="settings-title">{{ 'SETTINGS.TITLE' | translate }}</h1>
+      
+      <div class="profile-section">
+        <div class="profile-image">
+          <img [src]="profileImageUrl || '/assets/img/user-avatar.jpg'" alt="User profile">
+          <div class="photo-buttons" *ngIf="isEditing">
+            <button 
+              type="button" 
+              class="change-photo-btn" 
+              (click)="toggleImageUrlInput()">
+              {{ 'SETTINGS.CHANGE_PHOTO' | translate }}
+            </button>
+            <button 
+              type="button" 
+              class="delete-photo-btn" 
+              (click)="deleteProfileImage()"
+              *ngIf="profileImageUrl">
+              {{ 'SETTINGS.DELETE_PHOTO' | translate }}
+            </button>
+          </div>
+          
+          <div class="image-url-input" *ngIf="showImageUrlInput && isEditing">
+            <input 
+              type="text" 
+              [(ngModel)]="imageUrl" 
+              [ngModelOptions]="{standalone: true}"
+              placeholder="Ingrese URL de la imagen"
+              class="form-input">
+            <div class="url-input-actions">
+              <button type="button" class="accept-url-btn" (click)="applyImageUrl()">Aceptar</button>
+              <button type="button" class="cancel-url-btn" (click)="toggleImageUrlInput()">Cancelar</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="profile-form">
+          <form [formGroup]="settingsForm">
+            <div class="form-group">
+              <label>{{ 'SETTINGS.FULL_NAME' | translate }}</label>
+              <input 
+                type="text" 
+                formControlName="name" 
+                [readonly]="!isEditing"
+                class="form-input"
+              >
+            </div>
+            
+            <div class="form-group">
+              <label>{{ 'SETTINGS.EMAIL' | translate }}</label>
+              <input 
+                type="email" 
+                formControlName="email" 
+                [readonly]="!isEditing"
+                class="form-input"
+              >
+            </div>
+            
+            <div class="form-group">
+              <label>{{ 'SETTINGS.PASSWORD' | translate }}</label>
+              <div class="password-field">
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  formControlName="password" 
+                  [readonly]="!isEditing"
+                  class="form-input"
+                >
+                <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+                  {{ (showPassword ? 'SETTINGS.HIDE' : 'SETTINGS.SHOW') | translate }}
+                </button>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>{{ 'SETTINGS.ROLE' | translate }}</label>
+              <input 
+                type="text" 
+                formControlName="role" 
+                readonly
+                class="form-input"
+              >
+            </div>
+            
+            <div class="form-actions">
+              <button 
+                *ngIf="!isEditing" 
+                type="button" 
+                class="edit-button" 
+                (click)="toggleEdit()"
+              >
+                {{ 'SETTINGS.EDIT_PROFILE' | translate }}
+              </button>
+              
+              <ng-container *ngIf="isEditing">
+                <button 
+                  type="button" 
+                  class="update-button" 
+                  (click)="updateProfile()"
+                >
+                  {{ 'SETTINGS.UPDATE_PROFILE' | translate }}
+                </button>
+                
+                <button 
+                  type="button" 
+                  class="cancel-button" 
+                  (click)="toggleEdit()"
+                >
+                  {{ 'SETTINGS.CANCEL' | translate }}
+                </button>
+              </ng-container>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <app-footer-component></app-footer-component>
+</div>

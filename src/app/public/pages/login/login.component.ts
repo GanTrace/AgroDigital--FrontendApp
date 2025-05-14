@@ -1,11 +1,95 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService, User } from '../../services/auth.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    TranslateModule,
+    LanguageSwitcherComponent,
+    HttpClientModule
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
+  showPassword = false;
+  loginError = '';
+  isLoggingIn = false;
 
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private translate: TranslateService
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
+
+  ngOnInit(): void {
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang) {
+      this.translate.use(savedLang);
+    } else {
+      this.translate.use('es');
+    }
+
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  onSubmit(): void {
+    if (this.loginForm.invalid) {
+      Object.keys(this.loginForm.controls).forEach(key => {
+        const control = this.loginForm.get(key);
+        control?.markAsTouched();
+      });
+      return;
+    }
+
+    this.isLoggingIn = true;
+    this.loginError = '';
+
+    const credentials = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value
+    };
+
+    this.authService.login(credentials).subscribe({
+      next: (users: User[]) => {
+        this.isLoggingIn = false;
+        if (users.length > 0) {
+          const { password, ...userWithoutPassword } = users[0];
+          localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+          
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.loginError = this.translate.instant('LOGIN.INVALID_CREDENTIALS');
+        }
+      },
+      error: (error) => {
+        this.isLoggingIn = false;
+        console.error('Login error:', error);
+        this.loginError = this.translate.instant('LOGIN.SERVER_ERROR');
+      }
+    });
+  }
 }

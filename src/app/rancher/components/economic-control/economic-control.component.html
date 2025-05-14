@@ -1,1 +1,41 @@
-<p>economic-control works!</p>
+<div class="economic-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <section class="action-buttons">
+      <button class="add-income-btn" (click)="navigateToAddIncome()">{{ 'ECONOMIC_CONTROL.ADD_INCOME' | translate }}</button>
+      <button class="add-expense-btn" (click)="navigateToAddExpense()">{{ 'ECONOMIC_CONTROL.ADD_EXPENSE' | translate }}</button>
+    </section>
+
+    <section class="financial-cards">
+      <div class="financial-card income-card">
+        <div class="card-header">{{ 'ECONOMIC_CONTROL.INCOME' | translate }}</div>
+        <div class="card-content">
+          <div class="icon-container">
+            <i class="arrow-icon down">↓</i>
+          </div>
+          <div class="amount">S/{{ ingresos }}</div>
+        </div>
+      </div>
+
+      <div class="financial-card expense-card">
+        <div class="card-header">{{ 'ECONOMIC_CONTROL.EXPENSES' | translate }}</div>
+        <div class="card-content">
+          <div class="icon-container">
+            <i class="arrow-icon up">↑</i>
+          </div>
+          <div class="amount">S/{{ gastos }}</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="net-income-description">
+      <p>{{ 'ECONOMIC_CONTROL.NET_INCOME' | translate }}</p>
+    </section>
+
+    <section class="chart-section">
+      <canvas id="chart"></canvas>
+    </section>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>
+  

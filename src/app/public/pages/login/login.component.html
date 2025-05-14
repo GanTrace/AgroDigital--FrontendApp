@@ -1,1 +1,74 @@
-<p>login works!</p>
+<div class="login-container">
+  <div class="login-header">
+    <div class="logo-container">
+      <img src="AgroDigital_Logo.png" alt="AgroDigital" class="logo">
+      <p class="descripcion">
+        {{ 'LOGIN.DESCRIPTION' | translate }}
+      </p>
+    </div>
+    <app-language-switcher class="language-switcher"></app-language-switcher>
+  </div>
+
+  <div class="main-content">
+    <div class="left-section">
+      <h1 class="brand-title">AgroDigital</h1>
+      <div class="circular-image">
+        <img src="PortadaIS.png" alt="Ganadero con animales">
+      </div>
+    </div>
+
+    <div class="right-section">
+      <div class="form-card">
+        <h2 class="form-title">{{ 'LOGIN.TITLE' | translate }}</h2>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>{{ 'LOGIN.EMAIL_LABEL' | translate }}</label>
+            <input type="text" formControlName="email" class="form-input" 
+                  [ngClass]="{'invalid-input': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
+          </div>
+          
+          <div class="form-group">
+            <label>{{ 'LOGIN.PASSWORD_LABEL' | translate }}</label>
+            <div class="password-field">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-input"
+                    [ngClass]="{'invalid-input': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
+              <button type="button" class="toggle-password" (click)="togglePassword()">
+                {{ (showPassword ? 'LOGIN.HIDE' : 'LOGIN.SHOW') | translate }}
+              </button>
+            </div>
+          </div>
+          
+          <div *ngIf="loginError" class="error-message">
+            {{ loginError }}
+          </div>
+          
+          <button type="submit" class="submit-button" [disabled]="isLoggingIn">
+            {{ isLoggingIn ? ('LOGIN.LOGGING_IN' | translate) : ('LOGIN.SUBMIT_BUTTON' | translate) }}
+          </button>
+        </form>
+        
+        <p class="terms-text">
+          {{ 'LOGIN.TERMS_AGREEMENT' | translate }} <a href="#" class="terms-link">{{ 'LOGIN.TERMS_OF_USE' | translate }}</a> {{ 'LOGIN.AND' | translate }} 
+          <a href="#" class="terms-link">{{ 'LOGIN.PRIVACY_POLICY' | translate }}</a>.
+        </p>
+        
+        <a href="#" class="forgot-link">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a>
+        
+        <div class="divider">
+          <span>{{ 'LOGIN.NEW_USER' | translate }}</span>
+        </div>
+        
+        <button type="button" class="create-account-button" routerLink="/register">{{ 'LOGIN.CREATE_ACCOUNT' | translate }}</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="login-footer">
+    <div class="footer-content">
+      <div class="footer-section">{{ 'FOOTER.CONTACT' | translate }}</div>
+      <div class="footer-section">{{ 'FOOTER.SOCIAL' | translate }}</div>
+      <div class="footer-section">{{ 'FOOTER.ABOUT' | translate }}</div>
+    </div>
+  </footer>
+</div>

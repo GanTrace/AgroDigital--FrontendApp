@@ -1,0 +1,44 @@
+<div class="notifications-panel" [class.visible]="isVisible">
+  <div class="notifications-header">
+    <h2>{{ 'NOTIFICATIONS.TITLE' | translate }} 
+      <span class="notification-count" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+    </h2>
+    <div class="header-actions">
+      <button class="mark-read-btn" (click)="markAllAsRead()" *ngIf="unreadCount > 0">
+        {{ 'NOTIFICATIONS.MARK_ALL_READ' | translate }}
+      </button>
+      <button class="close-btn" (click)="closeNotifications()">×</button>
+    </div>
+  </div>
+  
+  <div class="notifications-list">
+    <div class="notification-item" *ngFor="let notification of notifications">
+      <div class="notification-avatar">
+        <img [src]="notification.imageUrl" alt="Notification icon">
+      </div>
+      
+      <div class="notification-content">
+        <div class="notification-header">
+          <h3 class="notification-title">{{ notification.title }}</h3>
+          <button *ngIf="!notification.hasActions" class="pin-btn">📌</button>
+        </div>
+        
+        <p class="notification-subtitle">{{ notification.subtitle }}</p>
+        
+        <div class="notification-time">
+          {{ notification.time || notification.date }}
+        </div>
+        
+        <div *ngIf="notification.details" class="notification-details">
+          <div class="details-indicator"></div>
+          <p>{{ notification.details }}</p>
+        </div>
+        
+        <div *ngIf="notification.hasActions" class="notification-actions">
+          <button class="action-btn add-btn" (click)="addDetail(notification.id)">Agregar</button>
+          <button class="action-btn dismiss-btn" (click)="dismissNotification(notification.id)">Descartar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
