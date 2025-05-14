@@ -73,8 +73,14 @@
       "EVENT_TITLE": "Título del evento",
       "EVENT_DATE": "Fecha del evento",
       "EVENT_DESCRIPTION": "Descripción del evento",
+      "VIEW_MORE": "Ver más",
+      "VIEW_LESS": "Ver menos",
       "LOGOUT": "Cerrar Sesión",
-      "ANIMALS_COUNT": "0 animales"
+      "ANIMALS_COUNT": "0 animales",
+      "FILTER_OPTIONS": "Opciones de filtro",
+      "APPLY_FILTERS": "Aplicar filtros",
+      "RESET_FILTERS": "Restablecer filtros",
+      "CANCEL": "Cancelar"
     },
     "MEDICAL_HISTORY": {
       "TITLE": "Historial Clínico",

@@ -73,8 +73,14 @@
       "EVENT_TITLE": "Event title",
       "EVENT_DATE": "Event date",
       "EVENT_DESCRIPTION": "Event description",
+      "VIEW_MORE": "View more",
+      "VIEW_LESS": "View less",
       "LOGOUT": "Logout",
-      "ANIMALS_COUNT": "0 animals"
+      "ANIMALS_COUNT": "0 animals",
+      "FILTER_OPTIONS": "Filter Options",
+      "APPLY_FILTERS": "Apply Filters",
+      "RESET_FILTERS": "Reset Filters",
+      "CANCEL": "Cancel"
     },
     "MEDICAL_HISTORY": {
       "TITLE": "Medical History",

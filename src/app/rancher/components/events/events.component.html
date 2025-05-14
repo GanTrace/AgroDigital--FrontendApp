@@ -12,7 +12,7 @@
       <div class="user-info">
         <div class="user-details">
           <span class="user-name" routerLink="/settings">{{ userName }}</span>
-          <span class="animal-count">{{ 'EVENTS.ANIMALS_COUNT' | translate }}</span>
+          <span class="animal-count">{{ animalCount }}</span>
         </div>
         <div class="user-avatar">
           <img src="/assets/img/user-avatar.jpg" alt="User avatar">
@@ -39,11 +39,38 @@
         <i class="search-icon">🔍</i>
         <input type="text" placeholder="{{ 'EVENTS.SEARCH' | translate }}">
       </div>
-      <button class="filter-btn">
+      <button class="filter-btn" (click)="toggleFilters()">
         {{ 'EVENTS.FILTER' | translate }}
         <i class="filter-icon">≡</i>
       </button>
     </section>
+
+    <div class="filter-panel" [class.show-filters]="showFilters">
+      <div class="filter-header">
+        <h3>{{ 'EVENTS.FILTER_OPTIONS' | translate }}</h3>
+        <button class="close-filters" (click)="toggleFilters()">×</button>
+      </div>
+      
+      <div class="filter-content">
+        <div class="filter-group">
+          <label>{{ 'EVENTS.EVENT_TYPE' | translate }}</label>
+          <select [(ngModel)]="selectedFilters.type">
+            <option *ngFor="let type of eventTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'EVENTS.EVENT_DATE' | translate }}</label>
+          <input type="date" [(ngModel)]="selectedFilters.date">
+        </div>
+      </div>
+      
+      <div class="filter-actions">
+        <button class="apply-filters" (click)="applyFilters()">{{ 'EVENTS.APPLY_FILTERS' | translate }}</button>
+        <button class="reset-filters" (click)="resetFilters()">{{ 'EVENTS.RESET_FILTERS' | translate }}</button>
+        <button class="cancel-filters" (click)="toggleFilters()">{{ 'EVENTS.CANCEL' | translate }}</button>
+      </div>
+    </div>
 
     <section class="events-description">
       <p>{{ 'EVENTS.UPCOMING' | translate }}</p>
@@ -66,6 +93,12 @@
         </div>
       </div>
     </section>
+    
+    <div class="view-more-container">
+      <button class="view-more-btn" (click)="toggleViewMore()">
+        {{ showingAllEvents ? ('EVENTS.VIEW_LESS' | translate) : ('EVENTS.VIEW_MORE' | translate) }}
+      </button>
+    </div>
   </main>
   
   <app-footer-component></app-footer-component>
