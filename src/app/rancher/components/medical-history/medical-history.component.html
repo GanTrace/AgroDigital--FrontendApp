@@ -1,0 +1,81 @@
+<div class="medical-history-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <section class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input type="text" placeholder="{{ 'MEDICAL_HISTORY.SEARCH' | translate }}">
+      </div>
+    </section>
+
+    <section class="history-description">
+      <p>{{ 'MEDICAL_HISTORY.DESCRIPTION' | translate }}</p>
+    </section>
+
+    <div class="medical-history-content">
+      <section class="animal-info">
+        <div class="animal-image">
+          <img [src]="selectedAnimal.imagen" alt="Animal image">
+          <div class="animal-id">{{ selectedAnimal.nombre }} #{{ selectedAnimal.id }}</div>
+        </div>
+        <div class="animal-details">
+          <div class="animal-type">
+            <i class="star-icon">★</i>
+            <span>{{ selectedAnimal.tipo }}</span>
+          </div>
+          <ul class="details-list">
+            <li>• {{ 'MEDICAL_HISTORY.BIRTH_DATE' | translate }}: {{ selectedAnimal.fechaNacimiento }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.AGE' | translate }}: {{ selectedAnimal.edad }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.SEX' | translate }}: {{ selectedAnimal.sexo }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.HEALTH_PROBLEMS' | translate }}: {{ selectedAnimal.problemasSalud }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.ZONE' | translate }}: {{ selectedAnimal.zona }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.FEEDING' | translate }}: {{ selectedAnimal.alimentacion }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.WEIGHT' | translate }}: {{ selectedAnimal.peso }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.OFFSPRING' | translate }}: {{ selectedAnimal.crias }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.BIRTHS' | translate }}: {{ selectedAnimal.partos }}</li>
+            <li>• {{ 'MEDICAL_HISTORY.STATUS' | translate }}: {{ selectedAnimal.estado }}</li>
+          </ul>
+          <button class="edit-btn">{{ 'MEDICAL_HISTORY.EDIT' | translate }}</button>
+        </div>
+      </section>
+
+      <section class="medical-table-section">
+        <table class="medical-table">
+          <thead>
+            <tr>
+              <th>{{ 'MEDICAL_HISTORY.DATE' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.EVENT_TYPE' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.DESCRIPTION' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.VETERINARIAN' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.OBSERVATIONS' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.ATTACHMENTS' | translate }}</th>
+              <th>{{ 'MEDICAL_HISTORY.MORE' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of medicalRecords">
+              <td>{{ record.fecha }}</td>
+              <td>{{ record.tipoEvento }}</td>
+              <td>{{ record.descripcion }}</td>
+              <td>{{ record.veterinario }}</td>
+              <td>{{ record.observaciones }}</td>
+              <td>{{ record.adjuntos }}</td>
+              <td class="more-cell">
+                <button class="more-btn">⊕</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="no-results" *ngIf="medicalRecords.length === 0">{{ 'MEDICAL_HISTORY.NO_RESULTS' | translate }}</p>
+      </section>
+
+      <section class="action-buttons">
+        <button class="add-visit-btn">{{ 'MEDICAL_HISTORY.ADD_VISIT' | translate }}</button>
+        <button class="edit-visit-btn">{{ 'MEDICAL_HISTORY.EDIT_VISIT' | translate }}</button>
+        <button class="delete-visit-btn">{{ 'MEDICAL_HISTORY.DELETE_VISIT' | translate }}</button>
+      </section>
+    </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>
+  

@@ -1,0 +1,13 @@
+<div class="language-switcher">
+  <div class="selected-language">
+    {{ currentLang === 'es' ? 'ES' : 'EN' }}
+  </div>
+  <div class="language-dropdown">
+    <div *ngFor="let lang of languages" 
+         class="language-option" 
+         [class.active]="currentLang === lang.code"
+         (click)="switchLanguage(lang.code)">
+      {{ lang.name }}
+    </div>
+  </div>
+</div>

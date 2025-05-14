@@ -1,0 +1,87 @@
+<div class="animals-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="form-container">
+      <h2 class="form-title">Comencemos</h2>
+      
+      <form [formGroup]="animalForm" class="animal-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" formControlName="nombre">
+          </div>
+          
+          <div class="form-group">
+            <label for="especie">Especie</label>
+            <input type="text" id="especie" formControlName="especie">
+          </div>
+          
+          <div class="form-group">
+            <label for="fechaNacimiento">Fecha de Nacimiento</label>
+            <input type="text" id="fechaNacimiento" formControlName="fechaNacimiento">
+          </div>
+          
+          <div class="animal-id">
+            <div class="id-tag">#{{ nextAnimalId }}</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="sexo">Sexo</label>
+            <input type="text" id="sexo" formControlName="sexo">
+          </div>
+          
+          <div class="form-group">
+            <label for="enfermedad">Enfermedad</label>
+            <input type="text" id="enfermedad" formControlName="enfermedad">
+          </div>
+          
+          <div class="form-group">
+            <label for="estadoReproductivo">Estado Reproductivo</label>
+            <input type="text" id="estadoReproductivo" formControlName="estadoReproductivo">
+          </div>
+          
+          <div class="upload-container">
+            <div class="upload-box">
+              <span class="upload-icon">⬆️</span>
+              <span>Subir imagen</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="vacunasAplicadas">Vacunas aplicadas</label>
+            <input type="text" id="vacunasAplicadas" formControlName="vacunasAplicadas">
+          </div>
+          
+          <div class="form-group">
+            <label for="numeroPartos">Numero de Partos</label>
+            <input type="text" id="numeroPartos" formControlName="numeroPartos">
+          </div>
+          
+          <div class="form-group">
+            <label for="ubicacion">Ubicación</label>
+            <input type="text" id="ubicacion" formControlName="ubicacion">
+          </div>
+          
+          <div class="upload-container">
+            <div class="upload-box">
+              <span class="upload-icon">⬆️</span>
+              <span>Adjuntar archivo</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group full-width">
+          <label for="observaciones">Observaciones</label>
+          <textarea id="observaciones" formControlName="observaciones" rows="3"></textarea>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="add-btn" (click)="addAnimal()">Añadir animal</button>
+          <button type="button" class="cancel-btn" (click)="cancel()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </main>
+  
+  <app-footer-component></app-footer-component>
+</div>
