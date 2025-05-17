@@ -78,8 +78,45 @@
   object-fit: cover;
 }
 
+.notifications {
+  position: relative;
+  margin-right: 15px;
+}
+
+.notification-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.notification-btn:hover {
+  transform: scale(1.1);
+}
+
 .notification-icon {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  color: white;
+}
+
+.notification-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #ff4444;
+  border-radius: 50%;
+  display: none; 
+}
+
+.notification-btn.has-notifications::after {
+  display: block;
 }
 
 .main-content {
@@ -221,5 +258,59 @@
 .stat-label {
   font-size: 1.1rem;
   color: #666;
+}
+
+.logout-btn {
+  background-color: #8e5928;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.logout-btn:hover {
+  background-color: #734621;
+}
+
+.user-name {
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+.generate-report-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.generate-report-btn {
+  background-color: #8e5928;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.generate-report-btn:hover {
+  background-color: #734621;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.generate-report-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
   

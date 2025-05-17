@@ -48,13 +48,49 @@
       "SPECIES": "Especie",
       "AGE": "Edad",
       "SEX": "Sexo",
-      "DISEASES": "Enfermedades"
+      "DISEASES": "Enfermedades",
+      "WELCOME": "Bienvenido",
+      "ADD_ANIMAL": "Agregar Animal",
+      "SEARCH": "Buscar animal",
+      "FILTER": "Filtrar",
+      "FILTER_OPTIONS": "Opciones de Filtro",
+      "ANIMAL_TYPE": "Tipo de Animal",
+      "YEARS": "años",
+      "APPLY_FILTERS": "Aplicar Filtros",
+      "RESET_FILTERS": "Resetear Filtros",
+      "CANCEL": "Cancelar",
+      "ANIMAL_IMAGE": "Imagen del animal",
+      "VIEW_MORE": "Ver más",
+      "VIEW_LESS": "Ver menos"
     },
     "EVENTS": {
       "SEARCH": "Buscar",
-      "FILTER": "Filtro",
+      "FILTER": "Filtrar",
       "UPCOMING": "A continuación se muestran los eventos más próximos:",
-      "ADD_EVENT": "Agregar Evento"
+      "ADD_EVENT": "Agregar Evento",
+      "EVENT_IMAGE": "Imagen del evento",
+      "EVENT_TYPE": "Tipo de evento",
+      "EVENT_TITLE": "Título del evento",
+      "EVENT_DATE": "Fecha del evento",
+      "EVENT_DESCRIPTION": "Descripción del evento",
+      "VIEW_MORE": "Ver más",
+      "VIEW_LESS": "Ver menos",
+      "LOGOUT": "Cerrar Sesión",
+      "ANIMALS_COUNT": "0 animales",
+      "FILTER_OPTIONS": "Opciones de filtro",
+      "APPLY_FILTERS": "Aplicar filtros",
+      "RESET_FILTERS": "Restablecer filtros",
+      "CANCEL": "Cancelar",
+      "SELECT_TYPE": "Seleccione tipo de evento",
+      "SAVE_EVENT": "Guardar Evento",
+      "IMAGE_URL": "URL de la imagen",
+      "IMAGE_PREVIEW": "Vista previa de la imagen",
+      "TYPE_REQUIRED": "El tipo de evento es obligatorio",
+      "TITLE_REQUIRED": "El título del evento es obligatorio",
+      "DATE_REQUIRED": "La fecha del evento es obligatoria",
+      "DESCRIPTION_REQUIRED": "La descripción del evento es obligatoria",
+      "DESCRIPTION_TOO_LONG": "La descripción no puede exceder los 200 caracteres",
+      "IMAGE_REQUIRED": "La URL de la imagen es obligatoria"
     },
     "MEDICAL_HISTORY": {
       "TITLE": "Historial Clínico",
@@ -84,14 +120,39 @@
       "DELETE_VISIT": "Eliminar visita"
     },
     "ECONOMIC_CONTROL": {
-      "TITLE": "Control Económico",
-      "INCOME": "Ingresos",
-      "EXPENSES": "Gastos",
-      "LEADS": "Leads generados por semana",
-      "ADD_INCOME": "Agregar ingreso",
-      "ADD_EXPENSE": "Agregar gasto",
-      "NET_INCOME": "A continuación se muestra el ingreso neto por semana:"
+    "ADD_INCOME": "Agregar Ingreso",
+    "ADD_EXPENSE": "Agregar Gasto",
+    "INCOME": "Ingresos",
+    "EXPENSES": "Gastos",
+    "NET_INCOME": "Ingreso Neto",
+    "ADD_INCOME_TITLE": "Agregar Ingreso",
+    "ADD_EXPENSE_TITLE": "Agregar Gasto",
+    "AMOUNT": "Monto",
+    "DESCRIPTION": "Descripción",
+    "CATEGORY": "Categoría",
+    "ACCEPT": "Aceptar",
+    "CANCEL": "Cancelar",
+    "AMOUNT_REQUIRED": "El monto es obligatorio",
+    "AMOUNT_MIN": "El monto debe ser mayor que 0",
+    "DESCRIPTION_REQUIRED": "La descripción es obligatoria",
+    "DESCRIPTION_MAX_LENGTH": "La descripción no puede exceder los 100 caracteres",
+    "DESCRIPTION_PLACEHOLDER": "Describe la fuente de ingreso...",
+    "EXPENSE_DESCRIPTION_PLACEHOLDER": "Describe el gasto...",
+    "CATEGORIES": {
+      "SALES": "Ventas",
+      "SERVICES": "Servicios",
+      "INVESTMENTS": "Inversiones",
+      "OTHER": "Otros"
     },
+    "EXPENSE_CATEGORIES": {
+      "SUPPLIES": "Suministros",
+      "EQUIPMENT": "Equipamiento",
+      "VETERINARY": "Veterinario",
+      "FEED": "Alimentación",
+      "MAINTENANCE": "Mantenimiento",
+      "OTHER": "Otros"
+    }
+  },
     "REPORTS": {
       "TITLE": "Reportes",
       "GENERATE": "Generar Reporte",
@@ -125,5 +186,45 @@
       "CONTACT": "Contacto",
       "SOCIAL": "Redes Sociales",
       "ABOUT": "Conócenos"
-    }
+    },
+    "SETTINGS": {
+    "TITLE": "Configuración de Perfil",
+    "CHANGE_PHOTO": "Cambiar foto",
+    "FULL_NAME": "Nombre completo",
+    "EMAIL": "Correo electrónico",
+    "PASSWORD": "Contraseña",
+    "ROLE": "Rol",
+    "EDIT_PROFILE": "Editar perfil",
+    "DELETE_PHOTO": "Eliminar foto",
+    "SAVE_CHANGES": "Guardar Cambios",
+    "UPDATE_PROFILE": "Actualizar perfil",
+    "CANCEL": "Cancelar",
+    "SHOW": "Mostrar",
+    "HIDE": "Ocultar"
+  },
+  "ANIMALS": {
+    "LETS_START": "¡Empecemos!",
+    "NAME": "Nombre",
+    "SPECIES": "Especie",
+    "BIRTH_DATE": "Fecha de Nacimiento",
+    "SEX": "Sexo",
+    "DISEASE": "Enfermedad",
+    "REPRODUCTIVE_STATUS": "Estado Reproductivo",
+    "UPLOAD_IMAGE": "Subir Imagen",
+    "APPLIED_VACCINES": "Vacunas Aplicadas",
+    "NUMBER_OF_BIRTHS": "Número de Partos",
+    "LOCATION": "Ubicación",
+    "ATTACH_FILE": "Adjuntar Archivo",
+    "OBSERVATIONS": "Observaciones",
+    "ADD_ANIMAL": "Agregar Animal",
+    "CANCEL": "Cancelar"
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "Notificaciones",
+    "MARK_ALL_READ": "Marcar todas como leídas",
+    "ADD": "Agregar",
+    "DISMISS": "Descartar"
   }
+}
+
+  

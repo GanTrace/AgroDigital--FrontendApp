@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
+import { AuthService } from '../../../public/services/auth.service';
+import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
+import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
+import { EconomicService } from '../../services/economic.service';
+import { Subscription } from 'rxjs';
 
 Chart.register(...registerables);
 
@@ -16,27 +21,77 @@ Chart.register(...registerables);
     RouterModule, 
     TranslateModule,
     FooterComponentComponent,
-    LanguageSwitcherComponent
+    LanguageSwitcherComponent,
+    NotificationsComponent,
+    HeaderComponent
   ],
   templateUrl: './economic-control.component.html',
   styleUrls: ['./economic-control.component.css']
 })
-export class EconomicControlComponent implements OnInit {
-  public ingresos: number = 1485;
-  public gastos: number = 1485;
+export class EconomicControlComponent implements OnInit, OnDestroy {
+  public ingresos: number = 0;
+  public gastos: number = 0;
+  userName: string = '';
+  animalCount: string = '0 animales';
+  showNotifications: boolean = false;
+  private incomeSubscription?: Subscription;
+  private expenseSubscription?: Subscription;
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    private authService: AuthService,
+    private economicService: EconomicService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    // Set language from localStorage or default
     const savedLang = localStorage.getItem('preferredLanguage');
     if (savedLang) {
       this.translate.use(savedLang);
     }
     
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      this.userName = user.name;
+    }
+    
+    this.incomeSubscription = this.economicService.getTotalIncome().subscribe(total => {
+      this.ingresos = total;
+    });
+    
+    this.expenseSubscription = this.economicService.getTotalExpense().subscribe(total => {
+      this.gastos = total;
+    });
+    
     setTimeout(() => {
       this.createChart();
     }, 100);
+  }
+
+  ngOnDestroy() {
+    if (this.incomeSubscription) {
+      this.incomeSubscription.unsubscribe();
+    }
+    
+    if (this.expenseSubscription) {
+      this.expenseSubscription.unsubscribe();
+    }
+  }
+
+  toggleNotifications(): void {
+    this.showNotifications = !this.showNotifications;
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
+
+  navigateToAddIncome(): void {
+    this.router.navigate(['/add-income']);
+  }
+
+  navigateToAddExpense(): void {
+    this.router.navigate(['/add-expense']);
   }
 
   createChart() {

@@ -20,7 +20,6 @@ export class LanguageSwitcherComponent implements OnInit {
   constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
-    // Get saved language or use default
     const savedLang = localStorage.getItem('preferredLanguage');
     if (savedLang) {
       this.currentLang = savedLang;

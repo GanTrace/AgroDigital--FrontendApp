@@ -5,7 +5,8 @@
       "email": "rodrigo.jsr12@gmail.com",
       "password": "Rodrigo12!",
       "role": "rancher",
-      "id": 1
+      "id": 1,
+      "profileImage": "https://bloggroomer.es/wp-content/uploads/2024/07/portrait-of-grey-scottish-fold-cat-lying-on-sofa-at-home-1024x684.jpg.webp"
     },
     {
       "name": "Erick",
@@ -13,6 +14,21 @@
       "password": "TheMutantRoost1812!",
       "role": "rancher",
       "id": 2
+    },
+    {
+      "name": "Gary",
+      "email": "gary96@gmail.com",
+      "password": "Khvrenai96!",
+      "role": "rancher",
+      "id": 3
+    },
+    {
+      "name": "Nelson Fabrizio",
+      "email": "nelson@gmail.com",
+      "password": "Nelson12345!",
+      "role": "rancher",
+      "id": 4,
+      "profileImage": "https://hospitalveterinariodonostia.com/wp-content/uploads/2020/10/gatos.png"
     }
   ]
 }

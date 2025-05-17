@@ -48,13 +48,49 @@
       "SPECIES": "Species",
       "AGE": "Age",
       "SEX": "Sex",
-      "DISEASES": "Diseases"
+      "DISEASES": "Diseases",
+      "WELCOME": "Welcome",
+      "ADD_ANIMAL": "Add Animal",
+      "SEARCH": "Search animal",
+      "FILTER": "Filter",
+      "FILTER_OPTIONS": "Filter Options",
+      "ANIMAL_TYPE": "Animal Type",
+      "YEARS": "years",
+      "APPLY_FILTERS": "Apply Filters",
+      "RESET_FILTERS": "Reset Filters",
+      "CANCEL": "Cancel",
+      "ANIMAL_IMAGE": "Animal image",
+      "VIEW_MORE": "View more",
+      "VIEW_LESS": "View less"
     },
     "EVENTS": {
       "SEARCH": "Search",
       "FILTER": "Filter",
       "UPCOMING": "Here are the upcoming events:",
-      "ADD_EVENT": "Add Event"
+      "ADD_EVENT": "Add Event",
+      "EVENT_IMAGE": "Event image",
+      "EVENT_TYPE": "Event type",
+      "EVENT_TITLE": "Event title",
+      "EVENT_DATE": "Event date",
+      "EVENT_DESCRIPTION": "Event description",
+      "VIEW_MORE": "View more",
+      "VIEW_LESS": "View less",
+      "LOGOUT": "Logout",
+      "ANIMALS_COUNT": "0 animals",
+      "FILTER_OPTIONS": "Filter Options",
+      "APPLY_FILTERS": "Apply Filters",
+      "RESET_FILTERS": "Reset Filters",
+      "CANCEL": "Cancel",
+      "SELECT_TYPE": "Select event type",
+      "SAVE_EVENT": "Save Event",
+      "IMAGE_URL": "Image URL",
+      "IMAGE_PREVIEW": "Image Preview",
+      "TYPE_REQUIRED": "Event type is required",
+      "TITLE_REQUIRED": "Event title is required",
+      "DATE_REQUIRED": "Event date is required",
+      "DESCRIPTION_REQUIRED": "Event description is required",
+      "DESCRIPTION_TOO_LONG": "Description cannot exceed 200 characters",
+      "IMAGE_REQUIRED": "Image URL is required"
     },
     "MEDICAL_HISTORY": {
       "TITLE": "Medical History",
@@ -84,14 +120,39 @@
       "DELETE_VISIT": "Delete visit"
     },
     "ECONOMIC_CONTROL": {
-      "TITLE": "Economic Control",
-      "INCOME": "Income",
-      "EXPENSES": "Expenses",
-      "LEADS": "Leads generated per week",
-      "ADD_INCOME": "Add income",
-      "ADD_EXPENSE": "Add expense",
-      "NET_INCOME": "Below is the net income per week:"
+    "ADD_INCOME": "Add Income",
+    "ADD_EXPENSE": "Add Expense",
+    "INCOME": "Income",
+    "EXPENSES": "Expenses",
+    "NET_INCOME": "Net Income",
+    "ADD_INCOME_TITLE": "Add Income",
+    "ADD_EXPENSE_TITLE": "Add Expense",
+    "AMOUNT": "Amount",
+    "DESCRIPTION": "Description",
+    "CATEGORY": "Category",
+    "ACCEPT": "Accept",
+    "CANCEL": "Cancel",
+    "AMOUNT_REQUIRED": "Amount is required",
+    "AMOUNT_MIN": "Amount must be greater than 0",
+    "DESCRIPTION_REQUIRED": "Description is required",
+    "DESCRIPTION_MAX_LENGTH": "Description cannot exceed 100 characters",
+    "DESCRIPTION_PLACEHOLDER": "Describe the income source...",
+    "EXPENSE_DESCRIPTION_PLACEHOLDER": "Describe the expense...",
+    "CATEGORIES": {
+      "SALES": "Sales",
+      "SERVICES": "Services",
+      "INVESTMENTS": "Investments",
+      "OTHER": "Other"
     },
+    "EXPENSE_CATEGORIES": {
+      "SUPPLIES": "Supplies",
+      "EQUIPMENT": "Equipment",
+      "VETERINARY": "Veterinary",
+      "FEED": "Feed",
+      "MAINTENANCE": "Maintenance",
+      "OTHER": "Other"
+    }
+  },
     "REPORTS": {
       "TITLE": "Reports",
       "GENERATE": "Generate Report",
@@ -125,5 +186,45 @@
       "CONTACT": "Contact",
       "SOCIAL": "Social Media",
       "ABOUT": "About Us"
-    }
+    },
+    "SETTINGS": {
+    "TITLE": "Profile Configuration",
+    "SAVE_CHANGES": "Save Changes",
+    "CHANGE_PHOTO": "Change Photo",
+    "DELETE_PHOTO": "Delete Photo",
+    "FULL_NAME": "Full name",
+    "EMAIL": "Email address",
+    "PASSWORD": "Password",
+    "ROLE": "Role",
+    "EDIT_PROFILE": "Edit profile",
+    "UPDATE_PROFILE": "Update profile",
+    "CANCEL": "Cancel",
+    "SHOW": "Show",
+    "HIDE": "Hide"
+  },
+  "ANIMALS": {
+    "LETS_START": "Let's start!",
+    "NAME": "Name",
+    "SPECIES": "Species",
+    "BIRTH_DATE": "Birth Date",
+    "SEX": "Sex",
+    "DISEASE": "Disease",
+    "REPRODUCTIVE_STATUS": "Reproductive Status",
+    "UPLOAD_IMAGE": "Upload Image",
+    "APPLIED_VACCINES": "Applied Vaccines",
+    "NUMBER_OF_BIRTHS": "Number of Births",
+    "LOCATION": "Location",
+    "ATTACH_FILE": "Attach File",
+    "OBSERVATIONS": "Observations",
+    "ADD_ANIMAL": "Add Animal",
+    "CANCEL": "Cancel"
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "Notifications",
+    "MARK_ALL_READ": "Mark all as read",
+    "ADD": "Add",
+    "DISMISS": "Dismiss"
   }
+
+}
+
