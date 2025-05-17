@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ interface RegisterPayload {
   name: string;
   email: string;
   password: string;
+  role?: string;
 }
 
 @Component({
@@ -28,8 +29,8 @@ interface RegisterPayload {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
-  registerForm: FormGroup;
+export class RegisterComponent implements OnInit {
+  registerForm!: FormGroup;
   showPassword = false;
   errorMessage = '';
   isSubmitting = false;
@@ -40,17 +41,19 @@ export class RegisterComponent {
     private router: Router,
     private translate: TranslateService
   ) {
-    this.registerForm = this.fb.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
-    });
-
-
     const savedLang = localStorage.getItem('preferredLanguage');
     if (savedLang) {
       this.translate.use(savedLang);
     }
+  }
+
+  ngOnInit(): void {
+    this.registerForm = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      role: ['rancher', Validators.required] 
+    });
   }
 
   togglePasswordVisibility() {
@@ -79,7 +82,8 @@ export class RegisterComponent {
     const payload: RegisterPayload = {
       name: this.registerForm.get('name')?.value,
       email: this.registerForm.get('email')?.value,
-      password: this.registerForm.get('password')?.value
+      password: this.registerForm.get('password')?.value,
+      role: this.registerForm.get('role')?.value
     };
 
     this.authService.register(payload).subscribe({
