@@ -14,6 +14,7 @@ import { AddEventComponent } from './rancher/components/add-event/add-event.comp
 import { AddExpenseComponent } from './rancher/components/add-expense/add-expense.component';
 import { AddIncomeComponent } from './rancher/components/add-income/add-income.component';
 import { VetDashboardComponent } from './veterinarian/components/vet-dashboard/vet-dashboard.component';
+import { MedicalRecordsComponent } from './veterinarian/components/medical-records/medical-records.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,8 +22,8 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path:'page-not-found', component: PageNotFoundComponent },
     { path:'header', component: HeaderComponent },
+    // Rancher routes
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'veterinarian/dashboard', component: VetDashboardComponent },
     { path: 'animals', component: AnimalsComponent },
     { path: 'events', component: EventsComponent },
     { path: 'medical-history', component: MedicalHistoryComponent }, 
@@ -32,6 +33,11 @@ export const routes: Routes = [
     { path:'add-event', component: AddEventComponent },
     { path:'add-expense', component: AddExpenseComponent },
     { path:'add-income', component: AddIncomeComponent },
+    // Veterinarian routes
+    { path: 'veterinarian/dashboard', component: VetDashboardComponent },
+    { path: 'veterinarian/medical-records', component: MedicalRecordsComponent },
+    { path: 'veterinarian/settings', component: SettingsComponent },
+    
     { path: '**', redirectTo: 'login' }
   ];
 

@@ -33,6 +33,7 @@ export class SettingsComponent implements OnInit {
   isEditing: boolean = false;
   showPassword: boolean = false;
   settingsForm: FormGroup;
+  userRole: string = 'rancher'; 
   
   profileImageUrl: string | null = null;
   showImageUrlInput: boolean = false;
@@ -65,6 +66,12 @@ export class SettingsComponent implements OnInit {
     
     const currentUser = this.authService.getCurrentUser();
     if (currentUser && currentUser.id !== undefined) {
+      this.userRole = currentUser.role || 'rancher';
+      
+      if (this.userRole === 'veterinarian') {
+        this.animalCount = '0 pacientes';
+      }
+      
       this.authService.getUserById(currentUser.id).subscribe({
         next: (userData) => {
           this.user = userData; 
@@ -167,5 +174,21 @@ export class SettingsComponent implements OnInit {
   
   logout(): void {
     this.authService.logout();
+  }
+  
+  navigateBack(): void {
+    if (this.userRole === 'veterinarian') {
+      this.router.navigate(['/veterinarian/dashboard']);
+    } else {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+  
+  navigateToSettings(): void {
+    if (this.userRole === 'veterinarian') {
+      this.router.navigate(['/veterinarian/settings']);
+    } else {
+      this.router.navigate(['/settings']);
+    }
   }
 }

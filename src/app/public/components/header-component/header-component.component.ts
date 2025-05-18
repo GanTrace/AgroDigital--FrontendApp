@@ -25,6 +25,8 @@ export class HeaderComponent implements OnInit {
   profileImage = '';
   itemCount = '0';
   showNotifications = false;
+  user: User | null = null; 
+
   
   constructor(
     private authService: AuthService,
@@ -35,6 +37,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     const user = this.authService.getCurrentUser();
     if (user) {
+      this.user = user;
       this.userName = user.name;
       this.userRole = user.role || 'rancher';
       this.profileImage = user.profileImage || 'assets/images/default-avatar.png';
@@ -63,10 +66,10 @@ export class HeaderComponent implements OnInit {
     if (this.userRole === 'veterinarian') {
       return [
         { path: '/veterinarian/dashboard', label: 'HEADER.DASHBOARD' },
+        { path: '/veterinarian/medical-records', label: 'HEADER.MEDICAL_RECORDS' },
         { path: '/appointments', label: 'HEADER.APPOINTMENTS' },
         { path: '/patients', label: 'HEADER.PATIENTS' },
-        { path: '/medical-records', label: 'HEADER.MEDICAL_RECORDS' },
-        { path: '/settings', label: 'HEADER.SETTINGS' }
+        { path: '/veterinarian/settings', label: 'HEADER.SETTINGS' }
       ];
     } else {
       return [
@@ -78,6 +81,14 @@ export class HeaderComponent implements OnInit {
         { path: '/reports', label: 'HEADER.REPORTS' },
         { path: '/settings', label: 'HEADER.SETTINGS' }
       ];
+    }
+  }
+  
+  navigateToSettings(): void {
+    if (this.userRole === 'veterinarian') {
+      this.router.navigate(['/veterinarian/settings']);
+    } else {
+      this.router.navigate(['/settings']);
     }
   }
 }

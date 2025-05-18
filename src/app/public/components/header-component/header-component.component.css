@@ -1,160 +1,115 @@
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #7ab55c;
-  padding: 15px 30px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  color: white;
-}
-
-.logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: white;
-}
-
-.main-nav {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.nav-item {
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  padding: 5px 10px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.nav-item.active {
-  background-color: #8e5928;
-  font-weight: bold;
-}
-
-.nav-item:hover:not(.active) {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.user-section {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.user-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.user-name {
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-}
-
-.item-count {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.user-avatar img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid white;
-}
-
-.logout-btn {
-  background-color: #8e5928;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  margin-left: 10px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
-}
-
-.logout-btn:hover {
-  background-color: #734621;
-}
-
-.notifications {
-  position: relative;
-  margin-right: 15px;
-}
-
-.notification-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease;
-}
-
-.notification-btn:hover {
-  transform: scale(1.1);
-}
-
-.notification-icon {
-  font-size: 1.4rem;
-  color: white;
-}
-
-.notification-btn::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 8px;
-  height: 8px;
-  background-color: #ff4444;
-  border-radius: 50%;
-  display: none;
-}
-
-.notification-btn.has-notifications::after {
-  display: block;
-}
-
-@media (max-width: 992px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 60px;
+    background-color: #7ab55c;
+    color: white;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
   .main-nav {
-    gap: 10px;
+    display: flex;
+    gap: 20px;
   }
   
   .nav-item {
-    padding: 5px 8px;
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    padding: 15px;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
   }
   
-  .main-nav {
-    margin: 15px 0;
-    justify-content: center;
+  .nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .nav-item.active {
+    background-color: #8e5928;
   }
   
   .user-section {
-    width: 100%;
-    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    gap: 15px;
   }
-}
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .user-info:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .user-details {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+  }
+  
+  .user-name {
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .animal-count {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .notifications {
+    position: relative;
+  }
+  
+  .notification-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  .logout-btn {
+    background-color: #8e5928;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .logout-btn:hover {
+    background-color: #4c7a12;
+  }
+  
+  .language-switcher {
+    margin-left: 10px;
+    color: black;
+  }

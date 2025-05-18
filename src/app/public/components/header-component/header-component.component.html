@@ -27,12 +27,14 @@
       <div class="user-avatar">
         <img [src]="profileImage" alt="User Avatar">
       </div>
-      
-      <button class="logout-btn" (click)="logout()">
-        {{ 'HEADER.LOGOUT' | translate }}
-      </button>
     </div>
+    
+    <button class="logout-btn" (click)="logout()">
+      {{ 'HEADER.LOGOUT' | translate }}
+    </button>
     
     <app-language-switcher></app-language-switcher>
   </div>
 </div>
+
+<app-notifications *ngIf="showNotifications"></app-notifications>

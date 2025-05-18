@@ -240,6 +240,38 @@
     "MARK_ALL_READ": "Marcar todas como leídas",
     "ADD": "Agregar",
     "DISMISS": "Descartar"
+  },
+  "VET_MEDICAL_RECORDS": {
+    "TITLE": "Registros Médicos",
+    "ADD_RECORD": "Agregar Registro",
+    "SEARCH_PLACEHOLDER": "Buscar por paciente, propietario, diagnóstico...",
+    "FILTER": "Filtrar",
+    "FILTER_OPTIONS": "Opciones de Filtro",
+    "PATIENT": "Paciente",
+    "ALL_PATIENTS": "Todos los pacientes",
+    "RECORD_TYPE": "Tipo de Registro",
+    "RECORD_TYPES": {
+      "ALL": "Todos los tipos",
+      "CHECKUP": "Revisión",
+      "VACCINATION": "Vacunación",
+      "TREATMENT": "Tratamiento",
+      "SURGERY": "Cirugía",
+      "EMERGENCY": "Emergencia"
+    },
+    "APPLY_FILTERS": "Aplicar Filtros",
+    "RESET_FILTERS": "Restablecer Filtros",
+    "CANCEL": "Cancelar",
+    "DATE": "Fecha",
+    "OWNER": "Propietario",
+    "DIAGNOSIS": "Diagnóstico",
+    "TREATMENT": "Tratamiento",
+    "FOLLOW_UP": "Seguimiento",
+    "ACTIONS": "Acciones",
+    "VIEW": "Ver detalles",
+    "EDIT": "Editar",
+    "DELETE": "Eliminar",
+    "NO_RECORDS": "No se encontraron registros médicos",
+    "DELETE_CONFIRM": "¿Está seguro de que desea eliminar este registro médico? Esta acción no se puede deshacer."
   }
 }
 
