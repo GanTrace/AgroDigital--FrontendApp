@@ -41,6 +41,19 @@
       "PASSWORD_STRENGTH_ERROR": "La contraseña debe incluir letras, números y símbolos.",
       "FORM_ERROR": "Por favor complete todos los campos correctamente."
     },
+    "HEADER": {
+      "DASHBOARD": "Inicio",
+      "ANIMALS": "Animales",
+      "EVENTS": "Eventos",
+      "MEDICAL_HISTORY": "Historial Médico",
+      "ECONOMIC_CONTROL": "Control Económico",
+      "REPORTS": "Reportes",
+      "SETTINGS": "Configuración",
+      "LOGOUT": "Cerrar Sesión",
+      "APPOINTMENTS": "Citas",
+      "PATIENTS": "Pacientes",
+      "MEDICAL_RECORDS": "Registros Médicos"
+    },
     "DASHBOARD": {
       "TITLE": "Mis Animales",
       "ANIMALS": "Animales",

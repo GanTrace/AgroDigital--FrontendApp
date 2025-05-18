@@ -13,6 +13,7 @@ import { HeaderComponent } from './public/components/header-component/header-com
 import { AddEventComponent } from './rancher/components/add-event/add-event.component';
 import { AddExpenseComponent } from './rancher/components/add-expense/add-expense.component';
 import { AddIncomeComponent } from './rancher/components/add-income/add-income.component';
+import { VetDashboardComponent } from './veterinarian/components/vet-dashboard/vet-dashboard.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,6 +22,7 @@ export const routes: Routes = [
     { path:'page-not-found', component: PageNotFoundComponent },
     { path:'header', component: HeaderComponent },
     { path: 'dashboard', component: DashboardComponent },
+    { path: 'veterinarian/dashboard', component: VetDashboardComponent },
     { path: 'animals', component: AnimalsComponent },
     { path: 'events', component: EventsComponent },
     { path: 'medical-history', component: MedicalHistoryComponent }, 

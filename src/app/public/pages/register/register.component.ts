@@ -89,7 +89,8 @@ export class RegisterComponent implements OnInit {
     this.authService.register(payload).subscribe({
       next: () => {
         this.isSubmitting = false;
-        this.router.navigate(['/dashboard']);
+        const dashboardRoute = this.authService.getDashboardRoute();
+        this.router.navigate([dashboardRoute]);
       },
       error: (error) => {
         this.isSubmitting = false;
