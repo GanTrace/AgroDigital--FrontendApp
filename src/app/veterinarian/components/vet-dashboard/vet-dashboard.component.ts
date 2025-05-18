@@ -180,4 +180,8 @@ export class VetDashboardComponent implements OnInit {
   logout(): void {
     this.authService.logout();
   }
+  
+  navigateToSettings(): void {
+    this.router.navigate(['/veterinarian/settings']);
+  }
 }
