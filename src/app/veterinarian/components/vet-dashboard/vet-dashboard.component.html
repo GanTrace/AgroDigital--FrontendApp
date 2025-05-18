@@ -1,0 +1,97 @@
+<div class="dashboard-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="welcome-section">
+      <h1>Bienvenido Dr. {{ userName }}!</h1>
+      <button class="add-appointment-btn" routerLink="/new-appointment">
+        <span>Nueva Cita</span>
+        <span class="add-icon">+</span>
+      </button>
+    </div>
+    
+    <div class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (input)="searchPatients()"
+          (keyup)="searchPatients()"
+          placeholder="Buscar paciente o propietario">
+      </div>
+      <button class="filter-btn" (click)="toggleFilters()">
+        Filtrar
+        <i class="filter-icon">≡</i>
+      </button>
+    </div>
+    
+    <div class="filter-panel" [class.show-filters]="showFilters">
+      <div class="filter-header">
+        <h3>Opciones de Filtro</h3>
+        <button class="close-filters" (click)="toggleFilters()">×</button>
+      </div>
+      
+      <div class="filter-content">
+        <div class="filter-group">
+          <label>Tipo de Animal</label>
+          <select [(ngModel)]="selectedFilters.type">
+            <option *ngFor="let type of animalTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-actions">
+          <button class="apply-btn" (click)="applyFilters()">Aplicar Filtros</button>
+          <button class="reset-btn" (click)="resetFilters()">Restablecer</button>
+          <button class="cancel-btn" (click)="toggleFilters()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="dashboard-sections">
+      <section class="patients-section">
+        <h2>Mis Pacientes</h2>
+        <div class="patients-grid">
+          <div class="patient-card" *ngFor="let patient of filteredPatients">
+            <div class="patient-tag">{{ patient.tipo }}</div>
+            <div class="patient-image">
+              <img [src]="patient.imagen" alt="Imagen del animal">
+            </div>
+            <div class="patient-name">{{ patient.nombre }}</div>
+            <ul class="patient-details-list">
+              <li>Edad: {{ patient.edad }}</li>
+              <li>Propietario: {{ patient.propietario }}</li>
+              <li>Última visita: {{ patient.ultimaVisita }}</li>
+            </ul>
+            <button class="info-btn" routerLink="/medical-record/{{ patient.id }}">i</button>
+          </div>
+        </div>
+        
+        <div class="view-more-container" *ngIf="patients.length > 6">
+          <button class="view-more-btn">Ver más</button>
+        </div>
+      </section>
+      
+      <section class="appointments-section">
+        <h2>Próximas Citas</h2>
+        <div class="appointments-list">
+          <div class="appointment-card" *ngFor="let appointment of upcomingAppointments">
+            <div class="appointment-date">
+              <div class="date">{{ appointment.date }}</div>
+              <div class="time">{{ appointment.time }}</div>
+            </div>
+            <div class="appointment-details">
+              <div class="patient-name">{{ appointment.patientName }}</div>
+              <div class="owner-name">Propietario: {{ appointment.ownerName }}</div>
+              <div class="reason">Motivo: {{ appointment.reason }}</div>
+            </div>
+            <div class="appointment-actions">
+              <button class="edit-btn">Editar</button>
+              <button class="cancel-btn">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>
