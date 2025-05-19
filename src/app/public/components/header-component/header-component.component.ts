@@ -67,8 +67,9 @@ export class HeaderComponent implements OnInit {
       return [
         { path: '/veterinarian/dashboard', label: 'HEADER.DASHBOARD' },
         { path: '/veterinarian/medical-records', label: 'HEADER.MEDICAL_RECORDS' },
-        { path: '/appointments', label: 'HEADER.APPOINTMENTS' },
-        { path: '/patients', label: 'HEADER.PATIENTS' },
+        { path: '/veterinarian/medical-appointments', label: 'HEADER.APPOINTMENTS' },
+        { path: '/veterinarian/patients', label: 'HEADER.PATIENTS' },
+        { path: '/veterinarian/treatments', label: 'HEADER.TREATMENTS' },
         { path: '/veterinarian/settings', label: 'HEADER.SETTINGS' }
       ];
     } else {

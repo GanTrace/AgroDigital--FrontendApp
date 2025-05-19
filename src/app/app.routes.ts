@@ -15,6 +15,10 @@ import { AddExpenseComponent } from './rancher/components/add-expense/add-expens
 import { AddIncomeComponent } from './rancher/components/add-income/add-income.component';
 import { VetDashboardComponent } from './veterinarian/components/vet-dashboard/vet-dashboard.component';
 import { MedicalRecordsComponent } from './veterinarian/components/medical-records/medical-records.component';
+import { MedicalAppointmentsComponent } from './veterinarian/components/medical-appointments/medical-appointments.component';
+import { PatientsComponent } from './veterinarian/components/patients/patients.component';
+import { TreatmentsComponent } from './veterinarian/components/treatments/treatments.component';
+
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -37,7 +41,9 @@ export const routes: Routes = [
     { path: 'veterinarian/dashboard', component: VetDashboardComponent },
     { path: 'veterinarian/medical-records', component: MedicalRecordsComponent },
     { path: 'veterinarian/settings', component: SettingsComponent },
-    
+    { path:'veterinarian/medical-appointments', component: MedicalAppointmentsComponent },
+    { path:'veterinarian/patients', component: PatientsComponent},
+    { path:'veterinarian/treatments', component: TreatmentsComponent},
     { path: '**', redirectTo: 'login' }
   ];
 
