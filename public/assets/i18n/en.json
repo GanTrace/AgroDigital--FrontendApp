@@ -42,19 +42,19 @@
       "FORM_ERROR": "Please complete all fields correctly."
     },
     "HEADER": {
-      "DASHBOARD": "Home",
-      "ANIMALS": "Animals",
-      "EVENTS": "Events",
-      "MEDICAL_HISTORY": "Medical History",
-      "ECONOMIC_CONTROL": "Economic Control",
-      "REPORTS": "Reports",
-      "SETTINGS": "Settings",
-      "LOGOUT": "Logout",
-      "APPOINTMENTS": "Appointments",
-      "PATIENTS": "Patients",
-      "MEDICAL_RECORDS": "Medical Records",
-      "TREATMENTS": "Treatments"
-    },
+    "DASHBOARD": "Dashboard",
+    "ANIMALS": "Animals",
+    "EVENTS": "Events",
+    "MEDICAL_HISTORY": "Medical History",
+    "ECONOMIC_CONTROL": "Economic Control",
+    "REPORTS": "Reports",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Logout",
+    "MEDICAL_RECORDS": "Medical Records",
+    "APPOINTMENTS": "Appointments",
+    "PATIENTS": "Patients",
+    "TREATMENTS": "Treatments"
+  },
     "DASHBOARD": {
       "TITLE": "My Animals",
       "ANIMALS": "Animals",

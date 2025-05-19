@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AuthService, User } from '../../../public/services/auth.service';
-import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
-import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
+import { AuthService, User } from '../../services/auth.service';
+import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
+import { NotificationsComponent } from '../../pages/notifications/notifications.component';
 
 @Component({
   selector: 'app-header-component',
@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit {
   profileImage = '';
   itemCount = '0';
   showNotifications = false;
+  showProfileMenu = false;
   user: User | null = null; 
 
   
@@ -52,6 +53,18 @@ export class HeaderComponent implements OnInit {
 
   toggleNotifications(): void {
     this.showNotifications = !this.showNotifications;
+    // Close profile menu if open
+    if (this.showProfileMenu) {
+      this.showProfileMenu = false;
+    }
+  }
+  
+  toggleProfileMenu(): void {
+    this.showProfileMenu = !this.showProfileMenu;
+    // Close notifications if open
+    if (this.showNotifications && this.showProfileMenu) {
+      this.showNotifications = false;
+    }
   }
 
   logout(): void {
@@ -69,8 +82,7 @@ export class HeaderComponent implements OnInit {
         { path: '/veterinarian/medical-records', label: 'HEADER.MEDICAL_RECORDS' },
         { path: '/veterinarian/medical-appointments', label: 'HEADER.APPOINTMENTS' },
         { path: '/veterinarian/patients', label: 'HEADER.PATIENTS' },
-        { path: '/veterinarian/treatments', label: 'HEADER.TREATMENTS' },
-        { path: '/veterinarian/settings', label: 'HEADER.SETTINGS' }
+        { path: '/veterinarian/treatments', label: 'HEADER.TREATMENTS' }
       ];
     } else {
       return [
@@ -79,8 +91,7 @@ export class HeaderComponent implements OnInit {
         { path: '/events', label: 'HEADER.EVENTS' },
         { path: '/medical-history', label: 'HEADER.MEDICAL_HISTORY' },
         { path: '/economic-control', label: 'HEADER.ECONOMIC_CONTROL' },
-        { path: '/reports', label: 'HEADER.REPORTS' },
-        { path: '/settings', label: 'HEADER.SETTINGS' }
+        { path: '/reports', label: 'HEADER.REPORTS' }
       ];
     }
   }
@@ -90,6 +101,21 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/veterinarian/settings']);
     } else {
       this.router.navigate(['/settings']);
+    }
+    this.showProfileMenu = false;
+  }
+  
+  // Close menu when clicking outside
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const userInfo = document.querySelector('.user-info');
+    const profileMenu = document.querySelector('.profile-menu');
+    
+    if (userInfo && profileMenu) {
+      if (!userInfo.contains(target) && !profileMenu.contains(target) && this.showProfileMenu) {
+        this.showProfileMenu = false;
+      }
     }
   }
 }

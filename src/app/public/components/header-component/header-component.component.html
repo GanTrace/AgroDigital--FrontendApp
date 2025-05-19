@@ -18,7 +18,7 @@
       </button>
     </div>
     
-    <div class="user-info">
+    <div class="user-info" (click)="toggleProfileMenu()">
       <div class="user-details">
         <span class="user-name">{{ userName }}</span>
         <span class="item-count">{{ itemCount }}</span>
@@ -29,12 +29,36 @@
       </div>
     </div>
     
-    <button class="logout-btn" (click)="logout()">
-      {{ 'HEADER.LOGOUT' | translate }}
-    </button>
-    
     <app-language-switcher></app-language-switcher>
   </div>
 </div>
 
 <app-notifications *ngIf="showNotifications"></app-notifications>
+
+<div class="profile-menu" *ngIf="showProfileMenu">
+  <div class="profile-menu-header">
+    <div class="profile-menu-avatar">
+      <img [src]="profileImage" alt="User Avatar">
+    </div>
+    <div class="profile-menu-info">
+      <div class="profile-menu-name">{{ userName }}</div>
+      <div class="profile-menu-role">{{ userRole === 'veterinarian' ? 'Veterinario' : 'Ganadero' }}</div>
+      <div class="profile-menu-status">
+      </div>
+    </div>
+    <button class="close-menu-btn" (click)="toggleProfileMenu()">×</button>
+  </div>
+  
+  <div class="profile-menu-items">
+    <a class="profile-menu-item" (click)="navigateToSettings()">
+      <i class="menu-icon">⚙️</i>
+      <span>{{ 'HEADER.SETTINGS' | translate }}</span>
+    </a>
+    <a class="profile-menu-item" (click)="logout()">
+      <i class="menu-icon">🚪</i>
+      <span>{{ 'HEADER.LOGOUT' | translate }}</span>
+    </a>
+  </div>
+</div>
+
+<div class="menu-overlay" *ngIf="showProfileMenu" (click)="toggleProfileMenu()"></div>
