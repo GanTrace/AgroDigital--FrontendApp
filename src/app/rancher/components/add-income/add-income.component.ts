@@ -47,9 +47,18 @@ export class AddIncomeComponent implements OnInit {
 
   onSubmit(): void {
     if (this.incomeForm.valid) {
-      const { amount, description, category } = this.incomeForm.value;
-      this.economicService.addIncome(Number(amount), description, category);
-      this.router.navigate(['/economic-control']);
+      const incomeData = this.incomeForm.value;
+      
+      // Fix: Pass only one argument (the income object) to addIncome
+      this.economicService.addIncome(incomeData).subscribe(
+        response => {
+          console.log('Income added successfully', response);
+          this.router.navigate(['/economic-control']);
+        },
+        error => {
+          console.error('Error adding income', error);
+        }
+      );
     } else {
       Object.keys(this.incomeForm.controls).forEach(key => {
         const control = this.incomeForm.get(key);

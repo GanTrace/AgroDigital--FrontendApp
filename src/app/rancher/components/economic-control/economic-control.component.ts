@@ -31,11 +31,16 @@ Chart.register(...registerables);
 export class EconomicControlComponent implements OnInit, OnDestroy {
   public ingresos: number = 0;
   public gastos: number = 0;
+  public balance: number = 0; 
   userName: string = '';
   animalCount: string = '0 animales';
   showNotifications: boolean = false;
+  recentTransactions: any[] = []; 
   private incomeSubscription?: Subscription;
   private expenseSubscription?: Subscription;
+  private transactionsSubscription?: Subscription; 
+  private chart: Chart | null = null;
+  private isChartInitialized = false;
 
   constructor(
     private translate: TranslateService,
@@ -55,17 +60,14 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
       this.userName = user.name;
     }
     
-    this.incomeSubscription = this.economicService.getTotalIncome().subscribe(total => {
-      this.ingresos = total;
-    });
+    // Load financial data first
+    this.loadFinancialData();
+    this.loadRecentTransactions(); 
     
-    this.expenseSubscription = this.economicService.getTotalExpense().subscribe(total => {
-      this.gastos = total;
-    });
-    
+    // Delay chart creation to improve initial load time
     setTimeout(() => {
-      this.createChart();
-    }, 100);
+      this.initializeChart();
+    }, 300);
   }
 
   ngOnDestroy() {
@@ -76,6 +78,89 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
     if (this.expenseSubscription) {
       this.expenseSubscription.unsubscribe();
     }
+    
+    if (this.transactionsSubscription) { 
+      this.transactionsSubscription.unsubscribe();
+    }
+    
+    // Destroy chart instance to prevent memory leaks
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = null;
+    }
+  }
+  
+  loadRecentTransactions() {
+    this.transactionsSubscription = this.economicService.getRecentTransactions().subscribe(
+      transactions => {
+        this.recentTransactions = transactions;
+      },
+      error => {
+        console.error('Error loading transactions', error);
+        this.recentTransactions = [];
+      }
+    );
+  }
+  
+  getTransactionIcon(category: string): string {
+    const icons: {[key: string]: string} = {
+      'sales': '💰',
+      'investment': '📈',
+      'investments': '📈',
+      'services': '🛠️',
+      'other': '💵',
+      'feed': '🌾',
+      'veterinary': '💉',
+      'equipment': '🔧',
+      'maintenance': '🏗️',
+      'supplies': '📦',
+      'other_expense': '💸'
+    };
+    
+    return icons[category.toLowerCase()] || '📋';
+  }
+  
+  getTranslatedCategory(category: string): string {
+    // Map the category to the appropriate translation key
+    const categoryKey = category.toUpperCase().replace(/\s+/g, '_');
+    if (category.toLowerCase().includes('expense')) {
+      return this.translate.instant(`ECONOMIC_CONTROL.EXPENSE_CATEGORIES.${categoryKey}`);
+    } else {
+      return this.translate.instant(`ECONOMIC_CONTROL.CATEGORIES.${categoryKey}`);
+    }
+  }
+  
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(this.translate.currentLang === 'es' ? 'es-ES' : 'en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+  
+  formatCurrency(amount: number): string {
+    return new Intl.NumberFormat(this.translate.currentLang === 'es' ? 'es-ES' : 'en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(amount);
+  }
+  
+  loadFinancialData() {
+    this.incomeSubscription = this.economicService.getTotalIncome().subscribe(total => {
+      this.ingresos = total;
+      this.calculateBalance(); // Calculate balance when income is loaded
+    });
+    
+    this.expenseSubscription = this.economicService.getTotalExpense().subscribe(total => {
+      this.gastos = total;
+      this.calculateBalance(); // Calculate balance when expense is loaded
+    });
+  }
+  
+  // Add method to calculate balance
+  calculateBalance() {
+    this.balance = this.ingresos - this.gastos;
   }
 
   toggleNotifications(): void {
@@ -94,24 +179,28 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
     this.router.navigate(['/add-expense']);
   }
 
-  createChart() {
+  initializeChart() {
+    if (this.isChartInitialized) return;
+    
     const ctx = document.getElementById('chart') as HTMLCanvasElement;
     if (!ctx) return;
-
-    const labels = Array.from({ length: 50 }, (_, i) => `Sem ${i+1}`);
-    const data = Array.from({ length: 50 }, () => Math.floor(Math.random() * 2000) + 500);
     
-    data[0] = 3200;
-    data[1] = 2800;
-    data[2] = 2600;
-    data[3] = 2500;
-    data[4] = 2400;
+    this.isChartInitialized = true;
     
-    for (let i = 5; i < data.length; i++) {
-      data[i] = Math.max(500, data[i-1] - Math.floor(Math.random() * 200));
-    }
+    // Reduce data points to improve performance
+    const dataPoints = 12; // Show only 12 months/weeks instead of 50
+    const labels = Array.from({ length: dataPoints }, (_, i) => `Sem ${i+1}`);
+    
+    // Simplified data generation
+    const data = Array.from({ length: dataPoints }, (_, i) => {
+      if (i < 5) {
+        return 3200 - (i * 200); // First 5 points with predefined values
+      } else {
+        return Math.max(500, 2400 - ((i-4) * 150)); // Remaining points with simpler calculation
+      }
+    });
 
-    const chart = new Chart(ctx, {
+    this.chart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: labels,
@@ -128,6 +217,9 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+          duration: 500 // Reduce animation duration
+        },
         plugins: {
           legend: {
             position: 'top',
@@ -167,8 +259,8 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
               font: {
                 size: 10
               },
-              maxRotation: 90,
-              minRotation: 90
+              maxRotation: 45, // Reduce rotation for better performance
+              minRotation: 45
             }
           }
         }
