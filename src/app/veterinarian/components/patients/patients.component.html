@@ -1,0 +1,107 @@
+<div class="patients-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="page-header">
+      <h1>{{ 'PATIENTS.TITLE' | translate }}</h1>
+      <button class="add-patient-btn" (click)="addNewPatient()">
+        <span>{{ 'PATIENTS.ADD_PATIENT' | translate }}</span>
+        <span class="add-icon">+</span>
+      </button>
+    </div>
+    
+    <div class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (input)="searchPatients()"
+          (keyup)="searchPatients()"
+          placeholder="{{ 'PATIENTS.SEARCH_PLACEHOLDER' | translate }}">
+      </div>
+      <button class="filter-btn" (click)="toggleFilters()">
+        {{ 'PATIENTS.FILTER' | translate }}
+        <i class="filter-icon">≡</i>
+      </button>
+    </div>
+    
+    <div class="filter-panel" [class.show-filters]="showFilters">
+      <div class="filter-header">
+        <h3>{{ 'PATIENTS.FILTER_OPTIONS' | translate }}</h3>
+        <button class="close-filters" (click)="toggleFilters()">×</button>
+      </div>
+      
+      <div class="filter-content">
+        <div class="filter-group">
+          <label>{{ 'PATIENTS.ANIMAL_TYPE' | translate }}</label>
+          <select [(ngModel)]="selectedAnimalType">
+            <option value="all">{{ 'PATIENTS.ALL_TYPES' | translate }}</option>
+            <option value="Vaca">{{ 'PATIENTS.COW' | translate }}</option>
+            <option value="Toro">{{ 'PATIENTS.BULL' | translate }}</option>
+            <option value="Cabra">{{ 'PATIENTS.GOAT' | translate }}</option>
+            <option value="Oveja">{{ 'PATIENTS.SHEEP' | translate }}</option>
+            <option value="Caballo">{{ 'PATIENTS.HORSE' | translate }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'PATIENTS.HEALTH_STATUS' | translate }}</label>
+          <select [(ngModel)]="selectedHealthStatus">
+            <option value="all">{{ 'PATIENTS.ALL_STATUSES' | translate }}</option>
+            <option value="healthy">{{ 'PATIENTS.HEALTHY' | translate }}</option>
+            <option value="treatment">{{ 'PATIENTS.IN_TREATMENT' | translate }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-actions">
+          <button class="apply-btn" (click)="applyFilters()">
+            {{ 'PATIENTS.APPLY_FILTERS' | translate }}
+          </button>
+          <button class="reset-btn" (click)="resetFilters()">
+            {{ 'PATIENTS.RESET_FILTERS' | translate }}
+          </button>
+          <button class="cancel-btn" (click)="toggleFilters()">
+            {{ 'PATIENTS.CANCEL' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="patients-section">
+      <div class="patients-grid">
+        <div class="patient-card" *ngFor="let patient of filteredPatients">
+          <div class="patient-tag" [ngClass]="getHealthStatusClass(patient.healthIssues)">
+            {{ patient.healthIssues === 'Ninguno' ? ('PATIENTS.HEALTHY' | translate) : ('PATIENTS.IN_TREATMENT' | translate) }}
+          </div>
+          <div class="patient-image">
+            <img [src]="patient.image" alt="{{ patient.name }}">
+          </div>
+          <div class="patient-info">
+            <h3 class="patient-name">{{ patient.name }}</h3>
+            <p class="patient-type">{{ patient.type }}</p>
+            <div class="patient-details">
+              <p><strong>{{ 'PATIENTS.OWNER' | translate }}:</strong> {{ patient.owner }}</p>
+              <p><strong>{{ 'PATIENTS.AGE' | translate }}:</strong> {{ patient.age }}</p>
+              <p><strong>{{ 'PATIENTS.GENDER' | translate }}:</strong> {{ patient.gender }}</p>
+              <p><strong>{{ 'PATIENTS.LAST_VISIT' | translate }}:</strong> {{ patient.lastVisit }}</p>
+              <p><strong>{{ 'PATIENTS.NEXT_VISIT' | translate }}:</strong> {{ patient.nextVisit }}</p>
+              <p *ngIf="patient.healthIssues !== 'Ninguno'">
+                <strong>{{ 'PATIENTS.HEALTH_ISSUES' | translate }}:</strong> {{ patient.healthIssues }}
+              </p>
+            </div>
+          </div>
+          <div class="patient-actions">
+            <button class="view-btn" (click)="viewPatientDetails(patient.id)">
+              {{ 'PATIENTS.VIEW_DETAILS' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="no-patients" *ngIf="filteredPatients.length === 0">
+        {{ 'PATIENTS.NO_PATIENTS' | translate }}
+      </div>
+    </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>

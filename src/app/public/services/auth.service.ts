@@ -40,6 +40,8 @@ export class AuthService {
       role: userData.role || 'rancher'
     };
     
+    console.log('Registering user with role:', user.role);
+    
     return this.http.post<User>(this.apiUrl, user).pipe(
       tap(response => {
         console.log('Registration successful:', response);
@@ -117,5 +119,13 @@ export class AuthService {
       return of({} as User);
     }
     return this.http.get<User>(`${this.apiUrl}/${id}`);
+  }
+
+  getDashboardRoute(): string {
+    const user = this.getCurrentUser();
+    if (user && user.role === 'veterinarian') {
+      return '/veterinarian/dashboard';
+    }
+    return '/dashboard'; 
   }
 }

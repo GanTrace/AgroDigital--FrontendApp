@@ -29,6 +29,14 @@
       "role": "rancher",
       "id": 4,
       "profileImage": "https://hospitalveterinariodonostia.com/wp-content/uploads/2020/10/gatos.png"
+    },
+    {
+      "name": "Patroclo",
+      "email": "patrocloquiereplata@gmail.com",
+      "password": "polloalabrasa30!",
+      "role": "veterinarian",
+      "id": 5,
+      "profileImage": "https://i.pinimg.com/originals/48/ee/ab/48eeab94003a4450804d9cb33ddf3089.png"
     }
   ]
 }

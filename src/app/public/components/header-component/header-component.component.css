@@ -43,7 +43,15 @@
   .user-info {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .user-info:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
   
   .user-details {
@@ -57,7 +65,7 @@
     cursor: pointer;
   }
   
-  .animal-count {
+  .item-count {
     font-size: 12px;
     opacity: 0.8;
   }
@@ -87,21 +95,117 @@
     font-size: 20px;
   }
   
-  .logout-btn {
-    background-color: #8e5928;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .logout-btn:hover {
-    background-color: #4c7a12;
-  }
-  
   .language-switcher {
     margin-left: 10px;
     color: black;
+  }
+  
+  /* Profile Menu Styles */
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 998;
+  }
+  
+  .profile-menu {
+    position: absolute;
+    top: 65px;
+    right: 20px;
+    width: 300px;
+    background-color: #d1bfa5;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    overflow: hidden;
+    color: #111;
+  }
+  
+  .profile-menu-header {
+    display: flex;
+    padding: 15px;
+    background-color: #A3794F;
+    position: relative;
+    color: white;
+  }
+  
+  .profile-menu-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+    border: 2px solid #A3C4A8;
+  }
+  
+  .profile-menu-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-menu-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .profile-menu-name {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 2px;
+  }
+  
+  .profile-menu-role {
+    font-size: 14px;
+    color: #f0f0f0;
+    margin-bottom: 5px;
+  }
+  
+  .profile-menu-status {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+  }
+  
+  .close-menu-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .close-menu-btn:hover {
+    color: #A3C4A8;
+  }
+  
+  .profile-menu-items {
+    padding: 10px 0;
+  }
+  
+  .profile-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    cursor: pointer;
+  }
+  
+  .profile-menu-item:hover {
+    background-color: #A3C4A8;
+    color: white;
+  }
+  
+  .menu-icon {
+    margin-right: 15px;
+    font-size: 18px;
   }

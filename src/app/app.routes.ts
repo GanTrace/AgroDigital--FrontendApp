@@ -13,6 +13,12 @@ import { HeaderComponent } from './public/components/header-component/header-com
 import { AddEventComponent } from './rancher/components/add-event/add-event.component';
 import { AddExpenseComponent } from './rancher/components/add-expense/add-expense.component';
 import { AddIncomeComponent } from './rancher/components/add-income/add-income.component';
+import { VetDashboardComponent } from './veterinarian/components/vet-dashboard/vet-dashboard.component';
+import { MedicalRecordsComponent } from './veterinarian/components/medical-records/medical-records.component';
+import { MedicalAppointmentsComponent } from './veterinarian/components/medical-appointments/medical-appointments.component';
+import { PatientsComponent } from './veterinarian/components/patients/patients.component';
+import { TreatmentsComponent } from './veterinarian/components/treatments/treatments.component';
+
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,6 +26,7 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path:'page-not-found', component: PageNotFoundComponent },
     { path:'header', component: HeaderComponent },
+    // Rancher routes
     { path: 'dashboard', component: DashboardComponent },
     { path: 'animals', component: AnimalsComponent },
     { path: 'events', component: EventsComponent },
@@ -30,6 +37,13 @@ export const routes: Routes = [
     { path:'add-event', component: AddEventComponent },
     { path:'add-expense', component: AddExpenseComponent },
     { path:'add-income', component: AddIncomeComponent },
+    // Veterinarian routes
+    { path: 'veterinarian/dashboard', component: VetDashboardComponent },
+    { path: 'veterinarian/medical-records', component: MedicalRecordsComponent },
+    { path: 'veterinarian/settings', component: SettingsComponent },
+    { path:'veterinarian/medical-appointments', component: MedicalAppointmentsComponent },
+    { path:'veterinarian/patients', component: PatientsComponent},
+    { path:'veterinarian/treatments', component: TreatmentsComponent},
     { path: '**', redirectTo: 'login' }
   ];
 

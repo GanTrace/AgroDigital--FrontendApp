@@ -1,0 +1,108 @@
+<div class="medical-records-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="page-header">
+      <h1>{{ 'VET_MEDICAL_RECORDS.TITLE' | translate }}</h1>
+      <button class="add-record-btn" (click)="addNewRecord()">
+        <span>{{ 'VET_MEDICAL_RECORDS.ADD_RECORD' | translate }}</span>
+        <span class="add-icon">+</span>
+      </button>
+    </div>
+    
+    <div class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (input)="searchRecords()"
+          (keyup)="searchRecords()"
+          placeholder="{{ 'VET_MEDICAL_RECORDS.SEARCH_PLACEHOLDER' | translate }}">
+      </div>
+      <button class="filter-btn" (click)="toggleFilters()">
+        {{ 'VET_MEDICAL_RECORDS.FILTER' | translate }}
+        <i class="filter-icon">≡</i>
+      </button>
+    </div>
+    
+    <div class="filter-panel" [class.show-filters]="showFilters">
+      <div class="filter-header">
+        <h3>{{ 'VET_MEDICAL_RECORDS.FILTER_OPTIONS' | translate }}</h3>
+        <button class="close-filters" (click)="toggleFilters()">×</button>
+      </div>
+      
+      <div class="filter-content">
+        <div class="filter-group">
+          <label>{{ 'VET_MEDICAL_RECORDS.PATIENT' | translate }}</label>
+          <select [(ngModel)]="selectedPatientId">
+            <option [ngValue]="null">{{ 'VET_MEDICAL_RECORDS.ALL_PATIENTS' | translate }}</option>
+            <option *ngFor="let patient of patients" [ngValue]="patient.id">
+              {{ patient.name }} ({{ patient.owner }})
+            </option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'VET_MEDICAL_RECORDS.RECORD_TYPE' | translate }}</label>
+          <select [(ngModel)]="selectedFilters.recordType">
+            <option *ngFor="let type of recordTypes" [value]="type">
+              {{ type | translate }}
+            </option>
+          </select>
+        </div>
+        
+        <div class="filter-actions">
+          <button class="apply-btn" (click)="applyFilters()">
+            {{ 'VET_MEDICAL_RECORDS.APPLY_FILTERS' | translate }}
+          </button>
+          <button class="reset-btn" (click)="resetFilters()">
+            {{ 'VET_MEDICAL_RECORDS.RESET_FILTERS' | translate }}
+          </button>
+          <button class="cancel-btn" (click)="toggleFilters()">
+            {{ 'VET_MEDICAL_RECORDS.CANCEL' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="records-section">
+      <div class="records-table-container">
+        <table class="records-table">
+          <thead>
+            <tr>
+              <th>{{ 'VET_MEDICAL_RECORDS.DATE' | translate }}</th>
+              <th>{{ 'VET_MEDICAL_RECORDS.PATIENT' | translate }}</th>
+              <th>{{ 'VET_MEDICAL_RECORDS.OWNER' | translate }}</th>
+              <th>{{ 'VET_MEDICAL_RECORDS.RECORD_TYPE' | translate }}</th>
+              <th>{{ 'VET_MEDICAL_RECORDS.DIAGNOSIS' | translate }}</th>
+              <th>{{ 'VET_MEDICAL_RECORDS.TREATMENT' | translate }}</th>
+              <th>{{ 'VET_MEDICAL_RECORDS.FOLLOW_UP' | translate }}</th>
+              <th>{{ 'VET_MEDICAL_RECORDS.ACTIONS' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of filteredRecords">
+              <td>{{ record.date }}</td>
+              <td>{{ record.patientName }}</td>
+              <td>{{ record.ownerName }}</td>
+              <td>{{ record.recordType | translate }}</td>
+              <td>{{ record.diagnosis }}</td>
+              <td>{{ record.treatment }}</td>
+              <td>{{ record.followUp }}</td>
+              <td class="actions-cell">
+                <button class="view-btn" (click)="viewRecordDetails(record.id)" title="{{ 'VET_MEDICAL_RECORDS.VIEW' | translate }}">👁️</button>
+                <button class="edit-btn" (click)="editRecord(record.id)" title="{{ 'VET_MEDICAL_RECORDS.EDIT' | translate }}">✏️</button>
+                <button class="delete-btn" (click)="deleteRecord(record.id)" title="{{ 'VET_MEDICAL_RECORDS.DELETE' | translate }}">🗑️</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div class="no-records" *ngIf="filteredRecords.length === 0">
+          {{ 'VET_MEDICAL_RECORDS.NO_RECORDS' | translate }}
+        </div>
+      </div>
+    </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>

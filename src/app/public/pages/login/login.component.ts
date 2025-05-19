@@ -77,10 +77,12 @@ export class LoginComponent implements OnInit {
       next: (users: User[]) => {
         this.isLoggingIn = false;
         if (users.length > 0) {
-          const { password, ...userWithoutPassword } = users[0];
-          localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-          
-          this.router.navigate(['/dashboard']);
+          if (this.authService.getDashboardRoute) {
+            const dashboardRoute = this.authService.getDashboardRoute();
+            this.router.navigate([dashboardRoute]);
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
         } else {
           this.loginError = this.translate.instant('LOGIN.INVALID_CREDENTIALS');
         }

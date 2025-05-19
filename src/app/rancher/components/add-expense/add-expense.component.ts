@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { EconomicService } from '../../services/economic.service';
@@ -47,20 +47,36 @@ export class AddExpenseComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  onSubmit() {
     if (this.expenseForm.valid) {
-      const { amount, description, category } = this.expenseForm.value;
-      this.economicService.addExpense(Number(amount), description, category);
-      this.router.navigate(['/economic-control']);
+      const expenseData = this.expenseForm.value;
+      
+      this.economicService.addExpense(expenseData).subscribe(
+        response => {
+          console.log('Expense added successfully', response);
+          this.router.navigate(['/economic-control']);
+        },
+        error => {
+          console.error('Error adding expense', error);
+        }
+      );
     } else {
-      Object.keys(this.expenseForm.controls).forEach(key => {
-        const control = this.expenseForm.get(key);
-        control?.markAsTouched();
-      });
+      this.markFormGroupTouched(this.expenseForm);
     }
   }
 
   cancel(): void {
     this.router.navigate(['/economic-control']);
+  }
+  
+  // Add the missing method
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 }
