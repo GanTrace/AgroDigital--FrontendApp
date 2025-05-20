@@ -113,7 +113,14 @@
       "DESCRIPTION_REQUIRED": "La descripción del evento es obligatoria",
       "DESCRIPTION_TOO_LONG": "La descripción es demasiado larga (máximo 200 caracteres)",
       "IMAGE_REQUIRED": "La URL de la imagen es obligatoria",
-      "DELETE_EVENT": "Eliminar Evento"
+      "DELETE_EVENT": "Eliminar Evento",
+      "CREATED_BY": "Creado por",
+      "EVENT_DETAILS": "Detalles del Evento",
+      "CLOSE": "Cerrar",
+      "BACK": "Volver",
+      "VIEW_DETAILS": "Ver Detalles",
+      "CREATOR": "Creador",
+      "DATE_FORMAT": "d 'de' MMMM, yyyy"
     },
     "MEDICAL_HISTORY": {
       "TITLE": "Historial Clínico",

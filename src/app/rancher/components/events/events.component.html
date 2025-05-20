@@ -45,7 +45,7 @@
     </section>
 
     <section class="events-grid">
-      <div class="event-card" *ngFor="let event of events">
+      <div class="event-card" *ngFor="let event of events" (click)="viewEventDetails(event)">
         <div class="event-image">
           <img [src]="event.imagen" alt="{{ 'EVENTS.EVENT_IMAGE' | translate }}">
           <span class="event-type">{{ event.tipo }}</span>
@@ -61,9 +61,60 @@
           </div>
           <div class="event-date">{{ event.fecha | date }}</div>
           <p class="event-description">{{ event.descripcion }}</p>
+          
+          <!-- Add creator name -->
+          <div class="event-creator" *ngIf="event.creatorName">
+            <span>{{ 'EVENTS.CREATED_BY' | translate }}: {{ event.creatorName }}</span>
+          </div>
+          
+          <div class="view-details">
+            <span>{{ 'EVENTS.VIEW_DETAILS' | translate }}</span>
+          </div>
         </div>
       </div>
     </section>
+    
+    <!-- Event Details Modal -->
+    <div class="event-details-modal" *ngIf="showEventDetails && selectedEvent" (click)="closeEventDetails()">
+      <div class="event-details-content" (click)="$event.stopPropagation()">
+        <button class="close-modal" (click)="closeEventDetails()">×</button>
+        
+        <h2>{{ 'EVENTS.EVENT_DETAILS' | translate }}</h2>
+        
+        <div class="event-detail-image">
+          <img [src]="selectedEvent.imagen" alt="{{ 'EVENTS.EVENT_IMAGE' | translate }}">
+          <span class="event-type">{{ selectedEvent.tipo }}</span>
+        </div>
+        
+        <div class="event-detail-info">
+          <h3>{{ selectedEvent.titulo }}</h3>
+          
+          <div class="detail-row">
+            <span class="detail-label">{{ 'EVENTS.EVENT_DATE' | translate }}:</span>
+            <span class="detail-value">{{ selectedEvent.fecha | date:('EVENTS.DATE_FORMAT' | translate) }}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">{{ 'EVENTS.EVENT_TYPE' | translate }}:</span>
+            <span class="detail-value">{{ selectedEvent.tipo }}</span>
+          </div>
+          
+          <div class="detail-row" *ngIf="selectedEvent.creatorName">
+            <span class="detail-label">{{ 'EVENTS.CREATOR' | translate }}:</span>
+            <span class="detail-value">{{ selectedEvent.creatorName }}</span>
+          </div>
+          
+          <div class="detail-description">
+            <h4>{{ 'EVENTS.EVENT_DESCRIPTION' | translate }}:</h4>
+            <p>{{ selectedEvent.descripcion }}</p>
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <button class="back-btn" (click)="closeEventDetails()">{{ 'EVENTS.BACK' | translate }}</button>
+        </div>
+      </div>
+    </div>
     
     <div class="view-more-container" *ngIf="filteredEvents.length > 3">
       <button class="view-more-btn" (click)="toggleViewMore()">

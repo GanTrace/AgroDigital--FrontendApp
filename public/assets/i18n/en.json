@@ -113,7 +113,14 @@
       "DESCRIPTION_REQUIRED": "Event description is required",
       "DESCRIPTION_TOO_LONG": "Description is too long (maximum 200 characters)",
       "IMAGE_REQUIRED": "Image URL is required",
-      "DELETE_EVENT": "Delete Event"
+      "DELETE_EVENT": "Delete Event",
+      "CREATED_BY": "Created by",
+      "EVENT_DETAILS": "Event Details",
+      "CLOSE": "Close",
+      "BACK": "Back",
+      "VIEW_DETAILS": "View Details",
+      "CREATOR": "Creator",
+      "DATE_FORMAT": "MMMM d, yyyy"
     },
     "MEDICAL_HISTORY": {
       "TITLE": "Medical History",

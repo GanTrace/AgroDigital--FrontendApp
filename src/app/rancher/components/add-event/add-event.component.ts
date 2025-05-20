@@ -63,12 +63,12 @@ export class AddEventComponent implements OnInit {
     if (this.eventForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
       
-      // Get current user
       const currentUser = this.authService.getCurrentUser();
       
       const newEvent: Event = {
         ...this.eventForm.value,
-        creatorId: currentUser?.id || 'unknown' // Add creator ID
+        creatorId: currentUser?.id || 'unknown',
+        creatorName: currentUser?.name || 'Anonymous'
       };
       
       this.eventService.addEvent(newEvent).subscribe({

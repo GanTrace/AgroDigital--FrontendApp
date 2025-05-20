@@ -147,9 +147,19 @@ export class EventsComponent implements OnInit {
 
   // Add these new methods
   canDeleteEvent(event: Event): boolean {
-    // For demo purposes, let's assume the user can delete all events
-    // In a real app, you would check if the current user is the creator
-    return true;
+    const currentUser = this.authService.getCurrentUser();
+    
+    // If no creator ID is set (for demo events), allow deletion
+    if (!event.creatorId) {
+      return true;
+    }
+    
+
+    const eventCreatorId = String(event.creatorId);
+    const currentUserId = currentUser?.id ? String(currentUser.id) : '';
+    
+    // Compare as strings
+    return eventCreatorId === currentUserId;
   }
 
   deleteEvent(eventItem: Event, e: MouseEvent): void {
@@ -173,5 +183,18 @@ export class EventsComponent implements OnInit {
         }
       );
     }
+  }
+
+  selectedEvent: Event | null = null;
+  showEventDetails: boolean = false;
+  
+  viewEventDetails(event: Event): void {
+    this.selectedEvent = event;
+    this.showEventDetails = true;
+  }
+  
+  closeEventDetails(): void {
+    this.showEventDetails = false;
+    this.selectedEvent = null;
   }
 }

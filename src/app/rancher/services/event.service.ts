@@ -8,7 +8,8 @@ export interface Event {
   fecha: string;
   descripcion: string;
   imagen: string;
-  creatorId?: string; 
+  creatorId?: string;
+  creatorName?: string;
 }
 
 @Injectable({
