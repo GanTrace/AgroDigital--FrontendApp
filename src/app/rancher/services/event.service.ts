@@ -8,6 +8,7 @@ export interface Event {
   fecha: string;
   descripcion: string;
   imagen: string;
+  creatorId?: string; 
 }
 
 @Injectable({
@@ -21,7 +22,8 @@ export class EventService {
       titulo: 'Campaña de vacunación',
       fecha: '2023-12-15',
       descripcion: 'Campaña de vacunación contra la fiebre aftosa para todo el ganado.',
-      imagen: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1000&auto=format&fit=crop'
+      imagen: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1000&auto=format&fit=crop',
+      creatorId: 'admin' // Default creator for initial events
     },
     {
       id: 2,
@@ -69,6 +71,12 @@ export class EventService {
     this.eventsSubject.next(this.events);
     
     return of(newEvent);
+  }
+
+  // Add method to check if user can delete an event
+  canDeleteEvent(eventId: number, userId: string): boolean {
+    const event = this.events.find(e => e.id === eventId);
+    return event?.creatorId === userId;
   }
 
   updateEvent(event: Event): Observable<Event> {

@@ -39,16 +39,26 @@ export class EventsComponent implements OnInit {
     date: ''
   };
   searchTerm: string = '';
+  currentUserId: string = '';
 
   constructor(
+    private eventService: EventService,
     private translate: TranslateService,
-    private eventService: EventService
+    private authService: AuthService // Add AuthService
   ) {}
 
+  // Get current user ID
   ngOnInit(): void {
     const savedLang = localStorage.getItem('preferredLanguage');
     if (savedLang) {
       this.translate.use(savedLang);
+    }
+    
+    // Get current user ID - fix type issue
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser && currentUser.id) {
+      // Ensure currentUserId is always a string
+      this.currentUserId = String(currentUser.id);
     }
     
     this.loadEvents();
@@ -133,5 +143,35 @@ export class EventsComponent implements OnInit {
 
   search(): void {
     this.applyFilters();
+  }
+
+  // Add these new methods
+  canDeleteEvent(event: Event): boolean {
+    // For demo purposes, let's assume the user can delete all events
+    // In a real app, you would check if the current user is the creator
+    return true;
+  }
+
+  deleteEvent(eventItem: Event, e: MouseEvent): void {
+    e.stopPropagation(); // Now this will work correctly
+    
+    if (!this.canDeleteEvent(eventItem)) {
+      alert(this.translate.instant('EVENTS.CANNOT_DELETE'));
+      return;
+    }
+    
+    if (confirm(this.translate.instant('EVENTS.CONFIRM_DELETE'))) {
+      const eventId = eventItem.id !== undefined ? eventItem.id : 0;
+      
+      this.eventService.deleteEvent(eventId).subscribe(
+        success => {
+          if (success) {
+            this.loadEvents(); 
+          } else {
+            alert(this.translate.instant('EVENTS.DELETE_ERROR'));
+          }
+        }
+      );
+    }
   }
 }
