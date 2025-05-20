@@ -5,6 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService, User } from '../../services/auth.service';
 import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
 import { NotificationsComponent } from '../../pages/notifications/notifications.component';
+import { AnimalService } from '../../../rancher/services/animal.service';
 
 @Component({
   selector: 'app-header-component',
@@ -32,7 +33,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private animalService: AnimalService
   ) {}
 
   ngOnInit(): void {
@@ -44,11 +46,20 @@ export class HeaderComponent implements OnInit {
       this.profileImage = user.profileImage || 'assets/images/default-avatar.png';
       
       if (this.userRole === 'rancher') {
-        this.itemCount = '0 animales';
+        // Get actual animal count
+        this.updateAnimalCount();
       } else if (this.userRole === 'veterinarian') {
         this.itemCount = '0 pacientes';
       }
     }
+  }
+
+  // Add this method to update animal count
+  updateAnimalCount(): void {
+    this.animalService.getAnimalsByUser().subscribe(animals => {
+      const count = animals.length;
+      this.itemCount = `${count} ${count === 1 ? 'animal' : 'animales'}`;
+    });
   }
 
   toggleNotifications(): void {
