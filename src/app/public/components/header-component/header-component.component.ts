@@ -87,7 +87,6 @@ export class HeaderComponent implements OnInit {
     } else {
       return [
         { path: '/dashboard', label: 'HEADER.DASHBOARD' },
-        { path: '/animals', label: 'HEADER.ANIMALS' },
         { path: '/events', label: 'HEADER.EVENTS' },
         { path: '/medical-history', label: 'HEADER.MEDICAL_HISTORY' },
         { path: '/economic-control', label: 'HEADER.ECONOMIC_CONTROL' },
