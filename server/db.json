@@ -13,7 +13,8 @@
       "email": "halamadrid@gmail.com",
       "password": "TheMutantRoost1812!",
       "role": "rancher",
-      "id": 2
+      "id": 2,
+      "profileImage": "https://i.imgur.com/cLFcHas.jpeg"
     },
     {
       "name": "Gary",
@@ -49,6 +50,34 @@
       "creatorId": 1,
       "creatorName": "Rodrigo",
       "id": 1
+    },
+    {
+      "tipo": "Vacunas",
+      "titulo": "Visita a los ganaderos",
+      "fecha": "2025-08-05",
+      "descripcion": "Prueba 2",
+      "imagen": "https://www.agrojunin.gob.pe/wp-content/uploads/2023/08/WhatsApp-Image-2023-07-24-at-17.29.03-1024x514.jpeg",
+      "creatorId": 2,
+      "creatorName": "Erick",
+      "id": 2
+    }
+  ],
+  "animals": [
+    {
+      "nombre": "Luna",
+      "especie": "Vaca",
+      "fechaNacimiento": "2019-04-17",
+      "sexo": "Hembra",
+      "enfermedad": "No",
+      "estadoReproductivo": "Gestación",
+      "imageUrl": "https://naukas.com/fx/uploads/2017/05/Dairy_cow.jpg",
+      "vacunasAplicadas": "2",
+      "numeroPartos": 1,
+      "ubicacion": "Ganado bovino",
+      "observaciones": "Ninguna",
+      "id": 1,
+      "imagen": "https://naukas.com/fx/uploads/2017/05/Dairy_cow.jpg",
+      "createdBy": 1
     }
   ]
 }

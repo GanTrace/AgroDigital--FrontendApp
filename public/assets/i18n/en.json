@@ -151,28 +151,41 @@
       "DELETE_VISIT": "Delete visit"
     },
     "ECONOMIC_CONTROL": {
-      "ADD_INCOME": "Add Income",
-      "ADD_EXPENSE": "Add Expense",
-      "TOTAL_INCOME": "Total Income",
-      "TOTAL_EXPENSES": "Total Expenses",
-      "BALANCE": "Balance",
-      "RECENT_TRANSACTIONS": "Recent Transactions",
-      "NO_TRANSACTIONS": "No transactions to display",
-      "LEADS": "Leads",
-      "CATEGORIES": {
+    "ADD_INCOME": "Add Income",
+    "ADD_EXPENSE": "Add Expense",
+    "ADD_INCOME_TITLE": "Add New Income",
+    "ADD_EXPENSE_TITLE": "Add New Expense",
+    "TOTAL_INCOME": "Total Income",
+    "TOTAL_EXPENSES": "Total Expenses",
+    "BALANCE": "Balance",
+    "RECENT_TRANSACTIONS": "Recent Transactions",
+    "NO_TRANSACTIONS": "No transactions to display",
+    "AMOUNT": "Amount",
+    "AMOUNT_REQUIRED": "Amount is required",
+    "AMOUNT_MIN": "Amount must be greater than zero",
+    "DESCRIPTION": "Description",
+    "DESCRIPTION_REQUIRED": "Description is required",
+    "DESCRIPTION_MAX_LENGTH": "Description cannot exceed 100 characters",
+    "DESCRIPTION_PLACEHOLDER": "Describe the source of income...",
+    "EXPENSE_DESCRIPTION_PLACEHOLDER": "Describe the reason for the expense...",
+    "CATEGORY": "Category",
+    "ACCEPT": "Accept",
+    "CANCEL": "Cancel",
+    "LEADS": "Leads",
+    "CATEGORIES": {
       "SALES": "Sales",
       "SERVICES": "Services",
       "INVESTMENTS": "Investments",
       "OTHER": "Other Income"
-  },
-  "EXPENSE_CATEGORIES": {
-    "SUPPLIES": "Supplies",
-    "EQUIPMENT": "Equipment",
-    "VETERINARY": "Veterinary",
-    "FEED": "Feed",
-    "MAINTENANCE": "Maintenance",
-    "OTHER": "Other Expense"
-  }
+    },
+    "EXPENSE_CATEGORIES": {
+      "SUPPLIES": "Supplies",
+      "EQUIPMENT": "Equipment",
+      "VETERINARY": "Veterinary",
+      "FEED": "Feed",
+      "MAINTENANCE": "Maintenance",
+      "OTHER": "Other Expense"
+    }
   },
     "REPORTS": {
       "TITLE": "Reports",
