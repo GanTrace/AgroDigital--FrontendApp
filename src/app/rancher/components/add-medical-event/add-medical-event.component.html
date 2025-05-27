@@ -1,0 +1,86 @@
+<div class="add-event-container">
+  <app-header-component></app-header-component>
+  
+  <main class="main-content">
+    <div class="form-container">
+      <h1 class="page-title">{{ 'MEDICAL_HISTORY.ADD_VISIT' | translate }}</h1>
+      
+      <div class="animal-info" *ngIf="animal">
+        <div class="animal-image">
+          <img [src]="animal.imagen" alt="{{ 'DASHBOARD.ANIMAL_IMAGE' | translate }}">
+        </div>
+        <div class="animal-details">
+          <h2>#{{ animal.id }} - {{ animal.nombre }}</h2>
+          <p>{{ animal.especie }} - {{ animal.sexo }}</p>
+        </div>
+      </div>
+      
+      <form [formGroup]="medicalEventForm" (ngSubmit)="onSubmit()" class="event-form">
+        <div class="form-group">
+          <label for="date">{{ 'MEDICAL_HISTORY.DATE' | translate }}</label>
+          <input type="date" id="date" formControlName="date">
+          <div class="error-message" *ngIf="medicalEventForm.get('date')?.invalid && medicalEventForm.get('date')?.touched">
+            {{ 'MEDICAL_HISTORY.DATE_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="eventType">{{ 'MEDICAL_HISTORY.EVENT_TYPE' | translate }}</label>
+          <select id="eventType" formControlName="eventType">
+            <option value="">{{ 'MEDICAL_HISTORY.SELECT_TYPE' | translate }}</option>
+            <option *ngFor="let type of eventTypes" [value]="type">{{ type }}</option>
+          </select>
+          <div class="error-message" *ngIf="medicalEventForm.get('eventType')?.invalid && medicalEventForm.get('eventType')?.touched">
+            {{ 'MEDICAL_HISTORY.EVENT_TYPE_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="description">{{ 'MEDICAL_HISTORY.DESCRIPTION' | translate }}</label>
+          <input type="text" id="description" formControlName="description">
+          <div class="error-message" *ngIf="medicalEventForm.get('description')?.invalid && medicalEventForm.get('description')?.touched">
+            <span *ngIf="medicalEventForm.get('description')?.errors?.['required']">
+              {{ 'MEDICAL_HISTORY.DESCRIPTION_REQUIRED' | translate }}
+            </span>
+            <span *ngIf="medicalEventForm.get('description')?.errors?.['maxlength']">
+              {{ 'MEDICAL_HISTORY.DESCRIPTION_MAX_LENGTH' | translate }}
+            </span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="veterinarian">{{ 'MEDICAL_HISTORY.VETERINARIAN' | translate }}</label>
+          <input type="text" id="veterinarian" formControlName="veterinarian">
+          <div class="error-message" *ngIf="medicalEventForm.get('veterinarian')?.invalid && medicalEventForm.get('veterinarian')?.touched">
+            {{ 'MEDICAL_HISTORY.VETERINARIAN_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="observations">{{ 'MEDICAL_HISTORY.OBSERVATIONS' | translate }}</label>
+          <textarea id="observations" formControlName="observations" rows="4"></textarea>
+          <div class="error-message" *ngIf="medicalEventForm.get('observations')?.invalid && medicalEventForm.get('observations')?.touched">
+            {{ 'MEDICAL_HISTORY.OBSERVATIONS_MAX_LENGTH' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="attachments">{{ 'MEDICAL_HISTORY.ATTACHMENTS' | translate }}</label>
+          <input type="text" id="attachments" formControlName="attachments" placeholder="{{ 'MEDICAL_HISTORY.ATTACHMENTS_PLACEHOLDER' | translate }}">
+          <small class="help-text">{{ 'MEDICAL_HISTORY.ATTACHMENTS_HELP' | translate }}</small>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" (click)="cancel()">
+            {{ 'MEDICAL_HISTORY.CANCEL' | translate }}
+          </button>
+          <button type="submit" class="submit-btn" [disabled]="medicalEventForm.invalid">
+            {{ 'MEDICAL_HISTORY.SAVE' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+  
+  <app-footer-component></app-footer-component>
+</div>

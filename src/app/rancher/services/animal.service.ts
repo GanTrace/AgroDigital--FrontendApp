@@ -3,7 +3,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, map, of, tap, catchError } from 'rxjs';
 import { AuthService } from '../../public/services/auth.service';
 
-// Update the Animal interface to include the missing properties
 export interface Animal {
   id: number;
   nombre: string;
@@ -11,10 +10,8 @@ export interface Animal {
   sexo: string;
   fechaNacimiento: string;
   imagen: string;
-  // Add these properties to fix the errors
   createdBy?: string;
   imageUrl?: string;
-  // Previously added properties
   alimentacion?: string;
   peso?: string;
   numeroPartos?: number;
