@@ -179,6 +179,25 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
     this.router.navigate(['/add-expense']);
   }
 
+  deleteTransaction(transaction: any): void {
+    if (confirm(this.translate.instant('ECONOMIC_CONTROL.CONFIRM_DELETE_MESSAGE'))) {
+      // Implement actual deletion logic
+      this.economicService.deleteTransaction(transaction.id).subscribe({
+        next: () => {
+          // Show success message
+          alert(this.translate.instant('ECONOMIC_CONTROL.TRANSACTION_DELETED'));
+          // Reload data
+          this.loadRecentTransactions();
+          this.loadFinancialData();
+        },
+        error: (error) => {
+          console.error('Error deleting transaction', error);
+          alert(this.translate.instant('ECONOMIC_CONTROL.ERROR_DELETING'));
+        }
+      });
+    }
+  }
+
   initializeChart() {
     if (this.isChartInitialized) return;
     
@@ -187,8 +206,7 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
     
     this.isChartInitialized = true;
     
-    // Reduce data points to improve performance
-    const dataPoints = 12; // Show only 12 months/weeks instead of 50
+    const dataPoints = 12; 
     const labels = Array.from({ length: dataPoints }, (_, i) => `Sem ${i+1}`);
     
     // Simplified data generation
@@ -218,7 +236,7 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
         responsive: true,
         maintainAspectRatio: false,
         animation: {
-          duration: 500 // Reduce animation duration
+          duration: 500 
         },
         plugins: {
           legend: {
@@ -259,7 +277,7 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
               font: {
                 size: 10
               },
-              maxRotation: 45, // Reduce rotation for better performance
+              maxRotation: 45, 
               minRotation: 45
             }
           }

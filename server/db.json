@@ -79,5 +79,71 @@
       "imagen": "https://naukas.com/fx/uploads/2017/05/Dairy_cow.jpg",
       "createdBy": 1
     }
+  ],
+  "incomes": [
+    {
+      "amount": 154.03,
+      "description": "Ingresos en Vacunación.",
+      "category": "Servicios",
+      "date": "2025-05-27T02:18:40.267Z",
+      "type": "income",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 1
+    },
+    {
+      "amount": 10.32,
+      "description": "dehaiawdhoiad",
+      "category": "Inversiones",
+      "date": "2025-05-27T02:59:16.675Z",
+      "type": "income",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 2
+    }
+  ],
+  "expenses": [
+    {
+      "amount": 54.08,
+      "description": "Gastos en Suministros",
+      "category": "Suministros",
+      "date": "2025-05-27T02:28:34.986Z",
+      "type": "expense",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 1
+    },
+    {
+      "amount": 20.3,
+      "description": "sdsdsssd",
+      "category": "Alimentación",
+      "date": "2025-05-27T03:00:45.010Z",
+      "type": "expense",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 2
+    }
+  ],
+  "transactions": [
+    {
+      "amount": 154.03,
+      "description": "Ingresos en Vacunación.",
+      "category": "Servicios",
+      "date": "2025-05-27T02:18:40.267Z",
+      "type": "income",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 1
+    },
+    {
+      "amount": 54.08,
+      "description": "Gastos en Suministros",
+      "category": "Suministros",
+      "date": "2025-05-27T02:28:34.986Z",
+      "type": "expense",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 2
+    }
   ]
 }

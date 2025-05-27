@@ -464,4 +464,28 @@
 .logout-btn:hover {
   background-color: #734621;
 }
+
+.transaction-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: 15px;
+}
+
+.edit-btn, .delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.delete-btn:hover {
+  color: #ff4444;
+}
   

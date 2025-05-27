@@ -1,16 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-
-interface Transaction {
-  id: number;
-  date: string;
-  amount: number;
-  category: string;
-  description: string;
-  type: string;
-}
+import { Observable, forkJoin, map, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +11,7 @@ export class EconomicService {
 
   constructor(private http: HttpClient) { }
 
+  // Get total income
   getTotalIncome(): Observable<number> {
     return this.http.get<any[]>(`${this.apiUrl}/incomes`).pipe(
       map(incomes => {
@@ -32,6 +24,7 @@ export class EconomicService {
     );
   }
 
+  // Get total expense
   getTotalExpense(): Observable<number> {
     return this.http.get<any[]>(`${this.apiUrl}/expenses`).pipe(
       map(expenses => {
@@ -43,106 +36,85 @@ export class EconomicService {
       })
     );
   }
-  
-  // Add the missing methods
+
+  // Add expense
   addExpense(expense: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/expenses`, expense);
   }
-  
+
+  // Add income
   addIncome(income: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/incomes`, income);
   }
-  
-  getRecentTransactions(): Observable<Transaction[]> {
-    // Combine incomes and expenses
-    return this.combineIncomesAndExpenses().pipe(
+
+  // Add transaction (for unified view)
+  addTransaction(transaction: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/transactions`, transaction);
+  }
+
+  // Get recent transactions
+  getRecentTransactions(limit: number = 10): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/transactions`).pipe(
       map(transactions => {
-        return transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 10);
+        // Sort by date (newest first) and limit
+        return transactions
+          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+          .slice(0, limit);
       }),
       catchError(error => {
         console.error('Error fetching transactions', error);
-        // Return some mock data if API fails
-        return of([
-          {
-            id: 1,
-            date: new Date().toISOString(),
-            amount: 1500,
-            category: 'sales',
-            description: 'Venta de leche',
-            type: 'income'
-          },
-          {
-            id: 2,
-            date: new Date(Date.now() - 86400000).toISOString(), // Yesterday
-            amount: 500,
-            category: 'veterinary',
-            description: 'Consulta veterinaria',
-            type: 'expense'
-          },
-          {
-            id: 3,
-            date: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
-            amount: 800,
-            category: 'feed',
-            description: 'Compra de alimento',
-            type: 'expense'
-          }
-        ]);
+        return of([]);
       })
     );
   }
 
-  private combineIncomesAndExpenses(): Observable<Transaction[]> {
-    return new Observable(observer => {
-      let transactions: Transaction[] = [];
-      
-      // Get incomes
-      this.http.get<any[]>(`${this.apiUrl}/incomes`).subscribe(
-        incomes => {
-          const formattedIncomes = incomes.map(income => ({
-            ...income,
-            type: 'income'
-          }));
-          transactions = [...transactions, ...formattedIncomes];
-          
-          // Get expenses
-          this.http.get<any[]>(`${this.apiUrl}/expenses`).subscribe(
-            expenses => {
-              const formattedExpenses = expenses.map(expense => ({
-                ...expense,
-                type: 'expense'
-              }));
-              transactions = [...transactions, ...formattedExpenses];
-              observer.next(transactions);
-              observer.complete();
-            },
-            error => {
-              console.error('Error fetching expenses', error);
-              observer.next(transactions); // Return just incomes if expenses fail
-              observer.complete();
-            }
-          );
-        },
-        error => {
-          console.error('Error fetching incomes', error);
-          // Try to get expenses even if incomes fail
-          this.http.get<any[]>(`${this.apiUrl}/expenses`).subscribe(
-            expenses => {
-              const formattedExpenses = expenses.map(expense => ({
-                ...expense,
-                type: 'expense'
-              }));
-              observer.next(formattedExpenses);
-              observer.complete();
-            },
-            err => {
-              console.error('Error fetching expenses', err);
-              observer.next([]); // Return empty array if both fail
-              observer.complete();
-            }
-          );
-        }
-      );
-    });
+  // Get all incomes
+  getIncomes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/incomes`).pipe(
+      catchError(error => {
+        console.error('Error fetching incomes', error);
+        return of([]);
+      })
+    );
+  }
+
+  // Get all expenses
+  getExpenses(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/expenses`).pipe(
+      catchError(error => {
+        console.error('Error fetching expenses', error);
+        return of([]);
+      })
+    );
+  }
+
+  // Update income
+  updateIncome(id: number, income: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/incomes/${id}`, income);
+  }
+
+  // Update expense
+  updateExpense(id: number, expense: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/expenses/${id}`, expense);
+  }
+
+  // Delete income
+  deleteIncome(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/incomes/${id}`);
+  }
+
+  // Delete expense
+  deleteExpense(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/expenses/${id}`);
+  }
+
+  // Delete transaction
+  deleteTransaction(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/transactions/${id}`);
+  }
+
+  // Get transaction by ID
+  getTransactionById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/transactions/${id}`);
   }
 }
