@@ -38,5 +38,17 @@
       "id": 5,
       "profileImage": "https://i.pinimg.com/originals/48/ee/ab/48eeab94003a4450804d9cb33ddf3089.png"
     }
+  ],
+  "events": [
+    {
+      "tipo": "Vacunas",
+      "titulo": "Visita al ganadero",
+      "fecha": "2025-07-31",
+      "descripcion": "prueba 1",
+      "imagen": "https://cdn.www.gob.pe/uploads/document/file/5083452/342060800_774930693946477_2209820065863032406_n.jpg",
+      "creatorId": 1,
+      "creatorName": "Rodrigo",
+      "id": 1
+    }
   ]
 }

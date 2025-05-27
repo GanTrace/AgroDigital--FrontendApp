@@ -22,6 +22,7 @@
         <div class="filter-group">
           <label>{{ 'EVENTS.EVENT_TYPE' | translate }}</label>
           <select [(ngModel)]="selectedFilters.type">
+            <option value="">{{ 'EVENTS.ALL_TYPES' | translate }}</option>
             <option *ngFor="let type of eventTypes" [value]="type">{{ type }}</option>
           </select>
         </div>
@@ -45,7 +46,7 @@
     </section>
 
     <section class="events-grid">
-      <div class="event-card" *ngFor="let event of events" (click)="viewEventDetails(event)">
+      <div class="event-card" *ngFor="let event of displayedEvents" (click)="viewEventDetails(event)">
         <div class="event-image">
           <img [src]="event.imagen" alt="{{ 'EVENTS.EVENT_IMAGE' | translate }}">
           <span class="event-type">{{ event.tipo }}</span>
@@ -91,7 +92,7 @@
           
           <div class="detail-row">
             <span class="detail-label">{{ 'EVENTS.EVENT_DATE' | translate }}:</span>
-            <span class="detail-value">{{ selectedEvent.fecha | date:('EVENTS.DATE_FORMAT' | translate) }}</span>
+            <span class="detail-value">{{ selectedEvent.fecha | date }}</span>
           </div>
           
           <div class="detail-row">

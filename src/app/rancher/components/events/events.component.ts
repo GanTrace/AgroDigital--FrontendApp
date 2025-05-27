@@ -1,25 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 import { AuthService } from '../../../public/services/auth.service';
-import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
-import { FormsModule } from '@angular/forms';
-import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 import { EventService, Event } from '../../services/event.service';
 
 @Component({
   selector: 'app-events',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterModule, 
+    CommonModule,
+    RouterModule,
+    FormsModule,
     TranslateModule,
     FooterComponentComponent,
     LanguageSwitcherComponent,
-    NotificationsComponent,
     FormsModule,
     HeaderComponent,
     FooterComponentComponent
@@ -27,125 +27,108 @@ import { EventService, Event } from '../../services/event.service';
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css']
 })
-export class EventsComponent implements OnInit {
+export class EventsComponent implements OnInit, OnDestroy {
   events: Event[] = [];
-  allEvents: Event[] = [];
   filteredEvents: Event[] = [];
+  displayedEvents: Event[] = [];
+  searchTerm: string = '';
   showFilters: boolean = false;
+  showEventDetails: boolean = false;
+  selectedEvent: Event | null = null;
   showingAllEvents: boolean = false;
-  eventTypes: string[] = ['Todos', 'Vacunas', 'Visita', 'Feria', 'Capacitación', 'Salud', 'Mercado', 'Tecnología'];
+  
+  eventTypes: string[] = ['Vacunas', 'Visita', 'Feria', 'Capacitación', 'Salud', 'Mercado', 'Tecnología'];
+  
   selectedFilters = {
-    type: 'Todos',
+    type: '',
     date: ''
   };
-  searchTerm: string = '';
-  currentUserId: string = '';
+  
+  private eventsSubscription: Subscription | null = null;
 
   constructor(
     private eventService: EventService,
-    private translate: TranslateService,
-    private authService: AuthService // Add AuthService
+    private authService: AuthService,
+    private translate: TranslateService
   ) {}
 
-  // Get current user ID
   ngOnInit(): void {
     const savedLang = localStorage.getItem('preferredLanguage');
     if (savedLang) {
       this.translate.use(savedLang);
     }
     
-    // Get current user ID - fix type issue
-    const currentUser = this.authService.getCurrentUser();
-    if (currentUser && currentUser.id) {
-      // Ensure currentUserId is always a string
-      this.currentUserId = String(currentUser.id);
-    }
-    
     this.loadEvents();
+  }
+  
+  ngOnDestroy(): void {
+    if (this.eventsSubscription) {
+      this.eventsSubscription.unsubscribe();
+    }
   }
 
   loadEvents(): void {
-    this.eventService.getEvents().subscribe(events => {
-      this.allEvents = events;
-      this.filteredEvents = [...this.allEvents];
-      
-      if (!this.showingAllEvents) {
-        this.events = this.filteredEvents.slice(0, 3);
-      } else {
-        this.events = this.filteredEvents;
+    this.eventsSubscription = this.eventService.getEvents().subscribe(
+      events => {
+        this.events = events;
+        this.filteredEvents = [...events];
+        this.updateDisplayedEvents();
+      },
+      error => {
+        console.error('Error loading events', error);
       }
-    });
+    );
+  }
+
+  updateDisplayedEvents(): void {
+    if (this.showingAllEvents) {
+      this.displayedEvents = [...this.filteredEvents];
+    } else {
+      this.displayedEvents = this.filteredEvents.slice(0, 3);
+    }
+  }
+
+  toggleViewMore(): void {
+    this.showingAllEvents = !this.showingAllEvents;
+    this.updateDisplayedEvents();
+  }
+
+  search(): void {
+    if (!this.searchTerm.trim()) {
+      this.filteredEvents = [...this.events];
+    } else {
+      this.eventService.searchEvents(this.searchTerm).subscribe(
+        events => {
+          this.filteredEvents = events;
+          this.updateDisplayedEvents();
+        }
+      );
+    }
   }
 
   toggleFilters(): void {
     this.showFilters = !this.showFilters;
   }
 
-  toggleViewMore(): void {
-    this.showingAllEvents = !this.showingAllEvents;
-    
-    if (this.showingAllEvents) {
-      this.events = this.filteredEvents;
-    } else {
-      this.events = this.filteredEvents.slice(0, 3);
-    }
-  }
-
   applyFilters(): void {
-    this.filteredEvents = this.allEvents.filter(event => {
-      if (this.selectedFilters.type !== 'Todos' && event.tipo !== this.selectedFilters.type) {
-        return false;
+    this.eventService.filterEvents(this.selectedFilters).subscribe(
+      events => {
+        this.filteredEvents = events;
+        this.updateDisplayedEvents();
+        this.showFilters = false;
       }
-      
-      if (this.selectedFilters.date && event.fecha !== this.selectedFilters.date) {
-        return false;
-      }
-      
-      if (this.searchTerm && !this.matchesSearchTerm(event)) {
-        return false;
-      }
-      
-      return true;
-    });
-    
-    if (this.showingAllEvents) {
-      this.events = this.filteredEvents;
-    } else {
-      this.events = this.filteredEvents.slice(0, 3);
-    }
-    
-    this.showFilters = false;
-  }
-
-  matchesSearchTerm(event: Event): boolean {
-    const term = this.searchTerm.toLowerCase();
-    return (
-      event.titulo.toLowerCase().includes(term) ||
-      event.descripcion.toLowerCase().includes(term) ||
-      event.tipo.toLowerCase().includes(term)
     );
   }
 
   resetFilters(): void {
     this.selectedFilters = {
-      type: 'Todos',
+      type: '',
       date: ''
     };
-    this.searchTerm = '';
-    this.filteredEvents = [...this.allEvents];
-    
-    if (this.showingAllEvents) {
-      this.events = this.filteredEvents;
-    } else {
-      this.events = this.filteredEvents.slice(0, 3);
-    }
+    this.filteredEvents = [...this.events];
+    this.updateDisplayedEvents();
   }
 
-  search(): void {
-    this.applyFilters();
-  }
-
-  // Add these new methods
   canDeleteEvent(event: Event): boolean {
     const currentUser = this.authService.getCurrentUser();
     
@@ -154,7 +137,6 @@ export class EventsComponent implements OnInit {
       return true;
     }
     
-
     const eventCreatorId = String(event.creatorId);
     const currentUserId = currentUser?.id ? String(currentUser.id) : '';
     
@@ -171,28 +153,26 @@ export class EventsComponent implements OnInit {
     }
     
     if (confirm(this.translate.instant('EVENTS.CONFIRM_DELETE'))) {
-      const eventId = eventItem.id !== undefined ? eventItem.id : 0;
-      
-      this.eventService.deleteEvent(eventId).subscribe(
-        success => {
-          if (success) {
-            this.loadEvents(); 
-          } else {
-            alert(this.translate.instant('EVENTS.DELETE_ERROR'));
+      if (eventItem.id) {
+        this.eventService.deleteEvent(eventItem.id).subscribe(
+          () => {
+            this.events = this.events.filter(e => e.id !== eventItem.id);
+            this.filteredEvents = this.filteredEvents.filter(e => e.id !== eventItem.id);
+            this.updateDisplayedEvents();
+          },
+          error => {
+            console.error('Error deleting event', error);
           }
-        }
-      );
+        );
+      }
     }
   }
 
-  selectedEvent: Event | null = null;
-  showEventDetails: boolean = false;
-  
   viewEventDetails(event: Event): void {
     this.selectedEvent = event;
     this.showEventDetails = true;
   }
-  
+
   closeEventDetails(): void {
     this.showEventDetails = false;
     this.selectedEvent = null;
