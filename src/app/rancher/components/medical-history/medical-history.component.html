@@ -119,12 +119,6 @@
           <button class="add-visit-btn" (click)="addVisit()">
             {{ 'MEDICAL_HISTORY.ADD_VISIT' | translate }}
           </button>
-          <button class="edit-visit-btn" [disabled]="medicalEvents.length === 0">
-            {{ 'MEDICAL_HISTORY.EDIT_VISIT' | translate }}
-          </button>
-          <button class="delete-visit-btn" [disabled]="medicalEvents.length === 0">
-            {{ 'MEDICAL_HISTORY.DELETE_VISIT' | translate }}
-          </button>
         </div>
       </div>
     </div>

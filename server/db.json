@@ -145,5 +145,23 @@
       "userName": "Rodrigo",
       "id": 2
     }
+  ],
+  "medicalEvents": [
+    {
+      "animalId": 1,
+      "animalName": "Luna",
+      "date": "2025-05-27",
+      "eventType": "Vacunación",
+      "description": "Chequeo Mensual",
+      "veterinarian": "Dra. Polo",
+      "observations": "Ninguna observación",
+      "attachments": [
+        "Factura"
+      ],
+      "userId": 1,
+      "userName": "Rodrigo",
+      "createdAt": "2025-05-27T07:26:34.344Z",
+      "id": 1
+    }
   ]
 }

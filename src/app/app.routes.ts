@@ -38,6 +38,7 @@ export const routes: Routes = [
     { path:'add-expense', component: AddExpenseComponent },
     { path:'add-income', component: AddIncomeComponent },
     { path:'add-medical-event', component: AddMedicalEventComponent },
+    { path:'add-medical-event/:id', component: AddMedicalEventComponent },
     // Veterinarian routes
     { path: 'veterinarian/dashboard', component: VetDashboardComponent },
     { path: 'veterinarian/medical-records', component: MedicalRecordsComponent },

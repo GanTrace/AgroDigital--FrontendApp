@@ -649,24 +649,6 @@ tr:last-child td {
   cursor: pointer;
 }
 
-.edit-visit-btn {
-  background-color: #8e5928;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.delete-visit-btn {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;

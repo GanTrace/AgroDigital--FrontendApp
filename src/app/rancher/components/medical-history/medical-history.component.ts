@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
@@ -32,7 +32,8 @@ export class MedicalHistoryComponent implements OnInit {
   constructor(
     private animalService: AnimalService,
     private medicalHistoryService: MedicalHistoryService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -91,13 +92,15 @@ export class MedicalHistoryComponent implements OnInit {
   }
 
   addVisit(): void {
-    // Navigate to add visit page with the selected animal ID
-    window.location.href = `/add-medical-event/${this.selectedAnimal?.id}`;
+    if (this.selectedAnimal) {
+      this.router.navigate(['/add-medical-event', this.selectedAnimal.id]);
+    } else {
+      console.error('No animal selected');
+    }
   }
 
   editVisit(eventId: number): void {
-    // Navigate to edit visit page
-    window.location.href = `/edit-medical-event/${eventId}`;
+    console.log('Edit visit', eventId);
   }
 
   deleteVisit(eventId: number): void {

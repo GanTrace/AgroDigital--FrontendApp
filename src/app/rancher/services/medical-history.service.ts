@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { AuthService } from '../../public/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,10 @@ import { catchError, map } from 'rxjs/operators';
 export class MedicalHistoryService {
   private apiUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
   // Get medical events for a specific animal
   getMedicalEvents(animalId: number): Observable<any[]> {
@@ -23,7 +27,17 @@ export class MedicalHistoryService {
 
   // Add a new medical event
   addMedicalEvent(event: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/medicalEvents`, event);
+    const currentUser = this.authService.getCurrentUser();
+    
+    // Add user information to the event
+    const eventWithUser = {
+      ...event,
+      userId: currentUser?.id,
+      userName: currentUser?.name,
+      createdAt: new Date().toISOString()
+    };
+    
+    return this.http.post(`${this.apiUrl}/medicalEvents`, eventWithUser);
   }
 
   // Update a medical event

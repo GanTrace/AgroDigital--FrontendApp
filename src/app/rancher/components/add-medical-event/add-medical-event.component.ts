@@ -103,6 +103,7 @@ export class AddMedicalEventComponent implements OnInit {
       
       const medicalEvent = {
         animalId: this.animalId,
+        animalName: this.animal?.nombre,
         date: formData.date,
         eventType: formData.eventType,
         description: formData.description,
