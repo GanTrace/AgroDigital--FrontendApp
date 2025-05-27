@@ -3,21 +3,24 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, map, of, tap, catchError } from 'rxjs';
 import { AuthService } from '../../public/services/auth.service';
 
+// Update the Animal interface to include the missing properties
 export interface Animal {
   id: number;
   nombre: string;
   especie: string;
-  fechaNacimiento: string;
   sexo: string;
-  enfermedad?: string;
-  estadoReproductivo?: string;
+  fechaNacimiento: string;
   imagen: string;
-  imageUrl?: string; 
-  vacunasAplicadas?: string;
-  numeroPartos?: string;
+  // Add these properties to fix the errors
+  createdBy?: string;
+  imageUrl?: string;
+  // Previously added properties
+  alimentacion?: string;
+  peso?: string;
+  numeroPartos?: number;
   ubicacion?: string;
-  observaciones?: string;
-  createdBy?: number;
+  enfermedad?: string;
+  estado?: string;
 }
 
 @Injectable({
@@ -25,7 +28,7 @@ export interface Animal {
 })
 export class AnimalService {
   private apiUrl = 'http://localhost:3000/animals';
-  private fallbackAnimals: Animal[] = []; // Fallback data if API fails
+  private fallbackAnimals: Animal[] = []; 
   
   constructor(
     private http: HttpClient,
@@ -47,7 +50,6 @@ export class AnimalService {
     return this.http.get<Animal[]>(`${this.apiUrl}?createdBy=${currentUser.id}`).pipe(
       catchError(error => {
         console.error('Error fetching animals by user:', error);
-        // Return local fallback data filtered by user
         return of(this.fallbackAnimals.filter(animal => animal.createdBy === currentUser.id));
       })
     );

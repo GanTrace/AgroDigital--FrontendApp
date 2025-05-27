@@ -1,81 +1,135 @@
 <div class="medical-history-container">
   <app-header-component></app-header-component>
+  
   <main class="main-content">
-    <section class="search-section">
+    <h1 class="page-title">{{ 'MEDICAL_HISTORY.TITLE' | translate }}</h1>
+    
+    <div class="search-section">
       <div class="search-bar">
         <i class="search-icon">🔍</i>
-        <input type="text" placeholder="{{ 'MEDICAL_HISTORY.SEARCH' | translate }}">
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (input)="searchAnimals()"
+          placeholder="{{ 'MEDICAL_HISTORY.SEARCH_ANIMAL' | translate }}">
       </div>
-    </section>
-
-    <section class="history-description">
-      <p>{{ 'MEDICAL_HISTORY.DESCRIPTION' | translate }}</p>
-    </section>
-
-    <div class="medical-history-content">
-      <section class="animal-info">
-        <div class="animal-image">
-          <img [src]="selectedAnimal.imagen" alt="Animal image">
-          <div class="animal-id">{{ selectedAnimal.nombre }} #{{ selectedAnimal.id }}</div>
-        </div>
-        <div class="animal-details">
-          <div class="animal-type">
-            <i class="star-icon">★</i>
-            <span>{{ selectedAnimal.tipo }}</span>
+    </div>
+    <div class="animal-selection" *ngIf="!selectedAnimal">
+      <h2>{{ 'MEDICAL_HISTORY.SELECT_ANIMAL' | translate }}</h2>
+      
+      <div class="animals-grid">
+        <div class="animal-card" *ngFor="let animal of filteredAnimals" (click)="selectAnimal(animal)">
+          <div class="animal-tag">{{ animal.especie }}</div>
+          <div class="animal-image">
+            <img [src]="animal.imagen" alt="{{ 'DASHBOARD.ANIMAL_IMAGE' | translate }}">
           </div>
-          <ul class="details-list">
-            <li>• {{ 'MEDICAL_HISTORY.BIRTH_DATE' | translate }}: {{ selectedAnimal.fechaNacimiento }}</li>
-            <li>• {{ 'MEDICAL_HISTORY.AGE' | translate }}: {{ selectedAnimal.edad }}</li>
-            <li>• {{ 'MEDICAL_HISTORY.SEX' | translate }}: {{ selectedAnimal.sexo }}</li>
-            <li>• {{ 'MEDICAL_HISTORY.HEALTH_PROBLEMS' | translate }}: {{ selectedAnimal.problemasSalud }}</li>
-            <li>• {{ 'MEDICAL_HISTORY.ZONE' | translate }}: {{ selectedAnimal.zona }}</li>
-            <li>• {{ 'MEDICAL_HISTORY.FEEDING' | translate }}: {{ selectedAnimal.alimentacion }}</li>
-            <li>• {{ 'MEDICAL_HISTORY.WEIGHT' | translate }}: {{ selectedAnimal.peso }}</li>
-            <li>• {{ 'MEDICAL_HISTORY.OFFSPRING' | translate }}: {{ selectedAnimal.crias }}</li>
-            <li>• {{ 'MEDICAL_HISTORY.BIRTHS' | translate }}: {{ selectedAnimal.partos }}</li>
-            <li>• {{ 'MEDICAL_HISTORY.STATUS' | translate }}: {{ selectedAnimal.estado }}</li>
+          <div class="animal-name">#{{ animal.id }} - {{ animal.nombre }}</div>
+          <ul class="animal-details-list">
+            <li>• {{ 'DASHBOARD.SPECIES' | translate }}: {{ animal.especie }}</li>
+            <li>• {{ 'DASHBOARD.AGE' | translate }}: {{ calculateAge(animal.fechaNacimiento) }}</li>
+            <li>• {{ 'DASHBOARD.SEX' | translate }}: {{ animal.sexo }}</li>
           </ul>
-          <button class="edit-btn">{{ 'MEDICAL_HISTORY.EDIT' | translate }}</button>
         </div>
-      </section>
-
-      <section class="medical-table-section">
-        <table class="medical-table">
-          <thead>
-            <tr>
-              <th>{{ 'MEDICAL_HISTORY.DATE' | translate }}</th>
-              <th>{{ 'MEDICAL_HISTORY.EVENT_TYPE' | translate }}</th>
-              <th>{{ 'MEDICAL_HISTORY.DESCRIPTION' | translate }}</th>
-              <th>{{ 'MEDICAL_HISTORY.VETERINARIAN' | translate }}</th>
-              <th>{{ 'MEDICAL_HISTORY.OBSERVATIONS' | translate }}</th>
-              <th>{{ 'MEDICAL_HISTORY.ATTACHMENTS' | translate }}</th>
-              <th>{{ 'MEDICAL_HISTORY.MORE' | translate }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let record of medicalRecords">
-              <td>{{ record.fecha }}</td>
-              <td>{{ record.tipoEvento }}</td>
-              <td>{{ record.descripcion }}</td>
-              <td>{{ record.veterinario }}</td>
-              <td>{{ record.observaciones }}</td>
-              <td>{{ record.adjuntos }}</td>
-              <td class="more-cell">
-                <button class="more-btn">⊕</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="no-results" *ngIf="medicalRecords.length === 0">{{ 'MEDICAL_HISTORY.NO_RESULTS' | translate }}</p>
-      </section>
-
-      <section class="action-buttons">
-        <button class="add-visit-btn">{{ 'MEDICAL_HISTORY.ADD_VISIT' | translate }}</button>
-        <button class="edit-visit-btn">{{ 'MEDICAL_HISTORY.EDIT_VISIT' | translate }}</button>
-        <button class="delete-visit-btn">{{ 'MEDICAL_HISTORY.DELETE_VISIT' | translate }}</button>
-      </section>
+      </div>
+      
+      <div class="no-animals-message" *ngIf="filteredAnimals.length === 0">
+        <p>{{ 'MEDICAL_HISTORY.NO_ANIMALS' | translate }}</p>
+      </div>
+    </div>
+    
+    <div class="animal-medical-history" *ngIf="selectedAnimal">
+      <div class="animal-info-header">
+        <button class="back-btn" (click)="selectedAnimal = null">
+          ← {{ 'MEDICAL_HISTORY.BACK_TO_ANIMALS' | translate }}
+        </button>
+        
+        <div class="animal-summary">
+          <div class="animal-image-small">
+            <img [src]="selectedAnimal.imagen" alt="{{ 'DASHBOARD.ANIMAL_IMAGE' | translate }}">
+          </div>
+          <div class="animal-details">
+            <h2>{{ selectedAnimal.nombre }} - {{ selectedAnimal.especie }}</h2>
+            <ul class="animal-details-summary">
+              <li>• {{ 'MEDICAL_HISTORY.BIRTH_DATE' | translate }}: {{ selectedAnimal.fechaNacimiento | date }}</li>
+              <li>• {{ 'MEDICAL_HISTORY.AGE' | translate }}: {{ calculateAge(selectedAnimal.fechaNacimiento) }}</li>
+              <li>• {{ 'MEDICAL_HISTORY.SEX' | translate }}: {{ selectedAnimal.sexo }}</li>
+              <li *ngIf="selectedAnimal.enfermedad">• {{ 'MEDICAL_HISTORY.HEALTH_ISSUES' | translate }}: {{ selectedAnimal.enfermedad }}</li>
+              <li>• {{ 'MEDICAL_HISTORY.ZONE' | translate }}: {{ selectedAnimal.ubicacion || 'N/A' }}</li>
+              <li>• {{ 'MEDICAL_HISTORY.FEEDING' | translate }}: {{ selectedAnimal.alimentacion || 'N/A' }}</li>
+              <li>• {{ 'MEDICAL_HISTORY.WEIGHT' | translate }}: {{ selectedAnimal.peso || 'N/A' }}</li>
+              <li>• {{ 'MEDICAL_HISTORY.OFFSPRING' | translate }}: {{ selectedAnimal.numeroPartos || 0 }}</li>
+              <li>• {{ 'MEDICAL_HISTORY.BIRTHS' | translate }}: {{ selectedAnimal.numeroPartos || 0 }}</li>
+              <li>• {{ 'MEDICAL_HISTORY.STATUS' | translate }}: {{ selectedAnimal.estado || 'Activo' }}</li>
+            </ul>
+            <button class="edit-btn">{{ 'MEDICAL_HISTORY.EDIT' | translate }}</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="medical-events-section">
+        <h3>{{ 'MEDICAL_HISTORY.CLINICAL_HISTORY' | translate }}</h3>
+        
+        <div class="medical-events-table">
+          <table>
+            <thead>
+              <tr>
+                <th>{{ 'MEDICAL_HISTORY.DATE' | translate }}</th>
+                <th>{{ 'MEDICAL_HISTORY.EVENT_TYPE' | translate }}</th>
+                <th>{{ 'MEDICAL_HISTORY.DESCRIPTION' | translate }}</th>
+                <th>{{ 'MEDICAL_HISTORY.VETERINARIAN' | translate }}</th>
+                <th>{{ 'MEDICAL_HISTORY.OBSERVATIONS' | translate }}</th>
+                <th>{{ 'MEDICAL_HISTORY.ATTACHMENTS' | translate }}</th>
+                <th>{{ 'MEDICAL_HISTORY.ACTIONS' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let event of medicalEvents">
+                <td>{{ event.date | date }}</td>
+                <td>{{ event.eventType }}</td>
+                <td>{{ event.description }}</td>
+                <td>{{ event.veterinarian }}</td>
+                <td>{{ event.observations }}</td>
+                <td>
+                  <span *ngIf="event.attachments && event.attachments.length">
+                    <a *ngFor="let attachment of event.attachments" href="#" class="attachment-link">
+                      {{ attachment }}
+                    </a>
+                  </span>
+                </td>
+                <td class="actions-cell">
+                  <button class="action-btn edit-btn-small" (click)="editVisit(event.id)">
+                    ✏️
+                  </button>
+                  <button class="action-btn delete-btn-small" (click)="deleteVisit(event.id)">
+                    🗑️
+                  </button>
+                </td>
+              </tr>
+              
+              <tr *ngIf="medicalEvents.length === 0">
+                <td colspan="7" class="no-events-message">
+                  {{ 'MEDICAL_HISTORY.NO_EVENTS' | translate }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="actions-container">
+          <button class="add-visit-btn" (click)="addVisit()">
+            {{ 'MEDICAL_HISTORY.ADD_VISIT' | translate }}
+          </button>
+          <button class="edit-visit-btn" [disabled]="medicalEvents.length === 0">
+            {{ 'MEDICAL_HISTORY.EDIT_VISIT' | translate }}
+          </button>
+          <button class="delete-visit-btn" [disabled]="medicalEvents.length === 0">
+            {{ 'MEDICAL_HISTORY.DELETE_VISIT' | translate }}
+          </button>
+        </div>
+      </div>
     </div>
   </main>
+  
   <app-footer-component></app-footer-component>
 </div>
   
