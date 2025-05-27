@@ -203,6 +203,9 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid #e0e0e0;
   background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .event-card:hover {
@@ -274,6 +277,9 @@
   background: linear-gradient(135deg, #e6d7c3, #f0e6d8);
   padding: 20px;
   border-top: 3px solid #7ab55c;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .event-title {
@@ -487,7 +493,7 @@ app-footer-component {
 
 .view-details {
   text-align: center;
-  margin-top: 15px;
+  margin-top: auto;
   color: #7ab55c;
   font-weight: 600;
   padding: 8px 0;
