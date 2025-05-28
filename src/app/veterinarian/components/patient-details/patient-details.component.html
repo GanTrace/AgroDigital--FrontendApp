@@ -1,0 +1,85 @@
+<div class="patient-details-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="page-header">
+      <button class="back-btn" (click)="goBack()">
+        <i class="back-icon">←</i>
+        <span>{{ 'PATIENT_DETAILS.BACK' | translate }}</span>
+      </button>
+      <h1>{{ 'PATIENT_DETAILS.TITLE' | translate }}</h1>
+    </div>
+    
+    <div class="loading" *ngIf="isLoading">
+      <p>{{ 'PATIENT_DETAILS.LOADING' | translate }}</p>
+    </div>
+    
+    <div class="error-message" *ngIf="loadError">
+      <p>{{ loadError }}</p>
+    </div>
+    
+    <div class="patient-details" *ngIf="!isLoading && !loadError && patient">
+      <div class="patient-header">
+        <div class="patient-image">
+          <img [src]="patient.image" alt="{{ patient.name }}">
+          <div class="patient-tag" [ngClass]="patient.healthIssues === 'Ninguno' ? 'status-healthy' : 'status-treatment'">
+            {{ patient.healthIssues === 'Ninguno' ? ('PATIENT_DETAILS.HEALTHY' | translate) : ('PATIENT_DETAILS.IN_TREATMENT' | translate) }}
+          </div>
+        </div>
+        
+        <div class="patient-info">
+          <h2 class="patient-name">{{ patient.name }}</h2>
+          <p class="patient-type">{{ patient.type }}</p>
+          
+          <div class="patient-actions">
+            <button class="delete-btn" (click)="deletePatient()">
+              <i class="delete-icon">🗑️</i>
+              <span>{{ 'PATIENT_DETAILS.DELETE' | translate }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="details-section">
+        <h3>{{ 'PATIENT_DETAILS.BASIC_INFO' | translate }}</h3>
+        <div class="details-grid">
+          <div class="detail-item">
+            <span class="detail-label">{{ 'PATIENT_DETAILS.OWNER' | translate }}:</span>
+            <span class="detail-value">{{ patient.owner }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">{{ 'PATIENT_DETAILS.AGE' | translate }}:</span>
+            <span class="detail-value">{{ patient.age }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">{{ 'PATIENT_DETAILS.GENDER' | translate }}:</span>
+            <span class="detail-value">{{ patient.gender }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">{{ 'PATIENT_DETAILS.HEALTH_ISSUES' | translate }}:</span>
+            <span class="detail-value">{{ patient.healthIssues }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="details-section">
+        <h3>{{ 'PATIENT_DETAILS.VISIT_INFO' | translate }}</h3>
+        <div class="details-grid">
+          <div class="detail-item">
+            <span class="detail-label">{{ 'PATIENT_DETAILS.LAST_VISIT' | translate }}:</span>
+            <span class="detail-value">{{ patient.lastVisit }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">{{ 'PATIENT_DETAILS.NEXT_VISIT' | translate }}:</span>
+            <span class="detail-value">{{ patient.nextVisit }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="details-section" *ngIf="patient.observations">
+        <h3>{{ 'PATIENT_DETAILS.OBSERVATIONS' | translate }}</h3>
+        <p class="observations">{{ patient.observations }}</p>
+      </div>
+    </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>

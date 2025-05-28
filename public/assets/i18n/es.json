@@ -408,6 +408,23 @@
     "VIEW_DETAILS": "Ver Detalles",
     "NO_PATIENTS": "No se encontraron pacientes"
   },
+  "PATIENT_DETAILS": {
+    "BACK": "Volver",
+    "TITLE": "Detalles del Paciente",
+    "LOADING": "Cargando detalles del paciente...",
+    "HEALTHY": "Saludable",
+    "IN_TREATMENT": "En Tratamiento",
+    "DELETE": "Eliminar",
+    "BASIC_INFO": "Información Básica",
+    "OWNER": "Propietario",
+    "AGE": "Edad",
+    "GENDER": "Sexo",
+    "HEALTH_ISSUES": "Problemas de Salud",
+    "VISIT_INFO": "Información de Visitas",
+    "LAST_VISIT": "Última Visita",
+    "NEXT_VISIT": "Próxima Visita",
+    "OBSERVATIONS": "Observaciones"
+  },
   "TREATMENTS": {
     "TITLE": "Tratamientos y Procedimientos",
     "ADD_TREATMENT": "Añadir Tratamiento",

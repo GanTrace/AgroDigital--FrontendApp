@@ -20,6 +20,7 @@ import { PatientsComponent } from './veterinarian/components/patients/patients.c
 import { TreatmentsComponent } from './veterinarian/components/treatments/treatments.component';
 import { AddMedicalEventComponent } from './rancher/components/add-medical-event/add-medical-event.component';
 import { NewPatientComponent } from './veterinarian/components/new-patient/new-patient.component';
+import { PatientDetailsComponent } from './veterinarian/components/patient-details/patient-details.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -48,6 +49,7 @@ export const routes: Routes = [
     { path:'veterinarian/patients', component: PatientsComponent},
     { path:'veterinarian/treatments', component: TreatmentsComponent},
     { path:'veterinarian/new-patient', component: NewPatientComponent},
+    { path:'veterinarian/patient/:id', component: PatientDetailsComponent},
     { path: '**', redirectTo: 'login' }
   ];
 
