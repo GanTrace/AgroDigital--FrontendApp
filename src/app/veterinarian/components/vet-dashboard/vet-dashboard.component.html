@@ -50,24 +50,40 @@
     <div class="dashboard-sections">
       <section class="patients-section">
         <h2>Mis Pacientes</h2>
-        <div class="patients-grid">
+        
+        <div class="loading" *ngIf="isLoading">
+          <p>Cargando pacientes...</p>
+        </div>
+        
+        <div class="error-message" *ngIf="loadError">
+          <p>{{ loadError }}</p>
+        </div>
+        
+        <div class="patients-grid" *ngIf="!isLoading && !loadError">
           <div class="patient-card" *ngFor="let patient of filteredPatients">
-            <div class="patient-tag">{{ patient.tipo }}</div>
-            <div class="patient-image">
-              <img [src]="patient.imagen" alt="Imagen del animal">
+            <div class="patient-tag" [ngClass]="patient.healthIssues === 'Ninguno' ? 'status-healthy' : 'status-treatment'">
+              {{ patient.healthIssues === 'Ninguno' ? 'Saludable' : 'En Tratamiento' }}
             </div>
-            <div class="patient-name">{{ patient.nombre }}</div>
+            <div class="patient-image">
+              <img [src]="patient.image" alt="{{ patient.name }}">
+            </div>
+            <div class="patient-name">{{ patient.name }}</div>
             <ul class="patient-details-list">
-              <li>Edad: {{ patient.edad }}</li>
-              <li>Propietario: {{ patient.propietario }}</li>
-              <li>Última visita: {{ patient.ultimaVisita }}</li>
+              <li>{{ patient.type }}</li>
+              <li>Edad: {{ patient.age }}</li>
+              <li>Propietario: {{ patient.owner }}</li>
+              <li>Última visita: {{ patient.lastVisit }}</li>
             </ul>
-            <button class="info-btn" routerLink="/medical-record/{{ patient.id }}">i</button>
+            <button class="info-btn" (click)="viewPatientDetails(patient.id)">i</button>
           </div>
         </div>
         
+        <div class="no-patients" *ngIf="!isLoading && !loadError && filteredPatients.length === 0">
+          No hay pacientes disponibles.
+        </div>
+        
         <div class="view-more-container" *ngIf="patients.length > 6">
-          <button class="view-more-btn">Ver más</button>
+          <button class="view-more-btn" routerLink="/veterinarian/patients">Ver más</button>
         </div>
       </section>
       

@@ -144,4 +144,26 @@ export class PatientsComponent implements OnInit {
   getHealthStatusClass(healthIssues: string): string {
     return healthIssues === 'Ninguno' ? 'status-healthy' : 'status-treatment';
   }
+
+  deletePatient(id: number | undefined, event: Event): void {
+    event.stopPropagation(); // Evitar que se active el evento de clic en la tarjeta
+    
+    if (id === undefined) {
+      console.error('ID de paciente no válido');
+      return;
+    }
+    
+    if (confirm('¿Estás seguro de que deseas eliminar este paciente?')) {
+      this.patientService.deletePatient(id).subscribe({
+        next: () => {
+          // Eliminar el paciente de la lista local
+          this.patients = this.patients.filter(p => p.id !== id);
+          this.filteredPatients = this.filteredPatients.filter(p => p.id !== id);
+        },
+        error: (error) => {
+          console.error('Error al eliminar el paciente:', error);
+        }
+      });
+    }
+  }
 }
