@@ -179,5 +179,21 @@
       "createdAt": "2025-05-28T03:44:53.325Z",
       "id": 1
     }
+  ],
+  "patients": [
+    {
+      "name": "Betty",
+      "type": "Oveja Merino",
+      "age": "5 años",
+      "gender": "Hembra",
+      "healthIssues": "Ninguno",
+      "owner": "Rodrigo",
+      "lastVisit": "2025-03-19",
+      "nextVisit": "2025-07-24",
+      "image": "https://animapedia.org/wp-content/uploads/2018/07/oveja-adulta.jpg",
+      "observations": "Ninguna.",
+      "createdBy": 5,
+      "id": 1
+    }
   ]
 }

@@ -19,6 +19,7 @@ import { MedicalAppointmentsComponent } from './veterinarian/components/medical-
 import { PatientsComponent } from './veterinarian/components/patients/patients.component';
 import { TreatmentsComponent } from './veterinarian/components/treatments/treatments.component';
 import { AddMedicalEventComponent } from './rancher/components/add-medical-event/add-medical-event.component';
+import { NewPatientComponent } from './veterinarian/components/new-patient/new-patient.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -46,6 +47,7 @@ export const routes: Routes = [
     { path:'veterinarian/medical-appointments', component: MedicalAppointmentsComponent },
     { path:'veterinarian/patients', component: PatientsComponent},
     { path:'veterinarian/treatments', component: TreatmentsComponent},
+    { path:'veterinarian/new-patient', component: NewPatientComponent},
     { path: '**', redirectTo: 'login' }
   ];
 

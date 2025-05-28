@@ -6,19 +6,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../public/services/auth.service';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
-
-interface Patient {
-  id: number;
-  name: string;
-  type: string;
-  age: string;
-  gender: string;
-  healthIssues: string;
-  owner: string;
-  lastVisit: string;
-  nextVisit: string;
-  image: string;
-}
+import { PatientService, Patient } from '../../services/patient.service';
 
 @Component({
   selector: 'app-patients',
@@ -41,76 +29,17 @@ export class PatientsComponent implements OnInit {
   selectedAnimalType = 'all';
   selectedHealthStatus = 'all';
   
-  patients: Patient[] = [
-    {
-      id: 1,
-      name: 'Clery',
-      type: 'Vaca Holstein',
-      age: '4 años',
-      gender: 'Hembra',
-      healthIssues: 'Ninguno',
-      owner: 'Rodrigo',
-      lastVisit: '15/10/2023',
-      nextVisit: '15/01/2024',
-      image: 'assets/images/animals/vaca1.jpg'
-    },
-    {
-      id: 2,
-      name: 'Bella',
-      type: 'Cabra Alpina',
-      age: '2 años',
-      gender: 'Hembra',
-      healthIssues: 'Cojera leve',
-      owner: 'Gary',
-      lastVisit: '20/11/2023',
-      nextVisit: '20/12/2023',
-      image: 'assets/images/animals/cabra1.jpg'
-    },
-    {
-      id: 3,
-      name: 'Max',
-      type: 'Toro Angus',
-      age: '5 años',
-      gender: 'Macho',
-      healthIssues: 'Ninguno',
-      owner: 'Nelson Fabrizio',
-      lastVisit: '05/11/2023',
-      nextVisit: '05/02/2024',
-      image: 'assets/images/animals/toro1.jpg'
-    },
-    {
-      id: 4,
-      name: 'Luna',
-      type: 'Oveja Merino',
-      age: '3 años',
-      gender: 'Hembra',
-      healthIssues: 'Problemas respiratorios',
-      owner: 'Rodrigo',
-      lastVisit: '10/12/2023',
-      nextVisit: '10/01/2024',
-      image: 'assets/images/animals/oveja1.jpg'
-    },
-    {
-      id: 5,
-      name: 'Rocky',
-      type: 'Caballo Andaluz',
-      age: '7 años',
-      gender: 'Macho',
-      healthIssues: 'Ninguno',
-      owner: 'Gary',
-      lastVisit: '25/11/2023',
-      nextVisit: '25/02/2024',
-      image: 'assets/images/animals/caballo1.jpg'
-    }
-  ];
-  
+  patients: Patient[] = [];
   filteredPatients: Patient[] = [];
   animalTypes = ['all', 'Vaca', 'Toro', 'Cabra', 'Oveja', 'Caballo'];
   healthStatuses = ['all', 'healthy', 'treatment'];
+  isLoading = true;
+  loadError = '';
   
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
+    private patientService: PatientService,
     private router: Router
   ) {}
   
@@ -130,7 +59,25 @@ export class PatientsComponent implements OnInit {
       this.userName = user.name;
     }
     
-    this.filteredPatients = [...this.patients];
+    this.loadPatients();
+  }
+  
+  loadPatients(): void {
+    this.isLoading = true;
+    this.loadError = '';
+    
+    this.patientService.getPatients().subscribe({
+      next: (patients) => {
+        this.patients = patients;
+        this.filteredPatients = [...this.patients];
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading patients:', error);
+        this.loadError = 'Error al cargar los pacientes. Por favor, inténtelo de nuevo.';
+        this.isLoading = false;
+      }
+    });
   }
   
   toggleFilters(): void {
@@ -181,8 +128,13 @@ export class PatientsComponent implements OnInit {
     this.filteredPatients = [...this.patients];
   }
   
-  viewPatientDetails(id: number): void {
-    this.router.navigate([`/veterinarian/patient/${id}`]);
+  viewPatientDetails(id: number | undefined): void {
+    if (id !== undefined) {
+      this.router.navigate([`/veterinarian/patient/${id}`]);
+    } else {
+      console.error('ID de paciente no válido');
+      // Opcionalmente, puedes mostrar un mensaje al usuario
+    }
   }
   
   addNewPatient(): void {
