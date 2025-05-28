@@ -66,17 +66,33 @@
     {
       "nombre": "Luna",
       "especie": "Vaca",
-      "fechaNacimiento": "2019-04-17",
-      "sexo": "Hembra",
-      "enfermedad": "No",
+      "fechaNacimiento": "2019-03-14",
+      "sexo": "Macho",
+      "enfermedad": "Si",
       "estadoReproductivo": "Gestación",
       "imageUrl": "https://naukas.com/fx/uploads/2017/05/Dairy_cow.jpg",
       "vacunasAplicadas": "2",
       "numeroPartos": 1,
       "ubicacion": "Ganado bovino",
-      "observaciones": "Ninguna",
+      "observaciones": "Ninguna.",
       "id": 1,
       "imagen": "https://naukas.com/fx/uploads/2017/05/Dairy_cow.jpg",
+      "createdBy": 1
+    },
+    {
+      "nombre": "Betty",
+      "especie": "Cordero",
+      "fechaNacimiento": "2017-07-04",
+      "sexo": "Hembra",
+      "enfermedad": "No",
+      "estadoReproductivo": "Gestación",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMZRUI6EhuVJa2FeSWwzRW_BfMSIRMN_GBTQ&s",
+      "vacunasAplicadas": "2",
+      "numeroPartos": 1,
+      "ubicacion": "Ganado Ovino",
+      "observaciones": "Ninguna.",
+      "id": 2,
+      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMZRUI6EhuVJa2FeSWwzRW_BfMSIRMN_GBTQ&s",
       "createdBy": 1
     }
   ],
@@ -150,17 +166,17 @@
     {
       "animalId": 1,
       "animalName": "Luna",
-      "date": "2025-05-27",
-      "eventType": "Vacunación",
+      "date": "2025-05-28",
+      "eventType": "Revisión",
       "description": "Chequeo Mensual",
       "veterinarian": "Dra. Polo",
-      "observations": "Ninguna observación",
+      "observations": "Ninguna observación.",
       "attachments": [
         "Factura"
       ],
       "userId": 1,
       "userName": "Rodrigo",
-      "createdAt": "2025-05-27T07:26:34.344Z",
+      "createdAt": "2025-05-28T03:44:53.325Z",
       "id": 1
     }
   ]

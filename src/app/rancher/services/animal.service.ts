@@ -10,7 +10,7 @@ export interface Animal {
   sexo: string;
   fechaNacimiento: string;
   imagen: string;
-  createdBy?: string;
+  createdBy?: string | number;
   imageUrl?: string;
   alimentacion?: string;
   peso?: string;
@@ -18,6 +18,9 @@ export interface Animal {
   ubicacion?: string;
   enfermedad?: string;
   estado?: string;
+  estadoReproductivo?: string;
+  vacunasAplicadas?: string;
+  observaciones?: string;
 }
 
 @Injectable({
