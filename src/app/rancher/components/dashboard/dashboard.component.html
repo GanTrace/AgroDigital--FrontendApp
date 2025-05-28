@@ -35,63 +35,135 @@
         <div class="filter-group">
           <label>{{ 'DASHBOARD.ANIMAL_TYPE' | translate }}</label>
           <select [(ngModel)]="selectedFilters.type">
+            <option value="">{{ 'DASHBOARD.ALL_TYPES' | translate }}</option>
             <option *ngFor="let type of animalTypes" [value]="type">{{ type }}</option>
           </select>
         </div>
         
         <div class="filter-group">
-          <label>{{ 'DASHBOARD.AGE' | translate }} ({{ selectedFilters.age }} {{ 'DASHBOARD.YEARS' | translate }})</label>
-          <input type="range" [(ngModel)]="selectedFilters.age" [min]="ageRange.min" [max]="ageRange.max">
-        </div>
-        
-        <div class="filter-group">
           <label>{{ 'DASHBOARD.SEX' | translate }}</label>
-          <div class="radio-group">
-            <label *ngFor="let gender of genders">
-              <input type="radio" name="gender" [value]="gender" [(ngModel)]="selectedFilters.gender">
-              {{ gender }}
-            </label>
-          </div>
+          <select [(ngModel)]="selectedFilters.sex">
+            <option value="">{{ 'DASHBOARD.ALL' | translate }}</option>
+            <option value="Macho">{{ 'ANIMALS.MALE' | translate }}</option>
+            <option value="Hembra">{{ 'ANIMALS.FEMALE' | translate }}</option>
+          </select>
         </div>
         
-        <div class="filter-group">
-          <label>{{ 'DASHBOARD.DISEASES' | translate }}</label>
-          <div class="radio-group">
-            <label *ngFor="let option of diseaseOptions">
-              <input type="radio" name="disease" [value]="option" [(ngModel)]="selectedFilters.disease">
-              {{ option }}
-            </label>
-          </div>
+        <div class="filter-actions">
+          <button class="apply-filters" (click)="applyFilters()">
+            {{ 'DASHBOARD.APPLY_FILTERS' | translate }}
+          </button>
+          <button class="reset-filters" (click)="resetFilters()">
+            {{ 'DASHBOARD.RESET_FILTERS' | translate }}
+          </button>
+          <button class="cancel-filters" (click)="toggleFilters()">
+            {{ 'DASHBOARD.CANCEL' | translate }}
+          </button>
         </div>
-      </div>
-      
-      <div class="filter-actions">
-        <button class="apply-filters" (click)="applyFilters()">{{ 'DASHBOARD.APPLY_FILTERS' | translate }}</button>
-        <button class="reset-filters" (click)="resetFilters()">{{ 'DASHBOARD.RESET_FILTERS' | translate }}</button>
-        <button class="cancel-filters" (click)="toggleFilters()">{{ 'DASHBOARD.CANCEL' | translate }}</button>
       </div>
     </div>
     
     <div class="animals-grid">
-      <div class="animal-card" *ngFor="let animal of animals; let i = index">
-        <div class="animal-tag">#{{i+1}}</div>
+      <div class="animal-card" *ngFor="let animal of filteredAnimals" (click)="viewAnimalDetails(animal)">
+        <div class="animal-tag" style="left: 0; right: auto;">{{ animal.especie }}</div>
+        <button class="delete-animal-btn" (click)="deleteAnimal($event, animal.id)" title="{{ 'DASHBOARD.DELETE_ANIMAL' | translate }}">
+          <i class="delete-icon">🗑️</i>
+        </button>
         <div class="animal-image">
           <img [src]="animal.imagen" alt="{{ 'DASHBOARD.ANIMAL_IMAGE' | translate }}">
         </div>
-        <div class="animal-name">{{animal.nombre}}</div>
+        <div class="animal-name">#{{ animal.id }} - {{ animal.nombre }}</div>
         <ul class="animal-details-list">
-          <li>• {{ 'DASHBOARD.SPECIES' | translate }}: {{animal.especie}}</li>
-          <li>• {{ 'DASHBOARD.AGE' | translate }}: {{animal.edad}}</li>
-          <li>• {{ 'DASHBOARD.SEX' | translate }}: {{animal.sexo}}</li>
-          <li>• {{ 'DASHBOARD.DISEASES' | translate }}: {{animal.enfermedades}}</li>
+          <li>• {{ 'DASHBOARD.SPECIES' | translate }}: {{ animal.especie }}</li>
+          <li>• {{ 'DASHBOARD.AGE' | translate }}: {{ calculateAge(animal.fechaNacimiento) }}</li>
+          <li>• {{ 'DASHBOARD.SEX' | translate }}: {{ animal.sexo }}</li>
+          <li *ngIf="animal.enfermedad">• {{ 'DASHBOARD.DISEASES' | translate }}: {{ animal.enfermedad }}</li>
         </ul>
         <button class="info-btn">i</button>
       </div>
     </div>
     
-    <div class="view-more-container">
-      <button class="view-more-btn" (click)="toggleViewMore()">
-        {{ showingAllAnimals ? ('DASHBOARD.VIEW_LESS' | translate) : ('DASHBOARD.VIEW_MORE' | translate) }}
+    <!-- Animal Details Modal -->
+    <div class="animal-details-modal" *ngIf="showAnimalDetails && selectedAnimal" (click)="closeAnimalDetails()">
+      <div class="animal-details-content" (click)="$event.stopPropagation()">
+        <button class="close-modal" (click)="closeAnimalDetails()">×</button>
+        
+        <h2>{{ 'DASHBOARD.ANIMAL_DETAILS' | translate }}</h2>
+        
+        <div class="animal-detail-image">
+          <img [src]="selectedAnimal.imagen" alt="{{ 'DASHBOARD.ANIMAL_IMAGE' | translate }}">
+          <span class="animal-detail-id">#{{ selectedAnimal.id }}</span>
+        </div>
+        
+        <div class="animal-detail-info">
+          <h3>{{ selectedAnimal.nombre }}</h3>
+          
+          <div class="detail-row">
+            <span class="detail-label">{{ 'DASHBOARD.SPECIES' | translate }}:</span>
+            <span class="detail-value">{{ selectedAnimal.especie }}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">{{ 'DASHBOARD.BIRTH_DATE' | translate }}:</span>
+            <span class="detail-value">{{ selectedAnimal.fechaNacimiento | date }}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">{{ 'DASHBOARD.AGE' | translate }}:</span>
+            <span class="detail-value">{{ calculateAge(selectedAnimal.fechaNacimiento) }}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">{{ 'DASHBOARD.SEX' | translate }}:</span>
+            <span class="detail-value">{{ selectedAnimal.sexo }}</span>
+          </div>
+          
+          <div class="detail-row" *ngIf="selectedAnimal.enfermedad">
+            <span class="detail-label">{{ 'DASHBOARD.DISEASES' | translate }}:</span>
+            <span class="detail-value">{{ selectedAnimal.enfermedad }}</span>
+          </div>
+          
+          <div class="detail-row" *ngIf="selectedAnimal.estadoReproductivo">
+            <span class="detail-label">{{ 'ANIMALS.REPRODUCTIVE_STATUS' | translate }}:</span>
+            <span class="detail-value">{{ selectedAnimal.estadoReproductivo }}</span>
+          </div>
+          
+          <div class="detail-row" *ngIf="selectedAnimal.vacunasAplicadas">
+            <span class="detail-label">{{ 'ANIMALS.APPLIED_VACCINES' | translate }}:</span>
+            <span class="detail-value">{{ selectedAnimal.vacunasAplicadas }}</span>
+          </div>
+          
+          <div class="detail-row" *ngIf="selectedAnimal.numeroPartos">
+            <span class="detail-label">{{ 'ANIMALS.NUMBER_OF_BIRTHS' | translate }}:</span>
+            <span class="detail-value">{{ selectedAnimal.numeroPartos }}</span>
+          </div>
+          
+          <div class="detail-row" *ngIf="selectedAnimal.ubicacion">
+            <span class="detail-label">{{ 'ANIMALS.LOCATION' | translate }}:</span>
+            <span class="detail-value">{{ selectedAnimal.ubicacion }}</span>
+          </div>
+          
+          <div class="detail-observations" *ngIf="selectedAnimal.observaciones">
+            <h4>{{ 'ANIMALS.OBSERVATIONS' | translate }}:</h4>
+            <p>{{ selectedAnimal.observaciones }}</p>
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <button class="edit-animal-btn" routerLink="/edit-animal/{{ selectedAnimal.id }}">
+            {{ 'DASHBOARD.EDIT_ANIMAL' | translate }}
+          </button>
+          <button class="back-btn" (click)="closeAnimalDetails()">
+            {{ 'DASHBOARD.BACK' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="no-animals-message" *ngIf="filteredAnimals.length === 0">
+      <p>{{ 'DASHBOARD.NO_ANIMALS' | translate }}</p>
+      <button class="add-animal-btn" routerLink="/animals">
+        {{ 'DASHBOARD.ADD_ANIMAL' | translate }}
       </button>
     </div>
   </main>

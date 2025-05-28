@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { EconomicService } from '../../services/economic.service';
+import { AuthService } from '../../../public/services/auth.service';
 
 @Component({
   selector: 'app-add-income',
@@ -19,22 +20,23 @@ import { EconomicService } from '../../services/economic.service';
 export class AddIncomeComponent implements OnInit {
   incomeForm: FormGroup;
   categories: string[] = [
-    'ECONOMIC_CONTROL.CATEGORIES.SALES',
-    'ECONOMIC_CONTROL.CATEGORIES.SERVICES',
-    'ECONOMIC_CONTROL.CATEGORIES.INVESTMENTS',
-    'ECONOMIC_CONTROL.CATEGORIES.OTHER'
+    'Ventas',
+    'Servicios',
+    'Inversiones',
+    'Otros Ingresos'
   ];
 
   constructor(
     private fb: FormBuilder,
-    private economicService: EconomicService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private economicService: EconomicService,
+    private authService: AuthService
   ) {
     this.incomeForm = this.fb.group({
       amount: ['', [Validators.required, Validators.min(1)]],
       description: ['', [Validators.required, Validators.maxLength(100)]],
-      category: ['ECONOMIC_CONTROL.CATEGORIES.SALES']
+      category: [this.categories[0], Validators.required]
     });
   }
 
@@ -47,22 +49,34 @@ export class AddIncomeComponent implements OnInit {
 
   onSubmit(): void {
     if (this.incomeForm.valid) {
-      const incomeData = this.incomeForm.value;
-      
-      // Fix: Pass only one argument (the income object) to addIncome
-      this.economicService.addIncome(incomeData).subscribe(
-        response => {
-          console.log('Income added successfully', response);
+      const currentUser = this.authService.getCurrentUser();
+      const userId = currentUser ? currentUser.id : null;
+      const userName = currentUser ? currentUser.name : 'Unknown';
+
+      const income = {
+        amount: parseFloat(this.incomeForm.value.amount),
+        description: this.incomeForm.value.description,
+        category: this.incomeForm.value.category,
+        date: new Date().toISOString(),
+        type: 'income',
+        userId: userId,
+        userName: userName
+      };
+
+      this.economicService.addIncome(income).subscribe({
+        next: () => {
+          // Also add to transactions for unified view
+          this.economicService.addTransaction({...income}).subscribe();
           this.router.navigate(['/economic-control']);
         },
-        error => {
+        error: (error) => {
           console.error('Error adding income', error);
         }
-      );
+      });
     } else {
+      // Mark all fields as touched to trigger validation messages
       Object.keys(this.incomeForm.controls).forEach(key => {
-        const control = this.incomeForm.get(key);
-        control?.markAsTouched();
+        this.incomeForm.get(key)?.markAsTouched();
       });
     }
   }

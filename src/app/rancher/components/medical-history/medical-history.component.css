@@ -353,4 +353,304 @@
   color: white;
   cursor: pointer;
 }
+
+.medical-history-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page-title {
+  font-size: 2.2rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Search section */
+.search-section {
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 15px;
+  max-width: 500px;
+}
+
+.search-icon {
+  margin-right: 10px;
+  color: #777;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+}
+
+/* Animal selection grid */
+.animal-selection h2 {
+  font-size: 1.5rem;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.animals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.animal-card {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.animal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.animal-tag {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  padding: 5px 10px;
+  background-color: #A3794F;
+  color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-weight: 500;
+  z-index: 2;
+}
+
+.animal-image {
+  height: 180px;
+  overflow: hidden;
+}
+
+.animal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.animal-name {
+  padding: 15px 15px 5px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.animal-details-list {
+  list-style: none;
+  padding: 0 15px 15px;
+}
+
+.animal-details-list li {
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.no-animals-message {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.no-animals-message p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Animal medical history section */
+.animal-medical-history {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.animal-info-header {
+  margin-bottom: 30px;
+}
+
+.back-btn {
+  background-color: #7ab55c;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.animal-summary {
+  display: flex;
+  background-color: #f0e6d6;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.animal-image-small {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.animal-image-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.animal-details {
+  flex: 1;
+}
+
+.animal-details h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.animal-details-summary {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.animal-details-summary li {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.edit-btn {
+  background-color: #8e5928;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+/* Medical events section */
+.medical-events-section {
+  margin-top: 30px;
+}
+
+.medical-events-section h3 {
+  font-size: 1.3rem;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.medical-events-table {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background-color: #7ab55c;
+  color: white;
+  font-weight: 500;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.actions-cell {
+  white-space: nowrap;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  margin: 0 2px;
+}
+
+.edit-btn-small {
+  color: #7ab55c;
+}
+
+.delete-btn-small {
+  color: #e74c3c;
+}
+
+.attachment-link {
+  display: inline-block;
+  margin-right: 5px;
+  color: #2980b9;
+  text-decoration: none;
+}
+
+.attachment-link:hover {
+  text-decoration: underline;
+}
+
+.no-events-message {
+  text-align: center;
+  color: #777;
+  padding: 20px 0;
+}
+
+.actions-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.add-visit-btn {
+  background-color: #7ab55c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
   

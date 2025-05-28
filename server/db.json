@@ -13,7 +13,8 @@
       "email": "halamadrid@gmail.com",
       "password": "TheMutantRoost1812!",
       "role": "rancher",
-      "id": 2
+      "id": 2,
+      "profileImage": "https://i.imgur.com/cLFcHas.jpeg"
     },
     {
       "name": "Gary",
@@ -37,6 +38,146 @@
       "role": "veterinarian",
       "id": 5,
       "profileImage": "https://i.pinimg.com/originals/48/ee/ab/48eeab94003a4450804d9cb33ddf3089.png"
+    }
+  ],
+  "events": [
+    {
+      "tipo": "Vacunas",
+      "titulo": "Visita al ganadero",
+      "fecha": "2025-07-31",
+      "descripcion": "prueba 1",
+      "imagen": "https://cdn.www.gob.pe/uploads/document/file/5083452/342060800_774930693946477_2209820065863032406_n.jpg",
+      "creatorId": 1,
+      "creatorName": "Rodrigo",
+      "id": 1
+    },
+    {
+      "tipo": "Vacunas",
+      "titulo": "Visita a los ganaderos",
+      "fecha": "2025-08-05",
+      "descripcion": "Prueba 2",
+      "imagen": "https://www.agrojunin.gob.pe/wp-content/uploads/2023/08/WhatsApp-Image-2023-07-24-at-17.29.03-1024x514.jpeg",
+      "creatorId": 2,
+      "creatorName": "Erick",
+      "id": 2
+    }
+  ],
+  "animals": [
+    {
+      "nombre": "Luna",
+      "especie": "Vaca",
+      "fechaNacimiento": "2019-03-14",
+      "sexo": "Macho",
+      "enfermedad": "Si",
+      "estadoReproductivo": "Gestación",
+      "imageUrl": "https://naukas.com/fx/uploads/2017/05/Dairy_cow.jpg",
+      "vacunasAplicadas": "2",
+      "numeroPartos": 1,
+      "ubicacion": "Ganado bovino",
+      "observaciones": "Ninguna.",
+      "id": 1,
+      "imagen": "https://naukas.com/fx/uploads/2017/05/Dairy_cow.jpg",
+      "createdBy": 1
+    },
+    {
+      "nombre": "Betty",
+      "especie": "Cordero",
+      "fechaNacimiento": "2017-07-04",
+      "sexo": "Hembra",
+      "enfermedad": "No",
+      "estadoReproductivo": "Gestación",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMZRUI6EhuVJa2FeSWwzRW_BfMSIRMN_GBTQ&s",
+      "vacunasAplicadas": "2",
+      "numeroPartos": 1,
+      "ubicacion": "Ganado Ovino",
+      "observaciones": "Ninguna.",
+      "id": 2,
+      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMZRUI6EhuVJa2FeSWwzRW_BfMSIRMN_GBTQ&s",
+      "createdBy": 1
+    }
+  ],
+  "incomes": [
+    {
+      "amount": 154.03,
+      "description": "Ingresos en Vacunación.",
+      "category": "Servicios",
+      "date": "2025-05-27T02:18:40.267Z",
+      "type": "income",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 1
+    },
+    {
+      "amount": 10.32,
+      "description": "dehaiawdhoiad",
+      "category": "Inversiones",
+      "date": "2025-05-27T02:59:16.675Z",
+      "type": "income",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 2
+    }
+  ],
+  "expenses": [
+    {
+      "amount": 54.08,
+      "description": "Gastos en Suministros",
+      "category": "Suministros",
+      "date": "2025-05-27T02:28:34.986Z",
+      "type": "expense",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 1
+    },
+    {
+      "amount": 20.3,
+      "description": "sdsdsssd",
+      "category": "Alimentación",
+      "date": "2025-05-27T03:00:45.010Z",
+      "type": "expense",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 2
+    }
+  ],
+  "transactions": [
+    {
+      "amount": 154.03,
+      "description": "Ingresos en Vacunación.",
+      "category": "Servicios",
+      "date": "2025-05-27T02:18:40.267Z",
+      "type": "income",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 1
+    },
+    {
+      "amount": 54.08,
+      "description": "Gastos en Suministros",
+      "category": "Suministros",
+      "date": "2025-05-27T02:28:34.986Z",
+      "type": "expense",
+      "userId": 1,
+      "userName": "Rodrigo",
+      "id": 2
+    }
+  ],
+  "medicalEvents": [
+    {
+      "animalId": 1,
+      "animalName": "Luna",
+      "date": "2025-05-28",
+      "eventType": "Revisión",
+      "description": "Chequeo Mensual",
+      "veterinarian": "Dra. Polo",
+      "observations": "Ninguna observación.",
+      "attachments": [
+        "Factura"
+      ],
+      "userId": 1,
+      "userName": "Rodrigo",
+      "createdAt": "2025-05-28T03:44:53.325Z",
+      "id": 1
     }
   ]
 }

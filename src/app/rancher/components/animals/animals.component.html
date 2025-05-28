@@ -2,23 +2,37 @@
   <app-header-component></app-header-component>
   <main class="main-content">
     <div class="form-container">
-      <h2 class="form-title">Comencemos</h2>
+      <h2 class="form-title">{{ 'ANIMALS.LETS_START' | translate }}</h2>
       
       <form [formGroup]="animalForm" class="animal-form">
         <div class="form-grid">
           <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" formControlName="nombre">
+            <label for="nombre">{{ 'ANIMALS.NAME' | translate }}</label>
+            <input type="text" id="nombre" formControlName="nombre" required>
+            <div class="error-message" *ngIf="animalForm.get('nombre')?.invalid && animalForm.get('nombre')?.touched">
+              {{ 'ANIMALS.NAME_REQUIRED' | translate }}
+            </div>
           </div>
           
           <div class="form-group">
-            <label for="especie">Especie</label>
-            <input type="text" id="especie" formControlName="especie">
+            <label for="especie">{{ 'ANIMALS.SPECIES' | translate }}</label>
+            <select id="especie" formControlName="especie" required class="select-dropdown">
+              <option value="">{{ 'ANIMALS.SELECT_SPECIES' | translate }}</option>
+              <option *ngFor="let species of animalSpecies" [value]="species.value">
+                {{ species.label | translate }}
+              </option>
+            </select>
+            <div class="error-message" *ngIf="animalForm.get('especie')?.invalid && animalForm.get('especie')?.touched">
+              {{ 'ANIMALS.SPECIES_REQUIRED' | translate }}
+            </div>
           </div>
           
           <div class="form-group">
-            <label for="fechaNacimiento">Fecha de Nacimiento</label>
-            <input type="text" id="fechaNacimiento" formControlName="fechaNacimiento">
+            <label for="fechaNacimiento">{{ 'ANIMALS.BIRTH_DATE' | translate }}</label>
+            <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento" required>
+            <div class="error-message" *ngIf="animalForm.get('fechaNacimiento')?.invalid && animalForm.get('fechaNacimiento')?.touched">
+              {{ 'ANIMALS.BIRTH_DATE_REQUIRED' | translate }}
+            </div>
           </div>
           
           <div class="animal-id">
@@ -26,58 +40,78 @@
           </div>
           
           <div class="form-group">
-            <label for="sexo">Sexo</label>
-            <input type="text" id="sexo" formControlName="sexo">
+            <label for="sexo">{{ 'ANIMALS.SEX' | translate }}</label>
+            <select id="sexo" formControlName="sexo" required class="select-dropdown">
+              <option value="">{{ 'ANIMALS.SELECT_SEX' | translate }}</option>
+              <option value="Macho">{{ 'ANIMALS.MALE' | translate }}</option>
+              <option value="Hembra">{{ 'ANIMALS.FEMALE' | translate }}</option>
+            </select>
+            <div class="error-message" *ngIf="animalForm.get('sexo')?.invalid && animalForm.get('sexo')?.touched">
+              {{ 'ANIMALS.SEX_REQUIRED' | translate }}
+            </div>
           </div>
           
           <div class="form-group">
-            <label for="enfermedad">Enfermedad</label>
-            <input type="text" id="enfermedad" formControlName="enfermedad">
+            <label for="enfermedad">{{ 'ANIMALS.DISEASE' | translate }}</label>
+            <select id="enfermedad" formControlName="enfermedad" class="select-dropdown">
+              <option value="">{{ 'ANIMALS.SELECT_DISEASE' | translate }}</option>
+              <option value="Si">{{ 'ANIMALS.YES' | translate }}</option>
+              <option value="No">{{ 'ANIMALS.NO' | translate }}</option>
+            </select>
           </div>
           
           <div class="form-group">
-            <label for="estadoReproductivo">Estado Reproductivo</label>
+            <label for="estadoReproductivo">{{ 'ANIMALS.REPRODUCTIVE_STATUS' | translate }}</label>
             <input type="text" id="estadoReproductivo" formControlName="estadoReproductivo">
           </div>
           
           <div class="upload-container">
-            <div class="upload-box">
-              <span class="upload-icon">⬆️</span>
-              <span>Subir imagen</span>
+            <div class="image-url-input">
+              <label for="imageUrl">{{ 'ANIMALS.IMAGE_URL' | translate }}</label>
+              <div class="url-input-group">
+                <input 
+                  type="text" 
+                  id="imageUrl" 
+                  [value]="imageUrl"
+                  (input)="setImageUrl($event)"
+                  placeholder="{{ 'ANIMALS.ENTER_IMAGE_URL' | translate }}">
+                <button 
+                  type="button" 
+                  class="clear-url-btn" 
+                  *ngIf="imageUrl" 
+                  (click)="clearImageUrl()">×</button>
+              </div>
+            </div>
+            
+            <div class="image-preview" *ngIf="showImagePreview">
+              <img [src]="imageUrl" alt="Animal preview">
             </div>
           </div>
           
           <div class="form-group">
-            <label for="vacunasAplicadas">Vacunas aplicadas</label>
+            <label for="vacunasAplicadas">{{ 'ANIMALS.APPLIED_VACCINES' | translate }}</label>
             <input type="text" id="vacunasAplicadas" formControlName="vacunasAplicadas">
           </div>
           
           <div class="form-group">
-            <label for="numeroPartos">Numero de Partos</label>
-            <input type="text" id="numeroPartos" formControlName="numeroPartos">
+            <label for="numeroPartos">{{ 'ANIMALS.NUMBER_OF_BIRTHS' | translate }}</label>
+            <input type="number" id="numeroPartos" formControlName="numeroPartos" min="0">
           </div>
           
           <div class="form-group">
-            <label for="ubicacion">Ubicación</label>
+            <label for="ubicacion">{{ 'ANIMALS.LOCATION' | translate }}</label>
             <input type="text" id="ubicacion" formControlName="ubicacion">
-          </div>
-          
-          <div class="upload-container">
-            <div class="upload-box">
-              <span class="upload-icon">⬆️</span>
-              <span>Adjuntar archivo</span>
-            </div>
           </div>
         </div>
         
         <div class="form-group full-width">
-          <label for="observaciones">Observaciones</label>
+          <label for="observaciones">{{ 'ANIMALS.OBSERVATIONS' | translate }}</label>
           <textarea id="observaciones" formControlName="observaciones" rows="3"></textarea>
         </div>
         
         <div class="form-actions">
-          <button type="button" class="add-btn" (click)="addAnimal()">Añadir animal</button>
-          <button type="button" class="cancel-btn" (click)="cancel()">Cancelar</button>
+          <button type="button" class="add-btn" (click)="addAnimal()">{{ 'ANIMALS.ADD_ANIMAL' | translate }}</button>
+          <button type="button" class="cancel-btn" (click)="cancel()">{{ 'ANIMALS.CANCEL' | translate }}</button>
         </div>
       </form>
     </div>

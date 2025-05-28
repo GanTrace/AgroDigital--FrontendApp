@@ -243,22 +243,49 @@
   transition: all 0.3s ease-in-out;
 }
 
+
 .animal-card {
-  background-color: #f9f5eb;
+  position: relative;
   border-radius: 10px;
   overflow: hidden;
-  position: relative;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer; 
+}
+
+.animal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.animal-name-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 8px 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-bottom-right-radius: 8px;
+  z-index: 2;
+}
+
+.animal-name {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
 }
 
 .animal-tag {
   position: absolute;
   top: 10px;
-  right: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 0.9rem;
+  left: 0;
+  padding: 5px 10px;
+  background-color: #A3794F;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-weight: 500;
+  z-index: 2;
 }
 
 .animal-image {
@@ -445,5 +472,176 @@
   padding: 30px;
   color: #666;
   font-size: 1.1rem;
+}
+
+/* Add these styles for the animal cards and details modal */
+.delete-animal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(220, 53, 69, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.delete-animal-btn:hover {
+  background-color: rgba(220, 53, 69, 1);
+  transform: scale(1.1);
+}
+
+/* Animal details modal styles */
+.animal-details-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.animal-details-content {
+  background-color: white;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 30px;
+  position: relative;
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.animal-detail-image {
+  position: relative;
+  height: 250px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.animal-detail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.animal-detail-id {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(142, 89, 40, 0.9);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.animal-detail-info h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.detail-label {
+  font-weight: bold;
+  width: 150px;
+  color: #555;
+}
+
+.detail-value {
+  flex: 1;
+}
+
+.detail-observations {
+  margin-top: 20px;
+}
+
+.detail-observations h4 {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.detail-observations p {
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  border-left: 3px solid #7ab55c;
+}
+
+.modal-actions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.edit-animal-btn {
+  background-color: #8e5928;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.back-btn {
+  background-color: #7ab55c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.edit-animal-btn:hover {
+  background-color: #734621;
+}
+
+.back-btn:hover {
+  background-color: #689f4a;
+}
+
+/* No animals message */
+.no-animals-message {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.no-animals-message p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
 }
   
