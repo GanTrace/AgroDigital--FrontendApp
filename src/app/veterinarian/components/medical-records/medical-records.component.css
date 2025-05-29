@@ -8,12 +8,15 @@
 .medical-records-container {
   width: 100%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .main-content {
   padding: 30px;
   max-width: 1400px;
   margin: 0 auto;
+  flex: 1;
 }
 
 .page-header {

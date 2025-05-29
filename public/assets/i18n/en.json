@@ -360,7 +360,21 @@
     "EDIT": "Edit",
     "DELETE": "Delete",
     "NO_RECORDS": "No medical records found",
-    "DELETE_CONFIRM": "Are you sure you want to delete this medical record? This action cannot be undone."
+    "DELETE_CONFIRM": "Are you sure you want to delete this medical record? This action cannot be undone.",
+    "LOADING_ERROR": "Error loading medical records. Please try again.",
+    "SELECT_PATIENT": "Select patient",
+        "PATIENT_REQUIRED": "Patient is required",
+        "DATE_REQUIRED": "Date is required",
+        "RECORD_TYPE_REQUIRED": "Record type is required",
+        "DIAGNOSIS_PLACEHOLDER": "Enter patient diagnosis",
+        "DIAGNOSIS_REQUIRED": "Diagnosis is required",
+        "TREATMENT_PLACEHOLDER": "Enter prescribed treatment",
+        "TREATMENT_REQUIRED": "Treatment is required",
+        "NOTES": "Notes",
+        "NOTES_PLACEHOLDER": "Enter additional notes",
+        "FOLLOW_UP_PLACEHOLDER": "dd/mm/yyyy",
+        "FOLLOW_UP_REQUIRED": "Follow-up date is required",
+        "SAVE_RECORD": "Save Record"
   },
   "APPOINTMENTS": {
     "TITLE": "Appointment Management",

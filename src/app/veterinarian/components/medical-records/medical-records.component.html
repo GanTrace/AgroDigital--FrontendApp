@@ -90,9 +90,9 @@
               <td>{{ record.treatment }}</td>
               <td>{{ record.followUp }}</td>
               <td class="actions-cell">
-                <button class="view-btn" (click)="viewRecordDetails(record.id)" title="{{ 'VET_MEDICAL_RECORDS.VIEW' | translate }}">👁️</button>
-                <button class="edit-btn" (click)="editRecord(record.id)" title="{{ 'VET_MEDICAL_RECORDS.EDIT' | translate }}">✏️</button>
-                <button class="delete-btn" (click)="deleteRecord(record.id)" title="{{ 'VET_MEDICAL_RECORDS.DELETE' | translate }}">🗑️</button>
+                <button class="view-btn" *ngIf="record.id !== undefined" (click)="viewRecordDetails(record.id)" title="{{ 'VET_MEDICAL_RECORDS.VIEW' | translate }}">👁️</button>
+                <button class="edit-btn" *ngIf="record.id !== undefined" (click)="editRecord(record.id)" title="{{ 'VET_MEDICAL_RECORDS.EDIT' | translate }}">✏️</button>
+                <button class="delete-btn" *ngIf="record.id !== undefined" (click)="deleteRecord(record.id)" title="{{ 'VET_MEDICAL_RECORDS.DELETE' | translate }}">🗑️</button>
               </td>
             </tr>
           </tbody>

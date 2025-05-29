@@ -235,5 +235,22 @@
       "createdBy": 5,
       "id": 2
     }
+  ],
+  "medicalRecords": [
+    {
+      "patientId": 2,
+      "patientName": "Luna",
+      "ownerName": "Rodrigo",
+      "date": "2025-05-29",
+      "recordType": "VET_MEDICAL_RECORDS.RECORD_TYPES.TREATMENT",
+      "diagnosis": "Estable pero con molestias",
+      "treatment": "Mejor alimentación y medicinas.",
+      "notes": "Tomar medicinas durante 5 días una cada 8 horas.",
+      "followUp": "2025-06-05",
+      "attachments": [],
+      "createdBy": 5,
+      "createdAt": "2025-05-29T19:11:13.305Z",
+      "id": 1
+    }
   ]
 }

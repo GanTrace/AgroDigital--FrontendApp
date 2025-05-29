@@ -360,7 +360,21 @@
     "EDIT": "Editar",
     "DELETE": "Eliminar",
     "NO_RECORDS": "No se encontraron registros médicos",
-    "DELETE_CONFIRM": "¿Está seguro de que desea eliminar este registro médico? Esta acción no se puede deshacer."
+    "DELETE_CONFIRM": "¿Está seguro de que desea eliminar este registro médico? Esta acción no se puede deshacer.",
+    "LOADING_ERROR": "Error al cargar los registros médicos. Por favor, inténtelo de nuevo.",
+    "SELECT_PATIENT": "Seleccionar paciente",
+        "PATIENT_REQUIRED": "El paciente es obligatorio",
+        "DATE_REQUIRED": "La fecha es obligatoria",
+        "RECORD_TYPE_REQUIRED": "El tipo de registro es obligatorio",
+        "DIAGNOSIS_PLACEHOLDER": "Ingrese el diagnóstico del paciente",
+        "DIAGNOSIS_REQUIRED": "El diagnóstico es obligatorio",
+        "TREATMENT_PLACEHOLDER": "Ingrese el tratamiento prescrito",
+        "TREATMENT_REQUIRED": "El tratamiento es obligatorio",
+        "NOTES": "Notas",
+        "NOTES_PLACEHOLDER": "Ingrese notas adicionales",
+        "FOLLOW_UP_PLACEHOLDER": "dd/mm/aaaa",
+        "FOLLOW_UP_REQUIRED": "La fecha de seguimiento es obligatoria",
+        "SAVE_RECORD": "Guardar Registro"
   },
   "APPOINTMENTS": {
     "TITLE": "Gestión de Citas",
