@@ -10,6 +10,7 @@ import { NotificationsComponent } from '../../../public/pages/notifications/noti
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 import { PatientService, Patient } from '../../services/patient.service';
 import { AppointmentService, Appointment } from '../../services/appointment.service';
+import { PatientEventService } from '../../services/patient-event.service';
 
 
 @Component({
@@ -53,7 +54,8 @@ export class VetDashboardComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private patientService: PatientService,
-    private appointmentService: AppointmentService
+    private appointmentService: AppointmentService,
+    private patientEventService: PatientEventService
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +76,19 @@ export class VetDashboardComponent implements OnInit {
     
     this.loadPatients();
     this.loadUpcomingAppointments();
+    
+    // Suscribirse a eventos de pacientes añadidos
+    this.patientEventService.patientAdded$.subscribe(newPatient => {
+      this.patients.push(newPatient);
+      this.filteredPatients = [...this.patients];
+      
+      // Actualizar el contador de pacientes
+      if (this.patients.length === 1) {
+        this.patientCount = `1 ${this.translate.instant('PATIENTS.PATIENT_SINGULAR')}`;
+      } else {
+        this.patientCount = `${this.patients.length} ${this.translate.instant('PATIENTS.PATIENT_PLURAL')}`;
+      }
+    });
   }
   
   loadPatients(): void {
@@ -84,7 +99,13 @@ export class VetDashboardComponent implements OnInit {
       next: (patients) => {
         this.patients = patients;
         this.filteredPatients = [...this.patients];
-        this.patientCount = `${this.patients.length} pacientes`;
+        
+        if (this.patients.length === 1) {
+          this.patientCount = `1 ${this.translate.instant('PATIENTS.PATIENT_SINGULAR')}`;
+        } else {
+          this.patientCount = `${this.patients.length} ${this.translate.instant('PATIENTS.PATIENT_PLURAL')}`;
+        }
+        
         this.isLoading = false;
       },
       error: (error) => {
@@ -152,8 +173,9 @@ export class VetDashboardComponent implements OnInit {
     this.router.navigate(['/veterinarian/settings']);
   }
 
+  // Modificar el método deletePatient para actualizar el contador
   deletePatient(id: number | undefined, event: Event): void {
-    event.stopPropagation(); // Evitar que se active el evento de clic en la tarjeta
+    event.stopPropagation();
     
     if (id === undefined) {
       console.error('ID de paciente no válido');
@@ -166,7 +188,13 @@ export class VetDashboardComponent implements OnInit {
           // Eliminar el paciente de la lista local
           this.patients = this.patients.filter(p => p.id !== id);
           this.filteredPatients = this.filteredPatients.filter(p => p.id !== id);
-          this.patientCount = `${this.patients.length} pacientes`;
+          
+          // Actualizar el contador de pacientes
+          if (this.patients.length === 1) {
+            this.patientCount = `1 ${this.translate.instant('PATIENTS.PATIENT_SINGULAR')}`;
+          } else {
+            this.patientCount = `${this.patients.length} ${this.translate.instant('PATIENTS.PATIENT_PLURAL')}`;
+          }
         },
         error: (error) => {
           console.error('Error al eliminar el paciente:', error);

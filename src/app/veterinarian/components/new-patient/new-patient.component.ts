@@ -7,6 +7,7 @@ import { AuthService } from '../../../public/services/auth.service';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 import { PatientService } from '../../services/patient.service';
+import { PatientEventService } from '../../services/patient-event.service';
 
 @Component({
   selector: 'app-new-patient',
@@ -36,7 +37,8 @@ export class NewPatientComponent implements OnInit {
     private patientService: PatientService,
     private router: Router,
     private translate: TranslateService,
-    private authService: AuthService
+    private authService: AuthService,
+    private patientEventService: PatientEventService
   ) {}
   
   ngOnInit(): void {
@@ -91,8 +93,10 @@ export class NewPatientComponent implements OnInit {
     }
     
     this.patientService.addPatient(patientData).subscribe({
-      next: () => {
+      next: (newPatient) => {
         this.isSubmitting = false;
+        // Notificar que se ha añadido un nuevo paciente
+        this.patientEventService.notifyPatientAdded(newPatient);
         this.router.navigate(['/veterinarian/patients']);
       },
       error: (error) => {

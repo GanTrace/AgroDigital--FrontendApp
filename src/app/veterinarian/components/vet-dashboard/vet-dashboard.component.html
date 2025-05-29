@@ -2,9 +2,9 @@
   <app-header-component></app-header-component>
   <main class="main-content">
     <div class="welcome-section">
-      <h1>Bienvenido Dr. {{ userName }}!</h1>
+      <h1>{{ 'DASHBOARD.WELCOME' | translate }} Dr. {{ userName }}!</h1>
       <button class="add-appointment-btn" routerLink="/new-appointment">
-        <span>Nueva Cita</span>
+        <span>{{ 'APPOINTMENTS.ADD_APPOINTMENT' | translate }}</span>
         <span class="add-icon">+</span>
       </button>
     </div>
@@ -17,42 +17,42 @@
           [(ngModel)]="searchTerm" 
           (input)="searchPatients()"
           (keyup)="searchPatients()"
-          placeholder="Buscar paciente o propietario">
+          placeholder="{{ 'PATIENTS.SEARCH_PLACEHOLDER' | translate }}">
       </div>
       <button class="filter-btn" (click)="toggleFilters()">
-        Filtrar
+        {{ 'PATIENTS.FILTER' | translate }}
         <i class="filter-icon">≡</i>
       </button>
     </div>
     
     <div class="filter-panel" [class.show-filters]="showFilters">
       <div class="filter-header">
-        <h3>Opciones de Filtro</h3>
+        <h3>{{ 'PATIENTS.FILTER_OPTIONS' | translate }}</h3>
         <button class="close-filters" (click)="toggleFilters()">×</button>
       </div>
       
       <div class="filter-content">
         <div class="filter-group">
-          <label>Tipo de Animal</label>
+          <label>{{ 'PATIENTS.ANIMAL_TYPE' | translate }}</label>
           <select [(ngModel)]="selectedFilters.type">
             <option *ngFor="let type of animalTypes" [value]="type">{{ type }}</option>
           </select>
         </div>
         
         <div class="filter-actions">
-          <button class="apply-btn" (click)="applyFilters()">Aplicar Filtros</button>
-          <button class="reset-btn" (click)="resetFilters()">Restablecer</button>
-          <button class="cancel-btn" (click)="toggleFilters()">Cancelar</button>
+          <button class="apply-btn" (click)="applyFilters()">{{ 'DASHBOARD.APPLY_FILTERS' | translate }}</button>
+          <button class="reset-btn" (click)="resetFilters()">{{ 'DASHBOARD.RESET_FILTERS' | translate }}</button>
+          <button class="cancel-btn" (click)="toggleFilters()">{{ 'DASHBOARD.CANCEL' | translate }}</button>
         </div>
       </div>
     </div>
     
     <div class="dashboard-sections">
       <section class="patients-section">
-        <h2>Mis Pacientes</h2>
+        <h2>{{ 'PATIENTS.TITLE' | translate }}</h2>
         
         <div class="loading" *ngIf="isLoading">
-          <p>Cargando pacientes...</p>
+          <p>{{ 'PATIENTS.LOADING' | translate }}</p>
         </div>
         
         <div class="error-message" *ngIf="loadError">
@@ -62,7 +62,7 @@
         <div class="patients-grid" *ngIf="!isLoading && !loadError">
           <div class="patient-card" *ngFor="let patient of filteredPatients">
             <div class="patient-tag" [ngClass]="patient.healthIssues === 'Ninguno' ? 'status-healthy' : 'status-treatment'">
-              {{ patient.healthIssues === 'Ninguno' ? 'Saludable' : 'En Tratamiento' }}
+              {{ patient.healthIssues === 'Ninguno' ? ('PATIENTS.HEALTHY' | translate) : ('PATIENTS.IN_TREATMENT' | translate) }}
             </div>
             <div class="patient-image">
               <img [src]="patient.image" alt="{{ patient.name }}">
@@ -70,20 +70,20 @@
             <div class="patient-name">{{ patient.name }}</div>
             <ul class="patient-details-list">
               <li>{{ patient.type }}</li>
-              <li>Edad: {{ patient.age }}</li>
-              <li>Propietario: {{ patient.owner }}</li>
-              <li>Última visita: {{ patient.lastVisit }}</li>
+              <li>{{ 'PATIENTS.AGE' | translate }}: {{ patient.age }}</li>
+              <li>{{ 'PATIENTS.OWNER' | translate }}: {{ patient.owner }}</li>
+              <li>{{ 'PATIENTS.LAST_VISIT' | translate }}: {{ patient.lastVisit }}</li>
             </ul>
             <button class="info-btn" (click)="viewPatientDetails(patient.id)">i</button>
           </div>
         </div>
         
         <div class="no-patients" *ngIf="!isLoading && !loadError && filteredPatients.length === 0">
-          No hay pacientes disponibles.
+          {{ 'PATIENTS.NO_PATIENTS' | translate }}
         </div>
         
         <div class="view-more-container" *ngIf="patients.length > 6">
-          <button class="view-more-btn" routerLink="/veterinarian/patients">Ver más</button>
+          <button class="view-more-btn" routerLink="/veterinarian/patients">{{ 'DASHBOARD.VIEW_MORE' | translate }}</button>
         </div>
       </section>
       
