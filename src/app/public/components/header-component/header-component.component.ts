@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -6,6 +6,9 @@ import { AuthService, User } from '../../services/auth.service';
 import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
 import { NotificationsComponent } from '../../pages/notifications/notifications.component';
 import { AnimalService } from '../../../rancher/services/animal.service';
+import { PatientService } from '../../../veterinarian/services/patient.service';
+import { PatientEventService } from '../../../veterinarian/services/patient-event.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header-component',
@@ -20,7 +23,7 @@ import { AnimalService } from '../../../rancher/services/animal.service';
   templateUrl: './header-component.component.html',
   styleUrls: ['./header-component.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   userName = '';
   userRole = '';
   profileImage = '';
@@ -28,13 +31,15 @@ export class HeaderComponent implements OnInit {
   showNotifications = false;
   showProfileMenu = false;
   user: User | null = null; 
-
+  private patientAddedSubscription: Subscription | null = null;
   
   constructor(
     private authService: AuthService,
     private router: Router,
     private translate: TranslateService,
-    private animalService: AnimalService
+    private animalService: AnimalService,
+    private patientService: PatientService,
+    private patientEventService: PatientEventService
   ) {}
 
   ngOnInit(): void {
@@ -49,8 +54,21 @@ export class HeaderComponent implements OnInit {
         // Get actual animal count
         this.updateAnimalCount();
       } else if (this.userRole === 'veterinarian') {
-        this.itemCount = '0 pacientes';
+        // Get actual patient count
+        this.updatePatientCount();
+        
+        // Subscribe to patient added events
+        this.patientAddedSubscription = this.patientEventService.patientAdded$.subscribe(() => {
+          this.updatePatientCount();
+        });
       }
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe to prevent memory leaks
+    if (this.patientAddedSubscription) {
+      this.patientAddedSubscription.unsubscribe();
     }
   }
 
@@ -59,6 +77,14 @@ export class HeaderComponent implements OnInit {
     this.animalService.getAnimalsByUser().subscribe(animals => {
       const count = animals.length;
       this.itemCount = `${count} ${count === 1 ? 'animal' : 'animales'}`;
+    });
+  }
+
+  // Add this method to update patient count
+  updatePatientCount(): void {
+    this.patientService.getPatients().subscribe(patients => {
+      const count = patients.length;
+      this.itemCount = `${count} ${count === 1 ? this.translate.instant('PATIENTS.PATIENT_SINGULAR') : this.translate.instant('PATIENTS.PATIENT_PLURAL')}`;
     });
   }
 
