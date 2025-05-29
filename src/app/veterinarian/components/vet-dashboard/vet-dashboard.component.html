@@ -87,23 +87,33 @@
         </div>
       </section>
       
-      <section class="appointments-section">
-        <h2>Próximas Citas</h2>
-        <div class="appointments-list">
+      <section class="upcoming-appointments">
+        <h2>{{ 'DASHBOARD.UPCOMING_APPOINTMENTS' | translate }}</h2>
+        
+        <div *ngIf="isLoadingAppointments" class="loading-message">
+          {{ 'DASHBOARD.LOADING_APPOINTMENTS' | translate }}
+        </div>
+        
+        <div *ngIf="appointmentsError" class="error-message">
+          {{ appointmentsError }}
+        </div>
+        
+        <div class="appointments-list" *ngIf="!isLoadingAppointments && !appointmentsError">
           <div class="appointment-card" *ngFor="let appointment of upcomingAppointments">
             <div class="appointment-date">
               <div class="date">{{ appointment.date }}</div>
               <div class="time">{{ appointment.time }}</div>
             </div>
-            <div class="appointment-details">
-              <div class="patient-name">{{ appointment.patientName }}</div>
-              <div class="owner-name">Propietario: {{ appointment.ownerName }}</div>
-              <div class="reason">Motivo: {{ appointment.reason }}</div>
+            <div class="appointment-info">
+              <h3 class="patient-name">{{ appointment.patientName }}</h3>
+              <div class="owner">{{ 'DASHBOARD.OWNER' | translate }}: {{ appointment.ownerName }}</div>
+              <div class="reason">{{ 'DASHBOARD.REASON' | translate }}: {{ appointment.reason }}</div>
             </div>
-            <div class="appointment-actions">
-              <button class="edit-btn">Editar</button>
-              <button class="cancel-btn">Cancelar</button>
-            </div>
+            <!-- No se incluyen botones de editar o cancelar como se solicitó -->
+          </div>
+          
+          <div class="no-appointments" *ngIf="upcomingAppointments.length === 0">
+            {{ 'DASHBOARD.NO_UPCOMING_APPOINTMENTS' | translate }}
           </div>
         </div>
       </section>

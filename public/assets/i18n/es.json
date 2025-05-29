@@ -79,7 +79,12 @@
     "EDIT_ANIMAL": "Editar animal",
     "BACK": "Volver",
     "NO_ANIMALS": "No tienes animales registrados. ¡Agrega uno ahora!",
-    "BIRTH_DATE": "Fecha de nacimiento"
+    "BIRTH_DATE": "Fecha de nacimiento",
+    "UPCOMING_APPOINTMENTS": "Próximas Citas",
+    "LOADING_APPOINTMENTS": "Cargando citas...",
+    "NO_UPCOMING_APPOINTMENTS": "No hay citas programadas próximamente",
+    "OWNER": "Propietario",
+    "REASON": "Motivo"
   },
     "EVENTS": {
       "TITLE": "Eventos",
@@ -377,7 +382,18 @@
     "NOTES": "Notas",
     "EDIT": "Editar",
     "COMPLETE": "Completar",
-    "NO_APPOINTMENTS": "No hay citas que mostrar"
+    "NO_APPOINTMENTS": "No hay citas que mostrar",
+    "PATIENT": "Paciente",
+    "SELECT_PATIENT": "Seleccionar paciente",
+    "TIME": "Hora",
+    "REASON_PLACEHOLDER": "Motivo de la cita",
+    "NOTES_PLACEHOLDER": "Notas adicionales sobre la cita",
+    "SAVE_APPOINTMENT": "Guardar Cita",
+    "PATIENT_REQUIRED": "Debe seleccionar un paciente",
+    "DATE_REQUIRED": "La fecha es obligatoria",
+    "TIME_REQUIRED": "La hora es obligatoria",
+    "REASON_REQUIRED": "El motivo es obligatorio",
+    "LOADING_PATIENTS": "Cargando pacientes..."
   },
   "PATIENTS": {
     "TITLE": "Mis Pacientes",

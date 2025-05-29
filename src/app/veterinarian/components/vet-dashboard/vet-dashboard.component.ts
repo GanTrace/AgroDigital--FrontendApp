@@ -9,6 +9,7 @@ import { LanguageSwitcherComponent } from '../../../public/components/language-s
 import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 import { PatientService, Patient } from '../../services/patient.service';
+import { AppointmentService, Appointment } from '../../services/appointment.service';
 
 
 @Component({
@@ -43,30 +44,16 @@ export class VetDashboardComponent implements OnInit {
     type: 'Todos'
   };
   
-  upcomingAppointments = [
-    {
-      id: 1,
-      patientName: 'Bella',
-      ownerName: 'Gary',
-      date: '20/12/2023',
-      time: '10:00',
-      reason: 'Seguimiento cojera'
-    },
-    {
-      id: 2,
-      patientName: 'Clery',
-      ownerName: 'Rodrigo',
-      date: '15/01/2024',
-      time: '09:30',
-      reason: 'Revisión rutinaria'
-    }
-  ];
+  upcomingAppointments: Appointment[] = [];
+  isLoadingAppointments = false;
+  appointmentsError = '';
 
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
     private router: Router,
-    private patientService: PatientService
+    private patientService: PatientService,
+    private appointmentService: AppointmentService
   ) {}
 
   ngOnInit(): void {
@@ -86,6 +73,7 @@ export class VetDashboardComponent implements OnInit {
     }
     
     this.loadPatients();
+    this.loadUpcomingAppointments();
   }
   
   loadPatients(): void {
@@ -185,5 +173,33 @@ export class VetDashboardComponent implements OnInit {
         }
       });
     }
+  }
+
+  loadUpcomingAppointments(): void {
+    this.isLoadingAppointments = true;
+    this.appointmentsError = '';
+    
+    this.appointmentService.getAppointments().subscribe({
+      next: (appointments) => {
+        // Filtrar solo las citas programadas (no canceladas ni completadas)
+        const scheduledAppointments = appointments.filter(app => app.status === 'scheduled');
+        
+        // Ordenar por fecha y hora
+        scheduledAppointments.sort((a, b) => {
+          const dateA = new Date(`${a.date}T${a.time}`);
+          const dateB = new Date(`${b.date}T${b.time}`);
+          return dateA.getTime() - dateB.getTime();
+        });
+        
+        // Tomar solo las próximas citas (por ejemplo, las 5 primeras)
+        this.upcomingAppointments = scheduledAppointments.slice(0, 5);
+        this.isLoadingAppointments = false;
+      },
+      error: (error) => {
+        console.error('Error loading appointments:', error);
+        this.appointmentsError = 'Error al cargar las citas. Por favor, inténtelo de nuevo.';
+        this.isLoadingAppointments = false;
+      }
+    });
   }
 }
