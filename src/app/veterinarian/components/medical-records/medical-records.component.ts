@@ -33,6 +33,9 @@ export class MedicalRecordsComponent implements OnInit {
   isLoading = false;
   loadError = '';
   
+  selectedRecord: MedicalRecord | null = null;
+  showRecordDetails = false;
+  
   recordTypes = [
     'VET_MEDICAL_RECORDS.RECORD_TYPES.ALL',
     'VET_MEDICAL_RECORDS.RECORD_TYPES.CHECKUP',
@@ -169,16 +172,17 @@ export class MedicalRecordsComponent implements OnInit {
     this.router.navigate(['/veterinarian/new-record']);
   }
   
-  editRecord(recordId: number): void {
-    this.router.navigate([`/veterinarian/edit-record/${recordId}`]);
-  }
-  
   deleteRecord(recordId: number): void {
     if (confirm(this.translate.instant('VET_MEDICAL_RECORDS.DELETE_CONFIRM'))) {
       this.medicalRecordService.deleteMedicalRecord(recordId).subscribe({
         next: () => {
           this.medicalRecords = this.medicalRecords.filter(record => record.id !== recordId);
           this.filteredRecords = this.filteredRecords.filter(record => record.id !== recordId);
+          
+          // Si el registro eliminado es el que se está mostrando, cerrar el panel de detalles
+          if (this.selectedRecord && this.selectedRecord.id === recordId) {
+            this.closeRecordDetails();
+          }
         },
         error: (error) => {
           console.error(`Error deleting medical record with id ${recordId}:`, error);
@@ -188,6 +192,19 @@ export class MedicalRecordsComponent implements OnInit {
   }
   
   viewRecordDetails(recordId: number): void {
-    this.router.navigate([`/veterinarian/record-details/${recordId}`]);
+    this.medicalRecordService.getMedicalRecord(recordId).subscribe({
+      next: (record) => {
+        this.selectedRecord = record;
+        this.showRecordDetails = true;
+      },
+      error: (error) => {
+        console.error(`Error fetching medical record with id ${recordId}:`, error);
+      }
+    });
+  }
+  
+  closeRecordDetails(): void {
+    this.showRecordDetails = false;
+    this.selectedRecord = null;
   }
 }

@@ -362,6 +362,7 @@
     "NO_RECORDS": "No medical records found",
     "DELETE_CONFIRM": "Are you sure you want to delete this medical record? This action cannot be undone.",
     "LOADING_ERROR": "Error loading medical records. Please try again.",
+    "RECORD_DETAILS": "Record Details",
     "SELECT_PATIENT": "Select patient",
         "PATIENT_REQUIRED": "Patient is required",
         "DATE_REQUIRED": "Date is required",

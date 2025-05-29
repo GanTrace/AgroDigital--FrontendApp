@@ -290,3 +290,110 @@
     padding: 10px;
   }
 }
+
+.record-details-panel {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background-color: #f8f9fa;
+  box-shadow: -3px 0 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: right 0.3s ease;
+  padding: 0;
+  overflow-y: auto;
+  border-left: 4px solid #7ab55c;
+}
+
+.record-details-panel.show-details {
+  right: 0;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #7ab55c;
+  color: white;
+  border-bottom: 1px solid #eee;
+}
+
+.details-header h3 {
+  margin: 0;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.close-details {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.2s;
+}
+
+.close-details:hover {
+  transform: scale(1.2);
+}
+
+.details-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+}
+
+.detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 12px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.detail-group:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #5a8f3e;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  color: #333;
+  font-size: 1.1rem;
+  padding: 5px 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.detail-group:nth-child(1) .detail-label,
+.detail-group:nth-child(2) .detail-label,
+.detail-group:nth-child(3) .detail-label {
+  color: #3e6b8a; 
+}
+
+.detail-group:nth-child(4) .detail-label {
+  color: #8a3e6b; 
+}
+
+.detail-group:nth-child(5) .detail-label,
+.detail-group:nth-child(6) .detail-label {
+  color: #8a6b3e; 
+}
+
+.detail-group:nth-child(7) .detail-label,
+.detail-group:nth-child(8) .detail-label {
+  color: #3e8a6b;
+}

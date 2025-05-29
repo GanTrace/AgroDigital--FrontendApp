@@ -362,6 +362,7 @@
     "NO_RECORDS": "No se encontraron registros médicos",
     "DELETE_CONFIRM": "¿Está seguro de que desea eliminar este registro médico? Esta acción no se puede deshacer.",
     "LOADING_ERROR": "Error al cargar los registros médicos. Por favor, inténtelo de nuevo.",
+    "RECORD_DETAILS": "Detalles del Registro",
     "SELECT_PATIENT": "Seleccionar paciente",
         "PATIENT_REQUIRED": "El paciente es obligatorio",
         "DATE_REQUIRED": "La fecha es obligatoria",
