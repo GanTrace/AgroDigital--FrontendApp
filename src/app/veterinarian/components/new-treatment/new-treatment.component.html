@@ -1,0 +1,116 @@
+<div class="new-treatment-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="page-header">
+      <h1>{{ 'TREATMENTS.NEW_TREATMENT' | translate }}</h1>
+    </div>
+    
+    <div class="form-container">
+      <form [formGroup]="treatmentForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">{{ 'TREATMENTS.NAME' | translate }} *</label>
+          <input type="text" id="name" formControlName="name" placeholder="{{ 'TREATMENTS.NAME_PLACEHOLDER' | translate }}">
+          <div class="error-message" *ngIf="treatmentForm.get('name')?.invalid && treatmentForm.get('name')?.touched">
+            {{ 'TREATMENTS.NAME_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="category">{{ 'TREATMENTS.CATEGORY' | translate }} *</label>
+          <select id="category" formControlName="category">
+            <option value="" disabled>{{ 'TREATMENTS.SELECT_CATEGORY' | translate }}</option>
+            <option *ngFor="let category of categories" [value]="category">
+              {{ 'TREATMENTS.CATEGORY_' + category.toUpperCase() | translate }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="treatmentForm.get('category')?.invalid && treatmentForm.get('category')?.touched">
+            {{ 'TREATMENTS.CATEGORY_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="description">{{ 'TREATMENTS.DESCRIPTION' | translate }} *</label>
+          <textarea id="description" formControlName="description" rows="3" placeholder="{{ 'TREATMENTS.DESCRIPTION_PLACEHOLDER' | translate }}"></textarea>
+          <div class="error-message" *ngIf="treatmentForm.get('description')?.invalid && treatmentForm.get('description')?.touched">
+            {{ 'TREATMENTS.DESCRIPTION_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="price">{{ 'TREATMENTS.PRICE' | translate }} *</label>
+          <input type="number" id="price" formControlName="price" placeholder="0.00" step="0.01" min="0">
+          <div class="error-message" *ngIf="treatmentForm.get('price')?.invalid && treatmentForm.get('price')?.touched">
+            {{ 'TREATMENTS.PRICE_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="duration">{{ 'TREATMENTS.DURATION' | translate }} *</label>
+          <input type="text" id="duration" formControlName="duration" placeholder="{{ 'TREATMENTS.DURATION_PLACEHOLDER' | translate }}">
+          <div class="error-message" *ngIf="treatmentForm.get('duration')?.invalid && treatmentForm.get('duration')?.touched">
+            {{ 'TREATMENTS.DURATION_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>{{ 'TREATMENTS.MATERIALS_NEEDED' | translate }} *</label>
+          <div class="array-container">
+            <div class="array-item" *ngFor="let material of materialsArray.controls; let i = index">
+              <input type="text" [formControl]="$any(material)" placeholder="{{ 'TREATMENTS.MATERIAL_PLACEHOLDER' | translate }}">
+              <button type="button" class="remove-btn" (click)="removeMaterial(i)" [disabled]="materialsArray.length <= 1">-</button>
+              <div class="error-message" *ngIf="material.invalid && material.touched">
+                {{ 'TREATMENTS.MATERIAL_REQUIRED' | translate }}
+              </div>
+            </div>
+            <button type="button" class="add-btn" (click)="addMaterial()">+ {{ 'TREATMENTS.ADD_MATERIAL' | translate }}</button>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>{{ 'TREATMENTS.PROCEDURE_STEPS' | translate }} *</label>
+          <div class="array-container">
+            <div class="array-item" *ngFor="let step of stepsArray.controls; let i = index">
+              <textarea [formControl]="$any(step)" placeholder="{{ 'TREATMENTS.STEP_PLACEHOLDER' | translate }}" rows="2"></textarea>
+              <button type="button" class="remove-btn" (click)="removeStep(i)" [disabled]="stepsArray.length <= 1">-</button>
+              <div class="error-message" *ngIf="step.invalid && step.touched">
+                {{ 'TREATMENTS.STEP_REQUIRED' | translate }}
+              </div>
+            </div>
+            <button type="button" class="add-btn" (click)="addStep()">+ {{ 'TREATMENTS.ADD_STEP' | translate }}</button>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>{{ 'TREATMENTS.SUITABLE_FOR' | translate }} *</label>
+          <div class="checkbox-group">
+            <div class="checkbox-item" *ngFor="let animalType of animalTypes">
+              <input type="checkbox" [id]="'animal-' + animalType" [checked]="isAnimalTypeSelected(animalType)" (change)="onAnimalTypeChange($event, animalType)">
+              <label [for]="'animal-' + animalType">{{ 'TREATMENTS.' + (animalType === 'Vaca' ? 'COW' : animalType === 'Toro' ? 'BULL' : animalType === 'Cabra' ? 'GOAT' : animalType === 'Oveja' ? 'SHEEP' : animalType === 'Caballo' ? 'HORSE' : 'CALF') | translate }}</label>
+            </div>
+          </div>
+          <div class="error-message" *ngIf="submitError && animalTypesArray.length === 0">
+            {{ 'TREATMENTS.ANIMAL_TYPE_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="image">{{ 'TREATMENTS.IMAGE_URL' | translate }} *</label>
+          <input type="text" id="image" formControlName="image" placeholder="{{ 'TREATMENTS.IMAGE_PLACEHOLDER' | translate }}">
+          <div class="error-message" *ngIf="treatmentForm.get('image')?.invalid && treatmentForm.get('image')?.touched">
+            {{ 'TREATMENTS.IMAGE_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" (click)="cancel()">{{ 'TREATMENTS.CANCEL' | translate }}</button>
+          <button type="submit" class="submit-btn" [disabled]="isSubmitting">{{ 'TREATMENTS.SAVE_TREATMENT' | translate }}</button>
+        </div>
+        
+        <div class="error-message submit-error" *ngIf="submitError">
+          {{ submitError }}
+        </div>
+      </form>
+    </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>
