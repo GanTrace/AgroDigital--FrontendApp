@@ -464,6 +464,7 @@
   "TREATMENTS": {
     "TITLE": "Treatments & Procedures",
     "ADD_TREATMENT": "Add Treatment",
+    "NEW_TREATMENT": "Add New Treatment",
     "SEARCH_PLACEHOLDER": "Search by name or description...",
     "FILTER": "Filter",
     "FILTER_OPTIONS": "Filter Options",
@@ -492,7 +493,29 @@
     "VIEW_DETAILS": "View Details",
     "EDIT_TREATMENT": "Edit Treatment",
     "CLOSE": "Close",
-    "NO_TREATMENTS": "No treatments found"
+    "NO_TREATMENTS": "No treatments found",
+    "NAME": "Name",
+    "NAME_PLACEHOLDER": "Treatment name",
+    "NAME_REQUIRED": "Name is required and must be at least 2 characters",
+    "SELECT_CATEGORY": "Select a category",
+    "CATEGORY_REQUIRED": "Category is required",
+    "DESCRIPTION": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Treatment description",
+    "DESCRIPTION_REQUIRED": "Description is required and must not exceed 200 characters",
+    "PRICE_REQUIRED": "Price is required and must be a positive value",
+    "DURATION_PLACEHOLDER": "E.g. 15-20 minutes",
+    "DURATION_REQUIRED": "Duration is required",
+    "MATERIAL_PLACEHOLDER": "Required material",
+    "MATERIAL_REQUIRED": "Material is required",
+    "ADD_MATERIAL": "Add Material",
+    "STEP_PLACEHOLDER": "Procedure step",
+    "STEP_REQUIRED": "Step is required",
+    "ADD_STEP": "Add Step",
+    "ANIMAL_TYPE_REQUIRED": "You must select at least one animal type",
+    "IMAGE_URL": "Image URL",
+    "IMAGE_PLACEHOLDER": "Treatment image URL",
+    "IMAGE_REQUIRED": "Image URL is required",
+    "SAVE_TREATMENT": "Save Treatment"
   }
 }
 

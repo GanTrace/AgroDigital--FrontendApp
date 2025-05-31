@@ -23,6 +23,7 @@ import { NewPatientComponent } from './veterinarian/components/new-patient/new-p
 import { PatientDetailsComponent } from './veterinarian/components/patient-details/patient-details.component';
 import { NewAppointmentComponent } from './veterinarian/components/new-appointment/new-appointment.component';
 import { NewRecordComponent } from './veterinarian/components/new-record/new-record.component';
+import { NewTreatmentComponent } from './veterinarian/components/new-treatment/new-treatment.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -54,6 +55,7 @@ export const routes: Routes = [
     { path:'veterinarian/patient/:id', component: PatientDetailsComponent},
     { path:'veterinarian/new-appointment', component: NewAppointmentComponent},
     { path:'veterinarian/new-record', component: NewRecordComponent},
+    { path:'veterinarian/new-treatment', component: NewTreatmentComponent},
     { path: '**', redirectTo: 'login' }
   ];
 

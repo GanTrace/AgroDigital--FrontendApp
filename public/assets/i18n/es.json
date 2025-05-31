@@ -463,6 +463,7 @@
   "TREATMENTS": {
     "TITLE": "Tratamientos y Procedimientos",
     "ADD_TREATMENT": "Añadir Tratamiento",
+    "NEW_TREATMENT": "Añadir Nuevo Tratamiento",
     "SEARCH_PLACEHOLDER": "Buscar por nombre o descripción...",
     "FILTER": "Filtrar",
     "FILTER_OPTIONS": "Opciones de Filtro",
@@ -491,7 +492,29 @@
     "VIEW_DETAILS": "Ver Detalles",
     "EDIT_TREATMENT": "Editar Tratamiento",
     "CLOSE": "Cerrar",
-    "NO_TREATMENTS": "No se encontraron tratamientos"
+    "NO_TREATMENTS": "No se encontraron tratamientos",
+    "NAME": "Nombre",
+    "NAME_PLACEHOLDER": "Nombre del tratamiento",
+    "NAME_REQUIRED": "El nombre es obligatorio y debe tener al menos 2 caracteres",
+    "SELECT_CATEGORY": "Seleccione una categoría",
+    "CATEGORY_REQUIRED": "Debe seleccionar una categoría",
+    "DESCRIPTION": "Descripción",
+    "DESCRIPTION_PLACEHOLDER": "Descripción del tratamiento",
+    "DESCRIPTION_REQUIRED": "La descripción es obligatoria y no debe exceder los 200 caracteres",
+    "PRICE_REQUIRED": "El precio es obligatorio y debe ser un valor positivo",
+    "DURATION_PLACEHOLDER": "Ej: 15-20 minutos",
+    "DURATION_REQUIRED": "La duración es obligatoria",
+    "MATERIAL_PLACEHOLDER": "Material necesario",
+    "MATERIAL_REQUIRED": "El material es obligatorio",
+    "ADD_MATERIAL": "Añadir Material",
+    "STEP_PLACEHOLDER": "Paso del procedimiento",
+    "STEP_REQUIRED": "El paso es obligatorio",
+    "ADD_STEP": "Añadir Paso",
+    "ANIMAL_TYPE_REQUIRED": "Debe seleccionar al menos un tipo de animal",
+    "IMAGE_URL": "URL de la Imagen",
+    "IMAGE_PLACEHOLDER": "URL de la imagen del tratamiento",
+    "IMAGE_REQUIRED": "La URL de la imagen es obligatoria",
+    "SAVE_TREATMENT": "Guardar Tratamiento"
   }
 }
 
