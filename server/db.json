@@ -38,6 +38,13 @@
       "role": "veterinarian",
       "id": 5,
       "profileImage": "https://i.pinimg.com/originals/48/ee/ab/48eeab94003a4450804d9cb33ddf3089.png"
+    },
+    {
+      "name": "Juan",
+      "email": "juan123@gmail.com",
+      "password": "Juan123!",
+      "role": "veterinarian",
+      "id": 6
     }
   ],
   "events": [
@@ -253,5 +260,31 @@
       "id": 1
     }
   ],
-  "treatments": []
+  "treatments": [
+    {
+      "name": "Vacunación contra los parásitos",
+      "category": "preventive",
+      "description": "prueba 1",
+      "price": 15.5,
+      "duration": "25 minutos",
+      "materials": [
+        "1",
+        "2"
+      ],
+      "steps": [
+        "cuidado",
+        "agregar",
+        "generar"
+      ],
+      "animalTypes": [
+        "Vaca",
+        "Cabra",
+        "Oveja",
+        "Ternero"
+      ],
+      "image": "https://www.senasa.gob.pe/senasacontigo/wp-content/uploads/2022/03/ANTRAX-MOQUEGUA.jpg",
+      "createdBy": 5,
+      "id": 1
+    }
+  ]
 }

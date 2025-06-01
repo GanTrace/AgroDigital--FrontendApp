@@ -111,13 +111,21 @@ export class TreatmentsComponent implements OnInit {
     this.filteredTreatments = [...this.treatments];
   }
   
-  viewTreatmentDetails(id: number): void {
+  viewTreatmentDetails(id: number | undefined): void {
+    if (id === undefined) return;
+    
     this.treatmentService.getTreatmentById(id).subscribe(treatment => {
       if (treatment) {
         this.selectedTreatment = treatment;
         this.showTreatmentDetails = true;
       }
     });
+  }
+  
+  editTreatment(id: number | undefined): void {
+    if (id === undefined) return;
+    
+    this.router.navigate([`/veterinarian/edit-treatment/${id}`]);
   }
   
   closeTreatmentDetails(): void {
@@ -127,10 +135,6 @@ export class TreatmentsComponent implements OnInit {
   
   addNewTreatment(): void {
     this.router.navigate(['/veterinarian/new-treatment']);
-  }
-  
-  editTreatment(id: number): void {
-    this.router.navigate([`/veterinarian/edit-treatment/${id}`]);
   }
   
   getCategoryClass(category: string): string {
