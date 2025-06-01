@@ -3,12 +3,7 @@
   <main class="main-content">
     <div class="welcome-section">
       <h1>{{ 'DASHBOARD.WELCOME' | translate }} Dr. {{ userName }}!</h1>
-      <button class="add-appointment-btn" routerLink="/new-appointment">
-        <span>{{ 'APPOINTMENTS.ADD_APPOINTMENT' | translate }}</span>
-        <span class="add-icon">+</span>
-      </button>
     </div>
-    
     <div class="search-section">
       <div class="search-bar">
         <i class="search-icon">🔍</i>
@@ -19,10 +14,6 @@
           (keyup)="searchPatients()"
           placeholder="{{ 'PATIENTS.SEARCH_PLACEHOLDER' | translate }}">
       </div>
-      <button class="filter-btn" (click)="toggleFilters()">
-        {{ 'PATIENTS.FILTER' | translate }}
-        <i class="filter-icon">≡</i>
-      </button>
     </div>
     
     <div class="filter-panel" [class.show-filters]="showFilters">

@@ -12,11 +12,6 @@
   </nav>
   
   <div class="user-section">
-    <div class="notifications">
-      <button class="notification-btn" (click)="toggleNotifications()">
-        <span class="notification-icon">🔔</span>
-      </button>
-    </div>
     
     <div class="user-info" (click)="toggleProfileMenu()">
       <div class="user-details">
@@ -33,7 +28,6 @@
   </div>
 </div>
 
-<app-notifications *ngIf="showNotifications"></app-notifications>
 
 <div class="profile-menu" *ngIf="showProfileMenu">
   <div class="profile-menu-header">

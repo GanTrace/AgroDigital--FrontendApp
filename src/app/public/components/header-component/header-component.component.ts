@@ -4,7 +4,6 @@ import { RouterModule, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService, User } from '../../services/auth.service';
 import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
-import { NotificationsComponent } from '../../pages/notifications/notifications.component';
 import { AnimalService } from '../../../rancher/services/animal.service';
 import { PatientService } from '../../../veterinarian/services/patient.service';
 import { PatientEventService } from '../../../veterinarian/services/patient-event.service';
@@ -18,7 +17,6 @@ import { Subscription } from 'rxjs';
     RouterModule,
     TranslateModule,
     LanguageSwitcherComponent,
-    NotificationsComponent
   ],
   templateUrl: './header-component.component.html',
   styleUrls: ['./header-component.component.css']
@@ -28,7 +26,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userRole = '';
   profileImage = '';
   itemCount = '0';
-  showNotifications = false;
   showProfileMenu = false;
   user: User | null = null; 
   private patientAddedSubscription: Subscription | null = null;
@@ -89,20 +86,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  toggleNotifications(): void {
-    this.showNotifications = !this.showNotifications;
-    // Close profile menu if open
-    if (this.showProfileMenu) {
-      this.showProfileMenu = false;
-    }
-  }
   
   toggleProfileMenu(): void {
     this.showProfileMenu = !this.showProfileMenu;
-    // Close notifications if open
-    if (this.showNotifications && this.showProfileMenu) {
-      this.showNotifications = false;
-    }
   }
 
   logout(): void {
