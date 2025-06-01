@@ -8,6 +8,8 @@
 .patients-container {
   width: 100%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .main-content {
@@ -343,4 +345,9 @@
 
 .delete-icon {
   font-size: 16px;
+}
+
+/* Asegurar que el footer se quede al final */
+app-footer-component {
+  margin-top: auto;
 }
