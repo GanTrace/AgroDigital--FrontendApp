@@ -81,8 +81,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   // Add this method to update patient count
+  // Método actualizado para mostrar solo los pacientes del veterinario actual
   updatePatientCount(): void {
-    this.patientService.getPatients().subscribe(patients => {
+    this.patientService.getPatientsByUser().subscribe(patients => {
       const count = patients.length;
       this.itemCount = `${count} ${count === 1 ? this.translate.instant('PATIENTS.PATIENT_SINGULAR') : this.translate.instant('PATIENTS.PATIENT_PLURAL')}`;
     });

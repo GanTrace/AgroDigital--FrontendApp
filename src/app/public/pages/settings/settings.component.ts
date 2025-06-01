@@ -148,6 +148,22 @@ export class SettingsComponent implements OnInit {
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
+    
+    if (this.showPassword && this.user) {
+      // Cuando se muestra la contraseña, obtener la contraseña real del usuario
+      this.authService.getUserById(this.user.id!).subscribe(userData => {
+        if (userData && userData.password) {
+          this.settingsForm.patchValue({
+            password: userData.password
+          });
+        }
+      });
+    } else {
+      // Cuando se oculta la contraseña, volver a mostrar asteriscos
+      this.settingsForm.patchValue({
+        password: '••••••••'
+      });
+    }
   }
   
   toggleNotifications(): void {
