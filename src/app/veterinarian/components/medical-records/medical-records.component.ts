@@ -84,7 +84,7 @@ export class MedicalRecordsComponent implements OnInit {
   }
   
   loadPatients(): void {
-    this.patientService.getPatients().subscribe({
+    this.patientService.getPatientsByUser().subscribe({  // Cambiado de getPatients() a getPatientsByUser()
       next: (patients) => {
         this.patients = patients;
       },
@@ -98,10 +98,10 @@ export class MedicalRecordsComponent implements OnInit {
     this.isLoading = true;
     this.loadError = '';
     
-    this.medicalRecordService.getMedicalRecords().subscribe({
+    this.medicalRecordService.getMedicalRecordsByUser().subscribe({  // Cambiado de getMedicalRecords() a getMedicalRecordsByUser()
       next: (records) => {
         this.medicalRecords = records;
-        this.filteredRecords = [...records];
+        this.filteredRecords = [...this.medicalRecords];
         this.isLoading = false;
       },
       error: (error) => {

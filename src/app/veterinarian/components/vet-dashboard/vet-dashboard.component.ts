@@ -95,23 +95,51 @@ export class VetDashboardComponent implements OnInit {
     this.isLoading = true;
     this.loadError = '';
     
-    this.patientService.getPatients().subscribe({
+    this.patientService.getPatientsByUser().subscribe({  // Cambiado de getPatients() a getPatientsByUser()
       next: (patients) => {
         this.patients = patients;
         this.filteredPatients = [...this.patients];
+        this.isLoading = false;
         
+        // Actualizar el contador de pacientes
         if (this.patients.length === 1) {
           this.patientCount = `1 ${this.translate.instant('PATIENTS.PATIENT_SINGULAR')}`;
         } else {
           this.patientCount = `${this.patients.length} ${this.translate.instant('PATIENTS.PATIENT_PLURAL')}`;
         }
-        
-        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error loading patients:', error);
         this.loadError = 'Error al cargar los pacientes. Por favor, inténtelo de nuevo.';
         this.isLoading = false;
+      }
+    });
+  }
+  
+  loadUpcomingAppointments(): void {
+    this.isLoadingAppointments = true;
+    this.appointmentsError = '';
+    
+    this.appointmentService.getAppointmentsByUser().subscribe({  // Cambiado de getAppointments() a getAppointmentsByUser()
+      next: (appointments) => {
+        // Filtrar solo las citas programadas (no canceladas ni completadas)
+        const scheduledAppointments = appointments.filter(app => app.status === 'scheduled');
+        
+        // Ordenar por fecha y hora
+        scheduledAppointments.sort((a, b) => {
+          const dateA = new Date(`${a.date}T${a.time}`);
+          const dateB = new Date(`${b.date}T${b.time}`);
+          return dateA.getTime() - dateB.getTime();
+        });
+        
+        // Tomar solo las próximas citas (por ejemplo, las 5 primeras)
+        this.upcomingAppointments = scheduledAppointments.slice(0, 5);
+        this.isLoadingAppointments = false;
+      },
+      error: (error) => {
+        console.error('Error loading appointments:', error);
+        this.appointmentsError = 'Error al cargar las citas. Por favor, inténtelo de nuevo.';
+        this.isLoadingAppointments = false;
       }
     });
   }
@@ -201,33 +229,5 @@ export class VetDashboardComponent implements OnInit {
         }
       });
     }
-  }
-
-  loadUpcomingAppointments(): void {
-    this.isLoadingAppointments = true;
-    this.appointmentsError = '';
-    
-    this.appointmentService.getAppointments().subscribe({
-      next: (appointments) => {
-        // Filtrar solo las citas programadas (no canceladas ni completadas)
-        const scheduledAppointments = appointments.filter(app => app.status === 'scheduled');
-        
-        // Ordenar por fecha y hora
-        scheduledAppointments.sort((a, b) => {
-          const dateA = new Date(`${a.date}T${a.time}`);
-          const dateB = new Date(`${b.date}T${b.time}`);
-          return dateA.getTime() - dateB.getTime();
-        });
-        
-        // Tomar solo las próximas citas (por ejemplo, las 5 primeras)
-        this.upcomingAppointments = scheduledAppointments.slice(0, 5);
-        this.isLoadingAppointments = false;
-      },
-      error: (error) => {
-        console.error('Error loading appointments:', error);
-        this.appointmentsError = 'Error al cargar las citas. Por favor, inténtelo de nuevo.';
-        this.isLoadingAppointments = false;
-      }
-    });
   }
 }

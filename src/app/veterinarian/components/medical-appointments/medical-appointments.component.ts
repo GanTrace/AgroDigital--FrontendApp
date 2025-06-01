@@ -64,7 +64,7 @@ export class MedicalAppointmentsComponent implements OnInit {
     this.isLoading = true;
     this.loadError = '';
     
-    this.appointmentService.getAppointments().subscribe({
+    this.appointmentService.getAppointmentsByUser().subscribe({  // Cambiado de getAppointments() a getAppointmentsByUser()
       next: (appointments) => {
         this.appointments = appointments;
         this.filteredAppointments = [...this.appointments];

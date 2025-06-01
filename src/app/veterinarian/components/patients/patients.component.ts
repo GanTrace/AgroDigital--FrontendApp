@@ -66,7 +66,7 @@ export class PatientsComponent implements OnInit {
     this.isLoading = true;
     this.loadError = '';
     
-    this.patientService.getPatients().subscribe({
+    this.patientService.getPatientsByUser().subscribe({  // Cambiado de getPatients() a getPatientsByUser()
       next: (patients) => {
         this.patients = patients;
         this.filteredPatients = [...this.patients];
