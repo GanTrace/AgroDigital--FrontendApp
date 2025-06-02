@@ -64,6 +64,55 @@
         </div>
       </div>
     </div>
+  
+    <div class="record-details-panel" *ngIf="selectedRecord" [class.show-details]="showRecordDetails">
+      <div class="details-header">
+        <h3>{{ 'VET_MEDICAL_RECORDS.RECORD_DETAILS' | translate }}</h3>
+        <button class="close-details" (click)="closeRecordDetails()">×</button>
+      </div>
+      
+      <div class="details-content">
+        <div class="detail-group">
+          <span class="detail-label">{{ 'VET_MEDICAL_RECORDS.DATE' | translate }}:</span>
+          <span class="detail-value">{{ selectedRecord.date }}</span>
+        </div>
+        
+        <div class="detail-group">
+          <span class="detail-label">{{ 'VET_MEDICAL_RECORDS.PATIENT' | translate }}:</span>
+          <span class="detail-value">{{ selectedRecord.patientName }}</span>
+        </div>
+        
+        <div class="detail-group">
+          <span class="detail-label">{{ 'VET_MEDICAL_RECORDS.OWNER' | translate }}:</span>
+          <span class="detail-value">{{ selectedRecord.ownerName }}</span>
+        </div>
+        
+        <div class="detail-group">
+          <span class="detail-label">{{ 'VET_MEDICAL_RECORDS.RECORD_TYPE' | translate }}:</span>
+          <span class="detail-value">{{ selectedRecord.recordType | translate }}</span>
+        </div>
+        
+        <div class="detail-group">
+          <span class="detail-label">{{ 'VET_MEDICAL_RECORDS.DIAGNOSIS' | translate }}:</span>
+          <span class="detail-value">{{ selectedRecord.diagnosis }}</span>
+        </div>
+        
+        <div class="detail-group">
+          <span class="detail-label">{{ 'VET_MEDICAL_RECORDS.TREATMENT' | translate }}:</span>
+          <span class="detail-value">{{ selectedRecord.treatment }}</span>
+        </div>
+        
+        <div class="detail-group">
+          <span class="detail-label">{{ 'VET_MEDICAL_RECORDS.NOTES' | translate }}:</span>
+          <span class="detail-value">{{ selectedRecord.notes }}</span>
+        </div>
+        
+        <div class="detail-group">
+          <span class="detail-label">{{ 'VET_MEDICAL_RECORDS.FOLLOW_UP' | translate }}:</span>
+          <span class="detail-value">{{ selectedRecord.followUp }}</span>
+        </div>
+      </div>
+    </div>
     
     <div class="records-section">
       <div class="records-table-container">
@@ -90,9 +139,8 @@
               <td>{{ record.treatment }}</td>
               <td>{{ record.followUp }}</td>
               <td class="actions-cell">
-                <button class="view-btn" (click)="viewRecordDetails(record.id)" title="{{ 'VET_MEDICAL_RECORDS.VIEW' | translate }}">👁️</button>
-                <button class="edit-btn" (click)="editRecord(record.id)" title="{{ 'VET_MEDICAL_RECORDS.EDIT' | translate }}">✏️</button>
-                <button class="delete-btn" (click)="deleteRecord(record.id)" title="{{ 'VET_MEDICAL_RECORDS.DELETE' | translate }}">🗑️</button>
+                <button class="view-btn" *ngIf="record.id !== undefined" (click)="viewRecordDetails(record.id)" title="{{ 'VET_MEDICAL_RECORDS.VIEW' | translate }}">👁️</button>
+                <button class="delete-btn" *ngIf="record.id !== undefined" (click)="deleteRecord(record.id)" title="{{ 'VET_MEDICAL_RECORDS.DELETE' | translate }}">🗑️</button>
               </td>
             </tr>
           </tbody>

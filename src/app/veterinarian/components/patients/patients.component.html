@@ -75,6 +75,9 @@
           </div>
           <div class="patient-image">
             <img [src]="patient.image" alt="{{ patient.name }}">
+            <button class="delete-patient-btn" (click)="deletePatient(patient.id, $event)" title="{{ 'PATIENTS.DELETE_PATIENT' | translate }}">
+              <i class="delete-icon">🗑️</i>
+            </button>
           </div>
           <div class="patient-info">
             <h3 class="patient-name">{{ patient.name }}</h3>

@@ -8,19 +8,10 @@ import { FooterComponentComponent } from '../../../public/components/footer-comp
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
+import { PatientService, Patient } from '../../services/patient.service';
+import { AppointmentService, Appointment } from '../../services/appointment.service';
+import { PatientEventService } from '../../services/patient-event.service';
 
-interface Patient {
-  id: number;
-  nombre: string;
-  tipo: string;
-  edad: string;
-  sexo: string;
-  problemasSalud: string;
-  propietario: string;
-  ultimaVisita: string;
-  proximaVisita: string;
-  imagen: string;
-}
 
 @Component({
   selector: 'app-vet-dashboard',
@@ -44,75 +35,27 @@ export class VetDashboardComponent implements OnInit {
   showNotifications = false;
   searchTerm = '';
   showFilters = false;
+  isLoading = true;
+  loadError = '';
   
-  patients: Patient[] = [
-    {
-      id: 1,
-      nombre: 'Clery',
-      tipo: 'Vaca Holstein',
-      edad: '4 años',
-      sexo: 'Hembra',
-      problemasSalud: 'Ninguno',
-      propietario: 'Rodrigo',
-      ultimaVisita: '15/10/2023',
-      proximaVisita: '15/01/2024',
-      imagen: 'assets/images/animals/vaca1.jpg'
-    },
-    {
-      id: 2,
-      nombre: 'Bella',
-      tipo: 'Cabra Alpina',
-      edad: '2 años',
-      sexo: 'Hembra',
-      problemasSalud: 'Cojera leve',
-      propietario: 'Gary',
-      ultimaVisita: '20/11/2023',
-      proximaVisita: '20/12/2023',
-      imagen: 'assets/images/animals/cabra1.jpg'
-    },
-    {
-      id: 3,
-      nombre: 'Max',
-      tipo: 'Toro Angus',
-      edad: '5 años',
-      sexo: 'Macho',
-      problemasSalud: 'Ninguno',
-      propietario: 'Nelson Fabrizio',
-      ultimaVisita: '05/11/2023',
-      proximaVisita: '05/02/2024',
-      imagen: 'assets/images/animals/toro1.jpg'
-    }
-  ];
-  
+  patients: Patient[] = [];
   filteredPatients: Patient[] = [];
   animalTypes = ['Todos', 'Vaca', 'Toro', 'Cabra', 'Oveja'];
   selectedFilters = {
     type: 'Todos'
   };
   
-  upcomingAppointments = [
-    {
-      id: 1,
-      patientName: 'Bella',
-      ownerName: 'Gary',
-      date: '20/12/2023',
-      time: '10:00',
-      reason: 'Seguimiento cojera'
-    },
-    {
-      id: 2,
-      patientName: 'Clery',
-      ownerName: 'Rodrigo',
-      date: '15/01/2024',
-      time: '09:30',
-      reason: 'Revisión rutinaria'
-    }
-  ];
+  upcomingAppointments: Appointment[] = [];
+  isLoadingAppointments = false;
+  appointmentsError = '';
 
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private patientService: PatientService,
+    private appointmentService: AppointmentService,
+    private patientEventService: PatientEventService
   ) {}
 
   ngOnInit(): void {
@@ -129,10 +72,76 @@ export class VetDashboardComponent implements OnInit {
     const user = this.authService.getCurrentUser();
     if (user) {
       this.userName = user.name;
-      this.patientCount = `${this.patients.length} pacientes`;
     }
     
-    this.filteredPatients = [...this.patients];
+    this.loadPatients();
+    this.loadUpcomingAppointments();
+    
+    // Suscribirse a eventos de pacientes añadidos
+    this.patientEventService.patientAdded$.subscribe(newPatient => {
+      this.patients.push(newPatient);
+      this.filteredPatients = [...this.patients];
+      
+      // Actualizar el contador de pacientes
+      if (this.patients.length === 1) {
+        this.patientCount = `1 ${this.translate.instant('PATIENTS.PATIENT_SINGULAR')}`;
+      } else {
+        this.patientCount = `${this.patients.length} ${this.translate.instant('PATIENTS.PATIENT_PLURAL')}`;
+      }
+    });
+  }
+  
+  loadPatients(): void {
+    this.isLoading = true;
+    this.loadError = '';
+    
+    this.patientService.getPatientsByUser().subscribe({  // Cambiado de getPatients() a getPatientsByUser()
+      next: (patients) => {
+        this.patients = patients;
+        this.filteredPatients = [...this.patients];
+        this.isLoading = false;
+        
+        // Actualizar el contador de pacientes
+        if (this.patients.length === 1) {
+          this.patientCount = `1 ${this.translate.instant('PATIENTS.PATIENT_SINGULAR')}`;
+        } else {
+          this.patientCount = `${this.patients.length} ${this.translate.instant('PATIENTS.PATIENT_PLURAL')}`;
+        }
+      },
+      error: (error) => {
+        console.error('Error loading patients:', error);
+        this.loadError = 'Error al cargar los pacientes. Por favor, inténtelo de nuevo.';
+        this.isLoading = false;
+      }
+    });
+  }
+  
+  loadUpcomingAppointments(): void {
+    this.isLoadingAppointments = true;
+    this.appointmentsError = '';
+    
+    this.appointmentService.getAppointmentsByUser().subscribe({  // Cambiado de getAppointments() a getAppointmentsByUser()
+      next: (appointments) => {
+        // Filtrar solo las citas programadas (no canceladas ni completadas)
+        const scheduledAppointments = appointments.filter(app => app.status === 'scheduled');
+        
+        // Ordenar por fecha y hora
+        scheduledAppointments.sort((a, b) => {
+          const dateA = new Date(`${a.date}T${a.time}`);
+          const dateB = new Date(`${b.date}T${b.time}`);
+          return dateA.getTime() - dateB.getTime();
+        });
+        
+        // Tomar solo las próximas citas (por ejemplo, las 5 primeras)
+        this.upcomingAppointments = scheduledAppointments.slice(0, 5);
+        this.isLoadingAppointments = false;
+      },
+      error: (error) => {
+        console.error('Error loading appointments:', error);
+        this.appointmentsError = 'Error al cargar las citas. Por favor, inténtelo de nuevo.';
+        this.isLoadingAppointments = false;
+      }
+    });
   }
   
   toggleNotifications(): void {
@@ -151,8 +160,9 @@ export class VetDashboardComponent implements OnInit {
     
     const term = this.searchTerm.toLowerCase();
     this.filteredPatients = this.patients.filter(patient => 
-      patient.nombre.toLowerCase().includes(term) || 
-      patient.propietario.toLowerCase().includes(term)
+      patient.name.toLowerCase().includes(term) || 
+      patient.owner.toLowerCase().includes(term) ||
+      patient.type.toLowerCase().includes(term)
     );
   }
   
@@ -161,7 +171,7 @@ export class VetDashboardComponent implements OnInit {
     
     if (this.selectedFilters.type !== 'Todos') {
       filtered = filtered.filter(patient => 
-        patient.tipo.toLowerCase().includes(this.selectedFilters.type.toLowerCase())
+        patient.type.toLowerCase().includes(this.selectedFilters.type.toLowerCase())
       );
     }
     
@@ -177,11 +187,47 @@ export class VetDashboardComponent implements OnInit {
     this.toggleFilters();
   }
   
+  viewPatientDetails(id: number | undefined): void {
+    if (id !== undefined) {
+      this.router.navigate([`/veterinarian/patient/${id}`]);
+    }
+  }
+  
   logout(): void {
     this.authService.logout();
   }
   
   navigateToSettings(): void {
     this.router.navigate(['/veterinarian/settings']);
+  }
+
+  // Modificar el método deletePatient para actualizar el contador
+  deletePatient(id: number | undefined, event: Event): void {
+    event.stopPropagation();
+    
+    if (id === undefined) {
+      console.error('ID de paciente no válido');
+      return;
+    }
+    
+    if (confirm('¿Estás seguro de que deseas eliminar este paciente?')) {
+      this.patientService.deletePatient(id).subscribe({
+        next: () => {
+          // Eliminar el paciente de la lista local
+          this.patients = this.patients.filter(p => p.id !== id);
+          this.filteredPatients = this.filteredPatients.filter(p => p.id !== id);
+          
+          // Actualizar el contador de pacientes
+          if (this.patients.length === 1) {
+            this.patientCount = `1 ${this.translate.instant('PATIENTS.PATIENT_SINGULAR')}`;
+          } else {
+            this.patientCount = `${this.patients.length} ${this.translate.instant('PATIENTS.PATIENT_PLURAL')}`;
+          }
+        },
+        error: (error) => {
+          console.error('Error al eliminar el paciente:', error);
+        }
+      });
+    }
   }
 }

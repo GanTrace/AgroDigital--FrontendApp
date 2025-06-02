@@ -8,6 +8,8 @@
 .appointments-container {
   width: 100%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .main-content {
@@ -336,4 +338,9 @@
   .filter-btn {
     align-self: flex-end;
   }
+}
+
+/* Asegurar que el footer se quede al final */
+app-footer-component {
+  margin-top: auto;
 }

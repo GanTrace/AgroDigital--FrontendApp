@@ -6,20 +6,10 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../public/services/auth.service';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
+import { MedicalRecordService, MedicalRecord } from '../../services/medical-record.service';
+import { PatientService, Patient } from '../../services/patient.service';
 
-interface MedicalRecord {
-  id: number;
-  patientId: number;
-  patientName: string;
-  ownerName: string;
-  date: string;
-  recordType: string;
-  diagnosis: string;
-  treatment: string;
-  notes: string;
-  followUp: string;
-  attachments: string[];
-}
+
 
 @Component({
   selector: 'app-medical-records',
@@ -40,6 +30,11 @@ export class MedicalRecordsComponent implements OnInit {
   searchTerm = '';
   showFilters = false;
   selectedPatientId: number | null = null;
+  isLoading = false;
+  loadError = '';
+  
+  selectedRecord: MedicalRecord | null = null;
+  showRecordDetails = false;
   
   recordTypes = [
     'VET_MEDICAL_RECORDS.RECORD_TYPES.ALL',
@@ -56,88 +51,16 @@ export class MedicalRecordsComponent implements OnInit {
     dateTo: ''
   };
   
-  patients = [
-    {
-      id: 1,
-      name: 'Clery',
-      owner: 'Rodrigo',
-      type: 'Vaca Holstein'
-    },
-    {
-      id: 2,
-      name: 'Bella',
-      owner: 'Gary',
-      type: 'Cabra Alpina'
-    },
-    {
-      id: 3,
-      name: 'Max',
-      owner: 'Nelson Fabrizio',
-      type: 'Toro Angus'
-    }
-  ];
-  
-  medicalRecords: MedicalRecord[] = [
-    {
-      id: 1,
-      patientId: 1,
-      patientName: 'Clery',
-      ownerName: 'Rodrigo',
-      date: '15/10/2023',
-      recordType: 'VET_MEDICAL_RECORDS.RECORD_TYPES.VACCINATION',
-      diagnosis: 'Prevención de fiebre aftosa',
-      treatment: 'Vacuna contra fiebre aftosa',
-      notes: 'Sin reacciones adversas',
-      followUp: '15/01/2024',
-      attachments: ['certificado.pdf']
-    },
-    {
-      id: 2,
-      patientId: 2,
-      patientName: 'Bella',
-      ownerName: 'Gary',
-      date: '20/11/2023',
-      recordType: 'VET_MEDICAL_RECORDS.RECORD_TYPES.TREATMENT',
-      diagnosis: 'Cojera leve en pata delantera izquierda',
-      treatment: 'Antiinflamatorio y reposo',
-      notes: 'Seguimiento en 30 días',
-      followUp: '20/12/2023',
-      attachments: []
-    },
-    {
-      id: 3,
-      patientId: 3,
-      patientName: 'Max',
-      ownerName: 'Nelson Fabrizio',
-      date: '05/11/2023',
-      recordType: 'VET_MEDICAL_RECORDS.RECORD_TYPES.CHECKUP',
-      diagnosis: 'Estado óptimo',
-      treatment: 'Ninguno',
-      notes: 'Revisión rutinaria',
-      followUp: '05/02/2024',
-      attachments: ['informe.pdf']
-    },
-    {
-      id: 4,
-      patientId: 1,
-      patientName: 'Clery',
-      ownerName: 'Rodrigo',
-      date: '01/09/2023',
-      recordType: 'VET_MEDICAL_RECORDS.RECORD_TYPES.CHECKUP',
-      diagnosis: 'Estado general bueno',
-      treatment: 'Suplemento vitamínico',
-      notes: 'Revisión rutinaria',
-      followUp: '15/10/2023',
-      attachments: []
-    }
-  ];
-  
+  patients: Patient[] = [];
+  medicalRecords: MedicalRecord[] = [];
   filteredRecords: MedicalRecord[] = [];
   
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private medicalRecordService: MedicalRecordService,
+    private patientService: PatientService
   ) {}
   
   ngOnInit(): void {
@@ -156,7 +79,37 @@ export class MedicalRecordsComponent implements OnInit {
       this.userName = user.name;
     }
     
-    this.filteredRecords = [...this.medicalRecords];
+    this.loadPatients();
+    this.loadMedicalRecords();
+  }
+  
+  loadPatients(): void {
+    this.patientService.getPatientsByUser().subscribe({  // Cambiado de getPatients() a getPatientsByUser()
+      next: (patients) => {
+        this.patients = patients;
+      },
+      error: (error) => {
+        console.error('Error loading patients:', error);
+      }
+    });
+  }
+  
+  loadMedicalRecords(): void {
+    this.isLoading = true;
+    this.loadError = '';
+    
+    this.medicalRecordService.getMedicalRecordsByUser().subscribe({  // Cambiado de getMedicalRecords() a getMedicalRecordsByUser()
+      next: (records) => {
+        this.medicalRecords = records;
+        this.filteredRecords = [...this.medicalRecords];
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading medical records:', error);
+        this.loadError = 'Error al cargar los registros médicos. Por favor, inténtelo de nuevo.';
+        this.isLoading = false;
+      }
+    });
   }
   
   toggleFilters(): void {
@@ -216,25 +169,42 @@ export class MedicalRecordsComponent implements OnInit {
   }
   
   addNewRecord(): void {
-    // Navigate to new record form
     this.router.navigate(['/veterinarian/new-record']);
   }
   
-  editRecord(recordId: number): void {
-    // Navigate to edit record form
-    this.router.navigate([`/veterinarian/edit-record/${recordId}`]);
-  }
-  
   deleteRecord(recordId: number): void {
-    // Implement delete confirmation and logic
     if (confirm(this.translate.instant('VET_MEDICAL_RECORDS.DELETE_CONFIRM'))) {
-      this.medicalRecords = this.medicalRecords.filter(record => record.id !== recordId);
-      this.filteredRecords = this.filteredRecords.filter(record => record.id !== recordId);
+      this.medicalRecordService.deleteMedicalRecord(recordId).subscribe({
+        next: () => {
+          this.medicalRecords = this.medicalRecords.filter(record => record.id !== recordId);
+          this.filteredRecords = this.filteredRecords.filter(record => record.id !== recordId);
+          
+          // Si el registro eliminado es el que se está mostrando, cerrar el panel de detalles
+          if (this.selectedRecord && this.selectedRecord.id === recordId) {
+            this.closeRecordDetails();
+          }
+        },
+        error: (error) => {
+          console.error(`Error deleting medical record with id ${recordId}:`, error);
+        }
+      });
     }
   }
   
   viewRecordDetails(recordId: number): void {
-    // Navigate to record details
-    this.router.navigate([`/veterinarian/record-details/${recordId}`]);
+    this.medicalRecordService.getMedicalRecord(recordId).subscribe({
+      next: (record) => {
+        this.selectedRecord = record;
+        this.showRecordDetails = true;
+      },
+      error: (error) => {
+        console.error(`Error fetching medical record with id ${recordId}:`, error);
+      }
+    });
+  }
+  
+  closeRecordDetails(): void {
+    this.showRecordDetails = false;
+    this.selectedRecord = null;
   }
 }

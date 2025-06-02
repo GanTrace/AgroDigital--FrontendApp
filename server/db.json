@@ -38,6 +38,13 @@
       "role": "veterinarian",
       "id": 5,
       "profileImage": "https://i.pinimg.com/originals/48/ee/ab/48eeab94003a4450804d9cb33ddf3089.png"
+    },
+    {
+      "name": "Juan",
+      "email": "juan123@gmail.com",
+      "password": "Juan123!",
+      "role": "veterinarian",
+      "id": 6
     }
   ],
   "events": [
@@ -177,6 +184,106 @@
       "userId": 1,
       "userName": "Rodrigo",
       "createdAt": "2025-05-28T03:44:53.325Z",
+      "id": 1
+    }
+  ],
+  "patients": [
+    {
+      "name": "Betty",
+      "type": "Oveja Merino",
+      "age": "5 años",
+      "gender": "Hembra",
+      "healthIssues": "Ninguno",
+      "owner": "Rodrigo",
+      "lastVisit": "2025-03-19",
+      "nextVisit": "2025-07-24",
+      "image": "https://animapedia.org/wp-content/uploads/2018/07/oveja-adulta.jpg",
+      "observations": "Ninguna.",
+      "createdBy": 5,
+      "id": 1
+    },
+    {
+      "name": "Luna",
+      "type": "Vaca Holstein",
+      "age": "7 años",
+      "gender": "Hembra",
+      "healthIssues": "Ninguno",
+      "owner": "Rodrigo",
+      "lastVisit": "2025-05-08",
+      "nextVisit": "2025-06-10",
+      "image": "https://a.storyblok.com/f/160385/4bf112f0cd/datos_curiosos.jpg/m/filters:quality(70)/",
+      "observations": "Ninguna",
+      "createdBy": 5,
+      "id": 2
+    }
+  ],
+  "appointments": [
+    {
+      "patientId": 1,
+      "patientName": "Betty",
+      "ownerName": "Rodrigo",
+      "date": "2025-06-21",
+      "time": "09:10",
+      "reason": "Chequeo Mensual",
+      "status": "completed",
+      "notes": "Visita.",
+      "createdBy": 5,
+      "id": 1
+    },
+    {
+      "patientId": 1,
+      "patientName": "Betty",
+      "ownerName": "Rodrigo",
+      "date": "2025-07-26",
+      "time": "10:15",
+      "reason": "Chequeo Mensual",
+      "status": "scheduled",
+      "notes": "Visita.",
+      "createdBy": 5,
+      "id": 2
+    }
+  ],
+  "medicalRecords": [
+    {
+      "patientId": 2,
+      "patientName": "Luna",
+      "ownerName": "Rodrigo",
+      "date": "2025-05-29",
+      "recordType": "VET_MEDICAL_RECORDS.RECORD_TYPES.TREATMENT",
+      "diagnosis": "Estable pero con molestias",
+      "treatment": "Mejor alimentación y medicinas.",
+      "notes": "Tomar medicinas durante 5 días una cada 8 horas.",
+      "followUp": "2025-06-05",
+      "attachments": [],
+      "createdBy": 5,
+      "createdAt": "2025-05-29T19:11:13.305Z",
+      "id": 1
+    }
+  ],
+  "treatments": [
+    {
+      "name": "Vacunación contra los parásitos",
+      "category": "preventive",
+      "description": "prueba 1",
+      "price": 15.5,
+      "duration": "25 minutos",
+      "materials": [
+        "1",
+        "2"
+      ],
+      "steps": [
+        "cuidado",
+        "agregar",
+        "generar"
+      ],
+      "animalTypes": [
+        "Vaca",
+        "Cabra",
+        "Oveja",
+        "Ternero"
+      ],
+      "image": "https://www.senasa.gob.pe/senasacontigo/wp-content/uploads/2022/03/ANTRAX-MOQUEGUA.jpg",
+      "createdBy": 5,
       "id": 1
     }
   ]

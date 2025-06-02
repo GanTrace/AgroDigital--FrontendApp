@@ -6,18 +6,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../public/services/auth.service';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
-
-interface Appointment {
-  id: number;
-  patientId: number;
-  patientName: string;
-  ownerName: string;
-  date: string;
-  time: string;
-  reason: string;
-  status: 'scheduled' | 'completed' | 'cancelled';
-  notes: string;
-}
+import { AppointmentService, Appointment } from '../../services/appointment.service';
 
 @Component({
   selector: 'app-medical-appointments',
@@ -39,59 +28,16 @@ export class MedicalAppointmentsComponent implements OnInit {
   showFilters = false;
   selectedDate: string = '';
   selectedStatus: string = 'all';
+  isLoading = true;
+  loadError = '';
   
-  appointments: Appointment[] = [
-    {
-      id: 1,
-      patientId: 1,
-      patientName: 'Clery',
-      ownerName: 'Rodrigo',
-      date: '15/12/2023',
-      time: '10:00',
-      reason: 'Revisión general',
-      status: 'scheduled',
-      notes: 'Primera revisión del mes'
-    },
-    {
-      id: 2,
-      patientId: 2,
-      patientName: 'Bella',
-      ownerName: 'Gary',
-      date: '16/12/2023',
-      time: '11:30',
-      reason: 'Vacunación',
-      status: 'scheduled',
-      notes: 'Vacuna anual'
-    },
-    {
-      id: 3,
-      patientId: 3,
-      patientName: 'Max',
-      ownerName: 'Nelson Fabrizio',
-      date: '14/12/2023',
-      time: '09:15',
-      reason: 'Seguimiento de tratamiento',
-      status: 'completed',
-      notes: 'Verificar evolución del tratamiento anterior'
-    },
-    {
-      id: 4,
-      patientId: 1,
-      patientName: 'Clery',
-      ownerName: 'Rodrigo',
-      date: '20/12/2023',
-      time: '15:45',
-      reason: 'Control de peso',
-      status: 'scheduled',
-      notes: 'Seguimiento nutricional'
-    }
-  ];
-  
+  appointments: Appointment[] = [];
   filteredAppointments: Appointment[] = [];
   
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
+    private appointmentService: AppointmentService,
     private router: Router
   ) {}
   
@@ -111,7 +57,25 @@ export class MedicalAppointmentsComponent implements OnInit {
       this.userName = user.name;
     }
     
-    this.filteredAppointments = [...this.appointments];
+    this.loadAppointments();
+  }
+  
+  loadAppointments(): void {
+    this.isLoading = true;
+    this.loadError = '';
+    
+    this.appointmentService.getAppointmentsByUser().subscribe({  // Cambiado de getAppointments() a getAppointmentsByUser()
+      next: (appointments) => {
+        this.appointments = appointments;
+        this.filteredAppointments = [...this.appointments];
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading appointments:', error);
+        this.loadError = 'Error al cargar las citas. Por favor, inténtelo de nuevo.';
+        this.isLoading = false;
+      }
+    });
   }
   
   toggleFilters(): void {
@@ -161,23 +125,43 @@ export class MedicalAppointmentsComponent implements OnInit {
     this.router.navigate(['/veterinarian/new-appointment']);
   }
   
-  editAppointment(id: number): void {
-    this.router.navigate([`/veterinarian/edit-appointment/${id}`]);
-  }
-  
-  cancelAppointment(id: number): void {
-    const appointment = this.appointments.find(a => a.id === id);
-    if (appointment) {
-      appointment.status = 'cancelled';
-      this.applyFilters();
+  editAppointment(id: number | undefined): void {
+    if (id !== undefined) {
+      this.router.navigate([`/veterinarian/edit-appointment/${id}`]);
     }
   }
   
-  completeAppointment(id: number): void {
-    const appointment = this.appointments.find(a => a.id === id);
-    if (appointment) {
-      appointment.status = 'completed';
-      this.applyFilters();
+  cancelAppointment(id: number | undefined): void {
+    if (id !== undefined) {
+      const appointment = this.appointments.find(a => a.id === id);
+      if (appointment) {
+        appointment.status = 'cancelled';
+        this.appointmentService.updateAppointment(appointment).subscribe({
+          next: () => {
+            this.applyFilters();
+          },
+          error: (error) => {
+            console.error('Error cancelling appointment:', error);
+          }
+        });
+      }
+    }
+  }
+  
+  completeAppointment(id: number | undefined): void {
+    if (id !== undefined) {
+      const appointment = this.appointments.find(a => a.id === id);
+      if (appointment) {
+        appointment.status = 'completed';
+        this.appointmentService.updateAppointment(appointment).subscribe({
+          next: () => {
+            this.applyFilters();
+          },
+          error: (error) => {
+            console.error('Error completing appointment:', error);
+          }
+        });
+      }
     }
   }
   

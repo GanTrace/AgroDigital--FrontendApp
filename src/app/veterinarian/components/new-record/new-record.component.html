@@ -1,0 +1,89 @@
+<div class="new-record-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="page-header">
+      <h1>{{ 'VET_MEDICAL_RECORDS.ADD_RECORD' | translate }}</h1>
+    </div>
+    
+    <div class="form-container">
+      <div *ngIf="isLoadingPatients" class="loading-message">
+        {{ 'VET_MEDICAL_RECORDS.LOADING_PATIENTS' | translate }}
+      </div>
+      
+      <div *ngIf="loadPatientsError" class="error-message load-error">
+        {{ loadPatientsError }}
+      </div>
+      
+      <form [formGroup]="recordForm" (ngSubmit)="onSubmit()" *ngIf="!isLoadingPatients && !loadPatientsError">
+        <div class="form-group">
+          <label for="patientId">{{ 'VET_MEDICAL_RECORDS.PATIENT' | translate }} *</label>
+          <select id="patientId" formControlName="patientId" (change)="onPatientChange()">
+            <option value="" disabled>{{ 'VET_MEDICAL_RECORDS.SELECT_PATIENT' | translate }}</option>
+            <option *ngFor="let patient of patients" [value]="patient.id">{{patient.name}} ({{patient.owner}})</option>
+          </select>
+          <div class="error-message" *ngIf="recordForm.get('patientId')?.invalid && recordForm.get('patientId')?.touched">
+            {{ 'VET_MEDICAL_RECORDS.PATIENT_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="date">{{ 'VET_MEDICAL_RECORDS.DATE' | translate }} *</label>
+          <input type="date" id="date" formControlName="date">
+          <div class="error-message" *ngIf="recordForm.get('date')?.invalid && recordForm.get('date')?.touched">
+            {{ 'VET_MEDICAL_RECORDS.DATE_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="recordType">{{ 'VET_MEDICAL_RECORDS.RECORD_TYPE' | translate }} *</label>
+          <select id="recordType" formControlName="recordType">
+            <option value="" disabled>{{ 'VET_MEDICAL_RECORDS.SELECT_RECORD_TYPE' | translate }}</option>
+            <option *ngFor="let type of recordTypes" [value]="type">{{ type | translate }}</option>
+          </select>
+          <div class="error-message" *ngIf="recordForm.get('recordType')?.invalid && recordForm.get('recordType')?.touched">
+            {{ 'VET_MEDICAL_RECORDS.RECORD_TYPE_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="diagnosis">{{ 'VET_MEDICAL_RECORDS.DIAGNOSIS' | translate }} *</label>
+          <textarea id="diagnosis" formControlName="diagnosis" rows="3" placeholder="{{ 'VET_MEDICAL_RECORDS.DIAGNOSIS_PLACEHOLDER' | translate }}"></textarea>
+          <div class="error-message" *ngIf="recordForm.get('diagnosis')?.invalid && recordForm.get('diagnosis')?.touched">
+            {{ 'VET_MEDICAL_RECORDS.DIAGNOSIS_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="treatment">{{ 'VET_MEDICAL_RECORDS.TREATMENT' | translate }} *</label>
+          <textarea id="treatment" formControlName="treatment" rows="3" placeholder="{{ 'VET_MEDICAL_RECORDS.TREATMENT_PLACEHOLDER' | translate }}"></textarea>
+          <div class="error-message" *ngIf="recordForm.get('treatment')?.invalid && recordForm.get('treatment')?.touched">
+            {{ 'VET_MEDICAL_RECORDS.TREATMENT_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="notes">{{ 'VET_MEDICAL_RECORDS.NOTES' | translate }}</label>
+          <textarea id="notes" formControlName="notes" rows="3" placeholder="{{ 'VET_MEDICAL_RECORDS.NOTES_PLACEHOLDER' | translate }}"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="followUp">{{ 'VET_MEDICAL_RECORDS.FOLLOW_UP' | translate }} *</label>
+          <input type="date" id="followUp" formControlName="followUp">
+          <div class="error-message" *ngIf="recordForm.get('followUp')?.invalid && recordForm.get('followUp')?.touched">
+            {{ 'VET_MEDICAL_RECORDS.FOLLOW_UP_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" (click)="cancel()">{{ 'VET_MEDICAL_RECORDS.CANCEL' | translate }}</button>
+          <button type="submit" class="submit-btn" [disabled]="isSubmitting">{{ 'VET_MEDICAL_RECORDS.SAVE_RECORD' | translate }}</button>
+        </div>
+        
+        <div class="error-message submit-error" *ngIf="submitError">
+          {{ submitError }}
+        </div>
+      </form>
+    </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>
