@@ -119,6 +119,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   
+  navigateToDashboard(): void {
+    if (this.userRole === 'veterinarian') {
+      this.router.navigate(['/veterinarian/dashboard']);
+    } else {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
   navigateToSettings(): void {
     if (this.userRole === 'veterinarian') {
       this.router.navigate(['/veterinarian/settings']);
