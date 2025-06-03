@@ -1,5 +1,5 @@
 <div class="navbar">
-  <div class="logo">AgroDigital</div>
+  <div class="logo" (click)="navigateToDashboard()" style="cursor: pointer;">AgroDigital</div>
   
   <nav class="main-nav">
     <ng-container *ngFor="let link of getNavLinks()">
