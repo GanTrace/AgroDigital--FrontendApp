@@ -3,19 +3,6 @@
   <main class="main-content">
     <div class="reports-header">
       <h1 class="page-title">{{ 'REPORTS.TITLE' | translate }}</h1>
-      <div class="search-section">
-        <div class="search-bar">
-          <i class="search-icon">🔍</i>
-          <input 
-            type="text" 
-            [(ngModel)]="searchTerm" 
-            placeholder="{{ 'REPORTS.SEARCH' | translate }}">
-        </div>
-        <button class="filter-btn" (click)="toggleFilters()">
-          {{ 'REPORTS.FILTER' | translate }}
-          <i class="filter-icon">≡</i>
-        </button>
-      </div>
     </div>
 
     <div class="reports-grid">
@@ -50,13 +37,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="generate-report-section">
-      <button class="generate-report-btn" (click)="generateReport()">
-        <i class="download-icon">📥</i>
-        {{ 'REPORTS.GENERATE' | translate }}
-      </button>
     </div>
   </main>
   <app-footer-component></app-footer-component>
