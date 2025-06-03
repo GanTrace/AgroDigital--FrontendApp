@@ -30,6 +30,7 @@ export class MedicalRecordsComponent implements OnInit {
   searchTerm = '';
   showFilters = false;
   selectedPatientId: number | null = null;
+  selectedPatient: Patient | null = null; // Añadir esta línea
   isLoading = false;
   loadError = '';
   
@@ -80,7 +81,7 @@ export class MedicalRecordsComponent implements OnInit {
     }
     
     this.loadPatients();
-    this.loadMedicalRecords();
+    // Solo cargamos los registros médicos cuando se selecciona un paciente
   }
   
   loadPatients(): void {
@@ -94,14 +95,38 @@ export class MedicalRecordsComponent implements OnInit {
     });
   }
   
+  selectPatient(patientId: number | undefined): void {
+    if (patientId === undefined) return;
+    
+    this.selectedPatientId = patientId;
+    this.selectedPatient = this.patients.find(p => p.id === patientId) || null;
+    
+    // Cargar los registros médicos del paciente seleccionado
+    this.loadMedicalRecords();
+  }
+  
+  clearSelectedPatient(): void {
+    this.selectedPatientId = null;
+    this.selectedPatient = null;
+    this.filteredRecords = [];
+  }
+  
   loadMedicalRecords(): void {
+    if (!this.selectedPatientId) {
+      this.filteredRecords = [];
+      return;
+    }
+    
     this.isLoading = true;
     this.loadError = '';
     
-    this.medicalRecordService.getMedicalRecordsByUser().subscribe({  // Cambiado de getMedicalRecords() a getMedicalRecordsByUser()
+    this.medicalRecordService.getMedicalRecordsByUser().subscribe({
       next: (records) => {
         this.medicalRecords = records;
-        this.filteredRecords = [...this.medicalRecords];
+        // Filtrar los registros para mostrar solo los del paciente seleccionado
+        this.filteredRecords = this.medicalRecords.filter(
+          record => record.patientId === this.selectedPatientId
+        );
         this.isLoading = false;
       },
       error: (error) => {
@@ -118,58 +143,32 @@ export class MedicalRecordsComponent implements OnInit {
   
   searchRecords(): void {
     if (!this.searchTerm.trim()) {
-      this.applyFilters();
+      this.filteredRecords = this.medicalRecords.filter(
+        record => record.patientId === this.selectedPatientId
+      );
       return;
     }
     
     const term = this.searchTerm.toLowerCase();
     this.filteredRecords = this.medicalRecords.filter(record => 
-      record.patientName.toLowerCase().includes(term) || 
-      record.ownerName.toLowerCase().includes(term) ||
-      record.diagnosis.toLowerCase().includes(term) ||
-      record.treatment.toLowerCase().includes(term)
+      record.patientId === this.selectedPatientId &&
+      (record.diagnosis.toLowerCase().includes(term) ||
+       record.treatment.toLowerCase().includes(term) ||
+       record.recordType.toLowerCase().includes(term))
     );
   }
   
-  applyFilters(): void {
-    let filtered = [...this.medicalRecords];
-    
-    if (this.selectedFilters.recordType !== 'VET_MEDICAL_RECORDS.RECORD_TYPES.ALL') {
-      filtered = filtered.filter(record => 
-        record.recordType === this.selectedFilters.recordType
-      );
-    }
-    
-    if (this.selectedPatientId) {
-      filtered = filtered.filter(record => 
-        record.patientId === this.selectedPatientId
-      );
-    }
-    
-    // Date filtering logic can be added here
-    
-    this.filteredRecords = filtered;
-    this.toggleFilters();
-  }
-  
-  resetFilters(): void {
-    this.selectedFilters = {
-      recordType: 'VET_MEDICAL_RECORDS.RECORD_TYPES.ALL',
-      dateFrom: '',
-      dateTo: ''
-    };
-    this.selectedPatientId = null;
-    this.filteredRecords = [...this.medicalRecords];
-    this.toggleFilters();
-  }
-  
-  selectPatient(patientId: number): void {
-    this.selectedPatientId = patientId;
-    this.applyFilters();
+  getHealthStatusClass(healthIssues: string): string {
+    return healthIssues === 'Ninguno' ? 'status-healthy' : 'status-treatment';
   }
   
   addNewRecord(): void {
-    this.router.navigate(['/veterinarian/new-record']);
+    if (this.selectedPatientId) {
+      // Navegar a la página de nuevo registro con el ID del paciente seleccionado
+      this.router.navigate(['/veterinarian/new-record'], {
+        queryParams: { patientId: this.selectedPatientId }
+      });
+    }
   }
   
   deleteRecord(recordId: number): void {
