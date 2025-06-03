@@ -252,6 +252,16 @@
       "COWS": "Vacas",
       "GOATS": "Cabras",
       "SHEEP": "Ovejas",
+      "OTHERS": "Otros",
+      "BULLS": "Toros",
+      "LAMBS": "Corderos",
+      "HORSES": "Caballos",
+      "MARES": "Yeguas",
+      "PIGS": "Cerdos",
+      "CHICKENS": "Gallinas",
+      "ROOSTERS": "Gallos",
+      "RABBITS": "Conejos",
+
       "CURRENT_MONTH": "Mes actual",
       "LAST_MONTH": "Mes anterior",
       "LAST_QUARTER": "Último trimestre",
@@ -518,4 +528,4 @@
   }
 }
 
-  
+

@@ -14,10 +14,24 @@
           </div>
           <div class="card-search">
             <i class="search-icon">🔍</i>
-            <input type="text" placeholder="{{ card.searchPlaceholder | translate }}">
+            <!--busqueda mas personalizada SOLO PARA SALUD Y PRODUCCIÓN-->
+            <ng-container *ngIf="card.id === 'health' || card.id === 'production'">
+              <input
+                type="text"
+                placeholder="{{ card.searchPlaceholder | translate }}"
+                [attr.list]="'especiesAnimales-' + card.id"
+                [(ngModel)]="card.searchTerm"
+                (blur)="filterBySpecies(card)"
+                (change)="filterBySpecies(card)">
+              <datalist [id]="'especiesAnimales-' + card.id">
+                <option *ngFor="let especie of especiesTraducidas" [value]="especie"></option>
+              </datalist>
+            </ng-container>
+
+
           </div>
         </div>
-        
+
         <div class="card-content">
           <div class="stat-display">
             <div class="stat-number" [class.currency]="card.id === 'financial'">
@@ -25,10 +39,10 @@
             </div>
             <div class="stat-label">{{ card.statLabel | translate }}</div>
           </div>
-          
+
           <div class="card-filters">
-            <div 
-              class="filter-pill" 
+            <div
+              class="filter-pill"
               *ngFor="let filter of card.filters"
               [class.selected]="filter.selected"
               (click)="selectFilter(card.id, filter.id)">
