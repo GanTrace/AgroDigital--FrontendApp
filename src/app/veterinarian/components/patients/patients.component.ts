@@ -7,6 +7,9 @@ import { AuthService } from '../../../public/services/auth.service';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 import { PatientService, Patient } from '../../services/patient.service';
+import { UserService } from '../../../public/services/user.service';
+import { AnimalService, Animal } from '../../../rancher/services/animal.service';
+import { User } from '../../../public/services/auth.service';
 
 @Component({
   selector: 'app-patients',
@@ -29,6 +32,17 @@ export class PatientsComponent implements OnInit {
   selectedAnimalType = 'all';
   selectedHealthStatus = 'all';
   
+  // Propiedades para el flujo de selección
+  currentStep = 1; // 1: Seleccionar propietario, 2: Seleccionar animal, 3: Ver pacientes
+  owners: User[] = [];
+  selectedOwner: User | null = null;
+  ownerAnimals: Animal[] = [];
+  selectedAnimal: Animal | null = null;
+  
+  filteredOwners: User[] = [];
+  animalSearchTerm = '';
+  filteredAnimals: Animal[] = [];
+  
   patients: Patient[] = [];
   filteredPatients: Patient[] = [];
   animalTypes = ['all', 'Vaca', 'Toro', 'Cabra', 'Oveja', 'Caballo'];
@@ -40,6 +54,8 @@ export class PatientsComponent implements OnInit {
     private translate: TranslateService,
     private authService: AuthService,
     private patientService: PatientService,
+    private userService: UserService,
+    private animalService: AnimalService,
     private router: Router
   ) {}
   
@@ -59,14 +75,89 @@ export class PatientsComponent implements OnInit {
       this.userName = user.name;
     }
     
-    this.loadPatients();
+    this.loadOwners();
+  }
+  
+  loadOwners(): void {
+    this.isLoading = true;
+    this.loadError = '';
+    
+    this.userService.getUsersByRole('rancher').subscribe({
+      next: (owners) => {
+        this.owners = owners;
+        this.filteredOwners = [...this.owners];
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading owners:', error);
+        this.loadError = 'Error al cargar los propietarios. Por favor, inténtelo de nuevo.';
+        this.isLoading = false;
+      }
+    });
+  }
+  
+  selectOwner(owner: User): void {
+    this.selectedOwner = owner;
+    this.loadOwnerAnimals(owner.id!);
+    this.currentStep = 2;
+  }
+  
+  loadOwnerAnimals(ownerId: number): void {
+    this.isLoading = true;
+    this.loadError = '';
+    
+    this.animalService.getAnimalsByUserId(ownerId).subscribe({
+      next: (animals) => {
+        this.ownerAnimals = animals;
+        this.filteredAnimals = [...this.ownerAnimals];
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading animals:', error);
+        this.loadError = 'Error al cargar los animales. Por favor, inténtelo de nuevo.';
+        this.isLoading = false;
+      }
+    });
+  }
+  
+  selectAnimal(animal: Animal): void {
+    this.selectedAnimal = animal;
+    this.currentStep = 3;
+  }
+  
+  addAsPatient(): void {
+    if (this.selectedAnimal && this.selectedOwner) {
+      // Navegar al formulario de nuevo paciente con los datos preseleccionados
+      this.router.navigate(['/veterinarian/new-patient'], { 
+        queryParams: { 
+          animalId: this.selectedAnimal.id,
+          animalName: this.selectedAnimal.nombre,
+          animalType: this.selectedAnimal.especie,
+          animalSex: this.selectedAnimal.sexo,
+          animalImage: this.selectedAnimal.imagen || this.selectedAnimal.imageUrl,
+          ownerId: this.selectedOwner.id,
+          ownerName: this.selectedOwner.name
+        } 
+      });
+    }
+  }
+  
+  backToOwners(): void {
+    this.currentStep = 1;
+    this.selectedOwner = null;
+    this.selectedAnimal = null;
+  }
+  
+  backToAnimals(): void {
+    this.currentStep = 2;
+    this.selectedAnimal = null;
   }
   
   loadPatients(): void {
     this.isLoading = true;
     this.loadError = '';
     
-    this.patientService.getPatientsByUser().subscribe({  // Cambiado de getPatients() a getPatientsByUser()
+    this.patientService.getPatientsByUser().subscribe({
       next: (patients) => {
         this.patients = patients;
         this.filteredPatients = [...this.patients];
@@ -78,6 +169,33 @@ export class PatientsComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+  
+  // Métodos de búsqueda y filtrado
+  searchOwners(): void {
+    if (!this.searchTerm.trim()) {
+      this.filteredOwners = [...this.owners];
+      return;
+    }
+    
+    const term = this.searchTerm.toLowerCase();
+    this.filteredOwners = this.owners.filter(owner => 
+      owner.name.toLowerCase().includes(term) || 
+      owner.email.toLowerCase().includes(term)
+    );
+  }
+
+  searchAnimals(): void {
+    if (!this.animalSearchTerm.trim()) {
+      this.filteredAnimals = [...this.ownerAnimals];
+      return;
+    }
+    
+    const term = this.animalSearchTerm.toLowerCase();
+    this.filteredAnimals = this.ownerAnimals.filter(animal => 
+      animal.nombre.toLowerCase().includes(term) || 
+      animal.especie.toLowerCase().includes(term)
+    );
   }
   
   toggleFilters(): void {
@@ -133,7 +251,6 @@ export class PatientsComponent implements OnInit {
       this.router.navigate([`/veterinarian/patient/${id}`]);
     } else {
       console.error('ID de paciente no válido');
-      // Opcionalmente, puedes mostrar un mensaje al usuario
     }
   }
   
@@ -146,7 +263,7 @@ export class PatientsComponent implements OnInit {
   }
 
   deletePatient(id: number | undefined, event: Event): void {
-    event.stopPropagation(); // Evitar que se active el evento de clic en la tarjeta
+    event.stopPropagation();
     
     if (id === undefined) {
       console.error('ID de paciente no válido');
@@ -156,7 +273,6 @@ export class PatientsComponent implements OnInit {
     if (confirm('¿Estás seguro de que deseas eliminar este paciente?')) {
       this.patientService.deletePatient(id).subscribe({
         next: () => {
-          // Eliminar el paciente de la lista local
           this.patients = this.patients.filter(p => p.id !== id);
           this.filteredPatients = this.filteredPatients.filter(p => p.id !== id);
         },

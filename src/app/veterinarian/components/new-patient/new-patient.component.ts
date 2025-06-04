@@ -8,6 +8,7 @@ import { FooterComponentComponent } from '../../../public/components/footer-comp
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 import { PatientService } from '../../services/patient.service';
 import { PatientEventService } from '../../services/patient-event.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-patient',
@@ -32,10 +33,15 @@ export class NewPatientComponent implements OnInit {
   genders = ['Macho', 'Hembra'];
   healthStatuses = ['Ninguno', 'Problemas respiratorios', 'Cojera leve', 'Infección', 'Otro'];
   
+  // Añadir estas propiedades
+  animalId?: number;
+  prefilledData: any = {};
+  
   constructor(
     private fb: FormBuilder,
     private patientService: PatientService,
     private router: Router,
+    private route: ActivatedRoute,
     private translate: TranslateService,
     private authService: AuthService,
     private patientEventService: PatientEventService
@@ -57,20 +63,35 @@ export class NewPatientComponent implements OnInit {
       this.userName = user.name;
     }
     
-    this.initForm();
+    // Obtener parámetros de la URL
+    this.route.queryParams.subscribe(params => {
+      if (params['animalId']) {
+        this.animalId = Number(params['animalId']);
+        this.prefilledData = {
+          name: params['animalName'] || '',
+          type: params['animalType'] || '',
+          gender: params['animalSex'] === 'Macho' ? 'Macho' : params['animalSex'] === 'Hembra' ? 'Hembra' : '',
+          owner: params['ownerName'] || '',
+          image: params['animalImage'] || ''
+        };
+      }
+      
+      this.initForm();
+    });
   }
   
   initForm(): void {
+    // Crear el formulario con valores predeterminados si están disponibles
     this.patientForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      type: ['', Validators.required],
+      name: [this.prefilledData.name || '', [Validators.required, Validators.minLength(2)]],
+      type: [this.prefilledData.type || '', Validators.required],
       age: ['', Validators.required],
-      gender: ['', Validators.required],
+      gender: [this.prefilledData.gender || '', Validators.required],
       healthIssues: ['Ninguno', Validators.required],
-      owner: ['', Validators.required],
+      owner: [this.prefilledData.owner || '', Validators.required],
       lastVisit: ['', Validators.required],
       nextVisit: ['', Validators.required],
-      image: ['', Validators.required],
+      image: [this.prefilledData.image || '', Validators.required],
       observations: ['']
     });
   }

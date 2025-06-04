@@ -64,6 +64,19 @@ export class AnimalService {
       })
     );
   }
+
+  getAnimalsByUserId(userId: number): Observable<Animal[]> {
+    if (!userId) {
+      return of([]);
+    }
+    
+    return this.http.get<Animal[]>(`${this.apiUrl}?createdBy=${userId}`).pipe(
+      catchError(error => {
+        console.error(`Error fetching animals for user ${userId}:`, error);
+        return of(this.fallbackAnimals.filter(animal => animal.createdBy === userId.toString()));
+      })
+    );
+  }
   
   addAnimal(animal: Animal): Observable<Animal> {
     // Ensure we have an image property from imageUrl if provided
