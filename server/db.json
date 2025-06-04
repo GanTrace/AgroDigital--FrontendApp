@@ -219,7 +219,20 @@
       "id": 1
     }
   ],
-  "appointments": [],
+  "appointments": [
+    {
+      "patientId": 1,
+      "patientName": "Luna",
+      "ownerName": "Rodrigo",
+      "date": "2025-06-13",
+      "time": "09:30",
+      "reason": "Chequeo Mensual",
+      "status": "completed",
+      "notes": "ninguna.",
+      "createdBy": 5,
+      "id": 1
+    }
+  ],
   "medicalRecords": [],
   "treatments": [
     {

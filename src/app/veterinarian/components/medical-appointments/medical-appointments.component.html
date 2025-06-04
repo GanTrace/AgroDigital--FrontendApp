@@ -3,10 +3,15 @@
   <main class="main-content">
     <div class="page-header">
       <h1>{{ 'APPOINTMENTS.TITLE' | translate }}</h1>
-      <button class="add-appointment-btn" (click)="addNewAppointment()">
-        <span>{{ 'APPOINTMENTS.ADD_APPOINTMENT' | translate }}</span>
-        <span class="add-icon">+</span>
-      </button>
+      <div class="header-buttons">
+        <button class="archived-appointments-btn" (click)="toggleArchivedAppointments()">
+          <span>{{ showArchivedAppointments ? ('APPOINTMENTS.ACTIVE_APPOINTMENTS' | translate) : ('APPOINTMENTS.ARCHIVED_APPOINTMENTS' | translate) }}</span>
+        </button>
+        <button class="add-appointment-btn" (click)="addNewAppointment()" *ngIf="!showArchivedAppointments">
+          <span>{{ 'APPOINTMENTS.ADD_APPOINTMENT' | translate }}</span>
+          <span class="add-icon">+</span>
+        </button>
+      </div>
     </div>
     
     <div class="search-section">
@@ -19,7 +24,7 @@
           (keyup)="searchAppointments()"
           placeholder="{{ 'APPOINTMENTS.SEARCH_PLACEHOLDER' | translate }}">
       </div>
-      <button class="filter-btn" (click)="toggleFilters()">
+      <button class="filter-btn" (click)="toggleFilters()" *ngIf="!showArchivedAppointments">
         {{ 'APPOINTMENTS.FILTER' | translate }}
         <i class="filter-icon">≡</i>
       </button>
@@ -42,7 +47,6 @@
           <select [(ngModel)]="selectedStatus">
             <option value="all">{{ 'APPOINTMENTS.ALL_STATUS' | translate }}</option>
             <option value="scheduled">{{ 'APPOINTMENTS.SCHEDULED' | translate }}</option>
-            <option value="completed">{{ 'APPOINTMENTS.COMPLETED' | translate }}</option>
             <option value="cancelled">{{ 'APPOINTMENTS.CANCELLED' | translate }}</option>
           </select>
         </div>
@@ -87,9 +91,6 @@
           </div>
           
           <div class="appointment-actions">
-            <button class="edit-btn" (click)="editAppointment(appointment.id)" *ngIf="appointment.status === 'scheduled'">
-              {{ 'APPOINTMENTS.EDIT' | translate }}
-            </button>
             <button class="complete-btn" (click)="completeAppointment(appointment.id)" *ngIf="appointment.status === 'scheduled'">
               {{ 'APPOINTMENTS.COMPLETE' | translate }}
             </button>
@@ -101,7 +102,7 @@
       </div>
       
       <div class="no-appointments" *ngIf="filteredAppointments.length === 0">
-        {{ 'APPOINTMENTS.NO_APPOINTMENTS' | translate }}
+        {{ showArchivedAppointments ? ('APPOINTMENTS.NO_ARCHIVED_APPOINTMENTS' | translate) : ('APPOINTMENTS.NO_APPOINTMENTS' | translate) }}
       </div>
     </div>
   </main>

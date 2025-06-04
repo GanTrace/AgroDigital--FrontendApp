@@ -33,6 +33,7 @@ export class MedicalAppointmentsComponent implements OnInit {
   
   appointments: Appointment[] = [];
   filteredAppointments: Appointment[] = [];
+  showArchivedAppointments = false; // Nueva propiedad para controlar la visualización de citas archivadas
   
   constructor(
     private translate: TranslateService,
@@ -64,10 +65,10 @@ export class MedicalAppointmentsComponent implements OnInit {
     this.isLoading = true;
     this.loadError = '';
     
-    this.appointmentService.getAppointmentsByUser().subscribe({  // Cambiado de getAppointments() a getAppointmentsByUser()
+    this.appointmentService.getAppointmentsByUser().subscribe({
       next: (appointments) => {
         this.appointments = appointments;
-        this.filteredAppointments = [...this.appointments];
+        this.applyFilters(); // Aplicar filtros para mostrar u ocultar citas archivadas
         this.isLoading = false;
       },
       error: (error) => {
@@ -82,6 +83,11 @@ export class MedicalAppointmentsComponent implements OnInit {
     this.showFilters = !this.showFilters;
   }
   
+  toggleArchivedAppointments(): void {
+    this.showArchivedAppointments = !this.showArchivedAppointments;
+    this.applyFilters(); // Aplicar filtros para actualizar la vista
+  }
+  
   searchAppointments(): void {
     if (!this.searchTerm.trim()) {
       this.applyFilters();
@@ -89,46 +95,61 @@ export class MedicalAppointmentsComponent implements OnInit {
     }
     
     const term = this.searchTerm.toLowerCase();
-    this.filteredAppointments = this.appointments.filter(appointment => 
+    let filtered = this.appointments.filter(appointment => 
       appointment.patientName.toLowerCase().includes(term) || 
       appointment.ownerName.toLowerCase().includes(term) ||
       appointment.reason.toLowerCase().includes(term)
     );
+    
+    // Filtrar según si estamos mostrando citas archivadas o no
+    if (this.showArchivedAppointments) {
+      filtered = filtered.filter(appointment => appointment.status === 'completed');
+    } else {
+      filtered = filtered.filter(appointment => appointment.status !== 'completed');
+    }
+    
+    this.filteredAppointments = filtered;
   }
   
   applyFilters(): void {
     let filtered = [...this.appointments];
     
-    if (this.selectedStatus !== 'all') {
-      filtered = filtered.filter(appointment => 
-        appointment.status === this.selectedStatus
-      );
-    }
-    
-    if (this.selectedDate) {
-      filtered = filtered.filter(appointment => 
-        appointment.date === this.selectedDate
-      );
+    // Filtrar por estado de archivo primero
+    if (this.showArchivedAppointments) {
+      filtered = filtered.filter(appointment => appointment.status === 'completed');
+    } else {
+      filtered = filtered.filter(appointment => appointment.status !== 'completed');
+      
+      // Solo aplicar estos filtros adicionales si no estamos en vista de archivados
+      if (this.selectedStatus !== 'all') {
+        filtered = filtered.filter(appointment => 
+          appointment.status === this.selectedStatus
+        );
+      }
+      
+      if (this.selectedDate) {
+        filtered = filtered.filter(appointment => 
+          appointment.date === this.selectedDate
+        );
+      }
     }
     
     this.filteredAppointments = filtered;
-    this.toggleFilters();
+    
+    // Solo cerrar el panel de filtros si está abierto
+    if (this.showFilters) {
+      this.toggleFilters();
+    }
   }
   
   resetFilters(): void {
     this.selectedStatus = 'all';
     this.selectedDate = '';
-    this.filteredAppointments = [...this.appointments];
+    this.applyFilters();
   }
   
   addNewAppointment(): void {
     this.router.navigate(['/veterinarian/new-appointment']);
-  }
-  
-  editAppointment(id: number | undefined): void {
-    if (id !== undefined) {
-      this.router.navigate([`/veterinarian/edit-appointment/${id}`]);
-    }
   }
   
   cancelAppointment(id: number | undefined): void {
@@ -155,7 +176,7 @@ export class MedicalAppointmentsComponent implements OnInit {
         appointment.status = 'completed';
         this.appointmentService.updateAppointment(appointment).subscribe({
           next: () => {
-            this.applyFilters();
+            this.applyFilters(); // Esto actualizará la vista y ocultará la cita completada
           },
           error: (error) => {
             console.error('Error completing appointment:', error);
