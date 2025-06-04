@@ -101,6 +101,22 @@
       "id": 2,
       "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMZRUI6EhuVJa2FeSWwzRW_BfMSIRMN_GBTQ&s",
       "createdBy": 1
+    },
+    {
+      "nombre": "Raphtalia",
+      "especie": "Cordero",
+      "fechaNacimiento": "2019-06-29",
+      "sexo": "Hembra",
+      "enfermedad": "No",
+      "estadoReproductivo": "Gestación",
+      "imageUrl": "https://mamaoveja.wordpress.com/wp-content/uploads/2017/05/cordero.jpg?w=584",
+      "vacunasAplicadas": "0",
+      "numeroPartos": "0",
+      "ubicacion": "Ganado Ovino",
+      "observaciones": "Ninguna.",
+      "id": 3,
+      "imagen": "https://mamaoveja.wordpress.com/wp-content/uploads/2017/05/cordero.jpg?w=584",
+      "createdBy": 2
     }
   ],
   "incomes": [
@@ -189,77 +205,22 @@
   ],
   "patients": [
     {
-      "name": "Betty",
-      "type": "Oveja Merino",
-      "age": "5 años",
-      "gender": "Hembra",
-      "healthIssues": "Ninguno",
-      "owner": "Rodrigo",
-      "lastVisit": "2025-03-19",
-      "nextVisit": "2025-07-24",
-      "image": "https://animapedia.org/wp-content/uploads/2018/07/oveja-adulta.jpg",
-      "observations": "Ninguna.",
-      "createdBy": 5,
-      "id": 1
-    },
-    {
       "name": "Luna",
       "type": "Vaca Holstein",
       "age": "7 años",
       "gender": "Hembra",
-      "healthIssues": "Ninguno",
+      "healthIssues": "Otro",
       "owner": "Rodrigo",
-      "lastVisit": "2025-05-08",
-      "nextVisit": "2025-06-10",
-      "image": "https://a.storyblok.com/f/160385/4bf112f0cd/datos_curiosos.jpg/m/filters:quality(70)/",
-      "observations": "Ninguna",
-      "createdBy": 5,
-      "id": 2
-    }
-  ],
-  "appointments": [
-    {
-      "patientId": 1,
-      "patientName": "Betty",
-      "ownerName": "Rodrigo",
-      "date": "2025-06-21",
-      "time": "09:10",
-      "reason": "Chequeo Mensual",
-      "status": "completed",
-      "notes": "Visita.",
+      "lastVisit": "2025-06-02",
+      "nextVisit": "2025-06-15",
+      "image": "https://naukas.com/fx/uploads/2017/05/Dairy_cow.jpg",
+      "observations": "Ninguna.",
       "createdBy": 5,
       "id": 1
-    },
-    {
-      "patientId": 1,
-      "patientName": "Betty",
-      "ownerName": "Rodrigo",
-      "date": "2025-07-26",
-      "time": "10:15",
-      "reason": "Chequeo Mensual",
-      "status": "scheduled",
-      "notes": "Visita.",
-      "createdBy": 5,
-      "id": 2
     }
   ],
-  "medicalRecords": [
-    {
-      "patientId": 2,
-      "patientName": "Luna",
-      "ownerName": "Rodrigo",
-      "date": "2025-05-29",
-      "recordType": "VET_MEDICAL_RECORDS.RECORD_TYPES.TREATMENT",
-      "diagnosis": "Estable pero con molestias",
-      "treatment": "Mejor alimentación y medicinas.",
-      "notes": "Tomar medicinas durante 5 días una cada 8 horas.",
-      "followUp": "2025-06-05",
-      "attachments": [],
-      "createdBy": 5,
-      "createdAt": "2025-05-29T19:11:13.305Z",
-      "id": 1
-    }
-  ],
+  "appointments": [],
+  "medicalRecords": [],
   "treatments": [
     {
       "name": "Vacunación contra los parásitos",

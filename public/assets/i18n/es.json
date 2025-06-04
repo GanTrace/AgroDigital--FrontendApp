@@ -441,7 +441,19 @@
     "NEXT_VISIT": "Próxima Visita",
     "HEALTH_ISSUES": "Problemas de Salud",
     "VIEW_DETAILS": "Ver Detalles",
-    "NO_PATIENTS": "No se encontraron pacientes"
+    "NO_PATIENTS": "No se encontraron pacientes",
+    "SELECT_OWNER": "Seleccionar Propietario",
+    "SEARCH_OWNER_PLACEHOLDER": "Buscar por nombre o correo...",
+    "LOADING_OWNERS": "Cargando propietarios...",
+    "NO_OWNERS": "No se encontraron propietarios",
+    "SELECT_ANIMAL": "Seleccionar Animal",
+    "SELECTED_OWNER": "Propietario seleccionado",
+    "SEARCH_ANIMAL_PLACEHOLDER": "Buscar por nombre o especie...",
+    "LOADING_ANIMALS": "Cargando animales...",
+    "NO_ANIMALS_FOR_OWNER": "Este propietario no tiene animales registrados",
+    "CONFIRM_ANIMAL": "Confirmar Animal",
+    "ADD_AS_PATIENT": "Añadir como Paciente",
+    "BACK": "Volver"
   },
   "PATIENT_DETAILS": {
     "BACK": "Volver",
