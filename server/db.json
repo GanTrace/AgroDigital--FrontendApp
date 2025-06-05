@@ -185,24 +185,7 @@
       "id": 2
     }
   ],
-  "medicalEvents": [
-    {
-      "animalId": 1,
-      "animalName": "Luna",
-      "date": "2025-05-28",
-      "eventType": "Revisión",
-      "description": "Chequeo Mensual",
-      "veterinarian": "Dra. Polo",
-      "observations": "Ninguna observación.",
-      "attachments": [
-        "Factura"
-      ],
-      "userId": 1,
-      "userName": "Rodrigo",
-      "createdAt": "2025-05-28T03:44:53.325Z",
-      "id": 1
-    }
-  ],
+  "medicalEvents": [],
   "patients": [
     {
       "name": "Luna",
@@ -233,7 +216,23 @@
       "id": 1
     }
   ],
-  "medicalRecords": [],
+  "medicalRecords": [
+    {
+      "patientId": 1,
+      "patientName": "Luna",
+      "ownerName": "Rodrigo",
+      "date": "2025-06-04",
+      "recordType": "VET_MEDICAL_RECORDS.RECORD_TYPES.VACCINATION",
+      "diagnosis": "Gripe - Influenza",
+      "treatment": "Medicina",
+      "notes": "Tomar cada 8 horas",
+      "followUp": "2025-06-14",
+      "attachments": [],
+      "createdBy": 5,
+      "createdAt": "2025-06-05T01:00:15.500Z",
+      "id": 1
+    }
+  ],
   "treatments": [
     {
       "name": "Vacunación contra los parásitos",

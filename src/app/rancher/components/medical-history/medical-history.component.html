@@ -76,30 +76,19 @@
                 <th>{{ 'MEDICAL_HISTORY.DATE' | translate }}</th>
                 <th>{{ 'MEDICAL_HISTORY.EVENT_TYPE' | translate }}</th>
                 <th>{{ 'MEDICAL_HISTORY.DESCRIPTION' | translate }}</th>
-                <th>{{ 'MEDICAL_HISTORY.VETERINARIAN' | translate }}</th>
-                <th>{{ 'MEDICAL_HISTORY.OBSERVATIONS' | translate }}</th>
-                <th>{{ 'MEDICAL_HISTORY.ATTACHMENTS' | translate }}</th>
+                <th>{{ 'MEDICAL_HISTORY.TREATMENT' | translate }}</th>
+                <th>{{ 'MEDICAL_HISTORY.FOLLOW_UP' | translate }}</th>
                 <th>{{ 'MEDICAL_HISTORY.ACTIONS' | translate }}</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let event of medicalEvents">
                 <td>{{ event.date | date }}</td>
-                <td>{{ event.eventType }}</td>
+                <td>{{ event.eventType | translate }}</td>
                 <td>{{ event.description }}</td>
-                <td>{{ event.veterinarian }}</td>
-                <td>{{ event.observations }}</td>
-                <td>
-                  <span *ngIf="event.attachments && event.attachments.length">
-                    <a *ngFor="let attachment of event.attachments" href="#" class="attachment-link">
-                      {{ attachment }}
-                    </a>
-                  </span>
-                </td>
+                <td>{{ event.treatment }}</td>
+                <td>{{ event.followUp }}</td>
                 <td class="actions-cell">
-                  <button class="action-btn edit-btn-small" (click)="editVisit(event.id)">
-                    ✏️
-                  </button>
                   <button class="action-btn delete-btn-small" (click)="deleteVisit(event.id)">
                     🗑️
                   </button>
@@ -107,7 +96,7 @@
               </tr>
               
               <tr *ngIf="medicalEvents.length === 0">
-                <td colspan="7" class="no-events-message">
+                <td colspan="6" class="no-events-message">
                   {{ 'MEDICAL_HISTORY.NO_EVENTS' | translate }}
                 </td>
               </tr>
@@ -116,9 +105,6 @@
         </div>
         
         <div class="actions-container">
-          <button class="add-visit-btn" (click)="addVisit()">
-            {{ 'MEDICAL_HISTORY.ADD_VISIT' | translate }}
-          </button>
         </div>
       </div>
     </div>

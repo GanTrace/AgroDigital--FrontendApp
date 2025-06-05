@@ -409,7 +409,11 @@
     "DATE_REQUIRED": "Date is required",
     "TIME_REQUIRED": "Time is required",
     "REASON_REQUIRED": "Reason is required",
-    "LOADING_PATIENTS": "Loading patients..."
+    "LOADING_PATIENTS": "Loading patients...",
+    "ARCHIVED_APPOINTMENTS": "Archived Appointments",
+    "ACTIVE_APPOINTMENTS": "Active Appointments",
+    "NO_ARCHIVED_APPOINTMENTS": "No archived appointments to display",
+    "ARCHIVE": "Archive"
   },
   "PATIENTS": {
     "TITLE": "My Patients",
@@ -454,6 +458,7 @@
     "NO_ANIMALS_FOR_OWNER": "This owner has no registered animals",
     "CONFIRM_ANIMAL": "Confirm Animal",
     "ADD_AS_PATIENT": "Add as Patient",
+    "ADD_NEW_PATIENT": "Add New Patient",
     "BACK": "Back"
   },
   "PATIENT_DETAILS": {
@@ -527,7 +532,8 @@
     "IMAGE_URL": "Image URL",
     "IMAGE_PLACEHOLDER": "Treatment image URL",
     "IMAGE_REQUIRED": "Image URL is required",
-    "SAVE_TREATMENT": "Save Treatment"
+    "SAVE_TREATMENT": "Save Treatment",
+    "TREATMENT_DETAILS": "Treatment Details"
   }
 }
 

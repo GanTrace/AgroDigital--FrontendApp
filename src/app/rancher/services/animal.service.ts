@@ -136,12 +136,21 @@ export class AnimalService {
   }
   
   getNextAnimalId(): Observable<number> {
-    return this.getAnimals().pipe(
+    // Obtener el usuario actual
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser || !currentUser.id) {
+      return of(1);
+    }
+    
+    // Obtener solo los animales del usuario actual
+    return this.getAnimalsByUserId(currentUser.id).pipe(
       map(animals => {
         if (animals.length === 0) {
           return 1;
         }
-        const maxId = Math.max(...animals.map(animal => animal.id));
+        const maxId = Math.max(...animals.map(animal => 
+          typeof animal.id === 'number' ? animal.id : parseInt(String(animal.id), 10)
+        ));
         return maxId + 1;
       }),
       catchError(error => {
@@ -149,6 +158,27 @@ export class AnimalService {
         return of(this.getNextIdForFallback());
       })
     );
+  }
+  
+  // Helper methods for fallback functionality
+  private getNextIdForFallback(): number {
+    if (this.fallbackAnimals.length === 0) {
+      return 1;
+    }
+    
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser && currentUser.id) {
+      const userAnimals = this.fallbackAnimals.filter(animal => 
+        animal.createdBy === currentUser.id || animal.createdBy === String(currentUser.id)
+      );
+      
+      if (userAnimals.length === 0) {
+        return 1;
+      }
+      return Math.max(...userAnimals.map(animal => animal.id)) + 1;
+    }
+    
+    return Math.max(...this.fallbackAnimals.map(animal => animal.id)) + 1;
   }
   
   searchAnimals(term: string): Observable<Animal[]> {
@@ -165,14 +195,6 @@ export class AnimalService {
         (animal.enfermedad && animal.enfermedad.toLowerCase().includes(term))
       ))
     );
-  }
-  
-  // Helper methods for fallback functionality
-  private getNextIdForFallback(): number {
-    if (this.fallbackAnimals.length === 0) {
-      return 1;
-    }
-    return Math.max(...this.fallbackAnimals.map(animal => animal.id)) + 1;
   }
   
   private handleError<T>(operation = 'operation', result?: T) {

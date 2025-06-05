@@ -153,9 +153,11 @@
           <button class="edit-animal-btn" routerLink="/edit-animal/{{ selectedAnimal.id }}">
             {{ 'DASHBOARD.EDIT_ANIMAL' | translate }}
           </button>
-          <button class="back-btn" (click)="closeAnimalDetails()">
-            {{ 'DASHBOARD.BACK' | translate }}
-          </button>
+          <div class="modal-footer">
+            <button class="back-btn" (click)="closeAnimalDetails()">
+              {{ 'ANIMALS.BACK' | translate }}
+            </button>
+          </div>
         </div>
       </div>
     </div>

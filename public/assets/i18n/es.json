@@ -151,6 +151,8 @@
       "DESCRIPTION": "Descripción",
       "VETERINARIAN": "Veterinario",
       "OBSERVATIONS": "Observaciones",
+      "TREATMENT": "Tratamiento",
+      "FOLLOW_UP": "Seguimiento",
       "ATTACHMENTS": "Adjuntos",
       "ACTIONS": "Acciones",
       "NO_EVENTS": "No hay eventos médicos registrados",
@@ -408,7 +410,11 @@
     "DATE_REQUIRED": "La fecha es obligatoria",
     "TIME_REQUIRED": "La hora es obligatoria",
     "REASON_REQUIRED": "El motivo es obligatorio",
-    "LOADING_PATIENTS": "Cargando pacientes..."
+    "LOADING_PATIENTS": "Cargando pacientes...",
+    "ARCHIVED_APPOINTMENTS": "Citas Archivadas",
+    "ACTIVE_APPOINTMENTS": "Citas Activas",
+    "NO_ARCHIVED_APPOINTMENTS": "No hay citas archivadas para mostrar",
+    "ARCHIVE": "Archivar"
   },
   "PATIENTS": {
     "TITLE": "Mis Pacientes",
@@ -453,6 +459,7 @@
     "NO_ANIMALS_FOR_OWNER": "Este propietario no tiene animales registrados",
     "CONFIRM_ANIMAL": "Confirmar Animal",
     "ADD_AS_PATIENT": "Añadir como Paciente",
+    "ADD_NEW_PATIENT": "Añadir Nuevo Paciente",
     "BACK": "Volver"
   },
   "PATIENT_DETAILS": {
@@ -526,7 +533,8 @@
     "IMAGE_URL": "URL de la Imagen",
     "IMAGE_PLACEHOLDER": "URL de la imagen del tratamiento",
     "IMAGE_REQUIRED": "La URL de la imagen es obligatoria",
-    "SAVE_TREATMENT": "Guardar Tratamiento"
+    "SAVE_TREATMENT": "Guardar Tratamiento",
+    "TREATMENT_DETAILS": "Detalles del Tratamiento"
   }
 }
 
