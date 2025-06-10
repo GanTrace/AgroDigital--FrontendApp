@@ -219,6 +219,7 @@
     "VENTAS": "Sales",
     "SERVICIOS": "Services",
     "INVERSIONES": "Investments",
+    "SUMINISTROS": "Supplies",
     "OTROS_INGRESOS": "Other Income"
   },
   "EXPENSE_CATEGORIES": {
@@ -228,14 +229,12 @@
     "FEED": "Feed",
     "MAINTENANCE": "Maintenance",
     "OTHER": "Other Expenses",
-    "SUMINISTROS": "Supplies",
     "EQUIPAMIENTO": "Equipment",
     "VETERINARIO": "Veterinary",
     "ALIMENTACIÓN": "Feed",
     "MANTENIMIENTO": "Maintenance",
     "OTROS_GASTOS": "Other Expenses"
-  }
-},
+  },
     "REPORTS": {
       "TITLE": "Reports",
       "GENERATE": "Generate Report",
@@ -310,6 +309,8 @@
     "SEX_REQUIRED": "Sex is required",
     "SELECT_SPECIES": "Select species",
     "SELECT_DISEASE": "Has disease?",
+    "BACK": "Back",
+    "YEARS": "years",
     "YES": "Yes",
     "NO": "No",
     "SPECIES_COW": "Cow",
@@ -422,6 +423,7 @@
     "FILTER": "Filter",
     "FILTER_OPTIONS": "Filter Options",
     "ANIMAL_TYPE": "Animal Type",
+    "SELECT": "Select",
     "ALL_TYPES": "All Types",
     "LOADING": "Loading patients...",
     "PATIENT_COUNT": "{{count}} patients",
@@ -535,6 +537,7 @@
     "SAVE_TREATMENT": "Save Treatment",
     "TREATMENT_DETAILS": "Treatment Details"
   }
+}
 }
 
 
