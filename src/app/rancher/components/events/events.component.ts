@@ -132,7 +132,6 @@ export class EventsComponent implements OnInit, OnDestroy {
   canDeleteEvent(event: Event): boolean {
     const currentUser = this.authService.getCurrentUser();
     
-    // If no creator ID is set (for demo events), allow deletion
     if (!event.creatorId) {
       return true;
     }
@@ -140,12 +139,11 @@ export class EventsComponent implements OnInit, OnDestroy {
     const eventCreatorId = String(event.creatorId);
     const currentUserId = currentUser?.id ? String(currentUser.id) : '';
     
-    // Compare as strings
     return eventCreatorId === currentUserId;
   }
 
   deleteEvent(eventItem: Event, e: MouseEvent): void {
-    e.stopPropagation(); // Now this will work correctly
+    e.stopPropagation(); 
     
     if (!this.canDeleteEvent(eventItem)) {
       alert(this.translate.instant('EVENTS.CANNOT_DELETE'));

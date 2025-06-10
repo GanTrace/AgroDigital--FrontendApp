@@ -11,7 +11,6 @@ export class EconomicService {
 
   constructor(private http: HttpClient) { }
 
-  // Get total income
   getTotalIncome(): Observable<number> {
     return this.http.get<any[]>(`${this.apiUrl}/incomes`).pipe(
       map(incomes => {
@@ -24,7 +23,6 @@ export class EconomicService {
     );
   }
 
-  // Get total expense
   getTotalExpense(): Observable<number> {
     return this.http.get<any[]>(`${this.apiUrl}/expenses`).pipe(
       map(expenses => {
@@ -37,26 +35,21 @@ export class EconomicService {
     );
   }
 
-  // Add expense
   addExpense(expense: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/expenses`, expense);
   }
 
-  // Add income
   addIncome(income: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/incomes`, income);
   }
 
-  // Add transaction (for unified view)
   addTransaction(transaction: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/transactions`, transaction);
   }
 
-  // Get recent transactions
   getRecentTransactions(limit: number = 10): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/transactions`).pipe(
       map(transactions => {
-        // Sort by date (newest first) and limit
         return transactions
           .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
           .slice(0, limit);
@@ -68,7 +61,6 @@ export class EconomicService {
     );
   }
 
-  // Get all incomes
   getIncomes(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/incomes`).pipe(
       catchError(error => {
@@ -78,7 +70,6 @@ export class EconomicService {
     );
   }
 
-  // Get all expenses
   getExpenses(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/expenses`).pipe(
       catchError(error => {
@@ -88,32 +79,26 @@ export class EconomicService {
     );
   }
 
-  // Update income
   updateIncome(id: number, income: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/incomes/${id}`, income);
   }
 
-  // Update expense
   updateExpense(id: number, expense: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/expenses/${id}`, expense);
   }
 
-  // Delete income
   deleteIncome(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/incomes/${id}`);
   }
 
-  // Delete expense
   deleteExpense(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/expenses/${id}`);
   }
 
-  // Delete transaction
   deleteTransaction(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/transactions/${id}`);
   }
 
-  // Get transaction by ID
   getTransactionById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/transactions/${id}`);
   }

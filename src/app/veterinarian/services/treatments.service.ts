@@ -58,7 +58,6 @@ export class TreatmentService {
   }
   
   addTreatment(treatment: Treatment): Observable<Treatment> {
-    // Asegurarse de que el usuario actual sea el creador
     const currentUser = this.authService.getCurrentUser();
     if (currentUser && currentUser.id) {
       treatment.createdBy = currentUser.id;

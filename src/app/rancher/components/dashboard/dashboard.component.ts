@@ -116,7 +116,7 @@ export class DashboardComponent implements OnInit {
   }
   
   deleteAnimal(event: Event, animalId: number): void {
-    event.stopPropagation(); // Prevent card click event
+    event.stopPropagation();
     
     if (confirm(this.translate.instant('DASHBOARD.CONFIRM_DELETE_ANIMAL'))) {
       this.animalService.deleteAnimal(animalId).subscribe({

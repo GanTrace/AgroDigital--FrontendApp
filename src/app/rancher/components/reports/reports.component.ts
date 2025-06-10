@@ -55,13 +55,11 @@ export class ReportsComponent implements OnInit, OnDestroy {
   
   reportCards: ReportCard[] = [];
   
-  // Datos para los reportes
   animals: Animal[] = [];
   medicalEvents: any[] = [];
   incomes: any[] = [];
   expenses: any[] = [];
   
-  // Suscripciones
   private subscriptions: Subscription[] = [];
   
   constructor(
@@ -88,12 +86,10 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy(): void {
-    // Cancelar todas las suscripciones para evitar memory leaks
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
   
   loadData(): void {
-    // Cargar todos los datos necesarios para los reportes
     const animalsSub = this.animalService.getAnimalsByUser().subscribe(animals => {
       this.animals = animals;
       this.animalCount = `${animals.length} ${animals.length === 1 ? 'animal' : 'animales'}`;
@@ -101,10 +97,8 @@ export class ReportsComponent implements OnInit, OnDestroy {
       this.updateProductionReport();
     });
     
-    // Cargar eventos médicos de todos los animales
     const medicalEventsSub = this.loadAllMedicalEvents();
     
-    // Cargar datos financieros
     const financialSub = forkJoin({
       incomes: this.economicService.getIncomes(),
       expenses: this.economicService.getExpenses()
@@ -119,13 +113,11 @@ export class ReportsComponent implements OnInit, OnDestroy {
   
   loadAllMedicalEvents(): Subscription {
     return this.animalService.getAnimalsByUser().subscribe(animals => {
-      // Para cada animal, obtener sus eventos médicos
       const medicalEventsPromises = animals.map(animal => 
         this.medicalHistoryService.getMedicalEvents(animal.id)
       );
       
       forkJoin(medicalEventsPromises).subscribe(eventsArrays => {
-        // Combinar todos los arrays de eventos en uno solo
         this.medicalEvents = eventsArrays.flat();
         this.updateHealthReport();
       });
@@ -141,7 +133,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
         statValue: 0,
         statLabel: 'REPORTS.HEALTHY_ANIMALS',
         searchPlaceholder: 'REPORTS.SEARCH_ANIMAL',
-        color: '#A3C4A8', // Green
+        color: '#A3C4A8', 
         filters: [
           { id: 'all', name: 'REPORTS.ALL_ANIMALS', selected: true },
           { id: 'cows', name: 'REPORTS.COWS', selected: false },
@@ -156,7 +148,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
         statValue: 0,
         statLabel: 'REPORTS.PRODUCTION_EFFICIENCY',
         searchPlaceholder: 'REPORTS.SEARCH_ANIMAL',
-        color: '#D1BFA5', // Beige
+        color: '#D1BFA5', 
         filters: [
           { id: 'all', name: 'REPORTS.ALL_ANIMALS', selected: true },
           { id: 'cows', name: 'REPORTS.COWS', selected: false },
@@ -171,7 +163,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
         statValue: 'S/0',
         statLabel: 'REPORTS.NET_PROFIT',
         searchPlaceholder: 'REPORTS.SEARCH_CATEGORY',
-        color: '#A3794F', // Brown
+        color: '#A3794F', 
         filters: [
           { id: 'current', name: 'REPORTS.CURRENT_MONTH', selected: true },
           { id: 'last', name: 'REPORTS.LAST_MONTH', selected: false },
@@ -186,7 +178,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
         statValue: 0,
         statLabel: 'REPORTS.INVENTORY_LEVEL',
         searchPlaceholder: 'REPORTS.SEARCH_ITEM',
-        color: '#8E5928', // Dark brown
+        color: '#8E5928', 
         filters: [
           { id: 'all', name: 'REPORTS.ALL_ITEMS', selected: true },
           { id: 'feed', name: 'REPORTS.FEED', selected: false },
@@ -212,7 +204,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
         filter.selected = filter.id === filterId;
       });
       
-      // Actualizar estadísticas basadas en el filtro seleccionado
       this.updateCardStatistics(cardId, filterId);
     }
   }
@@ -238,7 +229,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
     const card = this.reportCards.find(c => c.id === 'health');
     if (!card || this.animals.length === 0) return;
     
-    // Filtrar animales según el tipo seleccionado
     let filteredAnimals = this.animals;
     if (filterId !== 'all') {
       const speciesMap: {[key: string]: string[]} = {
@@ -256,7 +246,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
       return;
     }
     
-    // Calcular porcentaje de animales saludables (sin enfermedad)
     const healthyAnimals = filteredAnimals.filter(animal => animal.enfermedad === 'No' || !animal.enfermedad);
     const healthyPercentage = Math.round((healthyAnimals.length / filteredAnimals.length) * 100);
     
@@ -267,7 +256,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
     const card = this.reportCards.find(c => c.id === 'production');
     if (!card || this.animals.length === 0) return;
     
-    // Filtrar animales según el tipo seleccionado
     let filteredAnimals = this.animals;
     if (filterId !== 'all') {
       const speciesMap: {[key: string]: string[]} = {
@@ -285,19 +273,15 @@ export class ReportsComponent implements OnInit, OnDestroy {
       return;
     }
     
-    // Calcular eficiencia de producción basada en estado reproductivo
-    // Para este ejemplo, consideramos que los animales en gestación o con partos son más productivos
     const productiveAnimals = filteredAnimals.filter(animal => 
       animal.estadoReproductivo === 'Gestación' || 
       (animal.numeroPartos && animal.numeroPartos > 0)
     );
     
-    // Si no hay datos de productividad, usamos un valor base más alto para animales saludables
     if (productiveAnimals.length === 0) {
       const healthyAnimals = filteredAnimals.filter(animal => animal.enfermedad === 'No' || !animal.enfermedad);
       const healthyPercentage = Math.round((healthyAnimals.length / filteredAnimals.length) * 100);
-      card.statValue = Math.min(healthyPercentage + 10, 100); // Base más alta para animales saludables
-    } else {
+      card.statValue = Math.min(healthyPercentage + 10, 100); 
       const productionEfficiency = Math.round((productiveAnimals.length / filteredAnimals.length) * 100);
       card.statValue = productionEfficiency;
     }
@@ -307,35 +291,28 @@ export class ReportsComponent implements OnInit, OnDestroy {
     const card = this.reportCards.find(c => c.id === 'financial');
     if (!card) return;
     
-    // Obtener fecha actual
     const now = new Date();
     let startDate: Date;
     
-    // Determinar el rango de fechas según el filtro
     switch (filterId) {
       case 'current':
-        // Mes actual
         startDate = new Date(now.getFullYear(), now.getMonth(), 1);
         break;
       case 'last':
-        // Mes anterior
         startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
         const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
         now.setDate(endOfLastMonth.getDate());
         break;
       case 'quarter':
-        // Último trimestre (3 meses)
         startDate = new Date(now.getFullYear(), now.getMonth() - 3, 1);
         break;
       case 'year':
-        // Último año
         startDate = new Date(now.getFullYear() - 1, now.getMonth(), 1);
         break;
       default:
         startDate = new Date(now.getFullYear(), now.getMonth(), 1);
     }
     
-    // Filtrar ingresos y gastos por fecha
     const filteredIncomes = this.incomes.filter(income => {
       const incomeDate = new Date(income.date);
       return incomeDate >= startDate && incomeDate <= now;
@@ -346,12 +323,10 @@ export class ReportsComponent implements OnInit, OnDestroy {
       return expenseDate >= startDate && expenseDate <= now;
     });
     
-    // Calcular totales
     const totalIncome = filteredIncomes.reduce((sum, income) => sum + parseFloat(income.amount), 0);
     const totalExpense = filteredExpenses.reduce((sum, expense) => sum + parseFloat(expense.amount), 0);
     const netProfit = totalIncome - totalExpense;
     
-    // Formatear como moneda
     card.statValue = `S/${netProfit.toFixed(2)}`;
   }
   
@@ -359,10 +334,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
     const card = this.reportCards.find(c => c.id === 'inventory');
     if (!card) return;
     
-    // Como no tenemos datos reales de inventario en db.json, usaremos un cálculo basado en los gastos
-    // Asumimos que las categorías de gastos corresponden a niveles de inventario
-    
-    // Filtrar gastos por categoría
     let filteredExpenses = this.expenses;
     if (filterId !== 'all') {
       const categoryMap: {[key: string]: string[]} = {
@@ -375,8 +346,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
       filteredExpenses = this.expenses.filter(expense => categories.includes(expense.category));
     }
     
-    // Calcular nivel de inventario basado en gastos (simulación)
-    // Más gastos recientes = mayor nivel de inventario
     const recentExpenses = filteredExpenses.filter(expense => {
       const expenseDate = new Date(expense.date);
       const threeMonthsAgo = new Date();
@@ -384,16 +353,13 @@ export class ReportsComponent implements OnInit, OnDestroy {
       return expenseDate >= threeMonthsAgo;
     });
     
-    // Calcular nivel de inventario (simulación)
     let inventoryLevel = 0;
     if (filteredExpenses.length > 0) {
-      // Porcentaje de gastos recientes sobre el total
       inventoryLevel = Math.round((recentExpenses.length / filteredExpenses.length) * 100);
       
-      // Ajustar para que tenga sentido como nivel de inventario (más gastos recientes = mayor inventario)
-      inventoryLevel = Math.min(inventoryLevel + 50, 100); // Base mínima de 50%
+     
+      inventoryLevel = Math.min(inventoryLevel + 50, 100); 
     } else {
-      // Si no hay datos, mostrar un valor predeterminado
       inventoryLevel = 50;
     }
     
@@ -401,7 +367,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
   
   generateReport(): void {
-    // En una aplicación real, esto generaría un PDF o Excel
     alert(this.translate.instant('REPORTS.REPORT_GENERATED'));
   }
   

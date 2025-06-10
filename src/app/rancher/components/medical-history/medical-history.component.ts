@@ -72,27 +72,20 @@ export class MedicalHistoryComponent implements OnInit {
   }
 
   loadMedicalEvents(animalId: number): void {
-    // Primero cargamos los eventos médicos del ganadero
     this.medicalHistoryService.getMedicalEvents(animalId).subscribe(events => {
-      // Guardamos los eventos médicos del ganadero
       const rancherEvents = events.map(event => ({
         ...event,
-        // Aseguramos que los campos coincidan con la estructura de la tabla
         date: event.date,
         eventType: event.eventType,
         description: event.description,
         treatment: event.treatment || 'N/A',
         followUp: event.followUp || 'N/A',
-        // Mantenemos estos campos para compatibilidad con el código existente
         veterinarian: event.veterinarian || 'N/A',
         observations: event.observations || 'N/A',
         attachments: event.attachments || []
       }));
       
-      // Ahora cargamos los registros médicos del veterinario
       this.medicalRecordService.getMedicalRecords().subscribe(records => {
-        // Filtramos los registros que corresponden a este animal
-        // Asumimos que patientId en los registros médicos corresponde al id del animal
         const vetRecords = records
           .filter(record => record.patientId === animalId)
           .map(record => ({
@@ -102,46 +95,36 @@ export class MedicalHistoryComponent implements OnInit {
             description: record.diagnosis,
             treatment: record.treatment || 'N/A',
             followUp: record.followUp || 'N/A',
-            // Mantenemos estos campos para compatibilidad con el código existente
             veterinarian: record.ownerName || 'Veterinario',
             observations: record.notes || 'N/A',
             attachments: record.attachments || [],
-            // Agregamos un campo para identificar que es un registro del veterinario
             isVetRecord: true
           }));
         
-        // Combinamos ambos tipos de registros
         this.medicalEvents = [...rancherEvents, ...vetRecords];
         
-        // Actualizamos la información del animal si hay registros médicos del veterinario
         this.updateAnimalInfo(vetRecords);
       });
     });
   }
 
-  // Método para actualizar la información del animal basado en los registros médicos
   updateAnimalInfo(vetRecords: any[]): void {
     if (!this.selectedAnimal || vetRecords.length === 0) return;
     
-    // Ordenamos los registros por fecha (más reciente primero)
     const sortedRecords = [...vetRecords].sort((a, b) => 
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
     
-    // Tomamos el registro más reciente
     const latestRecord = sortedRecords[0];
     
-    // Actualizamos la información del animal si es necesario
     let needsUpdate = false;
     const updatedAnimal = { ...this.selectedAnimal };
     
-    // Ejemplo: Actualizamos el estado de salud del animal basado en el diagnóstico
     if (latestRecord.description && !updatedAnimal.enfermedad) {
       updatedAnimal.enfermedad = latestRecord.description;
       needsUpdate = true;
     }
     
-    // Si hay cambios, actualizamos el animal
     if (needsUpdate) {
       this.animalService.updateAnimal(updatedAnimal).subscribe(animal => {
         this.selectedAnimal = animal;
@@ -179,14 +162,11 @@ export class MedicalHistoryComponent implements OnInit {
 
   deleteVisit(eventId: number): void {
     if (confirm(this.translate.instant('MEDICAL_HISTORY.CONFIRM_DELETE'))) {
-      // Verificamos si es un registro del veterinario o un evento médico del ganadero
       const event = this.medicalEvents.find(e => e.id === eventId);
       
       if (event && event.isVetRecord) {
-        // Si es un registro del veterinario, usamos el servicio correspondiente
         this.medicalRecordService.deleteMedicalRecord(eventId).subscribe({
           next: () => {
-            // Reload events after deletion
             if (this.selectedAnimal) {
               this.loadMedicalEvents(this.selectedAnimal.id);
             }
@@ -196,10 +176,8 @@ export class MedicalHistoryComponent implements OnInit {
           }
         });
       } else {
-        // Si es un evento médico del ganadero, usamos el servicio original
         this.medicalHistoryService.deleteMedicalEvent(eventId).subscribe({
           next: () => {
-            // Reload events after deletion
             if (this.selectedAnimal) {
               this.loadMedicalEvents(this.selectedAnimal.id);
             }

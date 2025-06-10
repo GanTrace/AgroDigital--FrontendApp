@@ -82,8 +82,6 @@
         <button class="info-btn">i</button>
       </div>
     </div>
-    
-    <!-- Animal Details Modal -->
     <div class="animal-details-modal" *ngIf="showAnimalDetails && selectedAnimal" (click)="closeAnimalDetails()">
       <div class="animal-details-content" (click)="$event.stopPropagation()">
         <button class="close-modal" (click)="closeAnimalDetails()">×</button>

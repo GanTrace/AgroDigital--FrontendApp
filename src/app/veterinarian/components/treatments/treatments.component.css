@@ -264,7 +264,6 @@
     font-size: 0.9rem;
     line-height: 1.4;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -309,7 +308,6 @@
     font-size: 1.1rem;
   }
   
-/* Treatment Details Modal */
 .treatment-details-modal {
     position: fixed;
     top: 0;

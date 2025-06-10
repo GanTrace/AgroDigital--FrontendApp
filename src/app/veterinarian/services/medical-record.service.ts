@@ -64,7 +64,6 @@ export class MedicalRecordService {
   }
   
   addMedicalRecord(record: MedicalRecord): Observable<MedicalRecord> {
-    // Asegurarse de que el usuario actual sea el creador
     const currentUser = this.authService.getCurrentUser();
     if (currentUser && currentUser.id) {
       record.createdBy = currentUser.id;

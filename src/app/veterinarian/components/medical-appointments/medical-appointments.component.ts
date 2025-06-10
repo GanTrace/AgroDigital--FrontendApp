@@ -33,7 +33,7 @@ export class MedicalAppointmentsComponent implements OnInit {
   
   appointments: Appointment[] = [];
   filteredAppointments: Appointment[] = [];
-  showArchivedAppointments = false; // Nueva propiedad para controlar la visualización de citas archivadas
+  showArchivedAppointments = false;
   
   constructor(
     private translate: TranslateService,
@@ -68,7 +68,7 @@ export class MedicalAppointmentsComponent implements OnInit {
     this.appointmentService.getAppointmentsByUser().subscribe({
       next: (appointments) => {
         this.appointments = appointments;
-        this.applyFilters(); // Aplicar filtros para mostrar u ocultar citas archivadas
+        this.applyFilters();
         this.isLoading = false;
       },
       error: (error) => {
@@ -85,7 +85,7 @@ export class MedicalAppointmentsComponent implements OnInit {
   
   toggleArchivedAppointments(): void {
     this.showArchivedAppointments = !this.showArchivedAppointments;
-    this.applyFilters(); // Aplicar filtros para actualizar la vista
+    this.applyFilters();
   }
   
   searchAppointments(): void {
@@ -101,7 +101,6 @@ export class MedicalAppointmentsComponent implements OnInit {
       appointment.reason.toLowerCase().includes(term)
     );
     
-    // Filtrar según si estamos mostrando citas archivadas o no
     if (this.showArchivedAppointments) {
       filtered = filtered.filter(appointment => appointment.status === 'completed');
     } else {
@@ -114,13 +113,11 @@ export class MedicalAppointmentsComponent implements OnInit {
   applyFilters(): void {
     let filtered = [...this.appointments];
     
-    // Filtrar por estado de archivo primero
     if (this.showArchivedAppointments) {
       filtered = filtered.filter(appointment => appointment.status === 'completed');
     } else {
       filtered = filtered.filter(appointment => appointment.status !== 'completed');
       
-      // Solo aplicar estos filtros adicionales si no estamos en vista de archivados
       if (this.selectedStatus !== 'all') {
         filtered = filtered.filter(appointment => 
           appointment.status === this.selectedStatus
@@ -136,7 +133,6 @@ export class MedicalAppointmentsComponent implements OnInit {
     
     this.filteredAppointments = filtered;
     
-    // Solo cerrar el panel de filtros si está abierto
     if (this.showFilters) {
       this.toggleFilters();
     }
@@ -176,7 +172,7 @@ export class MedicalAppointmentsComponent implements OnInit {
         appointment.status = 'completed';
         this.appointmentService.updateAppointment(appointment).subscribe({
           next: () => {
-            this.applyFilters(); // Esto actualizará la vista y ocultará la cita completada
+            this.applyFilters();
           },
           error: (error) => {
             console.error('Error completing appointment:', error);

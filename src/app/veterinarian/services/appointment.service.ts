@@ -57,7 +57,6 @@ export class AppointmentService {
   }
   
   addAppointment(appointment: Appointment): Observable<Appointment> {
-    // Asegurarse de que el usuario actual sea el creador
     const currentUser = this.authService.getCurrentUser();
     if (currentUser && currentUser.id) {
       appointment.createdBy = currentUser.id;

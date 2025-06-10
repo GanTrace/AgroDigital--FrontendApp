@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angul
 import { FooterComponentComponent } from '../../components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
 import { AuthService, User } from '../../services/auth.service'; 
-import { NotificationsComponent } from '../../pages/notifications/notifications.component';
 import { HeaderComponent } from '../../components/header-component/header-component.component';
 
 @Component({
@@ -20,7 +19,6 @@ import { HeaderComponent } from '../../components/header-component/header-compon
     FormsModule,
     FooterComponentComponent,
     LanguageSwitcherComponent,
-    NotificationsComponent,
     HeaderComponent
   ],
   templateUrl: './settings.component.html',
@@ -150,7 +148,6 @@ export class SettingsComponent implements OnInit {
     this.showPassword = !this.showPassword;
     
     if (this.showPassword && this.user) {
-      // Cuando se muestra la contraseña, obtener la contraseña real del usuario
       this.authService.getUserById(this.user.id!).subscribe(userData => {
         if (userData && userData.password) {
           this.settingsForm.patchValue({
@@ -159,7 +156,6 @@ export class SettingsComponent implements OnInit {
         }
       });
     } else {
-      // Cuando se oculta la contraseña, volver a mostrar asteriscos
       this.settingsForm.patchValue({
         password: '••••••••'
       });

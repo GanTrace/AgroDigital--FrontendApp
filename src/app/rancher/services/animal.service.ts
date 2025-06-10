@@ -59,7 +59,6 @@ export class AnimalService {
     return this.http.get<Animal>(`${this.apiUrl}/${id}`).pipe(
       catchError(error => {
         console.error(`Error fetching animal with id ${id}:`, error);
-        // Return local fallback data
         return of(this.fallbackAnimals.find(animal => animal.id === id));
       })
     );
@@ -79,19 +78,16 @@ export class AnimalService {
   }
   
   addAnimal(animal: Animal): Observable<Animal> {
-    // Ensure we have an image property from imageUrl if provided
     if (animal.imageUrl && !animal.imagen) {
       animal.imagen = animal.imageUrl;
     }
     
     return this.http.post<Animal>(this.apiUrl, animal).pipe(
       tap(newAnimal => {
-        // Add to local fallback data
         this.fallbackAnimals.push(newAnimal);
       }),
       catchError(error => {
         console.error('Error adding animal:', error);
-        // Add to local fallback data and return
         animal.id = this.getNextIdForFallback();
         this.fallbackAnimals.push(animal);
         return of(animal);
@@ -102,7 +98,6 @@ export class AnimalService {
   updateAnimal(animal: Animal): Observable<Animal> {
     return this.http.put<Animal>(`${this.apiUrl}/${animal.id}`, animal).pipe(
       tap(updatedAnimal => {
-        // Update in local fallback data
         const index = this.fallbackAnimals.findIndex(a => a.id === animal.id);
         if (index !== -1) {
           this.fallbackAnimals[index] = updatedAnimal;
@@ -110,7 +105,6 @@ export class AnimalService {
       }),
       catchError(error => {
         console.error(`Error updating animal with id ${animal.id}:`, error);
-        // Update in local fallback data and return
         const index = this.fallbackAnimals.findIndex(a => a.id === animal.id);
         if (index !== -1) {
           this.fallbackAnimals[index] = animal;
@@ -123,12 +117,10 @@ export class AnimalService {
   deleteAnimal(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`).pipe(
       tap(() => {
-        // Remove from local fallback data
         this.fallbackAnimals = this.fallbackAnimals.filter(animal => animal.id !== id);
       }),
       catchError(error => {
         console.error(`Error deleting animal with id ${id}:`, error);
-        // Remove from local fallback data and return success
         this.fallbackAnimals = this.fallbackAnimals.filter(animal => animal.id !== id);
         return of({ success: true });
       })
@@ -136,13 +128,11 @@ export class AnimalService {
   }
   
   getNextAnimalId(): Observable<number> {
-    // Obtener el usuario actual
     const currentUser = this.authService.getCurrentUser();
     if (!currentUser || !currentUser.id) {
       return of(1);
     }
     
-    // Obtener solo los animales del usuario actual
     return this.getAnimalsByUserId(currentUser.id).pipe(
       map(animals => {
         if (animals.length === 0) {
@@ -160,7 +150,6 @@ export class AnimalService {
     );
   }
   
-  // Helper methods for fallback functionality
   private getNextIdForFallback(): number {
     if (this.fallbackAnimals.length === 0) {
       return 1;

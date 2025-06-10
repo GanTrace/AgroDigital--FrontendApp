@@ -60,11 +60,9 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
       this.userName = user.name;
     }
     
-    // Load financial data first
     this.loadFinancialData();
     this.loadRecentTransactions(); 
     
-    // Delay chart creation to improve initial load time
     setTimeout(() => {
       this.initializeChart();
     }, 300);
@@ -83,7 +81,6 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
       this.transactionsSubscription.unsubscribe();
     }
     
-    // Destroy chart instance to prevent memory leaks
     if (this.chart) {
       this.chart.destroy();
       this.chart = null;
@@ -121,7 +118,6 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
   }
   
   getTranslatedCategory(category: string): string {
-    // Map the category to the appropriate translation key
     const categoryKey = category.toUpperCase().replace(/\s+/g, '_');
     if (category.toLowerCase().includes('expense')) {
       return this.translate.instant(`ECONOMIC_CONTROL.EXPENSE_CATEGORIES.${categoryKey}`);
@@ -149,16 +145,15 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
   loadFinancialData() {
     this.incomeSubscription = this.economicService.getTotalIncome().subscribe(total => {
       this.ingresos = total;
-      this.calculateBalance(); // Calculate balance when income is loaded
+      this.calculateBalance(); 
     });
     
     this.expenseSubscription = this.economicService.getTotalExpense().subscribe(total => {
       this.gastos = total;
-      this.calculateBalance(); // Calculate balance when expense is loaded
+      this.calculateBalance(); 
     });
   }
   
-  // Add method to calculate balance
   calculateBalance() {
     this.balance = this.ingresos - this.gastos;
   }
@@ -181,12 +176,9 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
 
   deleteTransaction(transaction: any): void {
     if (confirm(this.translate.instant('ECONOMIC_CONTROL.CONFIRM_DELETE_MESSAGE'))) {
-      // Implement actual deletion logic
       this.economicService.deleteTransaction(transaction.id).subscribe({
         next: () => {
-          // Show success message
           alert(this.translate.instant('ECONOMIC_CONTROL.TRANSACTION_DELETED'));
-          // Reload data
           this.loadRecentTransactions();
           this.loadFinancialData();
         },
@@ -209,12 +201,11 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
     const dataPoints = 12; 
     const labels = Array.from({ length: dataPoints }, (_, i) => `Sem ${i+1}`);
     
-    // Simplified data generation
     const data = Array.from({ length: dataPoints }, (_, i) => {
       if (i < 5) {
-        return 3200 - (i * 200); // First 5 points with predefined values
+        return 3200 - (i * 200); 
       } else {
-        return Math.max(500, 2400 - ((i-4) * 150)); // Remaining points with simpler calculation
+        return Math.max(500, 2400 - ((i-4) * 150));
       }
     });
 

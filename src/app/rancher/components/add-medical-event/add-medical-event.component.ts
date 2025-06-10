@@ -59,7 +59,6 @@ export class AddMedicalEventComponent implements OnInit {
       this.translate.use(savedLang);
     }
     
-    // Get animal ID from route params
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.animalId = +params['id'];
@@ -72,7 +71,6 @@ export class AddMedicalEventComponent implements OnInit {
   
   loadAnimalDetails(): void {
     if (this.animalId) {
-      // Use getAnimalsByUser and filter for the specific animal
       this.animalService.getAnimalsByUser().subscribe({
         next: (animals) => {
           const foundAnimal = animals.find(animal => animal.id === this.animalId);
@@ -95,7 +93,6 @@ export class AddMedicalEventComponent implements OnInit {
     if (this.medicalEventForm.valid && this.animalId) {
       const formData = this.medicalEventForm.value;
       
-      // Process attachments if needed
       let attachments: string[] = [];
       if (formData.attachments) {
         attachments = formData.attachments.split(',').map((item: string) => item.trim());
@@ -121,7 +118,6 @@ export class AddMedicalEventComponent implements OnInit {
         }
       });
     } else {
-      // Mark all fields as touched to trigger validation messages
       Object.keys(this.medicalEventForm.controls).forEach(key => {
         this.medicalEventForm.get(key)?.markAsTouched();
       });

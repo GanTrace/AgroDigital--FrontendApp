@@ -82,7 +82,6 @@ export class AnimalsComponent implements OnInit {
       this.userName = user.name;
     }
     
-    // Get the next animal ID from the service
     this.animalService.getNextAnimalId().subscribe(id => {
       this.nextAnimalId = id;
     });
@@ -107,7 +106,6 @@ export class AnimalsComponent implements OnInit {
 
   addAnimal(): void {
     if (this.animalForm.invalid) {
-      // Mark all fields as touched to show validation errors
       Object.keys(this.animalForm.controls).forEach(key => {
         const control = this.animalForm.get(key);
         control?.markAsTouched();

@@ -347,12 +347,10 @@
   font-size: 16px;
 }
 
-/* Asegurar que el footer se quede al final */
 app-footer-component {
   margin-top: auto;
 }
 
-/* Estilos para la selección de propietarios */
 .section-header {
   display: flex;
   align-items: center;
@@ -386,7 +384,6 @@ app-footer-component {
   color: #7f8c8d;
 }
 
-/* Grid de propietarios */
 .owners-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -438,7 +435,6 @@ app-footer-component {
   font-size: 14px;
 }
 
-/* Grid de animales */
 .animals-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -496,7 +492,6 @@ app-footer-component {
   color: #34495e;
 }
 
-/* Confirmación de animal */
 .animal-confirmation {
   background-color: white;
   border-radius: 10px;

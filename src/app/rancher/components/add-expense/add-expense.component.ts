@@ -67,7 +67,6 @@ export class AddExpenseComponent implements OnInit {
 
       this.economicService.addExpense(expense).subscribe({
         next: () => {
-          // Also add to transactions for unified view
           this.economicService.addTransaction({...expense}).subscribe();
           this.router.navigate(['/economic-control']);
         },
@@ -76,7 +75,6 @@ export class AddExpenseComponent implements OnInit {
         }
       });
     } else {
-      // Mark all fields as touched to trigger validation messages
       Object.keys(this.expenseForm.controls).forEach(key => {
         this.expenseForm.get(key)?.markAsTouched();
       });

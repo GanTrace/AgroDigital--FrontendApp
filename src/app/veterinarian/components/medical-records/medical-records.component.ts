@@ -30,7 +30,7 @@ export class MedicalRecordsComponent implements OnInit {
   searchTerm = '';
   showFilters = false;
   selectedPatientId: number | null = null;
-  selectedPatient: Patient | null = null; // Añadir esta línea
+  selectedPatient: Patient | null = null; 
   isLoading = false;
   loadError = '';
   
@@ -81,11 +81,10 @@ export class MedicalRecordsComponent implements OnInit {
     }
     
     this.loadPatients();
-    // Solo cargamos los registros médicos cuando se selecciona un paciente
   }
   
   loadPatients(): void {
-    this.patientService.getPatientsByUser().subscribe({  // Cambiado de getPatients() a getPatientsByUser()
+    this.patientService.getPatientsByUser().subscribe({ 
       next: (patients) => {
         this.patients = patients;
       },
@@ -101,7 +100,6 @@ export class MedicalRecordsComponent implements OnInit {
     this.selectedPatientId = patientId;
     this.selectedPatient = this.patients.find(p => p.id === patientId) || null;
     
-    // Cargar los registros médicos del paciente seleccionado
     this.loadMedicalRecords();
   }
   
@@ -123,7 +121,6 @@ export class MedicalRecordsComponent implements OnInit {
     this.medicalRecordService.getMedicalRecordsByUser().subscribe({
       next: (records) => {
         this.medicalRecords = records;
-        // Filtrar los registros para mostrar solo los del paciente seleccionado
         this.filteredRecords = this.medicalRecords.filter(
           record => record.patientId === this.selectedPatientId
         );
@@ -164,7 +161,6 @@ export class MedicalRecordsComponent implements OnInit {
   
   addNewRecord(): void {
     if (this.selectedPatientId) {
-      // Navegar a la página de nuevo registro con el ID del paciente seleccionado
       this.router.navigate(['/veterinarian/new-record'], {
         queryParams: { patientId: this.selectedPatientId }
       });
@@ -178,7 +174,6 @@ export class MedicalRecordsComponent implements OnInit {
           this.medicalRecords = this.medicalRecords.filter(record => record.id !== recordId);
           this.filteredRecords = this.filteredRecords.filter(record => record.id !== recordId);
           
-          // Si el registro eliminado es el que se está mostrando, cerrar el panel de detalles
           if (this.selectedRecord && this.selectedRecord.id === recordId) {
             this.closeRecordDetails();
           }

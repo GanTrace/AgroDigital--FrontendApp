@@ -32,8 +32,7 @@ export class PatientsComponent implements OnInit {
   selectedAnimalType = 'all';
   selectedHealthStatus = 'all';
   
-  // Propiedades para el flujo de selección
-  currentStep = 1; // 1: Seleccionar propietario, 2: Seleccionar animal, 3: Ver pacientes
+  currentStep = 1;
   owners: User[] = [];
   selectedOwner: User | null = null;
   ownerAnimals: Animal[] = [];
@@ -127,7 +126,6 @@ export class PatientsComponent implements OnInit {
   
   addAsPatient(): void {
     if (this.selectedAnimal && this.selectedOwner) {
-      // Navegar al formulario de nuevo paciente con los datos preseleccionados
       this.router.navigate(['/veterinarian/new-patient'], { 
         queryParams: { 
           animalId: this.selectedAnimal.id,
@@ -170,8 +168,7 @@ export class PatientsComponent implements OnInit {
       }
     });
   }
-  
-  // Métodos de búsqueda y filtrado
+
   searchOwners(): void {
     if (!this.searchTerm.trim()) {
       this.filteredOwners = [...this.owners];

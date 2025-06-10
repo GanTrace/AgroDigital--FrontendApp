@@ -213,7 +213,6 @@ textarea:focus {
   }
 }
 
-/* Asegurar que el footer se quede al final */
 app-footer-component {
   margin-top: auto;
 }

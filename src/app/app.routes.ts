@@ -31,7 +31,6 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path:'page-not-found', component: PageNotFoundComponent },
     { path:'header', component: HeaderComponent },
-    // Rancher routes
     { path: 'dashboard', component: DashboardComponent },
     { path: 'animals', component: AnimalsComponent },
     { path: 'events', component: EventsComponent },
@@ -44,7 +43,6 @@ export const routes: Routes = [
     { path:'add-income', component: AddIncomeComponent },
     { path:'add-medical-event', component: AddMedicalEventComponent },
     { path:'add-medical-event/:id', component: AddMedicalEventComponent },
-    // Veterinarian routes
     { path: 'veterinarian/dashboard', component: VetDashboardComponent },
     { path: 'veterinarian/medical-records', component: MedicalRecordsComponent },
     { path: 'veterinarian/settings', component: SettingsComponent },

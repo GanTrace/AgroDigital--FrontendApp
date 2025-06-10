@@ -15,7 +15,6 @@ export class MedicalHistoryService {
     private authService: AuthService
   ) { }
 
-  // Get medical events for a specific animal
   getMedicalEvents(animalId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/medicalEvents?animalId=${animalId}`).pipe(
       catchError(error => {
@@ -25,11 +24,9 @@ export class MedicalHistoryService {
     );
   }
 
-  // Add a new medical event
   addMedicalEvent(event: any): Observable<any> {
     const currentUser = this.authService.getCurrentUser();
     
-    // Add user information to the event
     const eventWithUser = {
       ...event,
       userId: currentUser?.id,
@@ -40,17 +37,14 @@ export class MedicalHistoryService {
     return this.http.post(`${this.apiUrl}/medicalEvents`, eventWithUser);
   }
 
-  // Update a medical event
   updateMedicalEvent(id: number, event: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/medicalEvents/${id}`, event);
   }
 
-  // Delete a medical event
   deleteMedicalEvent(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/medicalEvents/${id}`);
   }
 
-  // Get a specific medical event
   getMedicalEvent(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/medicalEvents/${id}`);
   }

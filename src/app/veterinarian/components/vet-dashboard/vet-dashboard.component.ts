@@ -77,12 +77,10 @@ export class VetDashboardComponent implements OnInit {
     this.loadPatients();
     this.loadUpcomingAppointments();
     
-    // Suscribirse a eventos de pacientes añadidos
     this.patientEventService.patientAdded$.subscribe(newPatient => {
       this.patients.push(newPatient);
       this.filteredPatients = [...this.patients];
       
-      // Actualizar el contador de pacientes
       if (this.patients.length === 1) {
         this.patientCount = `1 ${this.translate.instant('PATIENTS.PATIENT_SINGULAR')}`;
       } else {
@@ -95,13 +93,12 @@ export class VetDashboardComponent implements OnInit {
     this.isLoading = true;
     this.loadError = '';
     
-    this.patientService.getPatientsByUser().subscribe({  // Cambiado de getPatients() a getPatientsByUser()
+    this.patientService.getPatientsByUser().subscribe({ 
       next: (patients) => {
         this.patients = patients;
         this.filteredPatients = [...this.patients];
         this.isLoading = false;
         
-        // Actualizar el contador de pacientes
         if (this.patients.length === 1) {
           this.patientCount = `1 ${this.translate.instant('PATIENTS.PATIENT_SINGULAR')}`;
         } else {
@@ -120,19 +117,16 @@ export class VetDashboardComponent implements OnInit {
     this.isLoadingAppointments = true;
     this.appointmentsError = '';
     
-    this.appointmentService.getAppointmentsByUser().subscribe({  // Cambiado de getAppointments() a getAppointmentsByUser()
+    this.appointmentService.getAppointmentsByUser().subscribe({  
       next: (appointments) => {
-        // Filtrar solo las citas programadas (no canceladas ni completadas)
         const scheduledAppointments = appointments.filter(app => app.status === 'scheduled');
         
-        // Ordenar por fecha y hora
         scheduledAppointments.sort((a, b) => {
           const dateA = new Date(`${a.date}T${a.time}`);
           const dateB = new Date(`${b.date}T${b.time}`);
           return dateA.getTime() - dateB.getTime();
         });
         
-        // Tomar solo las próximas citas (por ejemplo, las 5 primeras)
         this.upcomingAppointments = scheduledAppointments.slice(0, 5);
         this.isLoadingAppointments = false;
       },
@@ -201,7 +195,6 @@ export class VetDashboardComponent implements OnInit {
     this.router.navigate(['/veterinarian/settings']);
   }
 
-  // Modificar el método deletePatient para actualizar el contador
   deletePatient(id: number | undefined, event: Event): void {
     event.stopPropagation();
     
@@ -213,11 +206,9 @@ export class VetDashboardComponent implements OnInit {
     if (confirm('¿Estás seguro de que deseas eliminar este paciente?')) {
       this.patientService.deletePatient(id).subscribe({
         next: () => {
-          // Eliminar el paciente de la lista local
           this.patients = this.patients.filter(p => p.id !== id);
           this.filteredPatients = this.filteredPatients.filter(p => p.id !== id);
           
-          // Actualizar el contador de pacientes
           if (this.patients.length === 1) {
             this.patientCount = `1 ${this.translate.instant('PATIENTS.PATIENT_SINGULAR')}`;
           } else {

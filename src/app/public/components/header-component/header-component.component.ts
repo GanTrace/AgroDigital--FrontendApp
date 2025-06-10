@@ -48,13 +48,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.profileImage = user.profileImage || 'assets/images/default-avatar.png';
       
       if (this.userRole === 'rancher') {
-        // Get actual animal count
         this.updateAnimalCount();
       } else if (this.userRole === 'veterinarian') {
-        // Get actual patient count
         this.updatePatientCount();
         
-        // Subscribe to patient added events
         this.patientAddedSubscription = this.patientEventService.patientAdded$.subscribe(() => {
           this.updatePatientCount();
         });
@@ -63,13 +60,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe to prevent memory leaks
     if (this.patientAddedSubscription) {
       this.patientAddedSubscription.unsubscribe();
     }
   }
 
-  // Add this method to update animal count
   updateAnimalCount(): void {
     this.animalService.getAnimalsByUser().subscribe(animals => {
       const count = animals.length;
@@ -77,8 +72,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Add this method to update patient count
-  // Método actualizado para mostrar solo los pacientes del veterinario actual
   updatePatientCount(): void {
     this.patientService.getPatientsByUser().subscribe(patients => {
       const count = patients.length;
@@ -136,7 +129,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.showProfileMenu = false;
   }
   
-  // Close menu when clicking outside
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;

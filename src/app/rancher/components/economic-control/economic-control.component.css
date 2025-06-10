@@ -54,7 +54,6 @@
   background-color: #8c6743;
 }
 
-/* Summary Cards */
 .summary-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -127,7 +126,6 @@
   color: #A3794F;
 }
 
-/* Transactions Section */
 .transactions-section {
   background-color: white;
   border-radius: 12px;

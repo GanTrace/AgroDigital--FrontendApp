@@ -9,7 +9,6 @@
       </button>
     </div>
     
-    <!-- Sección de selección de pacientes -->
     <div class="patient-selection" *ngIf="!selectedPatientId">
       <h2 class="selection-title">Selecciona el paciente</h2>
       <div class="patients-grid">
@@ -43,7 +42,6 @@
       </div>
     </div>
     
-    <!-- Sección de registros médicos (solo visible cuando se ha seleccionado un paciente) -->
     <div *ngIf="selectedPatientId">
       <div class="patient-header">
         <div class="selected-patient-info" *ngIf="selectedPatient">

@@ -33,7 +33,6 @@ export class NewPatientComponent implements OnInit {
   genders = ['Macho', 'Hembra'];
   healthStatuses = ['Ninguno', 'Problemas respiratorios', 'Cojera leve', 'Infección', 'Otro'];
   
-  // Añadir estas propiedades
   animalId?: number;
   prefilledData: any = {};
   
@@ -63,7 +62,6 @@ export class NewPatientComponent implements OnInit {
       this.userName = user.name;
     }
     
-    // Obtener parámetros de la URL
     this.route.queryParams.subscribe(params => {
       if (params['animalId']) {
         this.animalId = Number(params['animalId']);
@@ -81,7 +79,6 @@ export class NewPatientComponent implements OnInit {
   }
   
   initForm(): void {
-    // Crear el formulario con valores predeterminados si están disponibles
     this.patientForm = this.fb.group({
       name: [this.prefilledData.name || '', [Validators.required, Validators.minLength(2)]],
       type: [this.prefilledData.type || '', Validators.required],
@@ -107,7 +104,6 @@ export class NewPatientComponent implements OnInit {
     
     const patientData = this.patientForm.value;
     
-    // Asignar el creador actual
     const user = this.authService.getCurrentUser();
     if (user) {
       patientData.createdBy = user.id;
@@ -116,7 +112,6 @@ export class NewPatientComponent implements OnInit {
     this.patientService.addPatient(patientData).subscribe({
       next: (newPatient) => {
         this.isSubmitting = false;
-        // Notificar que se ha añadido un nuevo paciente
         this.patientEventService.notifyPatientAdded(newPatient);
         this.router.navigate(['/veterinarian/patients']);
       },

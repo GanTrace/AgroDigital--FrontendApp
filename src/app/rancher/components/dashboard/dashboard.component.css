@@ -474,7 +474,6 @@
   font-size: 1.1rem;
 }
 
-/* Add these styles for the animal cards and details modal */
 .delete-animal-btn {
   position: absolute;
   top: 10px;
@@ -498,7 +497,6 @@
   transform: scale(1.1);
 }
 
-/* Animal details modal styles */
 .animal-details-modal {
   position: fixed;
   top: 0;
@@ -633,7 +631,6 @@
   background-color: #689f4a;
 }
 
-/* No animals message */
 .no-animals-message {
   text-align: center;
   padding: 40px 0;

@@ -110,7 +110,6 @@ export class NewRecordComponent implements OnInit {
     if (patientId) {
       const selectedPatient = this.patients.find(p => p.id === parseInt(patientId));
       if (selectedPatient) {
-        // Podríamos pre-llenar otros campos si fuera necesario
       }
     }
   }

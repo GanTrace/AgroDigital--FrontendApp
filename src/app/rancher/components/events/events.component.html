@@ -63,7 +63,6 @@
           <div class="event-date">{{ event.fecha | date }}</div>
           <p class="event-description">{{ event.descripcion }}</p>
           
-          <!-- Add creator name -->
           <div class="event-creator" *ngIf="event.creatorName">
             <span>{{ 'EVENTS.CREATED_BY' | translate }}: {{ event.creatorName }}</span>
           </div>
@@ -75,7 +74,6 @@
       </div>
     </section>
     
-    <!-- Event Details Modal -->
     <div class="event-details-modal" *ngIf="showEventDetails && selectedEvent" (click)="closeEventDetails()">
       <div class="event-details-content" (click)="$event.stopPropagation()">
         <button class="close-modal" (click)="closeEventDetails()">×</button>

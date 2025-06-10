@@ -59,7 +59,6 @@ export class PatientService {
   }
   
   addPatient(patient: Patient): Observable<Patient> {
-    // Asegurarse de que el usuario actual sea el creador
     const currentUser = this.authService.getCurrentUser();
     if (currentUser && currentUser.id) {
       patient.createdBy = currentUser.id;

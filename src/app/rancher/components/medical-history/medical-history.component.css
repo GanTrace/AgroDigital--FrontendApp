@@ -374,7 +374,6 @@
   margin-bottom: 30px;
 }
 
-/* Search section */
 .search-section {
   margin-bottom: 30px;
 }
@@ -401,7 +400,6 @@
   font-size: 1rem;
 }
 
-/* Animal selection grid */
 .animal-selection h2 {
   font-size: 1.5rem;
   color: #444;
@@ -481,7 +479,6 @@
   margin-bottom: 20px;
 }
 
-/* Animal medical history section */
 .animal-medical-history {
   background-color: #f9f9f9;
   border-radius: 10px;
@@ -557,7 +554,6 @@
   margin-top: 15px;
 }
 
-/* Medical events section */
 .medical-events-section {
   margin-top: 30px;
 }

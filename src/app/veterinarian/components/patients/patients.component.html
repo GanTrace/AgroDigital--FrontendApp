@@ -9,7 +9,6 @@
       </button>
     </div>
     
-    <!-- Paso 1: Selección de Propietario -->
     <div *ngIf="currentStep === 1">
       <div class="section-header">
         <h2>{{ 'PATIENTS.SELECT_OWNER' | translate }}</h2>
@@ -51,7 +50,6 @@
       </div>
     </div>
     
-    <!-- Paso 2: Selección de Animal -->
     <div *ngIf="currentStep === 2">
       <div class="section-header">
         <button class="back-btn" (click)="backToOwners()">
@@ -102,7 +100,6 @@
       </div>
     </div>
     
-    <!-- Paso 3: Confirmación y Añadir como Paciente -->
     <div *ngIf="currentStep === 3">
       <div class="section-header">
         <button class="back-btn" (click)="backToAnimals()">
@@ -135,7 +132,6 @@
       </div>
     </div>
     
-    <!-- Lista de Pacientes (Vista Original) -->
     <div *ngIf="currentStep === 4">
       <div class="search-section">
         <div class="search-bar">
