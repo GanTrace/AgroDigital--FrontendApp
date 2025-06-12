@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { EconomicService } from '../../services/economic.service';
+import { AuthService } from '../../../public/services/auth.service';
 
 @Component({
   selector: 'app-add-expense',
@@ -19,24 +20,25 @@ import { EconomicService } from '../../services/economic.service';
 export class AddExpenseComponent implements OnInit {
   expenseForm: FormGroup;
   categories: string[] = [
-    'ECONOMIC_CONTROL.EXPENSE_CATEGORIES.SUPPLIES',
-    'ECONOMIC_CONTROL.EXPENSE_CATEGORIES.EQUIPMENT',
-    'ECONOMIC_CONTROL.EXPENSE_CATEGORIES.VETERINARY',
-    'ECONOMIC_CONTROL.EXPENSE_CATEGORIES.FEED',
-    'ECONOMIC_CONTROL.EXPENSE_CATEGORIES.MAINTENANCE',
-    'ECONOMIC_CONTROL.EXPENSE_CATEGORIES.OTHER'
+    'Veterinario',
+    'Alimentación',
+    'Equipamiento',
+    'Suministros',
+    'Mantenimiento',
+    'Otros Gastos'
   ];
 
   constructor(
     private fb: FormBuilder,
-    private economicService: EconomicService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private economicService: EconomicService,
+    private authService: AuthService
   ) {
     this.expenseForm = this.fb.group({
       amount: ['', [Validators.required, Validators.min(1)]],
       description: ['', [Validators.required, Validators.maxLength(100)]],
-      category: ['ECONOMIC_CONTROL.EXPENSE_CATEGORIES.SUPPLIES']
+      category: [this.categories[0], Validators.required]
     });
   }
 
@@ -49,13 +51,32 @@ export class AddExpenseComponent implements OnInit {
 
   onSubmit(): void {
     if (this.expenseForm.valid) {
-      const { amount, description, category } = this.expenseForm.value;
-      this.economicService.addExpense(Number(amount), description, category);
-      this.router.navigate(['/economic-control']);
+      const currentUser = this.authService.getCurrentUser();
+      const userId = currentUser ? currentUser.id : null;
+      const userName = currentUser ? currentUser.name : 'Unknown';
+
+      const expense = {
+        amount: parseFloat(this.expenseForm.value.amount),
+        description: this.expenseForm.value.description,
+        category: this.expenseForm.value.category,
+        date: new Date().toISOString(),
+        type: 'expense',
+        userId: userId,
+        userName: userName
+      };
+
+      this.economicService.addExpense(expense).subscribe({
+        next: () => {
+          this.economicService.addTransaction({...expense}).subscribe();
+          this.router.navigate(['/economic-control']);
+        },
+        error: (error) => {
+          console.error('Error adding expense', error);
+        }
+      });
     } else {
       Object.keys(this.expenseForm.controls).forEach(key => {
-        const control = this.expenseForm.get(key);
-        control?.markAsTouched();
+        this.expenseForm.get(key)?.markAsTouched();
       });
     }
   }

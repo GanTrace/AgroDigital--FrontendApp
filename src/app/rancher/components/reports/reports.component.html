@@ -1,105 +1,42 @@
 <div class="reports-container">
   <app-header-component></app-header-component>
   <main class="main-content">
-    <section class="search-section">
-      <div class="search-bar">
-        <i class="search-icon">🔍</i>
-        <input type="text" placeholder="{{ 'REPORTS.SEARCH' | translate }}">
-      </div>
-      <button class="filter-btn">
-        {{ 'REPORTS.FILTER' | translate }}
-        <i class="filter-icon">≡</i>
-      </button>
-    </section>
-
-    <div class="reports-grid">
-      <div class="report-card">
-        <div class="card-sidebar">
-          <h3 class="card-title">{{ 'REPORTS.HEALTH_REPORT' | translate }}</h3>
-          <ul class="filter-list">
-            <li class="selected"><span class="circle-icon">●</span> {{ 'REPORTS.ALL_ANIMALS' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.COWS' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.GOATS' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.SHEEP' | translate }}</li>
-          </ul>
-          <div class="card-icon">📊</div>
-        </div>
-        <div class="card-content">
-          <div class="search-input">
-            <i class="search-icon">🔍</i>
-            <input type="text" placeholder="{{ 'REPORTS.SEARCH_ANIMAL' | translate }}">
-          </div>
-          <div class="stat-number">85<span class="percentage">%</span></div>
-          <div class="stat-label">{{ 'REPORTS.HEALTHY_ANIMALS' | translate }}</div>
-        </div>
-      </div>
-
-      <div class="report-card">
-        <div class="card-sidebar">
-          <h3 class="card-title">{{ 'REPORTS.PRODUCTION_REPORT' | translate }}</h3>
-          <ul class="filter-list">
-            <li class="selected"><span class="circle-icon">●</span> {{ 'REPORTS.ALL_ANIMALS' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.COWS' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.GOATS' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.SHEEP' | translate }}</li>
-          </ul>
-          <div class="card-icon">📈</div>
-        </div>
-        <div class="card-content">
-          <div class="search-input">
-            <i class="search-icon">🔍</i>
-            <input type="text" placeholder="{{ 'REPORTS.SEARCH_ANIMAL' | translate }}">
-          </div>
-          <div class="stat-number">92<span class="percentage">%</span></div>
-          <div class="stat-label">{{ 'REPORTS.PRODUCTION_EFFICIENCY' | translate }}</div>
-        </div>
-      </div>
-
-      <div class="report-card">
-        <div class="card-sidebar">
-          <h3 class="card-title">{{ 'REPORTS.FINANCIAL_REPORT' | translate }}</h3>
-          <ul class="filter-list">
-            <li class="selected"><span class="circle-icon">●</span> {{ 'REPORTS.CURRENT_MONTH' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.LAST_MONTH' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.LAST_QUARTER' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.LAST_YEAR' | translate }}</li>
-          </ul>
-          <div class="card-icon">💰</div>
-        </div>
-        <div class="card-content">
-          <div class="search-input">
-            <i class="search-icon">🔍</i>
-            <input type="text" placeholder="{{ 'REPORTS.SEARCH_CATEGORY' | translate }}">
-          </div>
-          <div class="stat-number">S/2850</div>
-          <div class="stat-label">{{ 'REPORTS.NET_PROFIT' | translate }}</div>
-        </div>
-      </div>
-
-      <div class="report-card">
-        <div class="card-sidebar">
-          <h3 class="card-title">{{ 'REPORTS.INVENTORY_REPORT' | translate }}</h3>
-          <ul class="filter-list">
-            <li class="selected"><span class="circle-icon">●</span> {{ 'REPORTS.ALL_ITEMS' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.FEED' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.MEDICINE' | translate }}</li>
-            <li><span class="circle-icon">●</span> {{ 'REPORTS.EQUIPMENT' | translate }}</li>
-          </ul>
-          <div class="card-icon">📦</div>
-        </div>
-        <div class="card-content">
-          <div class="search-input">
-            <i class="search-icon">🔍</i>
-            <input type="text" placeholder="{{ 'REPORTS.SEARCH_ITEM' | translate }}">
-          </div>
-          <div class="stat-number">78<span class="percentage">%</span></div>
-          <div class="stat-label">{{ 'REPORTS.INVENTORY_LEVEL' | translate }}</div>
-        </div>
-      </div>
+    <div class="reports-header">
+      <h1 class="page-title">{{ 'REPORTS.TITLE' | translate }}</h1>
     </div>
 
-    <div class="generate-report-section">
-      <button class="generate-report-btn">{{ 'REPORTS.GENERATE' | translate }}</button>
+    <div class="reports-grid">
+      <div class="report-card" *ngFor="let card of reportCards" [style.--card-color]="card.color">
+        <div class="card-header">
+          <div class="card-title-section">
+            <div class="card-icon">{{ card.icon }}</div>
+            <h3 class="card-title">{{ card.title | translate }}</h3>
+          </div>
+          <div class="card-search">
+            <i class="search-icon">🔍</i>
+            <input type="text" placeholder="{{ card.searchPlaceholder | translate }}">
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <div class="stat-display">
+            <div class="stat-number" [class.currency]="card.id === 'financial'">
+              {{ card.statValue }}<span class="percentage" *ngIf="card.id !== 'financial'">%</span>
+            </div>
+            <div class="stat-label">{{ card.statLabel | translate }}</div>
+          </div>
+          
+          <div class="card-filters">
+            <div 
+              class="filter-pill" 
+              *ngFor="let filter of card.filters"
+              [class.selected]="filter.selected"
+              (click)="selectFilter(card.id, filter.id)">
+              {{ filter.name | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
   <app-footer-component></app-footer-component>

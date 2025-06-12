@@ -13,6 +13,17 @@ import { HeaderComponent } from './public/components/header-component/header-com
 import { AddEventComponent } from './rancher/components/add-event/add-event.component';
 import { AddExpenseComponent } from './rancher/components/add-expense/add-expense.component';
 import { AddIncomeComponent } from './rancher/components/add-income/add-income.component';
+import { VetDashboardComponent } from './veterinarian/components/vet-dashboard/vet-dashboard.component';
+import { MedicalRecordsComponent } from './veterinarian/components/medical-records/medical-records.component';
+import { MedicalAppointmentsComponent } from './veterinarian/components/medical-appointments/medical-appointments.component';
+import { PatientsComponent } from './veterinarian/components/patients/patients.component';
+import { TreatmentsComponent } from './veterinarian/components/treatments/treatments.component';
+import { AddMedicalEventComponent } from './rancher/components/add-medical-event/add-medical-event.component';
+import { NewPatientComponent } from './veterinarian/components/new-patient/new-patient.component';
+import { PatientDetailsComponent } from './veterinarian/components/patient-details/patient-details.component';
+import { NewAppointmentComponent } from './veterinarian/components/new-appointment/new-appointment.component';
+import { NewRecordComponent } from './veterinarian/components/new-record/new-record.component';
+import { NewTreatmentComponent } from './veterinarian/components/new-treatment/new-treatment.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -30,6 +41,19 @@ export const routes: Routes = [
     { path:'add-event', component: AddEventComponent },
     { path:'add-expense', component: AddExpenseComponent },
     { path:'add-income', component: AddIncomeComponent },
+    { path:'add-medical-event', component: AddMedicalEventComponent },
+    { path:'add-medical-event/:id', component: AddMedicalEventComponent },
+    { path: 'veterinarian/dashboard', component: VetDashboardComponent },
+    { path: 'veterinarian/medical-records', component: MedicalRecordsComponent },
+    { path: 'veterinarian/settings', component: SettingsComponent },
+    { path:'veterinarian/medical-appointments', component: MedicalAppointmentsComponent },
+    { path:'veterinarian/patients', component: PatientsComponent},
+    { path:'veterinarian/treatments', component: TreatmentsComponent},
+    { path:'veterinarian/new-patient', component: NewPatientComponent},
+    { path:'veterinarian/patient/:id', component: PatientDetailsComponent},
+    { path:'veterinarian/new-appointment', component: NewAppointmentComponent},
+    { path:'veterinarian/new-record', component: NewRecordComponent},
+    { path:'veterinarian/new-treatment', component: NewTreatmentComponent},
     { path: '**', redirectTo: 'login' }
   ];
 

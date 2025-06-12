@@ -21,7 +21,7 @@ export interface LoginPayload {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://my-json-server.typicode.com/GanTrace/db.json/users';
+  private apiUrl = 'http://localhost:3000/users';
   private currentUser: User | null = null;
   
   constructor(
@@ -39,6 +39,8 @@ export class AuthService {
       ...userData,
       role: userData.role || 'rancher'
     };
+    
+    console.log('Registering user with role:', user.role);
     
     return this.http.post<User>(this.apiUrl, user).pipe(
       tap(response => {
@@ -117,5 +119,13 @@ export class AuthService {
       return of({} as User);
     }
     return this.http.get<User>(`${this.apiUrl}/${id}`);
+  }
+
+  getDashboardRoute(): string {
+    const user = this.getCurrentUser();
+    if (user && user.role === 'veterinarian') {
+      return '/veterinarian/dashboard';
+    }
+    return '/dashboard'; 
   }
 }

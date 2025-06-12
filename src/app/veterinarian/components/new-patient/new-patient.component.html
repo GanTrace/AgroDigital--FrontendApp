@@ -1,0 +1,107 @@
+<div class="new-patient-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Añadir Nuevo Paciente</h1>
+    </div>
+    
+    <div class="form-container">
+      <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Nombre *</label>
+          <input type="text" id="name" formControlName="name" placeholder="Nombre del animal">
+          <div class="error-message" *ngIf="patientForm.get('name')?.invalid && patientForm.get('name')?.touched">
+            El nombre es obligatorio y debe tener al menos 2 caracteres.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="type">Tipo de Animal *</label>
+          <select id="type" formControlName="type">
+            <option value="" disabled>Seleccione un tipo</option>
+            <option *ngFor="let type of animalTypes" [value]="type + ' ' + (type === 'Vaca' ? 'Holstein' : type === 'Toro' ? 'Angus' : type === 'Cabra' ? 'Alpina' : type === 'Oveja' ? 'Merino' : 'Andaluz')">{{type}} {{type === 'Vaca' ? 'Holstein' : type === 'Toro' ? 'Angus' : type === 'Cabra' ? 'Alpina' : type === 'Oveja' ? 'Merino' : 'Andaluz'}}</option>
+          </select>
+          <div class="error-message" *ngIf="patientForm.get('type')?.invalid && patientForm.get('type')?.touched">
+            Debe seleccionar un tipo de animal.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="age">Edad *</label>
+          <input type="text" id="age" formControlName="age" placeholder="Ej: 4 años">
+          <div class="error-message" *ngIf="patientForm.get('age')?.invalid && patientForm.get('age')?.touched">
+            La edad es obligatoria.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="gender">Género *</label>
+          <select id="gender" formControlName="gender">
+            <option value="" disabled>Seleccione un género</option>
+            <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
+          </select>
+          <div class="error-message" *ngIf="patientForm.get('gender')?.invalid && patientForm.get('gender')?.touched">
+            Debe seleccionar un género.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="healthIssues">Problemas de Salud *</label>
+          <select id="healthIssues" formControlName="healthIssues">
+            <option *ngFor="let status of healthStatuses" [value]="status">{{status}}</option>
+          </select>
+          <div class="error-message" *ngIf="patientForm.get('healthIssues')?.invalid && patientForm.get('healthIssues')?.touched">
+            Debe seleccionar un estado de salud.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="owner">Propietario *</label>
+          <input type="text" id="owner" formControlName="owner" placeholder="Nombre del propietario">
+          <div class="error-message" *ngIf="patientForm.get('owner')?.invalid && patientForm.get('owner')?.touched">
+            El propietario es obligatorio.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="lastVisit">Última Visita *</label>
+          <input type="date" id="lastVisit" formControlName="lastVisit">
+          <div class="error-message" *ngIf="patientForm.get('lastVisit')?.invalid && patientForm.get('lastVisit')?.touched">
+            La fecha de última visita es obligatoria.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="nextVisit">Próxima Visita *</label>
+          <input type="date" id="nextVisit" formControlName="nextVisit">
+          <div class="error-message" *ngIf="patientForm.get('nextVisit')?.invalid && patientForm.get('nextVisit')?.touched">
+            La fecha de próxima visita es obligatoria.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="image">URL de la Imagen *</label>
+          <input type="text" id="image" formControlName="image" placeholder="URL de la imagen del animal">
+          <div class="error-message" *ngIf="patientForm.get('image')?.invalid && patientForm.get('image')?.touched">
+            La URL de la imagen es obligatoria.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="observations">Observaciones</label>
+          <textarea id="observations" formControlName="observations" rows="4" placeholder="Observaciones adicionales"></textarea>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" (click)="cancel()">Cancelar</button>
+          <button type="submit" class="submit-btn" [disabled]="isSubmitting">Guardar Paciente</button>
+        </div>
+        
+        <div class="error-message submit-error" *ngIf="submitError">
+          {{ submitError }}
+        </div>
+      </form>
+    </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>

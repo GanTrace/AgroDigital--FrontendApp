@@ -11,6 +11,7 @@
   font-size: 14px;
   font-weight: bold;
   background-color: white;
+  color: black;
 }
 
 .language-dropdown {
@@ -33,6 +34,7 @@
 .language-option {
   padding: 8px 15px;
   font-size: 14px;
+  color: #000;
 }
 
 .language-option:hover {

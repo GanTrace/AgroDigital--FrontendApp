@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 export interface Event {
   id?: number;
@@ -8,98 +10,99 @@ export interface Event {
   fecha: string;
   descripcion: string;
   imagen: string;
+  creatorId?: number | string;
+  creatorName?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
-  private events: Event[] = [
-    {
-      id: 1,
-      tipo: 'Vacunas',
-      titulo: 'Campaña de vacunación',
-      fecha: '2023-12-15',
-      descripcion: 'Campaña de vacunación contra la fiebre aftosa para todo el ganado.',
-      imagen: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1000&auto=format&fit=crop'
-    },
-    {
-      id: 2,
-      tipo: 'Feria',
-      titulo: 'Feria ganadera regional',
-      fecha: '2024-01-20',
-      descripcion: 'Exposición de ganado y productos agrícolas con oportunidades de negocio.',
-      imagen: 'https://images.unsplash.com/photo-1605280263929-1c42c62ef169?q=80&w=1000&auto=format&fit=crop'
-    },
-    {
-      id: 3,
-      tipo: 'Capacitación',
-      titulo: 'Taller de manejo sostenible',
-      fecha: '2024-02-05',
-      descripcion: 'Aprende técnicas de manejo sostenible para mejorar la productividad de tu ganado.',
-      imagen: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1000&auto=format&fit=crop'
-    }
-  ];
+  private apiUrl = 'http://localhost:3000/events';
 
-  private eventsSubject = new BehaviorSubject<Event[]>(this.events);
-
-  constructor() {
-    const storedEvents = localStorage.getItem('events');
-    if (storedEvents) {
-      this.events = JSON.parse(storedEvents);
-      this.eventsSubject.next(this.events);
-    }
-  }
+  constructor(private http: HttpClient) { }
 
   getEvents(): Observable<Event[]> {
-    return this.eventsSubject.asObservable();
+    return this.http.get<Event[]>(this.apiUrl).pipe(
+      catchError(error => {
+        console.error('Error fetching events', error);
+        return of([]);
+      })
+    );
+  }
+
+  getEventById(id: number): Observable<Event | null> {
+    return this.http.get<Event>(`${this.apiUrl}/${id}`).pipe(
+      catchError(error => {
+        console.error(`Error fetching event with id ${id}`, error);
+        return of(null);
+      })
+    );
   }
 
   addEvent(event: Event): Observable<Event> {
-    const newId = this.events.length > 0 ? Math.max(...this.events.map(e => e.id || 0)) + 1 : 1;
-    
-    const newEvent: Event = {
-      ...event,
-      id: newId
-    };
-    
-    this.events.push(newEvent);
-    
-    localStorage.setItem('events', JSON.stringify(this.events));
-    this.eventsSubject.next(this.events);
-    
-    return of(newEvent);
+    return this.http.post<Event>(this.apiUrl, event).pipe(
+      catchError(error => {
+        console.error('Error adding event', error);
+        throw error;
+      })
+    );
   }
 
   updateEvent(event: Event): Observable<Event> {
-    const index = this.events.findIndex(e => e.id === event.id);
-    
-    if (index !== -1) {
-      this.events[index] = event;
-      
-      localStorage.setItem('events', JSON.stringify(this.events));
-      
-      this.eventsSubject.next(this.events);
-      
+    if (!event.id) {
+      console.error('Cannot update event without id');
       return of(event);
     }
     
-    return of({} as Event);
+    return this.http.put<Event>(`${this.apiUrl}/${event.id}`, event).pipe(
+      catchError(error => {
+        console.error(`Error updating event with id ${event.id}`, error);
+        throw error;
+      })
+    );
   }
 
-  deleteEvent(id: number): Observable<boolean> {
-    const index = this.events.findIndex(e => e.id === id);
-    
-    if (index !== -1) {
-      this.events.splice(index, 1);
-      
-      localStorage.setItem('events', JSON.stringify(this.events));
-      
-      this.eventsSubject.next(this.events);
-      
-      return of(true);
+  deleteEvent(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      catchError(error => {
+        console.error(`Error deleting event with id ${id}`, error);
+        throw error;
+      })
+    );
+  }
+
+  searchEvents(term: string): Observable<Event[]> {
+    if (!term.trim()) {
+      return this.getEvents();
     }
     
-    return of(false);
+    return this.getEvents().pipe(
+      map(events => events.filter(event => 
+        event.titulo.toLowerCase().includes(term.toLowerCase()) ||
+        event.descripcion.toLowerCase().includes(term.toLowerCase()) ||
+        event.tipo.toLowerCase().includes(term.toLowerCase())
+      ))
+    );
+  }
+
+  filterEvents(filters: any): Observable<Event[]> {
+    return this.getEvents().pipe(
+      map(events => {
+        return events.filter(event => {
+          let match = true;
+          
+          if (filters.type && filters.type !== 'all' && event.tipo !== filters.type) {
+            match = false;
+          }
+          
+          if (filters.date && new Date(event.fecha).toISOString().split('T')[0] !== filters.date) {
+            match = false;
+          }
+          
+          return match;
+        });
+      })
+    );
   }
 }

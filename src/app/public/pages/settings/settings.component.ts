@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angul
 import { FooterComponentComponent } from '../../components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
 import { AuthService, User } from '../../services/auth.service'; 
-import { NotificationsComponent } from '../../pages/notifications/notifications.component';
 import { HeaderComponent } from '../../components/header-component/header-component.component';
 
 @Component({
@@ -20,7 +19,6 @@ import { HeaderComponent } from '../../components/header-component/header-compon
     FormsModule,
     FooterComponentComponent,
     LanguageSwitcherComponent,
-    NotificationsComponent,
     HeaderComponent
   ],
   templateUrl: './settings.component.html',
@@ -33,6 +31,7 @@ export class SettingsComponent implements OnInit {
   isEditing: boolean = false;
   showPassword: boolean = false;
   settingsForm: FormGroup;
+  userRole: string = 'rancher'; 
   
   profileImageUrl: string | null = null;
   showImageUrlInput: boolean = false;
@@ -65,6 +64,12 @@ export class SettingsComponent implements OnInit {
     
     const currentUser = this.authService.getCurrentUser();
     if (currentUser && currentUser.id !== undefined) {
+      this.userRole = currentUser.role || 'rancher';
+      
+      if (this.userRole === 'veterinarian') {
+        this.animalCount = '0 pacientes';
+      }
+      
       this.authService.getUserById(currentUser.id).subscribe({
         next: (userData) => {
           this.user = userData; 
@@ -141,6 +146,20 @@ export class SettingsComponent implements OnInit {
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
+    
+    if (this.showPassword && this.user) {
+      this.authService.getUserById(this.user.id!).subscribe(userData => {
+        if (userData && userData.password) {
+          this.settingsForm.patchValue({
+            password: userData.password
+          });
+        }
+      });
+    } else {
+      this.settingsForm.patchValue({
+        password: '••••••••'
+      });
+    }
   }
   
   toggleNotifications(): void {
@@ -167,5 +186,21 @@ export class SettingsComponent implements OnInit {
   
   logout(): void {
     this.authService.logout();
+  }
+  
+  navigateBack(): void {
+    if (this.userRole === 'veterinarian') {
+      this.router.navigate(['/veterinarian/dashboard']);
+    } else {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+  
+  navigateToSettings(): void {
+    if (this.userRole === 'veterinarian') {
+      this.router.navigate(['/veterinarian/settings']);
+    } else {
+      this.router.navigate(['/settings']);
+    }
   }
 }

@@ -1,0 +1,235 @@
+<div class="patients-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="page-header">
+      <h1>{{ 'PATIENTS.TITLE' | translate }}</h1>
+      <button class="add-patient-btn" (click)="addNewPatient()">
+        <span>{{ 'PATIENTS.ADD_PATIENT' | translate }}</span>
+        <span class="add-icon">+</span>
+      </button>
+    </div>
+    
+    <div *ngIf="currentStep === 1">
+      <div class="section-header">
+        <h2>{{ 'PATIENTS.SELECT_OWNER' | translate }}</h2>
+      </div>
+      
+      <div class="search-section">
+        <div class="search-bar">
+          <i class="search-icon">🔍</i>
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            (input)="searchOwners()"
+            placeholder="{{ 'PATIENTS.SEARCH_OWNER_PLACEHOLDER' | translate }}">
+        </div>
+      </div>
+      
+      <div class="loading-message" *ngIf="isLoading">
+        {{ 'PATIENTS.LOADING_OWNERS' | translate }}
+      </div>
+      
+      <div class="error-message" *ngIf="loadError">
+        {{ loadError }}
+      </div>
+      
+      <div class="owners-grid" *ngIf="!isLoading && !loadError">
+        <div class="owner-card" *ngFor="let owner of filteredOwners" (click)="selectOwner(owner)">
+          <div class="owner-image">
+            <img [src]="owner.profileImage || 'assets/images/default-user.png'" alt="{{ owner.name }}">
+          </div>
+          <div class="owner-info">
+            <h3 class="owner-name">{{ owner.name }}</h3>
+            <p class="owner-email">{{ owner.email }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="no-owners" *ngIf="!isLoading && !loadError && filteredOwners.length === 0">
+        {{ 'PATIENTS.NO_OWNERS' | translate }}
+      </div>
+    </div>
+    
+    <div *ngIf="currentStep === 2">
+      <div class="section-header">
+        <button class="back-btn" (click)="backToOwners()">
+          <span>←</span> {{ 'PATIENTS.BACK' | translate }}
+        </button>
+        <h2>{{ 'PATIENTS.SELECT_ANIMAL' | translate }}</h2>
+        <p class="selected-owner">{{ 'PATIENTS.SELECTED_OWNER' | translate }}: <strong>{{ selectedOwner?.name }}</strong></p>
+      </div>
+      
+      <div class="search-section">
+        <div class="search-bar">
+          <i class="search-icon">🔍</i>
+          <input 
+            type="text" 
+            [(ngModel)]="animalSearchTerm" 
+            (input)="searchAnimals()"
+            placeholder="{{ 'PATIENTS.SEARCH_ANIMAL_PLACEHOLDER' | translate }}">
+        </div>
+      </div>
+      
+      <div class="loading-message" *ngIf="isLoading">
+        {{ 'PATIENTS.LOADING_ANIMALS' | translate }}
+      </div>
+      
+      <div class="error-message" *ngIf="loadError">
+        {{ loadError }}
+      </div>
+      
+      <div class="animals-grid" *ngIf="!isLoading && !loadError">
+        <div class="animal-card" *ngFor="let animal of filteredAnimals" (click)="selectAnimal(animal)">
+          <div class="animal-image">
+            <img [src]="animal.imagen || animal.imageUrl || 'assets/images/default-animal.png'" alt="{{ animal.nombre }}">
+          </div>
+          <div class="animal-info">
+            <h3 class="animal-name">{{ animal.nombre }}</h3>
+            <p class="animal-type">{{ animal.especie }}</p>
+            <div class="animal-details">
+              <p><strong>{{ 'ANIMALS.SEX' | translate }}:</strong> {{ animal.sexo }}</p>
+              <p><strong>{{ 'ANIMALS.BIRTH_DATE' | translate }}:</strong> {{ animal.fechaNacimiento }}</p>
+              <p *ngIf="animal.enfermedad"><strong>{{ 'ANIMALS.DISEASE' | translate }}:</strong> {{ animal.enfermedad }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="no-animals" *ngIf="!isLoading && !loadError && filteredAnimals.length === 0">
+        {{ 'PATIENTS.NO_ANIMALS_FOR_OWNER' | translate }}
+      </div>
+    </div>
+    
+    <div *ngIf="currentStep === 3">
+      <div class="section-header">
+        <button class="back-btn" (click)="backToAnimals()">
+          <span>←</span> {{ 'PATIENTS.BACK' | translate }}
+        </button>
+        <h2>{{ 'PATIENTS.CONFIRM_ANIMAL' | translate }}</h2>
+      </div>
+      
+      <div class="animal-confirmation" *ngIf="selectedAnimal">
+        <div class="animal-preview">
+          <div class="animal-image-large">
+            <img [src]="selectedAnimal.imagen || selectedAnimal.imageUrl || 'assets/images/default-animal.png'" alt="{{ selectedAnimal.nombre }}">
+          </div>
+          <div class="animal-details-large">
+            <h3>{{ selectedAnimal.nombre }}</h3>
+            <p><strong>{{ 'ANIMALS.SPECIES' | translate }}:</strong> {{ selectedAnimal.especie }}</p>
+            <p><strong>{{ 'ANIMALS.SEX' | translate }}:</strong> {{ selectedAnimal.sexo }}</p>
+            <p><strong>{{ 'ANIMALS.BIRTH_DATE' | translate }}:</strong> {{ selectedAnimal.fechaNacimiento }}</p>
+            <p><strong>{{ 'PATIENTS.OWNER' | translate }}:</strong> {{ selectedOwner?.name }}</p>
+            <p *ngIf="selectedAnimal.enfermedad"><strong>{{ 'ANIMALS.DISEASE' | translate }}:</strong> {{ selectedAnimal.enfermedad }}</p>
+            <p *ngIf="selectedAnimal.observaciones"><strong>{{ 'ANIMALS.OBSERVATIONS' | translate }}:</strong> {{ selectedAnimal.observaciones }}</p>
+          </div>
+        </div>
+        
+        <div class="confirmation-actions">
+          <button class="add-as-patient-btn" (click)="addAsPatient()">
+            {{ 'PATIENTS.ADD_AS_PATIENT' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="currentStep === 4">
+      <div class="search-section">
+        <div class="search-bar">
+          <i class="search-icon">🔍</i>
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            (input)="searchPatients()"
+            (keyup)="searchPatients()"
+            placeholder="{{ 'PATIENTS.SEARCH_PLACEHOLDER' | translate }}">
+        </div>
+        <button class="filter-btn" (click)="toggleFilters()">
+          {{ 'PATIENTS.FILTER' | translate }}
+          <i class="filter-icon">≡</i>
+        </button>
+      </div>
+      
+      <div class="filter-panel" [class.show-filters]="showFilters">
+        <div class="filter-header">
+          <h3>{{ 'PATIENTS.FILTER_OPTIONS' | translate }}</h3>
+          <button class="close-filters" (click)="toggleFilters()">×</button>
+        </div>
+        
+        <div class="filter-content">
+          <div class="filter-group">
+            <label>{{ 'PATIENTS.ANIMAL_TYPE' | translate }}</label>
+            <select [(ngModel)]="selectedAnimalType">
+              <option value="all">{{ 'PATIENTS.ALL_TYPES' | translate }}</option>
+              <option value="Vaca">{{ 'PATIENTS.COW' | translate }}</option>
+              <option value="Toro">{{ 'PATIENTS.BULL' | translate }}</option>
+              <option value="Cabra">{{ 'PATIENTS.GOAT' | translate }}</option>
+              <option value="Oveja">{{ 'PATIENTS.SHEEP' | translate }}</option>
+              <option value="Caballo">{{ 'PATIENTS.HORSE' | translate }}</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label>{{ 'PATIENTS.HEALTH_STATUS' | translate }}</label>
+            <select [(ngModel)]="selectedHealthStatus">
+              <option value="all">{{ 'PATIENTS.ALL_STATUSES' | translate }}</option>
+              <option value="healthy">{{ 'PATIENTS.HEALTHY' | translate }}</option>
+              <option value="treatment">{{ 'PATIENTS.IN_TREATMENT' | translate }}</option>
+            </select>
+          </div>
+          
+          <div class="filter-actions">
+            <button class="apply-btn" (click)="applyFilters()">
+              {{ 'PATIENTS.APPLY_FILTERS' | translate }}
+            </button>
+            <button class="reset-btn" (click)="resetFilters()">
+              {{ 'PATIENTS.RESET_FILTERS' | translate }}
+            </button>
+            <button class="cancel-btn" (click)="toggleFilters()">
+              {{ 'PATIENTS.CANCEL' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="patients-section">
+        <div class="patients-grid">
+          <div class="patient-card" *ngFor="let patient of filteredPatients">
+            <div class="patient-tag" [ngClass]="getHealthStatusClass(patient.healthIssues)">
+              {{ patient.healthIssues === 'Ninguno' ? ('PATIENTS.HEALTHY' | translate) : ('PATIENTS.IN_TREATMENT' | translate) }}
+            </div>
+            <div class="patient-image">
+              <img [src]="patient.image" alt="{{ patient.name }}">
+              <button class="delete-patient-btn" (click)="deletePatient(patient.id, $event)" title="{{ 'PATIENTS.DELETE_PATIENT' | translate }}">
+                <i class="delete-icon">🗑️</i>
+              </button>
+            </div>
+            <div class="patient-info">
+              <h3 class="patient-name">{{ patient.name }}</h3>
+              <p class="patient-type">{{ patient.type }}</p>
+              <div class="patient-details">
+                <p><strong>{{ 'PATIENTS.OWNER' | translate }}:</strong> {{ patient.owner }}</p>
+                <p><strong>{{ 'PATIENTS.AGE' | translate }}:</strong> {{ patient.age }}</p>
+                <p><strong>{{ 'PATIENTS.GENDER' | translate }}:</strong> {{ patient.gender }}</p>
+                <p><strong>{{ 'PATIENTS.LAST_VISIT' | translate }}:</strong> {{ patient.lastVisit }}</p>
+                <p><strong>{{ 'PATIENTS.NEXT_VISIT' | translate }}:</strong> {{ patient.nextVisit }}</p>
+                <p *ngIf="patient.healthIssues !== 'Ninguno'">
+                  <strong>{{ 'PATIENTS.HEALTH_ISSUES' | translate }}:</strong> {{ patient.healthIssues }}
+                </p>
+              </div>
+            </div>
+            <div class="patient-actions">
+              <button class="view-btn" (click)="viewPatientDetails(patient.id)">
+                {{ 'PATIENTS.VIEW_DETAILS' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="no-patients" *ngIf="filteredPatients.length === 0">
+          {{ 'PATIENTS.NO_PATIENTS' | translate }}
+        </div>
+      </div>
+    </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>

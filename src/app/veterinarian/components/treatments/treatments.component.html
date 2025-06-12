@@ -1,0 +1,165 @@
+<div class="treatments-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="page-header">
+      <h1>{{ 'TREATMENTS.TITLE' | translate }}</h1>
+      <button class="add-treatment-btn" (click)="addNewTreatment()">
+        <span>{{ 'TREATMENTS.ADD_TREATMENT' | translate }}</span>
+        <span class="add-icon">+</span>
+      </button>
+    </div>
+    
+    <div class="search-section">
+      <div class="search-bar">
+        <i class="search-icon">🔍</i>
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (input)="searchTreatments()"
+          (keyup)="searchTreatments()"
+          placeholder="{{ 'TREATMENTS.SEARCH_PLACEHOLDER' | translate }}">
+      </div>
+      <button class="filter-btn" (click)="toggleFilters()">
+        {{ 'TREATMENTS.FILTER' | translate }}
+        <i class="filter-icon">≡</i>
+      </button>
+    </div>
+    
+    <div class="filter-panel" [class.show-filters]="showFilters">
+      <div class="filter-header">
+        <h3>{{ 'TREATMENTS.FILTER_OPTIONS' | translate }}</h3>
+        <button class="close-filters" (click)="toggleFilters()">×</button>
+      </div>
+      
+      <div class="filter-content">
+        <div class="filter-group">
+          <label>{{ 'TREATMENTS.CATEGORY' | translate }}</label>
+          <select [(ngModel)]="selectedCategory">
+            <option value="all">{{ 'TREATMENTS.ALL_CATEGORIES' | translate }}</option>
+            <option value="preventive">{{ 'TREATMENTS.CATEGORY_PREVENTIVE' | translate }}</option>
+            <option value="therapeutic">{{ 'TREATMENTS.CATEGORY_THERAPEUTIC' | translate }}</option>
+            <option value="maintenance">{{ 'TREATMENTS.CATEGORY_MAINTENANCE' | translate }}</option>
+            <option value="emergency">{{ 'TREATMENTS.CATEGORY_EMERGENCY' | translate }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'TREATMENTS.ANIMAL_TYPE' | translate }}</label>
+          <select [(ngModel)]="selectedAnimalType">
+            <option value="all">{{ 'TREATMENTS.ALL_TYPES' | translate }}</option>
+            <option value="Vaca">{{ 'TREATMENTS.COW' | translate }}</option>
+            <option value="Toro">{{ 'TREATMENTS.BULL' | translate }}</option>
+            <option value="Cabra">{{ 'TREATMENTS.GOAT' | translate }}</option>
+            <option value="Oveja">{{ 'TREATMENTS.SHEEP' | translate }}</option>
+            <option value="Caballo">{{ 'TREATMENTS.HORSE' | translate }}</option>
+            <option value="Ternero">{{ 'TREATMENTS.CALF' | translate }}</option>
+          </select>
+        </div>
+        
+        <div class="filter-actions">
+          <button class="apply-btn" (click)="applyFilters()">
+            {{ 'TREATMENTS.APPLY_FILTERS' | translate }}
+          </button>
+          <button class="reset-btn" (click)="resetFilters()">
+            {{ 'TREATMENTS.RESET_FILTERS' | translate }}
+          </button>
+          <button class="cancel-btn" (click)="toggleFilters()">
+            {{ 'TREATMENTS.CANCEL' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="treatments-section">
+      <div class="treatments-grid">
+        <div class="treatment-card" *ngFor="let treatment of filteredTreatments">
+          <div class="treatment-tag" [ngClass]="getCategoryClass(treatment.category)">
+            {{ getCategoryTranslationKey(treatment.category) | translate }}
+          </div>
+          <div class="treatment-image">
+            <img [src]="treatment.image" alt="{{ treatment.name }}">
+          </div>
+          <div class="treatment-info">
+            <h3 class="treatment-name">{{ treatment.name }}</h3>
+            <p class="treatment-description">{{ treatment.description }}</p>
+            <div class="treatment-details">
+              <p><strong>{{ 'TREATMENTS.PRICE' | translate }}:</strong> ${{ treatment.price.toFixed(2) }}</p>
+              <p><strong>{{ 'TREATMENTS.DURATION' | translate }}:</strong> {{ treatment.duration }}</p>
+              <p><strong>{{ 'TREATMENTS.SUITABLE_FOR' | translate }}:</strong> {{ treatment.animalTypes.join(', ') }}</p>
+            </div>
+          </div>
+          <div class="treatment-actions">
+            <button class="view-btn" (click)="viewTreatmentDetails(treatment.id)">
+              {{ 'TREATMENTS.VIEW_DETAILS' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="no-treatments" *ngIf="filteredTreatments.length === 0">
+        {{ 'TREATMENTS.NO_TREATMENTS' | translate }}
+      </div>
+    </div>
+    
+    <div class="treatment-details-modal" *ngIf="showTreatmentDetails && selectedTreatment">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>{{ selectedTreatment.name }}</h2>
+          <button class="close-modal" (click)="closeTreatmentDetails()">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="treatment-image-large">
+            <img [src]="selectedTreatment.image" alt="{{ selectedTreatment.name }}">
+          </div>
+          
+          <div class="treatment-category">
+            <span [ngClass]="getCategoryClass(selectedTreatment.category)">
+              {{ getCategoryTranslationKey(selectedTreatment.category) | translate }}
+            </span>
+          </div>
+          
+          <div class="treatment-description-full">
+            <p>{{ selectedTreatment.description }}</p>
+          </div>
+          
+          <div class="treatment-details-full">
+            <div class="detail-item">
+              <h3>{{ 'TREATMENTS.PRICE' | translate }}</h3>
+              <p>${{ selectedTreatment.price.toFixed(2) }}</p>
+            </div>
+            
+            <div class="detail-item">
+              <h3>{{ 'TREATMENTS.DURATION' | translate }}</h3>
+              <p>{{ selectedTreatment.duration }}</p>
+            </div>
+            
+            <div class="detail-item">
+              <h3>{{ 'TREATMENTS.SUITABLE_FOR' | translate }}</h3>
+              <p>{{ selectedTreatment.animalTypes.join(', ') }}</p>
+            </div>
+          </div>
+          
+          <div class="treatment-materials">
+            <h3>{{ 'TREATMENTS.MATERIALS_NEEDED' | translate }}</h3>
+            <ul>
+              <li *ngFor="let material of selectedTreatment.materials">{{ material }}</li>
+            </ul>
+          </div>
+          
+          <div class="treatment-steps">
+            <h3>{{ 'TREATMENTS.PROCEDURE_STEPS' | translate }}</h3>
+            <ol>
+              <li *ngFor="let step of selectedTreatment.steps">{{ step }}</li>
+            </ol>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="close-btn" (click)="closeTreatmentDetails()">
+            {{ 'TREATMENTS.CLOSE' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>

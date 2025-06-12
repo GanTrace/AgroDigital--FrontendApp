@@ -1,0 +1,71 @@
+<div class="new-appointment-container">
+  <app-header-component></app-header-component>
+  <main class="main-content">
+    <div class="page-header">
+      <h1>{{ 'APPOINTMENTS.ADD_NEW_APPOINTMENT' | translate }}</h1>
+    </div>
+    
+    <div class="form-container">
+      <div *ngIf="isLoadingPatients" class="loading-message">
+        {{ 'APPOINTMENTS.LOADING_PATIENTS' | translate }}
+      </div>
+      
+      <div *ngIf="loadPatientsError" class="error-message load-error">
+        {{ loadPatientsError }}
+      </div>
+      
+      <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()" *ngIf="!isLoadingPatients && !loadPatientsError">
+        <div class="form-group">
+          <label for="patientId">{{ 'APPOINTMENTS.PATIENT' | translate }} *</label>
+          <select id="patientId" formControlName="patientId" (change)="onPatientChange()">
+            <option value="" disabled>{{ 'APPOINTMENTS.SELECT_PATIENT' | translate }}</option>
+            <option *ngFor="let patient of patients" [value]="patient.id">{{patient.name}} ({{patient.owner}})</option>
+          </select>
+          <div class="error-message" *ngIf="appointmentForm.get('patientId')?.invalid && appointmentForm.get('patientId')?.touched">
+            {{ 'APPOINTMENTS.PATIENT_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="date">{{ 'APPOINTMENTS.DATE' | translate }} *</label>
+          <input type="date" id="date" formControlName="date">
+          <div class="error-message" *ngIf="appointmentForm.get('date')?.invalid && appointmentForm.get('date')?.touched">
+            {{ 'APPOINTMENTS.DATE_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="time">{{ 'APPOINTMENTS.TIME' | translate }} *</label>
+          <input type="time" id="time" formControlName="time">
+          <div class="error-message" *ngIf="appointmentForm.get('time')?.invalid && appointmentForm.get('time')?.touched">
+            {{ 'APPOINTMENTS.TIME_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="reason">{{ 'APPOINTMENTS.REASON' | translate }} *</label>
+          <input type="text" id="reason" formControlName="reason" placeholder="{{ 'APPOINTMENTS.REASON_PLACEHOLDER' | translate }}">
+          <div class="error-message" *ngIf="appointmentForm.get('reason')?.invalid && appointmentForm.get('reason')?.touched">
+            {{ 'APPOINTMENTS.REASON_REQUIRED' | translate }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="notes">{{ 'APPOINTMENTS.NOTES' | translate }}</label>
+          <textarea id="notes" formControlName="notes" rows="4" placeholder="{{ 'APPOINTMENTS.NOTES_PLACEHOLDER' | translate }}"></textarea>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" (click)="cancel()">{{ 'APPOINTMENTS.CANCEL' | translate }}</button>
+          <button type="submit" class="submit-btn" [disabled]="isSubmitting">{{ 'APPOINTMENTS.SAVE_APPOINTMENT' | translate }}</button>
+        </div>
+        
+        <div class="error-message submit-error" *ngIf="submitError">
+          {{ submitError }}
+        </div>
+      </form>
+    </div>
+  </main>
+  <app-footer-component></app-footer-component>
+</div>
+<p>new-appointment works!</p>

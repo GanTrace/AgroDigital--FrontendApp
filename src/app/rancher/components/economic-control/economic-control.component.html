@@ -6,34 +6,61 @@
       <button class="add-expense-btn" (click)="navigateToAddExpense()">{{ 'ECONOMIC_CONTROL.ADD_EXPENSE' | translate }}</button>
     </section>
 
-    <section class="financial-cards">
-      <div class="financial-card income-card">
-        <div class="card-header">{{ 'ECONOMIC_CONTROL.INCOME' | translate }}</div>
+    <section class="summary-cards">
+      <div class="card income-card">
+        <div class="card-icon">💰</div>
         <div class="card-content">
-          <div class="icon-container">
-            <i class="arrow-icon down">↓</i>
-          </div>
-          <div class="amount">S/{{ ingresos }}</div>
+          <h3>{{ 'ECONOMIC_CONTROL.TOTAL_INCOME' | translate }}</h3>
+          <p class="card-amount">{{ formatCurrency(ingresos) }}</p>
         </div>
       </div>
-
-      <div class="financial-card expense-card">
-        <div class="card-header">{{ 'ECONOMIC_CONTROL.EXPENSES' | translate }}</div>
+      
+      <div class="card expense-card">
+        <div class="card-icon">💸</div>
         <div class="card-content">
-          <div class="icon-container">
-            <i class="arrow-icon up">↑</i>
-          </div>
-          <div class="amount">S/{{ gastos }}</div>
+          <h3>{{ 'ECONOMIC_CONTROL.TOTAL_EXPENSES' | translate }}</h3>
+          <p class="card-amount">{{ formatCurrency(gastos) }}</p>
+        </div>
+      </div>
+      
+      <div class="card balance-card" [ngClass]="{'positive-balance': balance >= 0, 'negative-balance': balance < 0}">
+        <div class="card-icon">{{ balance >= 0 ? '📈' : '📉' }}</div>
+        <div class="card-content">
+          <h3>{{ 'ECONOMIC_CONTROL.BALANCE' | translate }}</h3>
+          <p class="card-amount">{{ formatCurrency(balance) }}</p>
         </div>
       </div>
     </section>
-
-    <section class="net-income-description">
-      <p>{{ 'ECONOMIC_CONTROL.NET_INCOME' | translate }}</p>
-    </section>
-
-    <section class="chart-section">
-      <canvas id="chart"></canvas>
+    
+    <section class="transactions-section">
+      <h2>{{ 'ECONOMIC_CONTROL.RECENT_TRANSACTIONS' | translate }}</h2>
+      
+      <div class="transactions-list">
+        <div class="transaction-item" *ngFor="let transaction of recentTransactions">
+          <div class="transaction-icon" [ngClass]="{'income-icon': transaction.type === 'income', 'expense-icon': transaction.type === 'expense'}">
+            {{ getTransactionIcon(transaction.category) }}
+          </div>
+          <div class="transaction-details">
+            <div class="transaction-header">
+              <h4>{{ transaction.description }}</h4>
+              <span class="transaction-date">{{ formatDate(transaction.date) }}</span>
+            </div>
+            <div class="transaction-category">
+              {{ getTranslatedCategory(transaction.category) }}
+            </div>
+          </div>
+          <div class="transaction-amount" [ngClass]="{'income-amount': transaction.type === 'income', 'expense-amount': transaction.type === 'expense'}">
+            {{ transaction.type === 'income' ? '+' : '-' }}{{ formatCurrency(transaction.amount) }}
+          </div>
+          <div class="transaction-actions">
+            <button class="delete-btn" (click)="deleteTransaction(transaction)">🗑️</button>
+          </div>
+        </div>
+        
+        <div class="no-transactions" *ngIf="recentTransactions.length === 0">
+          {{ 'ECONOMIC_CONTROL.NO_TRANSACTIONS' | translate }}
+        </div>
+      </div>
     </section>
   </main>
   <app-footer-component></app-footer-component>

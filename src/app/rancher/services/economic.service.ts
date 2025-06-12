@@ -1,95 +1,105 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-
-export interface Transaction {
-  id: number;
-  type: 'income' | 'expense';
-  amount: number;
-  description: string;
-  date: string;
-  category?: string;
-}
+import { HttpClient } from '@angular/common/http';
+import { Observable, forkJoin, map, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EconomicService {
-  private totalIncome = new BehaviorSubject<number>(1485);
-  private totalExpense = new BehaviorSubject<number>(1485);
-  private transactions: Transaction[] = [];
-  private nextId = 1;
+  private apiUrl = 'http://localhost:3000';
 
-  constructor() {
-    const storedIncome = localStorage.getItem('totalIncome');
-    const storedExpense = localStorage.getItem('totalExpense');
-    const storedTransactions = localStorage.getItem('transactions');
-
-    if (storedIncome) {
-      this.totalIncome.next(Number(storedIncome));
-    }
-    
-    if (storedExpense) {
-      this.totalExpense.next(Number(storedExpense));
-    }
-    
-    if (storedTransactions) {
-      this.transactions = JSON.parse(storedTransactions);
-      if (this.transactions.length > 0) {
-        this.nextId = Math.max(...this.transactions.map(t => t.id)) + 1;
-      }
-    }
-  }
+  constructor(private http: HttpClient) { }
 
   getTotalIncome(): Observable<number> {
-    return this.totalIncome.asObservable();
+    return this.http.get<any[]>(`${this.apiUrl}/incomes`).pipe(
+      map(incomes => {
+        return incomes.reduce((total, income) => total + parseFloat(income.amount), 0);
+      }),
+      catchError(error => {
+        console.error('Error fetching incomes', error);
+        return of(0);
+      })
+    );
   }
 
   getTotalExpense(): Observable<number> {
-    return this.totalExpense.asObservable();
+    return this.http.get<any[]>(`${this.apiUrl}/expenses`).pipe(
+      map(expenses => {
+        return expenses.reduce((total, expense) => total + parseFloat(expense.amount), 0);
+      }),
+      catchError(error => {
+        console.error('Error fetching expenses', error);
+        return of(0);
+      })
+    );
   }
 
-  getTransactions(): Transaction[] {
-    return [...this.transactions];
+  addExpense(expense: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/expenses`, expense);
   }
 
-  addIncome(amount: number, description: string, category?: string): void {
-    const currentTotal = this.totalIncome.value;
-    const newTotal = currentTotal + amount;
-    
-
-    this.totalIncome.next(newTotal);
-    localStorage.setItem('totalIncome', newTotal.toString());
-    
-    const transaction: Transaction = {
-      id: this.nextId++,
-      type: 'income',
-      amount,
-      description,
-      date: new Date().toISOString(),
-      category
-    };
-    
-    this.transactions.push(transaction);
-    localStorage.setItem('transactions', JSON.stringify(this.transactions));
+  addIncome(income: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/incomes`, income);
   }
 
-  addExpense(amount: number, description: string, category?: string): void {
-    const currentTotal = this.totalExpense.value;
-    const newTotal = currentTotal + amount;
-    
-    this.totalExpense.next(newTotal);
-    localStorage.setItem('totalExpense', newTotal.toString());
-    
-    const transaction: Transaction = {
-      id: this.nextId++,
-      type: 'expense',
-      amount,
-      description,
-      date: new Date().toISOString(),
-      category
-    };
-    
-    this.transactions.push(transaction);
-    localStorage.setItem('transactions', JSON.stringify(this.transactions));
+  addTransaction(transaction: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/transactions`, transaction);
+  }
+
+  getRecentTransactions(limit: number = 10): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/transactions`).pipe(
+      map(transactions => {
+        return transactions
+          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+          .slice(0, limit);
+      }),
+      catchError(error => {
+        console.error('Error fetching transactions', error);
+        return of([]);
+      })
+    );
+  }
+
+  getIncomes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/incomes`).pipe(
+      catchError(error => {
+        console.error('Error fetching incomes', error);
+        return of([]);
+      })
+    );
+  }
+
+  getExpenses(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/expenses`).pipe(
+      catchError(error => {
+        console.error('Error fetching expenses', error);
+        return of([]);
+      })
+    );
+  }
+
+  updateIncome(id: number, income: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/incomes/${id}`, income);
+  }
+
+  updateExpense(id: number, expense: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/expenses/${id}`, expense);
+  }
+
+  deleteIncome(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/incomes/${id}`);
+  }
+
+  deleteExpense(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/expenses/${id}`);
+  }
+
+  deleteTransaction(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/transactions/${id}`);
+  }
+
+  getTransactionById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/transactions/${id}`);
   }
 }
