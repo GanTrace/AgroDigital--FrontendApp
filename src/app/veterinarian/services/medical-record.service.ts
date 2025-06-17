@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from '../../public/services/auth.service';
+import { environment } from '../../../environments/environment';
 
 export interface MedicalRecord {
   id?: number;
@@ -24,7 +25,7 @@ export interface MedicalRecord {
   providedIn: 'root'
 })
 export class MedicalRecordService {
-  private apiUrl = 'http://localhost:3000/medicalRecords';
+  private apiUrl = `${environment.apiUrl}/medicalRecords`;
   
   constructor(
     private http: HttpClient,

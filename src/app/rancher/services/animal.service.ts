@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, map, of, tap, catchError } from 'rxjs';
 import { AuthService } from '../../public/services/auth.service';
+import { environment } from '../../../environments/environment';
 
 export interface Animal {
   id: number;
@@ -27,7 +28,7 @@ export interface Animal {
   providedIn: 'root'
 })
 export class AnimalService {
-  private apiUrl = 'http://localhost:3000/animals';
+  private apiUrl = `${environment.apiUrl}/animals`;
   private fallbackAnimals: Animal[] = []; 
   
   constructor(

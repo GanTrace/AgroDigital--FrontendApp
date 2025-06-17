@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of, catchError } from 'rxjs';
 import { AuthService } from '../../public/services/auth.service';
+import { environment } from '../../../environments/environment';
 
 export interface Treatment {
   id?: number;
@@ -21,7 +22,7 @@ export interface Treatment {
   providedIn: 'root'
 })
 export class TreatmentService {
-  private apiUrl = 'http://localhost:3000/treatments';
+  private apiUrl = `${environment.apiUrl}/treatments`;
   
   constructor(
     private http: HttpClient,
