@@ -94,8 +94,8 @@
             <button class="complete-btn" (click)="completeAppointment(appointment.id)" *ngIf="appointment.status === 'scheduled'">
               {{ 'APPOINTMENTS.COMPLETE' | translate }}
             </button>
-            <button class="cancel-btn" (click)="cancelAppointment(appointment.id)" *ngIf="appointment.status === 'scheduled'">
-              {{ 'APPOINTMENTS.CANCEL' | translate }}
+            <button class="delete-btn" (click)="deleteAppointment(appointment.id)" *ngIf="appointment.status === 'scheduled'">
+              {{ 'APPOINTMENTS.DELETE' | translate }}
             </button>
           </div>
         </div>

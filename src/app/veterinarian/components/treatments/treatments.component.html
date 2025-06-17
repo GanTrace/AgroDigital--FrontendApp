@@ -92,6 +92,9 @@
             <button class="view-btn" (click)="viewTreatmentDetails(treatment.id)">
               {{ 'TREATMENTS.VIEW_DETAILS' | translate }}
             </button>
+            <button class="delete-btn" *ngIf="canDeleteTreatment(treatment)" (click)="deleteTreatment(treatment.id, treatment.name)">
+              {{ 'TREATMENTS.DELETE' | translate }}
+            </button>
           </div>
         </div>
       </div>
