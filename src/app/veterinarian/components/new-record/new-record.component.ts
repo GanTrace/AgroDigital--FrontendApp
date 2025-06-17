@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../public/services/auth.service';
@@ -45,6 +45,7 @@ export class NewRecordComponent implements OnInit {
     private medicalRecordService: MedicalRecordService,
     private patientService: PatientService,
     private router: Router,
+    private route: ActivatedRoute,
     private translate: TranslateService,
     private authService: AuthService
   ) {}
@@ -67,6 +68,15 @@ export class NewRecordComponent implements OnInit {
     
     this.loadPatients();
     this.initForm();
+    
+    // Check for patientId in query params
+    this.route.queryParams.subscribe(params => {
+      if (params['patientId']) {
+        this.recordForm.patchValue({
+          patientId: params['patientId']
+        });
+      }
+    });
   }
   
   loadPatients(): void {
@@ -138,7 +148,7 @@ export class NewRecordComponent implements OnInit {
       patientName: selectedPatient.name,
       ownerName: selectedPatient.owner,
       date: formData.date,
-      recordType: formData.recordType,
+      recordType: formData.recordType.replace('VET_MEDICAL_RECORDS.RECORD_TYPES.', ''),
       diagnosis: formData.diagnosis,
       treatment: formData.treatment,
       notes: formData.notes || '',
