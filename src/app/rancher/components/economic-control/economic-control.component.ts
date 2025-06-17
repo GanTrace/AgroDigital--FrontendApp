@@ -6,7 +6,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
 import { AuthService } from '../../../public/services/auth.service';
-import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 import { EconomicService } from '../../services/economic.service';
 import { Subscription } from 'rxjs';
@@ -22,7 +21,6 @@ Chart.register(...registerables);
     TranslateModule,
     FooterComponentComponent,
     LanguageSwitcherComponent,
-    NotificationsComponent,
     HeaderComponent
   ],
   templateUrl: './economic-control.component.html',

@@ -48,7 +48,8 @@ export class LoginComponent implements OnInit {
     }
 
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/dashboard']);
+      const dashboardRoute = this.authService.getDashboardRoute();
+      this.router.navigate([dashboardRoute]);
     }
   }
 
@@ -77,12 +78,8 @@ export class LoginComponent implements OnInit {
       next: (users: User[]) => {
         this.isLoggingIn = false;
         if (users.length > 0) {
-          if (this.authService.getDashboardRoute) {
-            const dashboardRoute = this.authService.getDashboardRoute();
-            this.router.navigate([dashboardRoute]);
-          } else {
-            this.router.navigate(['/dashboard']);
-          }
+          const dashboardRoute = this.authService.getDashboardRoute();
+          this.router.navigate([dashboardRoute]);
         } else {
           this.loginError = this.translate.instant('LOGIN.INVALID_CREDENTIALS');
         }
