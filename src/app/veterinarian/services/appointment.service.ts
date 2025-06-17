@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of, catchError } from 'rxjs';
 import { AuthService } from '../../public/services/auth.service';
+import { environment } from '../../../environments/environment';
 
 export interface Appointment {
   id?: number;
@@ -20,7 +21,7 @@ export interface Appointment {
   providedIn: 'root'
 })
 export class AppointmentService {
-  private apiUrl = 'http://localhost:3000/appointments';
+  private apiUrl = `${environment.apiUrl}/appointments`;
   
   constructor(
     private http: HttpClient,

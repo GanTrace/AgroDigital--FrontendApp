@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of, catchError, tap, map } from 'rxjs';
 import { AuthService } from '../../public/services/auth.service';
+import { environment } from '../../../environments/environment';
 
 export interface Patient {
   id?: number;
@@ -22,7 +23,7 @@ export interface Patient {
   providedIn: 'root'
 })
 export class PatientService {
-  private apiUrl = 'http://localhost:3000/patients';
+  private apiUrl = `${environment.apiUrl}/patients`;
   
   constructor(
     private http: HttpClient,
