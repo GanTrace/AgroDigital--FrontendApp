@@ -150,4 +150,29 @@ export class TreatmentsComponent implements OnInit {
   getCategoryTranslationKey(category: string): string {
     return 'TREATMENTS.CATEGORY_' + category.toUpperCase();
   }
+  
+  canDeleteTreatment(treatment: Treatment): boolean {
+    const currentUser = this.authService.getCurrentUser();
+    return !!(currentUser && currentUser.id !== undefined && currentUser.id === treatment.createdBy);
+  }
+  
+  deleteTreatment(id: number | undefined, treatmentName: string): void {
+    if (id === undefined) return;
+    
+    const confirmDelete = confirm(`¿Estás seguro de que deseas eliminar el tratamiento "${treatmentName}"? Esta acción no se puede deshacer.`);
+    
+    if (confirmDelete) {
+      this.treatmentService.deleteTreatment(id).subscribe({
+        next: () => {
+          // Actualizar la lista de tratamientos
+          this.loadTreatments();
+          alert('Tratamiento eliminado exitosamente.');
+        },
+        error: (error) => {
+          console.error('Error al eliminar el tratamiento:', error);
+          alert('Error al eliminar el tratamiento. Por favor, inténtalo de nuevo.');
+        }
+      });
+    }
+  }
 }

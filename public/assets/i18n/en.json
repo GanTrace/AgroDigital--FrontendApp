@@ -365,6 +365,7 @@
     "LOADING_ERROR": "Error loading medical records. Please try again.",
     "RECORD_DETAILS": "Record Details",
     "SELECT_PATIENT": "Select patient",
+    "SELECT_RECORD_TYPE": "Select record type",
         "PATIENT_REQUIRED": "Patient is required",
         "DATE_REQUIRED": "Date is required",
         "RECORD_TYPE_REQUIRED": "Record type is required",
@@ -394,6 +395,7 @@
     "APPLY_FILTERS": "Apply Filters",
     "RESET_FILTERS": "Reset Filters",
     "CANCEL": "Cancel",
+    "DELETE": "Delete",
     "OWNER": "Owner",
     "REASON": "Reason",
     "NOTES": "Notes",
@@ -535,9 +537,8 @@
     "IMAGE_PLACEHOLDER": "Treatment image URL",
     "IMAGE_REQUIRED": "Image URL is required",
     "SAVE_TREATMENT": "Save Treatment",
-    "TREATMENT_DETAILS": "Treatment Details"
+    "TREATMENT_DETAILS": "Treatment Details",
+    "DELETE": "Delete"
   }
 }
 }
-
-

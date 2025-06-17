@@ -5,7 +5,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
-import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 import { AuthService } from '../../../public/services/auth.service';
 import { AnimalService, Animal } from '../../services/animal.service';
@@ -20,7 +19,6 @@ import { AnimalService, Animal } from '../../services/animal.service';
     ReactiveFormsModule,
     FooterComponentComponent,
     LanguageSwitcherComponent,
-    NotificationsComponent,
     HeaderComponent 
   ],
   templateUrl: './animals.component.html',

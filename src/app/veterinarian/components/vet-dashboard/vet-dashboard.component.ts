@@ -6,7 +6,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../public/services/auth.service';
 import { FooterComponentComponent } from '../../../public/components/footer-component/footer-component.component';
 import { LanguageSwitcherComponent } from '../../../public/components/language-switcher/language-switcher.component';
-import { NotificationsComponent } from '../../../public/pages/notifications/notifications.component';
 import { HeaderComponent } from '../../../public/components/header-component/header-component.component';
 import { PatientService, Patient } from '../../services/patient.service';
 import { AppointmentService, Appointment } from '../../services/appointment.service';
@@ -23,7 +22,6 @@ import { PatientEventService } from '../../services/patient-event.service';
     TranslateModule,
     FooterComponentComponent,
     LanguageSwitcherComponent,
-    NotificationsComponent,
     HeaderComponent
   ],
   templateUrl: './vet-dashboard.component.html',

@@ -19,7 +19,8 @@ import { AnimalService, Animal } from '../../services/animal.service';
     TranslateModule,
     HeaderComponent,
     FooterComponentComponent,
-    LanguageSwitcherComponent 
+    LanguageSwitcherComponent
+ 
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'

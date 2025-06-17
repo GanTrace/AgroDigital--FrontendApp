@@ -148,19 +148,26 @@ export class MedicalAppointmentsComponent implements OnInit {
     this.router.navigate(['/veterinarian/new-appointment']);
   }
   
-  cancelAppointment(id: number | undefined): void {
+  deleteAppointment(id: number | undefined): void {
     if (id !== undefined) {
       const appointment = this.appointments.find(a => a.id === id);
       if (appointment) {
-        appointment.status = 'cancelled';
-        this.appointmentService.updateAppointment(appointment).subscribe({
-          next: () => {
-            this.applyFilters();
-          },
-          error: (error) => {
-            console.error('Error cancelling appointment:', error);
-          }
-        });
+        const confirmDelete = confirm(`¿Estás seguro de que deseas eliminar la cita con ${appointment.patientName}? Esta acción no se puede deshacer.`);
+        
+        if (confirmDelete) {
+          this.appointmentService.deleteAppointment(id).subscribe({
+            next: () => {
+              // Remover la cita de la lista local
+              this.appointments = this.appointments.filter(a => a.id !== id);
+              this.applyFilters();
+              alert('Cita eliminada exitosamente.');
+            },
+            error: (error) => {
+              console.error('Error deleting appointment:', error);
+              alert('Error al eliminar la cita. Por favor, inténtalo de nuevo.');
+            }
+          });
+        }
       }
     }
   }
