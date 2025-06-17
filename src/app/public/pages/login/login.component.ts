@@ -75,9 +75,9 @@ export class LoginComponent implements OnInit {
     };
 
     this.authService.login(credentials).subscribe({
-      next: (users: User[]) => {
+      next: (user: User) => {
         this.isLoggingIn = false;
-        if (users.length > 0) {
+        if (user) {
           const dashboardRoute = this.authService.getDashboardRoute();
           this.router.navigate([dashboardRoute]);
         } else {
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
       error: (error) => {
         this.isLoggingIn = false;
         console.error('Login error:', error);
-        this.loginError = this.translate.instant('LOGIN.SERVER_ERROR');
+        this.loginError = this.translate.instant('LOGIN.INVALID_CREDENTIALS');
       }
     });
   }

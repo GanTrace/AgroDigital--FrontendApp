@@ -57,20 +57,22 @@ export class AuthService {
     );
   }
 
-  login(credentials: LoginPayload): Observable<User[]> {
+  login(credentials: LoginPayload): Observable<User> {
     console.log('Attempting login with:', credentials.email);
-    return this.http.get<User[]>(`${this.apiUrl}?email=${credentials.email}&password=${credentials.password}`).pipe(
-      tap(users => {
-        console.log('Login response:', users);
-        if (users.length > 0) {
-          const { password, ...userWithoutPassword } = users[0];
+    const loginUrl = `${environment.apiUrl}/auth/login`;
+    
+    return this.http.post<User>(loginUrl, credentials).pipe(
+      tap(user => {
+        console.log('Login response:', user);
+        if (user) {
+          const { password, ...userWithoutPassword } = user;
           localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-          this.currentUser = users[0];
+          this.currentUser = user;
         }
       }),
       catchError(error => {
         console.error('Error during login:', error);
-        return of([]);
+        throw error;
       })
     );
   }
