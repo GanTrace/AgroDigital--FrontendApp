@@ -59,6 +59,20 @@
       "password": "Andrid123!",
       "role": "veterinarian",
       "id": 8
+    },
+    {
+      "name": "eric",
+      "email": "xaericks@gmail.com",
+      "password": "ericagama123!",
+      "role": "rancher",
+      "id": 9
+    },
+    {
+      "name": "victor",
+      "email": "victormeneses@gmail.com",
+      "password": "Victor123!",
+      "role": "rancher",
+      "id": 10
     }
   ],
   "events": [
