@@ -369,6 +369,7 @@
     "LOADING_ERROR": "Error al cargar los registros médicos. Por favor, inténtelo de nuevo.",
     "RECORD_DETAILS": "Detalles del Registro",
     "SELECT_PATIENT": "Seleccionar paciente",
+    "SELECT_RECORD_TYPE": "Selecciona el tipo de registro",
         "PATIENT_REQUIRED": "El paciente es obligatorio",
         "DATE_REQUIRED": "La fecha es obligatoria",
         "RECORD_TYPE_REQUIRED": "El tipo de registro es obligatorio",
@@ -397,6 +398,7 @@
     "APPLY_FILTERS": "Aplicar Filtros",
     "RESET_FILTERS": "Restablecer",
     "CANCEL": "Cancelar",
+    "DELETE": "Eliminar",
     "OWNER": "Propietario",
     "REASON": "Motivo",
     "NOTES": "Notas",
@@ -538,7 +540,8 @@
     "IMAGE_PLACEHOLDER": "URL de la imagen del tratamiento",
     "IMAGE_REQUIRED": "La URL de la imagen es obligatoria",
     "SAVE_TREATMENT": "Guardar Tratamiento",
-    "TREATMENT_DETAILS": "Detalles del Tratamiento"
+    "TREATMENT_DETAILS": "Detalles del Tratamiento",
+    "DELETE": "Eliminar"
   }
 }
 
