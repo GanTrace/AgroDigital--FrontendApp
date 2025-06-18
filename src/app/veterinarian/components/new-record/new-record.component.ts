@@ -83,7 +83,7 @@ export class NewRecordComponent implements OnInit {
     this.isLoadingPatients = true;
     this.loadPatientsError = '';
     
-    this.patientService.getPatients().subscribe({
+    this.patientService.getPatientsByUser().subscribe({
       next: (patients) => {
         this.patients = patients;
         this.isLoadingPatients = false;
