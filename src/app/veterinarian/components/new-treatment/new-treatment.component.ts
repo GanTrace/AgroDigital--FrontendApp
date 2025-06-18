@@ -130,30 +130,83 @@ export class NewTreatmentComponent implements OnInit {
   }
   
   onSubmit(): void {
+    console.log('Form submission started');
+    console.log('Form valid:', this.treatmentForm.valid);
+    console.log('Form value:', this.treatmentForm.value);
+    
     if (this.treatmentForm.invalid) {
       this.markFormGroupTouched(this.treatmentForm);
+      this.submitError = 'Por favor, complete todos los campos requeridos';
+      console.log('Form is invalid');
       return;
     }
     
     if (this.animalTypesArray.length === 0) {
       this.submitError = 'Debe seleccionar al menos un tipo de animal';
+      console.log('No animal types selected');
+      return;
+    }
+    
+    // Verificar que el usuario esté autenticado
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser || !currentUser.id) {
+      this.submitError = 'Error de autenticación. Por favor, inicie sesión nuevamente.';
+      console.log('User not authenticated');
       return;
     }
     
     this.isSubmitting = true;
     this.submitError = '';
     
-    const treatmentData = this.treatmentForm.value;
+    // Preparar los datos según las especificaciones del backend
+    const formValue = this.treatmentForm.value;
+    
+    // Convertir categoría a mayúsculas según especificaciones
+    const categoryMapping: { [key: string]: string } = {
+      'preventive': 'PREVENTIVO',
+      'therapeutic': 'TERAPEUTICO', 
+      'maintenance': 'MANTENIMIENTO',
+      'emergency': 'EMERGENCIA'
+    };
+    
+    const treatmentData = {
+      name: formValue.name?.trim(),
+      category: categoryMapping[formValue.category] || formValue.category?.toUpperCase(),
+      description: formValue.description?.trim(),
+      price: parseFloat(formValue.price),
+      duration: formValue.duration?.trim(),
+      materials: formValue.materials?.filter((material: string) => material?.trim()) || [],
+      steps: formValue.steps?.filter((step: string) => step?.trim()) || [],
+      animalTypes: formValue.animalTypes || [],
+      image: formValue.image?.trim() || '',
+      createdBy: currentUser.id
+    };
+    
+    console.log('Sending treatment data:', treatmentData);
     
     this.treatmentService.addTreatment(treatmentData).subscribe({
-      next: () => {
+      next: (response) => {
+        console.log('Treatment created successfully:', response);
         this.isSubmitting = false;
         this.router.navigate(['/veterinarian/treatments']);
       },
       error: (error) => {
-        this.isSubmitting = false;
-        this.submitError = 'Error al guardar el tratamiento. Por favor, inténtelo de nuevo.';
         console.error('Error adding treatment:', error);
+        this.isSubmitting = false;
+        
+        // Manejo de errores más específico
+        if (error.status === 400) {
+          this.submitError = 'Datos inválidos. Verifique que todos los campos estén correctamente completados.';
+        } else if (error.status === 403) {
+          this.submitError = 'No tiene permisos para crear tratamientos.';
+        } else if (error.status === 401) {
+          this.submitError = 'Sesión expirada. Por favor, inicie sesión nuevamente.';
+          this.router.navigate(['/login']);
+        } else if (error.status === 500) {
+          this.submitError = 'Error del servidor. Por favor, inténtelo más tarde.';
+        } else {
+          this.submitError = 'Error al guardar el tratamiento. Por favor, inténtelo de nuevo.';
+        }
       }
     });
   }

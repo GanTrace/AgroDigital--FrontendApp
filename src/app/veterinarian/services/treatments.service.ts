@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, catchError } from 'rxjs';
+import { Observable, of, catchError, throwError } from 'rxjs';
 import { AuthService } from '../../public/services/auth.service';
 import { environment } from '../../../environments/environment';
 
@@ -64,10 +64,18 @@ export class TreatmentService {
       treatment.createdBy = currentUser.id;
     }
     
+    console.log('TreatmentService: Sending treatment to API:', treatment);
+    console.log('TreatmentService: API URL:', this.apiUrl);
+    
     return this.http.post<Treatment>(this.apiUrl, treatment).pipe(
       catchError(error => {
-        console.error('Error adding treatment:', error);
-        return of(treatment);
+        console.error('TreatmentService: Error adding treatment:', error);
+        console.error('TreatmentService: Error status:', error.status);
+        console.error('TreatmentService: Error message:', error.message);
+        console.error('TreatmentService: Error body:', error.error);
+        
+        // Re-throw the error so the component can handle it properly
+        throw error;
       })
     );
   }
