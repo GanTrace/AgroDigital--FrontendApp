@@ -344,6 +344,12 @@
     "PATIENT": "Paciente",
     "ALL_PATIENTS": "Todos los pacientes",
     "RECORD_TYPE": "Tipo de Registro",
+    "RECORD_TYPES_ALL": "Todos los tipos de registros",
+    "RECORD_TYPES_CHECKUP": "Revisión",
+    "RECORD_TYPES_VACCINATION": "Vacunación",
+    "RECORD_TYPES_TREATMENT": "Tratamiento",  
+    "RECORD_TYPES_SURGERY": "Cirugía", 
+    "RECORD_TYPES_EMERGENCY": "Emergencia",
     "RECORD_TYPES": {
       "ALL": "Todos los tipos",
       "CHECKUP": "Revisión",

@@ -125,8 +125,22 @@ export class NewRecordComponent implements OnInit {
   }
   
   onSubmit(): void {
+    console.log('Form submission started');
+    console.log('Form valid:', this.recordForm.valid);
+    console.log('Form value:', this.recordForm.value);
+    
     if (this.recordForm.invalid) {
       this.markFormGroupTouched(this.recordForm);
+      this.submitError = 'Por favor, complete todos los campos requeridos';
+      console.log('Form is invalid');
+      return;
+    }
+    
+    // Verificar que el usuario esté autenticado
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser || !currentUser.id) {
+      this.submitError = 'Error de autenticación. Por favor, inicie sesión nuevamente.';
+      console.log('User not authenticated');
       return;
     }
     
@@ -140,31 +154,53 @@ export class NewRecordComponent implements OnInit {
     if (!selectedPatient) {
       this.submitError = 'Paciente no encontrado';
       this.isSubmitting = false;
+      console.log('Patient not found');
       return;
     }
     
+    // Obtener el valor traducido del tipo de registro
+     const translatedRecordType = this.translate.instant(formData.recordType);
+    
+    // Preparar datos según especificaciones del backend
     const recordData = {
       patientId: patientId,
-      patientName: selectedPatient.name,
-      ownerName: selectedPatient.owner,
+      patientName: selectedPatient.name?.trim(),
+      ownerName: selectedPatient.owner?.trim(),
       date: formData.date,
-      recordType: formData.recordType.replace('VET_MEDICAL_RECORDS.RECORD_TYPES.', ''),
-      diagnosis: formData.diagnosis,
-      treatment: formData.treatment,
-      notes: formData.notes || '',
+      recordType: translatedRecordType,
+      diagnosis: formData.diagnosis?.trim(),
+      treatment: formData.treatment?.trim(),
+      notes: formData.notes?.trim() || '',
       followUp: formData.followUp,
-      attachments: []
+      attachments: [],
+      createdBy: currentUser.id
     };
     
+    console.log('Sending medical record data:', recordData);
+    
     this.medicalRecordService.addMedicalRecord(recordData).subscribe({
-      next: () => {
+      next: (response) => {
+        console.log('Medical record created successfully:', response);
         this.isSubmitting = false;
         this.router.navigate(['/veterinarian/medical-records']);
       },
       error: (error) => {
-        this.isSubmitting = false;
-        this.submitError = 'Error al guardar el registro médico. Por favor, inténtelo de nuevo.';
         console.error('Error adding medical record:', error);
+        this.isSubmitting = false;
+        
+        // Manejo de errores más específico
+        if (error.status === 400) {
+          this.submitError = 'Datos inválidos. Verifique que todos los campos estén correctamente completados.';
+        } else if (error.status === 403) {
+          this.submitError = 'No tiene permisos para crear registros médicos.';
+        } else if (error.status === 401) {
+          this.submitError = 'Sesión expirada. Por favor, inicie sesión nuevamente.';
+          this.router.navigate(['/login']);
+        } else if (error.status === 500) {
+          this.submitError = 'Error del servidor. Por favor, inténtelo más tarde.';
+        } else {
+          this.submitError = 'Error al guardar el registro médico. Por favor, inténtelo de nuevo.';
+        }
       }
     });
   }
