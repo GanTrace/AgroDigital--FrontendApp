@@ -52,6 +52,16 @@ export class AddEventComponent implements OnInit {
 
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
+      return;
+    }
+
+    // Verificar que el usuario tenga rol de rancher
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser || currentUser.role !== 'rancher') {
+      console.error('Usuario no tiene permisos para crear eventos');
+      alert('No tienes permisos para crear eventos. Solo los ganaderos pueden crear eventos.');
+      this.router.navigate(['/dashboard']);
+      return;
     }
 
     this.eventForm.get('imagen')?.valueChanges.subscribe(url => {
@@ -65,19 +75,45 @@ export class AddEventComponent implements OnInit {
       
       const currentUser = this.authService.getCurrentUser();
       
+      // Verificar nuevamente el rol antes de enviar
+      if (!currentUser || currentUser.role !== 'rancher') {
+        console.error('Usuario no tiene permisos para crear eventos');
+        alert('No tienes permisos para crear eventos.');
+        this.isSubmitting = false;
+        return;
+      }
+      
+      // Asegurar que todos los campos requeridos estén presentes
       const newEvent: Event = {
-        ...this.eventForm.value,
-        creatorId: currentUser?.id || 'unknown',
-        creatorName: currentUser?.name || 'Anonymous'
+        tipo: this.eventForm.value.tipo,
+        titulo: this.eventForm.value.titulo,
+        fecha: this.eventForm.value.fecha,
+        descripcion: this.eventForm.value.descripcion,
+        imagen: this.eventForm.value.imagen,
+        creatorId: currentUser.id,
+        creatorName: currentUser.name
       };
+      
+      console.log('Enviando evento:', newEvent);
       
       this.eventService.addEvent(newEvent).subscribe({
         next: (event) => {
-          console.log('Evento creado:', event);
+          console.log('Evento creado exitosamente:', event);
+          alert('Evento creado exitosamente');
           this.router.navigate(['/events']);
         },
         error: (error) => {
           console.error('Error al crear el evento:', error);
+          
+          // Manejar diferentes tipos de errores
+          if (error.status === 400) {
+            alert('Error: Datos inválidos o usuario no existe. Verifica todos los campos.');
+          } else if (error.status === 403) {
+            alert('Error: No tienes permisos para crear eventos.');
+          } else {
+            alert('Error al crear el evento. Inténtalo de nuevo.');
+          }
+          
           this.isSubmitting = false;
         },
         complete: () => {
@@ -85,10 +121,15 @@ export class AddEventComponent implements OnInit {
         }
       });
     } else if (!this.isSubmitting) {
+      console.log('Formulario inválido:', this.eventForm.errors);
       Object.keys(this.eventForm.controls).forEach(key => {
         const control = this.eventForm.get(key);
+        if (control?.invalid) {
+          console.log(`Campo ${key} inválido:`, control.errors);
+        }
         control?.markAsTouched();
       });
+      alert('Por favor, completa todos los campos requeridos.');
     }
   }
 
