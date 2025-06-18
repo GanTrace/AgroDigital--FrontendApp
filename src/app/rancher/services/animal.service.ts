@@ -48,7 +48,7 @@ export class AnimalService {
       return of([]);
     }
     
-    return this.http.get<Animal[]>(`${this.apiUrl}?createdBy=${currentUser.id}`).pipe(
+    return this.http.get<Animal[]>(`${this.apiUrl}/creator/${currentUser.id}`).pipe(
       catchError(error => {
         console.error('Error fetching animals by user:', error);
         return of(this.fallbackAnimals.filter(animal => animal.createdBy === currentUser.id));
@@ -70,7 +70,7 @@ export class AnimalService {
       return of([]);
     }
     
-    return this.http.get<Animal[]>(`${this.apiUrl}?createdBy=${userId}`).pipe(
+    return this.http.get<Animal[]>(`${this.apiUrl}/creator/${userId}`).pipe(
       catchError(error => {
         console.error(`Error fetching animals for user ${userId}:`, error);
         return of(this.fallbackAnimals.filter(animal => animal.createdBy === userId.toString()));
