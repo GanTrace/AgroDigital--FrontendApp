@@ -135,8 +135,8 @@ export class EconomicService {
     return this.http.delete(`${this.apiUrl}/expenses/${id}`);
   }
 
-  deleteTransaction(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/transactions/${id}`);
+  deleteTransaction(id: number, type: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/transactions/${id}?type=${type}`);
   }
 
   getTransactionById(id: number): Observable<any> {

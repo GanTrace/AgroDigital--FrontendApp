@@ -174,7 +174,7 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
 
   deleteTransaction(transaction: any): void {
     if (confirm(this.translate.instant('ECONOMIC_CONTROL.CONFIRM_DELETE_MESSAGE'))) {
-      this.economicService.deleteTransaction(transaction.id).subscribe({
+      this.economicService.deleteTransaction(transaction.id, transaction.type).subscribe({
         next: () => {
           alert(this.translate.instant('ECONOMIC_CONTROL.TRANSACTION_DELETED'));
           this.loadRecentTransactions();
