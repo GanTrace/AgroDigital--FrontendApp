@@ -40,7 +40,7 @@ export class AppointmentService {
       return of([]);
     }
     
-    return this.http.get<Appointment[]>(`${this.apiUrl}/creator/${currentUser.id}`).pipe(
+    return this.http.get<Appointment[]>(`${this.apiUrl}?createdBy=${currentUser.id}`).pipe(
       catchError(error => {
         console.error('Error fetching appointments by user:', error);
         return of([]);

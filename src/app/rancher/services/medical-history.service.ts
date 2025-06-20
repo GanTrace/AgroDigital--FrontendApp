@@ -17,7 +17,7 @@ export class MedicalHistoryService {
   ) { }
 
   getMedicalEvents(animalId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/medicalEvents?animalId=${animalId}`).pipe(
+    return this.http.get<any[]>(`${this.apiUrl}/medicalRecords?patientId=${animalId}`).pipe(
       catchError(error => {
         console.error('Error fetching medical events', error);
         return of([]);
@@ -30,23 +30,22 @@ export class MedicalHistoryService {
     
     const eventWithUser = {
       ...event,
-      userId: currentUser?.id,
-      userName: currentUser?.name,
+      createdBy: currentUser?.id,
       createdAt: new Date().toISOString()
     };
     
-    return this.http.post(`${this.apiUrl}/medicalEvents`, eventWithUser);
+    return this.http.post(`${this.apiUrl}/medicalRecords`, eventWithUser);
   }
 
   updateMedicalEvent(id: number, event: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/medicalEvents/${id}`, event);
+    return this.http.put(`${this.apiUrl}/medicalRecords/${id}`, event);
   }
 
   deleteMedicalEvent(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/medicalEvents/${id}`);
+    return this.http.delete(`${this.apiUrl}/medicalRecords/${id}`);
   }
 
   getMedicalEvent(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/medicalEvents/${id}`);
+    return this.http.get<any>(`${this.apiUrl}/medicalRecords/${id}`);
   }
 }

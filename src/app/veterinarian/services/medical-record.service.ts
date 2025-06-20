@@ -25,7 +25,7 @@ export interface MedicalRecord {
   providedIn: 'root'
 })
 export class MedicalRecordService {
-  private apiUrl = `${environment.apiUrl}/medical-records`;
+  private apiUrl = `${environment.apiUrl}/medicalRecords`;
   
   constructor(
     private http: HttpClient,
