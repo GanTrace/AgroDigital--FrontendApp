@@ -25,7 +25,7 @@ export class EconomicService {
       return of(0);
     }
     
-    return this.http.get<any[]>(`${this.apiUrl}/incomes/user/${userId}`).pipe(
+    return this.http.get<any[]>(`${this.apiUrl}/incomes?userId=${userId}`).pipe(
       map(incomes => {
         return incomes.reduce((total, income) => total + parseFloat(income.amount), 0);
       }),
@@ -45,7 +45,7 @@ export class EconomicService {
       return of(0);
     }
     
-    return this.http.get<any[]>(`${this.apiUrl}/expenses/user/${userId}`).pipe(
+    return this.http.get<any[]>(`${this.apiUrl}/expenses?userId=${userId}`).pipe(
       map(expenses => {
         return expenses.reduce((total, expense) => total + parseFloat(expense.amount), 0);
       }),
@@ -77,7 +77,7 @@ export class EconomicService {
       return of([]);
     }
     
-    return this.http.get<any[]>(`${this.apiUrl}/transactions/user/${userId}/recent?limit=${limit}`).pipe(
+    return this.http.get<any[]>(`${this.apiUrl}/transactions?userId=${userId}&_limit=${limit}&_sort=date&_order=desc`).pipe(
       catchError(error => {
         console.error('Error fetching transactions', error);
         return of([]);
@@ -94,7 +94,7 @@ export class EconomicService {
       return of([]);
     }
     
-    return this.http.get<any[]>(`${this.apiUrl}/incomes/user/${userId}`).pipe(
+    return this.http.get<any[]>(`${this.apiUrl}/incomes?userId=${userId}`).pipe(
       catchError(error => {
         console.error('Error fetching incomes', error);
         return of([]);
@@ -111,7 +111,7 @@ export class EconomicService {
       return of([]);
     }
     
-    return this.http.get<any[]>(`${this.apiUrl}/expenses/user/${userId}`).pipe(
+    return this.http.get<any[]>(`${this.apiUrl}/expenses?userId=${userId}`).pipe(
       catchError(error => {
         console.error('Error fetching expenses', error);
         return of([]);

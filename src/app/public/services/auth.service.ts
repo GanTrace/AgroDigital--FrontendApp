@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap, catchError, of } from 'rxjs';
+import { Observable, tap, catchError, of, map, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
@@ -59,9 +59,16 @@ export class AuthService {
 
   login(credentials: LoginPayload): Observable<User> {
     console.log('Attempting login with:', credentials.email);
-    const loginUrl = `${environment.apiUrl}/auth/login`;
     
-    return this.http.post<User>(loginUrl, credentials).pipe(
+    // Buscar usuario por email y password usando json-server
+    return this.http.get<User[]>(`${this.apiUrl}?email=${credentials.email}&password=${credentials.password}`).pipe(
+      map(users => {
+        if (users.length > 0) {
+          return users[0];
+        } else {
+          throw new Error('Invalid credentials');
+        }
+      }),
       tap(user => {
         console.log('Login response:', user);
         if (user) {
@@ -72,7 +79,7 @@ export class AuthService {
       }),
       catchError(error => {
         console.error('Error during login:', error);
-        throw error;
+        return throwError(() => error);
       })
     );
   }
