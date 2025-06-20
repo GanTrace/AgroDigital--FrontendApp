@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError, of, map, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { MockDataService } from '../../shared/services/mock-data.service';
 
 export interface User {
   id?: number;
@@ -27,7 +28,8 @@ export class AuthService {
   
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private mockDataService: MockDataService
   ) {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -42,6 +44,21 @@ export class AuthService {
     };
     
     console.log('Registering user with role:', user.role);
+    
+    if (environment.useMockData) {
+      return this.mockDataService.addUser(user).pipe(
+        tap(response => {
+          console.log('Registration successful (mock):', response);
+          const { password, ...userWithoutPassword } = response;
+          localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+          this.currentUser = response;
+        }),
+        catchError(error => {
+          console.error('Registration error (mock):', error);
+          throw error;
+        })
+      );
+    }
     
     return this.http.post<User>(this.apiUrl, user).pipe(
       tap(response => {
@@ -59,6 +76,30 @@ export class AuthService {
 
   login(credentials: LoginPayload): Observable<User> {
     console.log('Attempting login with:', credentials.email);
+    
+    if (environment.useMockData) {
+      return this.mockDataService.getUserByCredentials(credentials.email, credentials.password).pipe(
+        map(users => {
+          if (users.length > 0) {
+            return users[0];
+          } else {
+            throw new Error('Invalid credentials');
+          }
+        }),
+        tap(user => {
+          console.log('Login response (mock):', user);
+          if (user) {
+            const { password, ...userWithoutPassword } = user;
+            localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+            this.currentUser = user;
+          }
+        }),
+        catchError(error => {
+          console.error('Error during login (mock):', error);
+          return throwError(() => error);
+        })
+      );
+    }
     
     // Buscar usuario por email y password usando json-server
     return this.http.get<User[]>(`${this.apiUrl}?email=${credentials.email}&password=${credentials.password}`).pipe(
@@ -108,6 +149,20 @@ export class AuthService {
       return of({}); 
     }
     
+    if (environment.useMockData) {
+      return this.mockDataService.updateUser(user).pipe(
+        tap(updatedUser => {
+          if (this.isLoggedIn()) {
+            const currentUser = this.getCurrentUser();
+            if (currentUser && currentUser.id === updatedUser.id) {
+              localStorage.setItem('user', JSON.stringify(updatedUser));
+              this.currentUser = updatedUser;
+            }
+          }
+        })
+      );
+    }
+    
     return this.http.put<any>(`${this.apiUrl}/${user.id}`, user).pipe(
       tap(updatedUser => {
         
@@ -128,6 +183,11 @@ export class AuthService {
       console.error('getUserById called with undefined ID');
       return of({} as User);
     }
+    
+    if (environment.useMockData) {
+      return this.mockDataService.getUserById(id);
+    }
+    
     return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
