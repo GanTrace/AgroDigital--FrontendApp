@@ -13,7 +13,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
   
   getUsersByRole(role: string): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/role/${role}`).pipe(
+    return this.http.get<User[]>(`${this.apiUrl}?role=${role}`).pipe(
       catchError(error => {
         console.error('Error fetching users by role:', error);
         return of([]);
