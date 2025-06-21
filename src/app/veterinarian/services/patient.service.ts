@@ -42,7 +42,7 @@ export class PatientService {
       return of([]);
     }
     
-    return this.http.get<Patient[]>(`${this.apiUrl}/creator/${currentUser.id}`).pipe(
+    return this.http.get<Patient[]>(`${this.apiUrl}?createdBy=${currentUser.id}`).pipe(
       catchError(error => {
         console.error('Error fetching patients by user:', error);
         return of([]);

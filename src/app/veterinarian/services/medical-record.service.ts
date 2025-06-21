@@ -4,6 +4,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from '../../public/services/auth.service';
 import { environment } from '../../../environments/environment';
+import { MockDataService } from '../../shared/services/mock-data.service';
 
 export interface MedicalRecord {
   id?: number;
@@ -25,14 +26,19 @@ export interface MedicalRecord {
   providedIn: 'root'
 })
 export class MedicalRecordService {
-  private apiUrl = `${environment.apiUrl}/medical-records`;
+  private apiUrl = `${environment.apiUrl}/medicalRecords`;
   
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private mockDataService: MockDataService
   ) {}
   
   getMedicalRecords(): Observable<MedicalRecord[]> {
+    if (environment.useMockData) {
+      return this.mockDataService.getMedicalRecords();
+    }
+    
     return this.http.get<MedicalRecord[]>(this.apiUrl).pipe(
       catchError(error => {
         console.error('Error fetching medical records:', error);
@@ -47,6 +53,10 @@ export class MedicalRecordService {
       return of([]);
     }
     
+    if (environment.useMockData) {
+      return this.mockDataService.getMedicalRecordsByUser(currentUser.id);
+    }
+    
     return this.http.get<MedicalRecord[]>(`${this.apiUrl}?createdBy=${currentUser.id}`).pipe(
       catchError(error => {
         console.error('Error fetching medical records by user:', error);
@@ -56,6 +66,15 @@ export class MedicalRecordService {
   }
   
   getMedicalRecord(id: number): Observable<MedicalRecord> {
+    if (environment.useMockData) {
+      return this.mockDataService.getMedicalRecordById(id).pipe(
+        catchError(error => {
+          console.error(`Error fetching medical record with id ${id} (mock):`, error);
+          return of({} as MedicalRecord);
+        })
+      );
+    }
+    
     return this.http.get<MedicalRecord>(`${this.apiUrl}/${id}`).pipe(
       catchError(error => {
         console.error(`Error fetching medical record with id ${id}:`, error);
@@ -65,11 +84,6 @@ export class MedicalRecordService {
   }
   
   addMedicalRecord(record: MedicalRecord): Observable<MedicalRecord> {
-    // Configurar headers correctos
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    
     // Asegurar que createdBy esté incluido
     const currentUser = this.authService.getCurrentUser();
     if (currentUser && currentUser.id) {
@@ -82,6 +96,21 @@ export class MedicalRecordService {
       console.error('Missing required fields in medical record:', record);
       return throwError(() => new Error('Faltan campos requeridos'));
     }
+    
+    if (environment.useMockData) {
+      console.log('Adding medical record (mock):', record);
+      return this.mockDataService.addMedicalRecord(record).pipe(
+        catchError(error => {
+          console.error('Error adding medical record (mock):', error);
+          return throwError(() => error);
+        })
+      );
+    }
+    
+    // Configurar headers correctos
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
     
     console.log('Sending POST request to:', this.apiUrl);
     console.log('With headers:', headers);
@@ -99,6 +128,15 @@ export class MedicalRecordService {
   }
   
   updateMedicalRecord(record: MedicalRecord): Observable<MedicalRecord> {
+    if (environment.useMockData) {
+      return this.mockDataService.updateMedicalRecord(record).pipe(
+        catchError(error => {
+          console.error(`Error updating medical record with id ${record.id} (mock):`, error);
+          return throwError(() => error);
+        })
+      );
+    }
+    
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
@@ -110,8 +148,17 @@ export class MedicalRecordService {
       })
     );
   }
-  
+
   deleteMedicalRecord(id: number): Observable<any> {
+    if (environment.useMockData) {
+      return this.mockDataService.deleteMedicalRecord(id).pipe(
+        catchError(error => {
+          console.error(`Error deleting medical record with id ${id} (mock):`, error);
+          return of(null);
+        })
+      );
+    }
+    
     return this.http.delete(`${this.apiUrl}/${id}`).pipe(
       catchError(error => {
         console.error(`Error deleting medical record with id ${id}:`, error);

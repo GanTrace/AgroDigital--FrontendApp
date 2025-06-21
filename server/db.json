@@ -324,6 +324,20 @@
       "createdBy": 5,
       "createdAt": "2025-06-17T07:31:32.150Z",
       "id": 3
+    },
+    {
+      "patientId": 2,
+      "patientName": "Raphtalia",
+      "ownerName": "Erick",
+      "date": "2025-06-20",
+      "recordType": "Vacunación",
+      "diagnosis": "....",
+      "treatment": "...",
+      "notes": "...",
+      "followUp": "2026-04-19",
+      "attachments": [],
+      "createdBy": 5,
+      "id": 4
     }
   ],
   "treatments": [
