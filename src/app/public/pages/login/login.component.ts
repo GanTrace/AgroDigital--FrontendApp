@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService, User } from '../../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageSwitcherComponent } from '../../components/language-switcher/language-switcher.component';
+import { TranslatedFooterComponent } from '../../components/translated-footer/translated-footer.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule,
     TranslateModule,
     LanguageSwitcherComponent,
+    TranslatedFooterComponent,
     HttpClientModule
   ],
   templateUrl: './login.component.html',

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { I18nService } from '../../../services/i18n.service';
+import { LocaleSettings } from '../../../core/i18n/translation.model';
 
 @Component({
   selector: 'app-language-switcher',
@@ -10,14 +12,15 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./language-switcher.component.css']
 })
 export class LanguageSwitcherComponent implements OnInit {
-  languages = [
-    { code: 'es', name: 'Español' },
-    { code: 'en', name: 'English' }
-  ];
-  
+  languages = LocaleSettings.getSupportedLocales();
+
   currentLang: string = 'es';
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    private ngZone: NgZone,
+    private i18nService: I18nService
+  ) {}
 
   ngOnInit(): void {
     const savedLang = localStorage.getItem('preferredLanguage');
@@ -30,8 +33,18 @@ export class LanguageSwitcherComponent implements OnInit {
   }
 
   switchLanguage(langCode: string): void {
-    this.translate.use(langCode);
-    this.currentLang = langCode;
-    localStorage.setItem('preferredLanguage', langCode);
+    if (this.currentLang !== langCode) {
+      this.ngZone.run(() => {
+        // Actualizar idioma en el servicio
+        this.i18nService.setLanguage(langCode);
+        this.currentLang = langCode;
+
+        // Disparar evento personalizado para el nuevo footer
+        window.dispatchEvent(new Event('language-changed'));
+
+        // Evitar la recarga completa que afecta a la experiencia de usuario
+        // window.location.reload();
+      });
+    }
   }
 }

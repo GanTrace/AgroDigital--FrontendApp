@@ -1,0 +1,58 @@
+{
+  "LOGIN": {
+    "TITLE": "Iniciar Sesión",
+    "DESCRIPTION": "Inicia sesión en tu cuenta para acceder a todas las funciones",
+    "EMAIL": "Correo electrónico",
+    "PASSWORD": "Contraseña",
+    "REMEMBER_ME": "Recordarme",
+    "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
+    "SUBMIT": "Iniciar Sesión",
+    "NO_ACCOUNT": "¿No tienes una cuenta?",
+    "REGISTER": "Regístrate aquí"
+  },
+  "FOOTER": {
+    "PRIVACY_POLICY": "Política de privacidad",
+    "COOKIE_POLICY": "Política de cookies",
+    "LEGAL_NOTICE": "Aviso Legal",
+    "ALL_RIGHTS_RESERVED": "Todos los derechos reservados."
+  },
+  "REGISTER": {
+    "TITLE": "Registro",
+    "DESCRIPTION": "Crea una nueva cuenta",
+    "NAME": "Nombre",
+    "EMAIL": "Correo electrónico",
+    "PASSWORD": "Contraseña",
+    "CONFIRM_PASSWORD": "Confirmar contraseña",
+    "SUBMIT": "Registrarse",
+    "HAVE_ACCOUNT": "¿Ya tienes una cuenta?",
+    "LOGIN": "Iniciar sesión aquí"
+  },
+  "SETTINGS": {
+    "TITLE": "Configuración",
+    "LANGUAGE": "Idioma",
+    "NOTIFICATIONS": "Notificaciones",
+    "THEME": "Tema",
+    "SAVE": "Guardar cambios"
+  },
+  "HEADER": {
+    "HOME": "Inicio",
+    "ABOUT": "Acerca de",
+    "SERVICES": "Servicios",
+    "CONTACT": "Contacto",
+    "LOGIN": "Iniciar Sesión",
+    "REGISTER": "Registrarse",
+    "SETTINGS": "Configuración",
+    "PROFILE": "Perfil",
+    "LOGOUT": "Cerrar Sesión"
+  },
+  "COMMON": {
+    "SAVE": "Guardar",
+    "CANCEL": "Cancelar",
+    "DELETE": "Eliminar",
+    "EDIT": "Editar",
+    "SEARCH": "Buscar",
+    "LOADING": "Cargando...",
+    "ERROR": "Ha ocurrido un error",
+    "SUCCESS": "Operación exitosa"
+  }
+}

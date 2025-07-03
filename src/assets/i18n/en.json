@@ -1,0 +1,58 @@
+{
+  "LOGIN": {
+    "TITLE": "Login",
+    "DESCRIPTION": "Sign in to your account to access all features",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "REMEMBER_ME": "Remember me",
+    "FORGOT_PASSWORD": "Forgot password?",
+    "SUBMIT": "Sign In",
+    "NO_ACCOUNT": "Don't have an account?",
+    "REGISTER": "Register here"
+  },
+  "FOOTER": {
+    "PRIVACY_POLICY": "Privacy Policy",
+    "COOKIE_POLICY": "Cookie Policy",
+    "LEGAL_NOTICE": "Legal Notice",
+    "ALL_RIGHTS_RESERVED": "All Rights Reserved."
+  },
+  "REGISTER": {
+    "TITLE": "Register",
+    "DESCRIPTION": "Create a new account",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "CONFIRM_PASSWORD": "Confirm password",
+    "SUBMIT": "Register",
+    "HAVE_ACCOUNT": "Already have an account?",
+    "LOGIN": "Sign in here"
+  },
+  "SETTINGS": {
+    "TITLE": "Settings",
+    "LANGUAGE": "Language",
+    "NOTIFICATIONS": "Notifications",
+    "THEME": "Theme",
+    "SAVE": "Save changes"
+  },
+  "HEADER": {
+    "HOME": "Home",
+    "ABOUT": "About",
+    "SERVICES": "Services",
+    "CONTACT": "Contact",
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "SETTINGS": "Settings",
+    "PROFILE": "Profile",
+    "LOGOUT": "Logout"
+  },
+  "COMMON": {
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SEARCH": "Search",
+    "LOADING": "Loading...",
+    "ERROR": "An error has occurred",
+    "SUCCESS": "Operation successful"
+  }
+}

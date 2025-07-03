@@ -3,7 +3,7 @@
     <div class="footer-logo">
       <img src="AgroDigital_Logo.png" alt="AgroDigital Logo">
     </div>
-    
+
     <div class="social-icons">
       <a href="https://www.facebook.com" target="_blank" class="social-icon facebook">
         <div class="icon-circle">f</div>
@@ -15,15 +15,15 @@
         <div class="icon-circle">𝕏</div>
       </a>
     </div>
-    
-    <div class="footer-links">
-      <a href="#" class="footer-link">Política de privacidad</a>
-      <a href="#" class="footer-link">Política de cookies</a>
-      <a href="#" class="footer-link">Aviso Legal</a>
+
+    <div class="footer-links" *ngIf="isTranslationsLoaded">
+      <a href="#" class="footer-link">{{ 'FOOTER.PRIVACY_POLICY' | translate }}</a>
+      <a href="#" class="footer-link">{{ 'FOOTER.COOKIE_POLICY' | translate }}</a>
+      <a href="#" class="footer-link">{{ 'FOOTER.LEGAL_NOTICE' | translate }}</a>
     </div>
-    
-    <div class="copyright">
-      © 2025 GanTrace. All Rights Reserved.
+
+    <div class="copyright" *ngIf="isTranslationsLoaded">
+      © {{ currentYear }} GanTrace. {{ 'FOOTER.ALL_RIGHTS_RESERVED' | translate }}
     </div>
   </div>
 </footer>
