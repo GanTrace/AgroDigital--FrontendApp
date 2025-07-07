@@ -392,6 +392,7 @@
   "APPOINTMENTS": {
     "TITLE": "Gestión de Citas",
     "ADD_APPOINTMENT": "Añadir Cita",
+    "ADD_NEW_APPOINTMENT": "Añadir Cita",
     "SEARCH_PLACEHOLDER": "Buscar por paciente, propietario o motivo...",
     "FILTER": "Filtrar",
     "FILTER_OPTIONS": "Opciones de Filtro",
