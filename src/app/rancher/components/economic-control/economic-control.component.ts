@@ -116,12 +116,17 @@ export class EconomicControlComponent implements OnInit, OnDestroy {
   }
   
   getTranslatedCategory(category: string): string {
-    const categoryKey = category.toUpperCase().replace(/\s+/g, '_');
-    if (category.toLowerCase().includes('expense')) {
-      return this.translate.instant(`ECONOMIC_CONTROL.EXPENSE_CATEGORIES.${categoryKey}`);
-    } else {
-      return this.translate.instant(`ECONOMIC_CONTROL.CATEGORIES.${categoryKey}`);
-    }
+    const categoryMap: {[key: string]: string} = {
+      'veterinary': 'Veterinario',
+      'feed': 'Alimentación',
+      'equipment': 'Equipamiento',
+      'supplies': 'Suministros',
+      'maintenance': 'Mantenimiento',
+      'other_expense': 'Otros Gastos',
+      'other': 'Otros Gastos'
+    };
+    
+    return categoryMap[category.toLowerCase()] || category;
   }
   
   formatDate(dateString: string): string {
