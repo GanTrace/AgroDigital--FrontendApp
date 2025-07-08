@@ -51,7 +51,7 @@
         <label for="category">{{ 'ECONOMIC_CONTROL.CATEGORY' | translate }}</label>
         <select id="category" formControlName="category">
           <option *ngFor="let category of categories" [value]="category">
-            {{ category | translate }}
+            {{ category }}
           </option>
         </select>
       </div>
